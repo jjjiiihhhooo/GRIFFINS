@@ -25,7 +25,11 @@ public class InputManager : MonoBehaviour
 
         if(Input.GetAxisRaw("Vertical") != 0 || Input.GetAxisRaw("Horizontal") != 0)
         {
-            if(player.currentState.GetType() != typeof(PlayerWalkState) player.ChangeState(player.))
+            if (player.currentState.GetType() != typeof(PlayerWalkState)) player.ChangeState(player.PlayerWalkState);
+        }
+        else
+        {
+            if (player.currentState.GetType() != typeof(PlayerIdleState)) player.ChangeState(player.PlayerIdleState);
         }
     }
 }
