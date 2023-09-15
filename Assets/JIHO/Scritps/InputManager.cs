@@ -4,15 +4,28 @@ using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private PlayerController player;
+
+    private void Awake()
     {
-        
+        if(player == null)
+        {
+            player = PlayerController.Instance;
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        PlayerInput();
+    }
+
+    private void PlayerInput()
+    {
+        if (player.IsMouse) return;
+
+        if(Input.GetAxisRaw("Vertical") != 0 || Input.GetAxisRaw("Horizontal") != 0)
+        {
+            if(player.currentState.GetType() != typeof(PlayerWalkState) player.ChangeState(player.))
+        }
     }
 }

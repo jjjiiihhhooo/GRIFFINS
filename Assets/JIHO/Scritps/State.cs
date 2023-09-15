@@ -4,22 +4,22 @@ using UnityEngine;
 
 public class State<T>
 {
-    public void StateChange(T PlayerController)
+    public virtual void StateChange(T PlayerController)
     { 
     
     }
 
-    public void StateEnter(T PlayerController)
+    public virtual void StateEnter(T PlayerController)
     {
 
     }
 
-    public void StateUpdate(T PlayerController)
+    public virtual void StateUpdate(T PlayerController)
     {
 
     }
 
-    public void StateExit(T PlayerController)
+    public virtual void StateExit(T PlayerController)
     {
 
     }
