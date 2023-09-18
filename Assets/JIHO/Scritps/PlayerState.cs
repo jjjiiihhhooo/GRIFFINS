@@ -7,9 +7,9 @@ public class PlayerIdleState : State<PlayerController>
     public override void StateChange(PlayerController playerController)
     {
         Debug.Log("IdleStateChange");
-        //playerController.currentState.StateExit(playerController);
+        playerController.currentState.StateExit(playerController);
 
-        //playerController.currentState = this;
+        playerController.currentState = this;
 
         StateEnter(playerController);
     }
@@ -32,7 +32,7 @@ public class PlayerIdleState : State<PlayerController>
         //}
 
         //if (playerController.currentWeapon.isSightMode) return;
-        //playerController.Idle();
+        playerController.IdleMassage();
     }
 }
 
@@ -41,9 +41,9 @@ public class PlayerWalkState : State<PlayerController>
     public override void StateChange(PlayerController playerController)
     {
         Debug.Log("WalkStateChange");
-        //playerController.currentState.StateExit(playerController);
+        playerController.currentState.StateExit(playerController);
 
-        //playerController.currentState = this;
+        playerController.currentState = this;
 
         StateEnter(playerController);
     }
@@ -51,13 +51,13 @@ public class PlayerWalkState : State<PlayerController>
     public override void StateEnter(PlayerController playerController)
     {
         Debug.Log("WalkStateEnter");
-        //playerController.currentSpeed = playerController.walkSpeed;
+        playerController.CurrentSpeed = playerController.WalkSpeed;
     }
 
     public override void StateExit(PlayerController playerController)
     {
         Debug.Log("WalkStateExit");
-        //playerController.currentSpeed = 0;
+        playerController.CurrentSpeed = 0;
     }
 
     public override void StateUpdate(PlayerController playerController)
