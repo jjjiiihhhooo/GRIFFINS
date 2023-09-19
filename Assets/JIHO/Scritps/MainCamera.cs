@@ -20,6 +20,7 @@ public class MainCamera : MonoBehaviour
     [SerializeField] private float mouseSpeed;
 
     [SerializeField] private LineRenderer line;
+    [SerializeField] private Camera thisCam;
 
     public Vector3 rayDir;
     public Vector3 mousePos;
@@ -36,6 +37,7 @@ public class MainCamera : MonoBehaviour
     {
         if(!player.IsPinball || player.IsScope)
         {
+            thisCam.depth = 0;
             Vector2 mousePos = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
             Vector3 camAngle = cameraArm.rotation.eulerAngles;
 
@@ -48,6 +50,10 @@ public class MainCamera : MonoBehaviour
             else transform.localPosition = position;
 
             cameraArm.rotation = Quaternion.Euler(x, camAngle.y + mousePos.x, camAngle.z);
+        }
+        else
+        {
+            thisCam.depth = -2;
         }
 
         //if(player.IsScope)
@@ -74,6 +80,7 @@ public class MainCamera : MonoBehaviour
         {
             //line.SetPosition(0, Camera.main.transform.position);
             //line.SetPosition(1, hit.point);
+            rayDir = hit.point - Camera.main.transform.position;
             mousePos = hit.point;
         }
     }

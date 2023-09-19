@@ -9,9 +9,12 @@ public class Bullet : MonoBehaviour
     [SerializeField] private float scopeSpeed;
     [SerializeField] private float noScopeSpeed;
     [SerializeField] private float time;
-    public bool isScope;
+    [SerializeField] private LayerMask platform;
+    [SerializeField] private LayerMask enemy;
+    [SerializeField] private GameObject effect;
 
     public Vector3 direction;
+    public Vector3 endPos;
 
     private void OnEnable()
     {
@@ -25,7 +28,7 @@ public class Bullet : MonoBehaviour
             time -= Time.deltaTime;
             if (time <= 0) Exit();
         }
-
+        
         transform.position += direction * speed * Time.deltaTime;
 
         if (PlayerController.Instance.IsScope) speed = scopeSpeed;
@@ -35,6 +38,27 @@ public class Bullet : MonoBehaviour
     public void Exit()
     {
         Managers.Instance.BulletSpawner.ReturnQueue(this.gameObject);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.layer == platform)
+        {
+            Debug.LogError("dd");
+            GameObject temp = Instantiate(effect, transform.position, Quaternion.identity);
+            Exit();
+        }
+
+        if (other.gameObject.layer == enemy)
+        {
+            GameObject temp = Instantiate(effect, transform.position, Quaternion.identity);
+            Exit();
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        
     }
 
 }

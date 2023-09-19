@@ -246,8 +246,8 @@ public class PlayerController : MonoBehaviour
             GameObject obj = Managers.Instance.BulletSpawner.PopQueue();
             Bullet bullet = obj.GetComponent<Bullet>();
 
-            obj.transform.position = cam.transform.position;
-            bullet.direction = cam.transform.forward;
+            obj.transform.position = cam.transform.position + cam.transform.forward * 0.3f;
+            bullet.direction = cam.rayDir.normalized;
             obj.SetActive(true);
 
         }
