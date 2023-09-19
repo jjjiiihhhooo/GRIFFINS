@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float force = 50.0f;
 
     [SerializeField] private int pinballCount;
+    [SerializeField] private int pinballMaxCount;
 
     [SerializeField] private bool isAttack;
     [SerializeField] private bool isDash;
@@ -32,10 +33,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private bool isMove;
     [SerializeField] private bool isPinball;
 
+    [SerializeField] private LineRenderer line;
+
     [SerializeField] private Vector2 moveVec = Vector2.zero;
     [SerializeField] private Vector3 vector = Vector3.zero;
     [SerializeField] private Vector3 camVector = Vector3.zero;
     [SerializeField] private Vector3 playerRotate = Vector3.zero;
+    [SerializeField] private Vector3 pinballRoutePos = Vector3.zero;
 
     [SerializeField] private RaycastHit hit;
     [SerializeField] private LayerMask layer;
@@ -88,17 +92,19 @@ public class PlayerController : MonoBehaviour
     {
         Move();
         PinBall();
+        
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            isPinball = false;
+            PinBallRoute();
         }
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            
             isPinball = true;
             rigid.useGravity = false;
             playerCharacter.forward = cam.transform.forward;
@@ -139,15 +145,39 @@ public class PlayerController : MonoBehaviour
     //    rigid.AddForce(reflectVector * force, ForceMode.Impulse);
     //}
 
+    private void PinBallRoute()
+    {
+        pinballRoutePos = playerCharacter.position;
+
+        Vector3 routeVec = playerCharacter.forward;
+
+        for(int i = 0; i < pinballMaxCount - 1; i++)
+        {
+            
+            if (Physics.Raycast(pinballRoutePos, routeVec, out hit, 100, layer))
+            {
+                Debug.Log(i);
+                line.SetPosition(i, pinballRoutePos);
+                Vector3 incomingVector = routeVec;
+                incomingVector = incomingVector.normalized;
+                Vector3 normalVector = hit.normal;
+                Vector3 reflectVector = Vector3.Reflect(incomingVector, normalVector);
+                reflectVector = reflectVector.normalized;
+                routeVec = reflectVector;
+                pinballRoutePos = hit.point;
+            }
+        }
+    }
+
+    
+
     private void PinBall()
     {
         if (!isPinball) return;
         Debug.Log("ÇÉº¼ ½ÃÀÛ");
 
-        
-
         Debug.DrawRay(playerCharacter.position + playerCharacter.forward * 0.3f, playerCharacter.forward, Color.red);
-        if(pinballCount > 10)
+        if(pinballCount > pinballMaxCount)
         {
             isPinball = false;
             pinballCount = 0;
@@ -155,8 +185,6 @@ public class PlayerController : MonoBehaviour
             return;
         }
         
-       
-
         if(Physics.Raycast(playerCharacter.position + playerCharacter.forward * 0.3f, playerCharacter.forward, out hit, rayDistance, layer))
         {
             Vector3 incomingVector = playerCharacter.forward;
@@ -167,7 +195,7 @@ public class PlayerController : MonoBehaviour
             playerCharacter.forward = reflectVector;
             cam.cameraArm.forward = reflectVector;
             pinballCount++;
-            Debug.LogError("ÇÉº¼ Ãæµ¹");
+            Debug.Log("ÇÉº¼ Ãæµ¹");
         }
 
         transform.position += cam.transform.forward * force * Time.deltaTime;

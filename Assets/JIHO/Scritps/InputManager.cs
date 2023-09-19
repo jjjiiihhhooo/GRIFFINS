@@ -6,9 +6,9 @@ public class InputManager : MonoBehaviour
 {
     private PlayerController player;
 
-    private void Awake()
+    private void Start()
     {
-        if(player == null)
+        if (player == null)
         {
             player = PlayerController.Instance;
         }
