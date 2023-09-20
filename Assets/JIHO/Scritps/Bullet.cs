@@ -42,23 +42,16 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == platform)
+        if (other.gameObject.CompareTag("Enemy"))
         {
-            Debug.LogError("dd");
-            GameObject temp = Instantiate(effect, transform.position, Quaternion.identity);
             Exit();
         }
 
-        if (other.gameObject.layer == enemy)
+        if (other.gameObject.CompareTag("Object"))
         {
             GameObject temp = Instantiate(effect, transform.position, Quaternion.identity);
             Exit();
         }
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        
     }
 
 }

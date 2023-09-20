@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 197948494100078830}
   m_Layer: 0
   m_Name: Bullet
-  m_TagString: Untagged
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -123,7 +123,7 @@ MonoBehaviour:
   enemy:
     serializedVersion: 2
     m_Bits: 128
-  effect: {fileID: 6028781632150402901, guid: 64ea0200654ed094ca9b851a89ccc316, type: 3}
+  effect: {fileID: 8913216077532788961, guid: 64b0cab899ff3f94693dd435233502cf, type: 3}
   direction: {x: 0, y: 0, z: 0}
   endPos: {x: 0, y: 0, z: 0}
 --- !u!54 &197948494100078830
@@ -365,7 +365,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 0, b: 0.020421028, a: 1}
+      maxColor: {r: 0, g: 1, b: 0, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}

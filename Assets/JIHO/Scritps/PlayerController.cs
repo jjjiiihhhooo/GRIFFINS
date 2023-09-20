@@ -26,7 +26,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float mouseY;
 
     [SerializeField] private float forceMax;
-    [SerializeField] private float force = 50.0f;
+    [SerializeField] private float force;
+    [SerializeField] private float scopeForce;
     [SerializeField] private float tempForce;
 
     [SerializeField] private int pinballCount;
@@ -40,6 +41,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private bool isMove;
     [SerializeField] private bool isPinball;
     [SerializeField] private bool isScope;
+    [SerializeField] private bool isPinballRoute;
 
     [SerializeField] private Vector2 moveVec = Vector2.zero;
     [SerializeField] private Vector3 vector = Vector3.zero;
@@ -50,6 +52,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private RaycastHit hit;
     [SerializeField] private LayerMask layer;
+    [SerializeField] private LayerMask enemyLayer;
 
     [SerializeField] private Rigidbody rigid;
     [SerializeField] private CapsuleCollider col;
@@ -112,7 +115,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.E))
         {
             isPinball = true;
             rigid.useGravity = false;
@@ -131,12 +134,25 @@ public class PlayerController : MonoBehaviour
             Shoot();
         }
 
+        if (Input.GetMouseButton(0))
+        {
+            if (!isScope) return;
+            Shoot();
+        }
+
+        if(Input.GetKeyDown(KeyCode.Q))
+        {
+            isPinballRoute = !isPinballRoute;
+            line.gameObject.SetActive(isPinballRoute);
+        }
+
         if (bulletCurTime > 0) bulletCurTime -= Time.deltaTime;
     }
 
     private void Move()
     {
         if (isPinball) return;
+        
 
         moveVec.x = Input.GetAxisRaw("Horizontal");
         moveVec.y = Input.GetAxisRaw("Vertical");
@@ -171,6 +187,8 @@ public class PlayerController : MonoBehaviour
     private void PinBallRoute()
     {
         if (isPinball) return;
+        if (!isPinballRoute) return;
+        
 
         pinballRoutePos = playerCharacter.position;
         Debug.Log("1" + pinballRoutePos);
@@ -197,6 +215,8 @@ public class PlayerController : MonoBehaviour
     {
         if (!isPinball) return;
         Debug.Log("ÇÉº¼ ½ÃÀÛ");
+        isPinballRoute = false;
+        line.gameObject.SetActive(isPinballRoute);
 
         if(pinballCount >= pinballMaxCount)
         {
@@ -210,13 +230,22 @@ public class PlayerController : MonoBehaviour
 
         transform.position = Vector3.MoveTowards(transform.position, routeVectors[pinballCount], Time.deltaTime * force);
 
+        if(Physics.Raycast(playerCharacter.transform.position, routeVectors[pinballCount] - transform.position, out hit, Mathf.Infinity, enemyLayer))
+        {
+            if (Vector3.Distance(transform.position, hit.point) < 1f)
+            {
+                GameObject temp = Instantiate(hit.transform.GetComponent<Enemy>().damageEffect, transform.position, Quaternion.identity);
+                Destroy(hit.transform.gameObject);
+            }
+        }
+
         playerCharacter.forward = routeVectors[pinballCount] - transform.position;
 
         if (Vector3.Distance(transform.position, routeVectors[pinballCount]) < 0.1f) 
         {
             pinballCount++;
             GameObject temp = Instantiate(attackEffect, transform.position, Quaternion.identity);
-            if(force < forceMax) force += 2;
+            if(force < forceMax && !isScope) force += 2;
 
             temp.SetActive(true);
         }
@@ -236,7 +265,7 @@ public class PlayerController : MonoBehaviour
         {
             cam.transform.localPosition = camScopePos;
             tempForce = force;
-            force = 0.3f;
+            force = scopeForce;
         }
 
         scope.SetActive(isScope);
@@ -250,7 +279,7 @@ public class PlayerController : MonoBehaviour
             GameObject obj = Managers.Instance.BulletSpawner.PopQueue();
             Bullet bullet = obj.GetComponent<Bullet>();
 
-            obj.transform.position = cam.transform.position + cam.transform.forward * 0.3f;
+            obj.transform.position = cam.transform.position + cam.transform.forward;
             bullet.direction = cam.rayDir.normalized;
             obj.SetActive(true);
 
