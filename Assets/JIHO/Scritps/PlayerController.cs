@@ -254,19 +254,32 @@ public class PlayerController : MonoBehaviour
             if (Vector3.Distance(transform.position, hit.point) < 1f)
             {
                 GameObject temp = Instantiate(hit.transform.GetComponent<Enemy>().damageEffect, transform.position, Quaternion.identity);
-                Destroy(hit.transform.gameObject);
+                //hit.transform.GetComponent<Enemy>().anim.SetTrigger("Hit");
             }
         }
 
+        if (Physics.Raycast(playerCharacter.transform.position, routeVectors[pinballCount] - transform.position, out hit, Mathf.Infinity, layer))
+        {
+            if (Vector3.Distance(transform.position, hit.point) < 1f) if (hit.transform.gameObject.CompareTag("item")) hit.transform.GetComponent<PlatformObj>().anim.SetTrigger("Hit");
+
+        }
+
         playerCharacter.forward = routeVectors[pinballCount] - transform.position;
+
+
 
         if (Vector3.Distance(transform.position, routeVectors[pinballCount]) < 0.1f) 
         {
             if (!animator.GetCurrentAnimatorStateInfo(0).IsName("PinBallLanding")) 
                 animator.SetTrigger("Landing");
+
+            
             pinballCount++;
             GameObject temp = Instantiate(attackEffect, transform.position, Quaternion.identity);
-            if(force < forceMax && !isScope) force += 2;
+
+            
+
+                if (force < forceMax && !isScope) force += 2;
 
             temp.SetActive(true);
         }
