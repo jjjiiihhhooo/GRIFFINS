@@ -39,9 +39,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private bool isReroad;
     [SerializeField] private bool isMouse;
     [SerializeField] private bool isMove;
-    [SerializeField] private bool isPinball;
     [SerializeField] private bool isScope;
     [SerializeField] private bool isPinballRoute;
+
+    public bool isPinball;
 
     [SerializeField] private Vector2 moveVec = Vector2.zero;
     [SerializeField] private Vector3 vector = Vector3.zero;
@@ -54,19 +55,20 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private LayerMask layer;
     [SerializeField] private LayerMask enemyLayer;
 
-    [SerializeField] private Rigidbody rigid;
-    [SerializeField] private CapsuleCollider col;
+    public Rigidbody rigid;
+    public CapsuleCollider col;
     [SerializeField] private Transform firePos;
-    [SerializeField] private Transform playerCharacter;
+    public Transform playerCharacter;
     [SerializeField] private Vector3[] routeVectors;
     [SerializeField] private LineRenderer line;
 
     [SerializeField] private GameObject attackEffect;
     [SerializeField] private GameObject scope;
 
-    [SerializeField] private MainCamera cam;
+    public MainCamera cam;
 
     public Animator animator;
+    public Animator attackerAnimator;
 
     private PlayerIdleState playerIdleState;
     private PlayerWalkState playerWalkState;
@@ -80,6 +82,7 @@ public class PlayerController : MonoBehaviour
     public PlayerIdleState PlayerIdleState { get => playerIdleState; }
     public PlayerWalkState PlayerWalkState { get => playerWalkState; }
 
+    public GameObject attackerEffect;
 
 
     private void Awake()
@@ -119,10 +122,7 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            isPinball = true;
-            rigid.useGravity = false;
-            col.enabled = false;
-            playerCharacter.forward = cam.transform.forward;
+            attackerAnimator.SetTrigger("Attack");
         }
 
         if(Input.GetMouseButtonDown(1))
@@ -147,11 +147,20 @@ public class PlayerController : MonoBehaviour
             isPinballRoute = !isPinballRoute;
 
             animator.SetBool("Ready", isPinballRoute);
+            attackerAnimator.gameObject.SetActive(isPinballRoute);
 
             line.gameObject.SetActive(isPinballRoute);
         }
 
         if (bulletCurTime > 0) bulletCurTime -= Time.deltaTime;
+    }
+
+    public void PinballAnim()
+    {
+        isPinball = true;
+        rigid.useGravity = false;
+        col.enabled = false;
+        playerCharacter.forward = cam.transform.forward;
     }
 
     private void Move()
@@ -231,12 +240,16 @@ public class PlayerController : MonoBehaviour
         if (!isPinball) return;
         Debug.Log("ÇÉº¼ ½ÃÀÛ");
         isPinballRoute = false;
+        attackerAnimator.gameObject.SetActive(false);
         line.gameObject.SetActive(isPinballRoute);
+        
+        
 
         if (!animator.GetCurrentAnimatorStateInfo(0).IsName("PinBallMove")) animator.SetTrigger("Dash");
 
         if (pinballCount >= pinballMaxCount)
         {
+            attackerAnimator.gameObject.SetActive(false);
             animator.SetBool("Ready", false);
             animator.SetTrigger("Exit");
             isPinball = false;

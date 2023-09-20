@@ -88,9 +88,9 @@ MonoBehaviour:
   isReroad: 0
   isMouse: 0
   isMove: 0
-  isPinball: 0
   isScope: 0
   isPinballRoute: 0
+  isPinball: 0
   moveVec: {x: 0, y: 0}
   vector: {x: 0, y: 0, z: 0}
   camPos: {x: 0.17, y: 0.13, z: -1.4}
@@ -143,6 +143,8 @@ MonoBehaviour:
   scope: {fileID: 0}
   cam: {fileID: 3427135974562150826}
   animator: {fileID: 7977289102399600769}
+  attackerAnimator: {fileID: 8678338723041265507}
+  attackerEffect: {fileID: 0}
 --- !u!136 &4602559547052339789
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -370,4 +372,87 @@ Transform:
 Animator:
   m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: c56c76b9375f5cc45b1b255f938c0fc5, type: 3}
   m_PrefabInstance: {fileID: 4602559546469106960}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &4602559546526687810
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 4059197887381414651}
+    m_Modifications:
+    - target: {fileID: 5165686578947433760, guid: eb493ea2862acfb42ba78e9b5de63ee1, type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5165686578947433760, guid: eb493ea2862acfb42ba78e9b5de63ee1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5165686578947433760, guid: eb493ea2862acfb42ba78e9b5de63ee1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.184
+      objectReference: {fileID: 0}
+    - target: {fileID: 5165686578947433760, guid: eb493ea2862acfb42ba78e9b5de63ee1, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5165686578947433760, guid: eb493ea2862acfb42ba78e9b5de63ee1, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5165686578947433760, guid: eb493ea2862acfb42ba78e9b5de63ee1, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5165686578947433760, guid: eb493ea2862acfb42ba78e9b5de63ee1, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5165686578947433760, guid: eb493ea2862acfb42ba78e9b5de63ee1, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5165686578947433760, guid: eb493ea2862acfb42ba78e9b5de63ee1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5165686578947433760, guid: eb493ea2862acfb42ba78e9b5de63ee1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5165686578947433760, guid: eb493ea2862acfb42ba78e9b5de63ee1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5165686578947433762, guid: eb493ea2862acfb42ba78e9b5de63ee1, type: 3}
+      propertyPath: m_Name
+      value: attacker
+      objectReference: {fileID: 0}
+    - target: {fileID: 5165686578947433762, guid: eb493ea2862acfb42ba78e9b5de63ee1, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: eb493ea2862acfb42ba78e9b5de63ee1, type: 3}
+--- !u!1 &8678338723041265504 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5165686578947433762, guid: eb493ea2862acfb42ba78e9b5de63ee1, type: 3}
+  m_PrefabInstance: {fileID: 4602559546526687810}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1660051702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8678338723041265504}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c576f3274e3ca63499583374eaf27bca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!95 &8678338723041265507 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5165686578947433761, guid: eb493ea2862acfb42ba78e9b5de63ee1, type: 3}
+  m_PrefabInstance: {fileID: 4602559546526687810}
   m_PrefabAsset: {fileID: 0}
