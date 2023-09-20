@@ -5,7 +5,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     public GameObject damageEffect;
-
+    public Animator anim;
 
     private void OnTriggerEnter(Collider other)
     {

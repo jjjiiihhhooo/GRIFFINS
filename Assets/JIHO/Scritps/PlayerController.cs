@@ -66,6 +66,8 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private MainCamera cam;
 
+    public Animator animator;
+
     private PlayerIdleState playerIdleState;
     private PlayerWalkState playerWalkState;
 
@@ -143,6 +145,9 @@ public class PlayerController : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Q))
         {
             isPinballRoute = !isPinballRoute;
+
+            animator.SetBool("Ready", isPinballRoute);
+
             line.gameObject.SetActive(isPinballRoute);
         }
 
@@ -152,8 +157,17 @@ public class PlayerController : MonoBehaviour
     private void Move()
     {
         if (isPinball) return;
-        
+        if (isPinballRoute) return;
 
+        if(moveVec.x != 0 || moveVec.y != 0)
+        {
+            if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Move")) animator.SetBool("Walk", true);
+        }
+        else
+        {
+            if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Idle")) animator.SetBool("Walk", false);
+        }
+        
         moveVec.x = Input.GetAxisRaw("Horizontal");
         moveVec.y = Input.GetAxisRaw("Vertical");
 
@@ -190,6 +204,7 @@ public class PlayerController : MonoBehaviour
         if (!isPinballRoute) return;
         
 
+
         pinballRoutePos = playerCharacter.position;
         Debug.Log("1" + pinballRoutePos);
         Vector3 routeVec = cam.mousePos - pinballRoutePos;
@@ -218,8 +233,12 @@ public class PlayerController : MonoBehaviour
         isPinballRoute = false;
         line.gameObject.SetActive(isPinballRoute);
 
-        if(pinballCount >= pinballMaxCount)
+        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("PinBallMove")) animator.SetTrigger("Dash");
+
+        if (pinballCount >= pinballMaxCount)
         {
+            animator.SetBool("Ready", false);
+            animator.SetTrigger("Exit");
             isPinball = false;
             col.enabled = true;
             pinballCount = 0;
@@ -235,17 +254,32 @@ public class PlayerController : MonoBehaviour
             if (Vector3.Distance(transform.position, hit.point) < 1f)
             {
                 GameObject temp = Instantiate(hit.transform.GetComponent<Enemy>().damageEffect, transform.position, Quaternion.identity);
-                Destroy(hit.transform.gameObject);
+                //hit.transform.GetComponent<Enemy>().anim.SetTrigger("Hit");
             }
+        }
+
+        if (Physics.Raycast(playerCharacter.transform.position, routeVectors[pinballCount] - transform.position, out hit, Mathf.Infinity, layer))
+        {
+            if (Vector3.Distance(transform.position, hit.point) < 1f) if (hit.transform.gameObject.CompareTag("item")) hit.transform.GetComponent<PlatformObj>().anim.SetTrigger("Hit");
+
         }
 
         playerCharacter.forward = routeVectors[pinballCount] - transform.position;
 
+
+
         if (Vector3.Distance(transform.position, routeVectors[pinballCount]) < 0.1f) 
         {
+            if (!animator.GetCurrentAnimatorStateInfo(0).IsName("PinBallLanding")) 
+                animator.SetTrigger("Landing");
+
+            
             pinballCount++;
             GameObject temp = Instantiate(attackEffect, transform.position, Quaternion.identity);
-            if(force < forceMax && !isScope) force += 2;
+
+            
+
+                if (force < forceMax && !isScope) force += 2;
 
             temp.SetActive(true);
         }
