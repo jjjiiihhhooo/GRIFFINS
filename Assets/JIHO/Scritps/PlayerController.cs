@@ -54,6 +54,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform playerCharacter;
     [SerializeField] private Vector3[] routeVectors;
     [SerializeField] private LineRenderer line;
+
+    [SerializeField] private GameObject attackEffect;
     [SerializeField] private GameObject scope;
 
     [SerializeField] private MainCamera cam;
@@ -215,7 +217,12 @@ public class PlayerController : MonoBehaviour
         //    cam.transform.position = playerCharacter.transform.position + playerCharacter.transform.forward * 0.2f;
         //}
 
-        if (Vector3.Distance(transform.position, routeVectors[pinballCount]) < 0.1f) pinballCount++;
+        if (Vector3.Distance(transform.position, routeVectors[pinballCount]) < 0.1f) 
+        {
+            pinballCount++;
+            GameObject temp = Instantiate(attackEffect, transform.position, Quaternion.identity);
+            temp.SetActive(true);
+        }
 
     }
 
