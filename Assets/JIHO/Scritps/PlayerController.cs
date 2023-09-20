@@ -211,14 +211,6 @@ public class PlayerController : MonoBehaviour
         transform.position = Vector3.MoveTowards(transform.position, routeVectors[pinballCount], Time.deltaTime * force);
 
         playerCharacter.forward = routeVectors[pinballCount] - transform.position;
-        //if (!isScope)
-        //{
-        //    cam.cameraArm.forward = routeVectors[pinballCount] - transform.position;
-        //}
-        //else
-        //{
-        //    cam.transform.position = playerCharacter.transform.position + playerCharacter.transform.forward * 0.2f;
-        //}
 
         if (Vector3.Distance(transform.position, routeVectors[pinballCount]) < 0.1f) 
         {
