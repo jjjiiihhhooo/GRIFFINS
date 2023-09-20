@@ -83,7 +83,7 @@ public class PlayerController : MonoBehaviour
     public PlayerWalkState PlayerWalkState { get => playerWalkState; }
 
     public GameObject attackerEffect;
-
+    public GameObject pinBallMoveEffect;
 
     private void Awake()
     {
@@ -240,6 +240,7 @@ public class PlayerController : MonoBehaviour
         if (!isPinball) return;
         Debug.Log("ÇÉº¼ ½ÃÀÛ");
         isPinballRoute = false;
+        pinBallMoveEffect.SetActive(true);
         attackerAnimator.gameObject.SetActive(false);
         line.gameObject.SetActive(isPinballRoute);
         
@@ -249,6 +250,7 @@ public class PlayerController : MonoBehaviour
 
         if (pinballCount >= pinballMaxCount)
         {
+            pinBallMoveEffect.SetActive(false);
             attackerAnimator.gameObject.SetActive(false);
             animator.SetBool("Ready", false);
             animator.SetTrigger("Exit");
