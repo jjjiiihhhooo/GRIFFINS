@@ -16,6 +16,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float dashPower;
     [SerializeField] private float rayDistance;
 
+
+
     [SerializeField] private float bulletCoolTime;
     [SerializeField] private float bulletCurTime;
 
@@ -23,6 +25,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float mouseX;
     [SerializeField] private float mouseY;
 
+    [SerializeField] private float forceMax;
     [SerializeField] private float force = 50.0f;
     [SerializeField] private float tempForce;
 
@@ -221,6 +224,8 @@ public class PlayerController : MonoBehaviour
         {
             pinballCount++;
             GameObject temp = Instantiate(attackEffect, transform.position, Quaternion.identity);
+            if(force < forceMax) force += 2;
+
             temp.SetActive(true);
         }
 

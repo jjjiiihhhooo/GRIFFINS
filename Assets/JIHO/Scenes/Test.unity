@@ -361,10 +361,11 @@ MonoBehaviour:
   mouseSpeed: 3
   mouseX: 0
   mouseY: 0
-  force: 25
-  tempForce: 25
+  forceMax: 30
+  force: 10
+  tempForce: 10
   pinballCount: 0
-  pinballMaxCount: 20
+  pinballMaxCount: 30
   isAttack: 0
   isDash: 0
   isJump: 0
@@ -387,6 +388,16 @@ MonoBehaviour:
   firePos: {fileID: 0}
   playerCharacter: {fileID: 635492534389902445}
   routeVectors:
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 0}
@@ -3069,7 +3080,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 237006593380815622, guid: 8b90baf571554a44ea6428a01d9ebb05, type: 3}
       propertyPath: m_Positions.Array.size
-      value: 20
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 237006593380815622, guid: 8b90baf571554a44ea6428a01d9ebb05, type: 3}
       propertyPath: m_Positions.Array.data[10].z
@@ -3109,6 +3120,46 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 237006593380815622, guid: 8b90baf571554a44ea6428a01d9ebb05, type: 3}
       propertyPath: m_Positions.Array.data[19].z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 237006593380815622, guid: 8b90baf571554a44ea6428a01d9ebb05, type: 3}
+      propertyPath: m_Positions.Array.data[20].z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 237006593380815622, guid: 8b90baf571554a44ea6428a01d9ebb05, type: 3}
+      propertyPath: m_Positions.Array.data[21].z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 237006593380815622, guid: 8b90baf571554a44ea6428a01d9ebb05, type: 3}
+      propertyPath: m_Positions.Array.data[22].z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 237006593380815622, guid: 8b90baf571554a44ea6428a01d9ebb05, type: 3}
+      propertyPath: m_Positions.Array.data[23].z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 237006593380815622, guid: 8b90baf571554a44ea6428a01d9ebb05, type: 3}
+      propertyPath: m_Positions.Array.data[24].z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 237006593380815622, guid: 8b90baf571554a44ea6428a01d9ebb05, type: 3}
+      propertyPath: m_Positions.Array.data[25].z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 237006593380815622, guid: 8b90baf571554a44ea6428a01d9ebb05, type: 3}
+      propertyPath: m_Positions.Array.data[26].z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 237006593380815622, guid: 8b90baf571554a44ea6428a01d9ebb05, type: 3}
+      propertyPath: m_Positions.Array.data[27].z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 237006593380815622, guid: 8b90baf571554a44ea6428a01d9ebb05, type: 3}
+      propertyPath: m_Positions.Array.data[28].z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 237006593380815622, guid: 8b90baf571554a44ea6428a01d9ebb05, type: 3}
+      propertyPath: m_Positions.Array.data[29].z
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
