@@ -11,12 +11,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float currentHp;
     [SerializeField] private float maxHp;
     [SerializeField] private float currentSpeed;
-    [SerializeField] private float walkSpeed;
-    [SerializeField] private float jumpPower;
-    [SerializeField] private float dashPower;
     [SerializeField] private float rayDistance;
-
-
 
     [SerializeField] private float bulletCoolTime;
     [SerializeField] private float bulletCurTime;
@@ -33,38 +28,31 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private int pinballCount;
     [SerializeField] private int pinballMaxCount;
 
-    [SerializeField] private bool isAttack;
-    [SerializeField] private bool isDash;
-    [SerializeField] private bool isJump;
-    [SerializeField] private bool isReroad;
     [SerializeField] private bool isMouse;
     [SerializeField] private bool isMove;
     [SerializeField] private bool isScope;
-    [SerializeField] private bool isPinballRoute;
 
     public bool isPinball;
 
     [SerializeField] private Vector2 moveVec = Vector2.zero;
-    [SerializeField] private Vector3 vector = Vector3.zero;
     [SerializeField] private Vector3 camPos = Vector3.zero;
     [SerializeField] private Vector3 camScopePos = Vector3.zero;
-    [SerializeField] private Vector3 playerRotate = Vector3.zero;
-    [SerializeField] private Vector3 pinballRoutePos = Vector3.zero;
+    [SerializeField] private Vector3 PinBallLandingPos = Vector3.zero;
 
     [SerializeField] private RaycastHit hit;
     [SerializeField] private LayerMask layer;
     [SerializeField] private LayerMask enemyLayer;
 
-    public Rigidbody rigid;
-    public CapsuleCollider col;
     [SerializeField] private Transform firePos;
-    public Transform playerCharacter;
+    [SerializeField] private Transform playerCharacter;
     [SerializeField] private Vector3[] routeVectors;
     [SerializeField] private LineRenderer line;
 
     [SerializeField] private GameObject attackEffect;
     [SerializeField] private GameObject scope;
 
+    public Rigidbody rigid;
+    public CapsuleCollider col;
     public MainCamera cam;
 
     public Animator animator;
@@ -72,15 +60,18 @@ public class PlayerController : MonoBehaviour
 
     private PlayerIdleState playerIdleState;
     private PlayerWalkState playerWalkState;
+    private PinBallReadyState pinBallReadyState;
+    private PlayerPinballState playerPinballState;
 
     public bool IsMouse { get => isMouse; }
     public bool IsPinball { get => isPinball; }
     public bool IsScope { get => isScope; }
     public float CurrentSpeed { get => currentSpeed; set => currentSpeed = value; }
-    public float WalkSpeed { get => walkSpeed; set => walkSpeed = value; }
 
     public PlayerIdleState PlayerIdleState { get => playerIdleState; }
     public PlayerWalkState PlayerWalkState { get => playerWalkState; }
+    public PinBallReadyState PinBallReadyState { get => pinBallReadyState; }
+    public PlayerPinballState PlayerPinballState { get => playerPinballState; }
 
     public GameObject attackerEffect;
     public GameObject pinBallMoveEffect;
@@ -104,6 +95,8 @@ public class PlayerController : MonoBehaviour
     {
         playerIdleState = new PlayerIdleState();
         playerWalkState = new PlayerWalkState();
+        pinBallReadyState = new PinBallReadyState();
+        playerPinballState = new PlayerPinballState();
 
         MouseCursorSet(false);
 
@@ -113,18 +106,12 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Move();
-        PinBall();
-        PinBallRoute();
+        currentState.StateUpdate(this);
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            attackerAnimator.SetTrigger("Attack");
-        }
-
+        Debug.LogError(currentState.ToString());
         if(Input.GetMouseButtonDown(1))
         {
             ScopeMode();
@@ -140,43 +127,17 @@ public class PlayerController : MonoBehaviour
         {
             if (!isScope) return;
             Shoot();
-        }
-
-        if(Input.GetKeyDown(KeyCode.Q))
-        {
-            isPinballRoute = !isPinballRoute;
-
-            animator.SetBool("Ready", isPinballRoute);
-            attackerAnimator.gameObject.SetActive(isPinballRoute);
-
-            line.gameObject.SetActive(isPinballRoute);
-        }
-
+        }  
         if (bulletCurTime > 0) bulletCurTime -= Time.deltaTime;
     }
 
-    public void PinballAnim()
+    public void WalkEnter()
     {
-        isPinball = true;
-        rigid.useGravity = false;
-        col.enabled = false;
-        playerCharacter.forward = cam.transform.forward;
+        animator.SetBool("Walk", true);
     }
 
-    private void Move()
+    public void Walk()
     {
-        if (isPinball) return;
-        if (isPinballRoute) return;
-
-        if(moveVec.x != 0 || moveVec.y != 0)
-        {
-            if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Move")) animator.SetBool("Walk", true);
-        }
-        else
-        {
-            if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Idle")) animator.SetBool("Walk", false);
-        }
-        
         moveVec.x = Input.GetAxisRaw("Horizontal");
         moveVec.y = Input.GetAxisRaw("Vertical");
 
@@ -187,78 +148,84 @@ public class PlayerController : MonoBehaviour
         Vector3 moveDir = lookForward * moveVec.y + lookRight * moveVec.x;
 
         playerCharacter.forward = lookForward;
-        
-        if (isMove) transform.position += moveDir * Time.deltaTime * 5f;
+
+        if (isMove) transform.position += moveDir * Time.deltaTime * CurrentSpeed;
     }
 
-    //private void OnCollisionEnter(Collision collision)
-    //{
-    //    if (!isPinball) return;
-    //    rigid.AddForce(playerCharacter.forward * 0, ForceMode.Impulse);
-    //    Vector3 incomingVector = playerCharacter.forward;
-    //    incomingVector = incomingVector.normalized;
 
-    //    Vector3 normalVector = collision.contacts[0].normal;
-
-    //    Vector3 reflectVector = Vector3.Reflect(incomingVector, normalVector);
-    //    reflectVector = reflectVector.normalized;
-    //    playerCharacter.forward = reflectVector;
-    //    cam.cameraArm.forward = reflectVector;
-    //    rigid.AddForce(reflectVector * force, ForceMode.Impulse);
-    //}
-
-    private void PinBallRoute()
+    public void IdleEnter()
     {
-        if (isPinball) return;
-        if (!isPinballRoute) return;
-        
+        animator.SetBool("Walk", false);
+    }
+
+    public void Idle()
+    {
+
+    }
 
 
-        pinballRoutePos = playerCharacter.position;
-        Debug.Log("1" + pinballRoutePos);
-        Vector3 routeVec = cam.mousePos - pinballRoutePos;
+    public void PinBallReadyEnter()
+    {
+        animator.SetBool("Ready", true);
+        attackerAnimator.gameObject.SetActive(true);
+        line.gameObject.SetActive(true);
+    }
 
-        for(int i = 0; i < pinballMaxCount; i++)
+    public void PinBallReadyUpdate()
+    {
+        PinBallLandingPos = playerCharacter.position;
+        Debug.Log("1" + PinBallLandingPos);
+        Vector3 routeVec = cam.mousePos - PinBallLandingPos;
+
+        for (int i = 0; i < pinballMaxCount; i++)
         {
-            if (Physics.Raycast(pinballRoutePos, routeVec, out hit, Mathf.Infinity, layer))
+            if (Physics.Raycast(PinBallLandingPos, routeVec, out hit, Mathf.Infinity, layer))
             {
-                line.SetPosition(i, pinballRoutePos);
+                line.SetPosition(i, PinBallLandingPos);
                 Vector3 incomingVector = routeVec;
                 incomingVector = incomingVector.normalized;
                 Vector3 normalVector = hit.normal;
                 Vector3 reflectVector = Vector3.Reflect(incomingVector, normalVector);
                 reflectVector = reflectVector.normalized;
                 routeVec = reflectVector;
-                pinballRoutePos = hit.point;
+                PinBallLandingPos = hit.point;
                 routeVectors[i] = hit.point;
             }
         }
     }
 
-    private void PinBall()
+    public void PinBallReadyExit()
+    {
+        attackerAnimator.gameObject.SetActive(false);
+        line.gameObject.SetActive(false);
+    }
+
+    public void PinBallReadyCancel()
+    {
+        animator.SetBool("Ready", false);
+        attackerAnimator.gameObject.SetActive(false);
+        line.gameObject.SetActive(false);
+        ChangeState(playerIdleState);
+    }
+
+    public void PinBallEnter()
+    {
+        StartCoroutine(PinBallStartCor());
+    }
+
+    public void PinBallUpdate()
     {
         if (!isPinball) return;
         Debug.Log("ÇÉº¼ ½ÃÀÛ");
-        isPinballRoute = false;
         pinBallMoveEffect.SetActive(true);
         attackerAnimator.gameObject.SetActive(false);
-        line.gameObject.SetActive(isPinballRoute);
         
         
-
         if (!animator.GetCurrentAnimatorStateInfo(0).IsName("PinBallMove")) animator.SetTrigger("Dash");
 
         if (pinballCount >= pinballMaxCount)
         {
-            pinBallMoveEffect.SetActive(false);
-            attackerAnimator.gameObject.SetActive(false);
-            animator.SetBool("Ready", false);
-            animator.SetTrigger("Exit");
-            isPinball = false;
-            col.enabled = true;
-            pinballCount = 0;
-            rigid.useGravity = true;
-            force = tempForce;
+            
             return;
         }
 
@@ -301,6 +268,30 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    public void PinBallExit()
+    {
+        pinBallMoveEffect.SetActive(false);
+        animator.SetBool("Ready", false);
+        animator.SetTrigger("Exit");
+        isPinball = false;
+        col.enabled = true;
+        pinballCount = 0;
+        rigid.useGravity = true;
+        force = tempForce;
+    }
+
+    private IEnumerator PinBallStartCor()
+    {
+        attackerAnimator.SetTrigger("Attack");
+        yield return new WaitForSeconds(0.5f);
+        isPinball = true;
+        rigid.useGravity = false;
+        col.enabled = false;
+        GameObject Effect = Instantiate(attackerEffect, attackerAnimator.transform.position, Quaternion.identity);
+        playerCharacter.forward = cam.transform.forward;
+    }
+
+    
     private void ScopeMode()
     {
         isScope = !isScope;
@@ -335,15 +326,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void Idle()
-    {
-
-    }
-
-    public void IdleMassage()
-    {
-        Idle();
-    }
 
     public void MouseCursorSet(bool _bool)
     {

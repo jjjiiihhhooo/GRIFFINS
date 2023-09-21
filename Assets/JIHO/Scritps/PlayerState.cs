@@ -8,7 +8,6 @@ public class PlayerIdleState : State<PlayerController>
     {
         Debug.Log("IdleStateChange");
         playerController.currentState.StateExit(playerController);
-
         playerController.currentState = this;
 
         StateEnter(playerController);
@@ -16,6 +15,7 @@ public class PlayerIdleState : State<PlayerController>
 
     public override void StateEnter(PlayerController playerController)
     {
+        playerController.IdleEnter();
         Debug.Log("IdleStateEnter");
     }
 
@@ -26,13 +26,7 @@ public class PlayerIdleState : State<PlayerController>
 
     public override void StateUpdate(PlayerController playerController)
     {
-        //if (playerController.currentHelper != null)
-        //{
-        //    if (playerController.currentHelper.isPassive) playerController.HelperUpdate();
-        //}
-
-        //if (playerController.currentWeapon.isSightMode) return;
-        playerController.IdleMassage();
+        playerController.Idle();
     }
 }
 
@@ -42,7 +36,6 @@ public class PlayerWalkState : State<PlayerController>
     {
         Debug.Log("WalkStateChange");
         playerController.currentState.StateExit(playerController);
-
         playerController.currentState = this;
 
         StateEnter(playerController);
@@ -51,23 +44,77 @@ public class PlayerWalkState : State<PlayerController>
     public override void StateEnter(PlayerController playerController)
     {
         Debug.Log("WalkStateEnter");
-        playerController.CurrentSpeed = playerController.WalkSpeed;
+        playerController.WalkEnter();
     }
 
     public override void StateExit(PlayerController playerController)
     {
         Debug.Log("WalkStateExit");
-        playerController.CurrentSpeed = 0;
     }
 
     public override void StateUpdate(PlayerController playerController)
     {
-        //if (playerController.currentHelper != null)
-        //{
-        //    if (playerController.currentHelper.isPassive) playerController.HelperUpdate();
-        //}
-
-        //if (!playerController.currentWeapon.weapon_anim.GetBool("isWalk")) playerController.currentWeapon.Walk();
+        playerController.Walk();
     }
 }
+
+public class PinBallReadyState : State<PlayerController>
+{
+    public override void StateChange(PlayerController playerController)
+    {
+        Debug.Log("LandingStateChange");
+        playerController.currentState.StateExit(playerController);
+        playerController.currentState = this;
+
+        StateEnter(playerController);
+    }
+
+    public override void StateEnter(PlayerController playerController)
+    {
+        Debug.Log("LandingStateEnter");
+
+        playerController.PinBallReadyEnter();
+    }
+
+    public override void StateExit(PlayerController playerController)
+    {
+        Debug.Log("LandingStateExit");
+        playerController.PinBallReadyExit();
+    }
+
+    public override void StateUpdate(PlayerController playerController)
+    {
+        playerController.PinBallReadyUpdate();
+    }
+}
+
+public class PlayerPinballState : State<PlayerController>
+{
+    public override void StateChange(PlayerController playerController)
+    {
+        Debug.Log("PinballStateChange");
+        playerController.currentState.StateExit(playerController);
+        playerController.currentState = this;
+
+        StateEnter(playerController);
+    }
+
+    public override void StateEnter(PlayerController playerController)
+    {
+        Debug.Log("PinballStateEnter");
+        playerController.PinBallEnter();
+    }
+
+    public override void StateExit(PlayerController playerController)
+    {
+        Debug.Log("PinballStateExit");
+        playerController.PinBallExit();
+    }
+
+    public override void StateUpdate(PlayerController playerController)
+    {
+        playerController.PinBallUpdate();
+    }
+}
+
 
