@@ -240,7 +240,8 @@ public class PlayerController : MonoBehaviour
         if (!isPinball) return;
         Debug.Log("«…∫º Ω√¿€");
         isPinballRoute = false;
-        pinBallMoveEffect.SetActive(true);
+        if(!pinBallMoveEffect.activeSelf) pinBallMoveEffect.SetActive(true);
+
         attackerAnimator.gameObject.SetActive(false);
         line.gameObject.SetActive(isPinballRoute);
         
@@ -263,7 +264,7 @@ public class PlayerController : MonoBehaviour
         }
 
         transform.position = Vector3.MoveTowards(transform.position, routeVectors[pinballCount], Time.deltaTime * force);
-
+        //cam.transform.forward = playerCharacter.transform.forward;
         if(Physics.Raycast(playerCharacter.transform.position, routeVectors[pinballCount] - transform.position, out hit, Mathf.Infinity, enemyLayer))
         {
             if (Vector3.Distance(transform.position, hit.point) < 1f)
