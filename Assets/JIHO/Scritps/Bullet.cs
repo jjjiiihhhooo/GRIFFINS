@@ -23,16 +23,16 @@ public class Bullet : MonoBehaviour
 
     private void Update()
     {
-        if(!PlayerController.Instance.IsScope)
-        {
-            time -= Time.deltaTime;
-            if (time <= 0) Exit();
-        }
+        //if(!PlayerController.Instance.IsScope)
+        //{
+        //    time -= Time.deltaTime;
+        //    if (time <= 0) Exit();
+        //}
         
-        transform.position += direction * speed * Time.deltaTime;
+        //transform.position += direction * speed * Time.deltaTime;
 
-        if (PlayerController.Instance.IsScope) speed = scopeSpeed;
-        else speed = noScopeSpeed;
+        //if (PlayerController.Instance.IsScope) speed = scopeSpeed;
+        //else speed = noScopeSpeed;
     }
 
     public void Exit()

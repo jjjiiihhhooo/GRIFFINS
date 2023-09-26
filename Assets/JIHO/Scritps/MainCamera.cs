@@ -29,36 +29,29 @@ public class MainCamera : MonoBehaviour
 
     private void Update()
     {
-        LookAt();
-        CheckCamVec();
+        
     }
 
     private void LookAt()
     {
-        if(!player.IsPinball || player.IsScope)
-        {
-            thisCam.depth = 0;
-            Vector2 mousePos = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
-            Vector3 camAngle = cameraArm.rotation.eulerAngles;
+        thisCam.depth = 0;
+        Vector2 mousePos = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
+        Vector3 camAngle = cameraArm.rotation.eulerAngles;
 
-            float x = camAngle.x - mousePos.y;
+        float x = camAngle.x - mousePos.y;
 
-            if (x < 180f) x = Mathf.Clamp(x, -1f, 70f);
-            else x = Mathf.Clamp(x, 335f, 361f);
+        if (x < 180f) x = Mathf.Clamp(x, -1f, 70f);
+        else x = Mathf.Clamp(x, 335f, 361f);
 
-            if (player.IsScope) transform.localPosition = scopePosition;
-            else transform.localPosition = position;
+        //if (player.IsScope) transform.localPosition = scopePosition;
+        //else transform.localPosition = position;
 
-            cameraArm.rotation = Quaternion.Euler(x, camAngle.y + mousePos.x, camAngle.z);
-        }
-        else
-        {
-            thisCam.depth = -2;
-        }
+        cameraArm.rotation = Quaternion.Euler(x, camAngle.y + mousePos.x, camAngle.z);
+
 
         //if(player.IsScope)
         //{
-            
+
         //    float mouseX = 0;
         //    float mouseY = 0;
         //    mouseX += Input.GetAxis("Mouse X") * mouseSpeed;
