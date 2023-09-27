@@ -10,6 +10,7 @@ public class InputManager : MonoBehaviour
     private bool isCursorLocked = false;
 
     [SerializeField] private KeyCode jumpKey = KeyCode.Space;
+    [SerializeField] private KeyCode dashKey = KeyCode.LeftControl;
     [SerializeField] private KeyCode cursorLockKey = KeyCode.LeftAlt;
 
     public bool IsCursorLocked { get => isCursorLocked; }
@@ -44,11 +45,13 @@ public class InputManager : MonoBehaviour
         }
         else
         {
+            player.textText.text = "Idle";
             if (player.currentState.GetType() != typeof(PlayerIdleState)) player.ChangeState(player.PlayerIdleState);
         }
 
         if(Input.GetKeyDown(jumpKey))
         {
+            player.textText.text = "Jump";
             player.IsJump = true;
         }
 
@@ -57,6 +60,12 @@ public class InputManager : MonoBehaviour
             isCursorLocked = !isCursorLocked;
             Cursor.lockState = isCursorLocked ? CursorLockMode.Locked : CursorLockMode.None;
             Cursor.visible = !isCursorLocked;
+        }
+
+        if(Input.GetKeyDown(dashKey))
+        {
+            player.textText.text = "Dash";
+            player.Dash();
         }
 
         if (isCursorLocked)

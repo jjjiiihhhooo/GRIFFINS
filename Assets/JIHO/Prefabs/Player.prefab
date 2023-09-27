@@ -44,7 +44,6 @@ GameObject:
   - component: {fileID: 912236180067296974}
   - component: {fileID: 912236180067296973}
   - component: {fileID: 912236180067296972}
-  - component: {fileID: 912236180067296971}
   - component: {fileID: 912236180067296970}
   m_Layer: 8
   m_Name: Player
@@ -90,63 +89,50 @@ MonoBehaviour:
   mouseX: 0
   mouseY: 0
   jumpForce: 8
-  moveSpeed: 8
+  speed: 0
+  moveSpeed: 5
+  sprintSpeed: 5.5
+  dashSpeed: 40
+  dashCurSpeed: 0
+  dashCurTime: 0
+  dashMinus: 0
+  dashTime: 10
+  speedChangeRate: 10
+  rotationSmoothTime: 0.12
+  groundedOffset: -0.14
+  groundedRadius: 0.2
+  jumpHeight: 1.2
+  gravity: -30
+  jumpTimeout: 0.2
+  fallTimeout: 0.15
   scopeForce: 0.3
   tempForce: 10
-  pinballCount: 0
-  pinballMaxCount: 30
   isJump: 0
   isMove: 0
   isRotate: 0
+  isDash: 0
   isMouse: 0
+  isBounce: 0
+  grounded: 1
+  interaction: 0
   moveVec: {x: 0, y: 0, z: 0}
-  camForward: {x: 0, y: 0, z: 0}
-  PinBallLandingPos: {x: 0, y: 0, z: 0}
-  routeVectors:
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
+  dashPos: {x: 0, y: 0, z: 0}
   layer:
+    serializedVersion: 2
+    m_Bits: 64
+  groundLayers:
     serializedVersion: 2
     m_Bits: 64
   enemyLayer:
     serializedVersion: 2
     m_Bits: 128
-  firePos: {fileID: 0}
   playerCharacter: {fileID: 802292219643573884}
-  line: {fileID: 0}
   attackEffect: {fileID: 124998, guid: 16f393fea92971c4f9d155ff0adab5a5, type: 3}
-  scope: {fileID: 0}
-  isPinball: 0
-  rigid: {fileID: 0}
-  col: {fileID: 0}
+  TopClamp: 70
+  BottomClamp: -30
+  CameraAngleOverride: 0
+  LockCameraPosition: 0
+  CinemachineCameraTarget: {fileID: 912236178275118232}
   cam: {fileID: 0}
   animator: {fileID: 6756099079963929606}
   attackerAnimator: {fileID: 5411318406214112228}
@@ -168,6 +154,7 @@ MonoBehaviour:
   look: {x: 0, y: 0}
   jump: 0
   sprint: 0
+  dash: 0
   analogMovement: 0
   cursorLocked: 1
   cursorInputForLook: 1
@@ -219,40 +206,6 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &912236180067296971
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 912236180067296965}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 26e54e5a728a9234ab24fcf1460ed8a2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MoveSpeed: 2
-  SprintSpeed: 5.335
-  RotationSmoothTime: 0.12
-  SpeedChangeRate: 10
-  LandingAudioClip: {fileID: 0}
-  FootstepAudioClips: []
-  FootstepAudioVolume: 0.5
-  JumpHeight: 1.2
-  Gravity: -20
-  JumpTimeout: 0.05
-  FallTimeout: 0.15
-  Grounded: 1
-  GroundedOffset: -0.14
-  GroundedRadius: 0.28
-  GroundLayers:
-    serializedVersion: 2
-    m_Bits: 64
-  CinemachineCameraTarget: {fileID: 912236178275118232}
-  TopClamp: 70
-  BottomClamp: -30
-  CameraAngleOverride: 0
-  LockCameraPosition: 0
 --- !u!114 &912236180067296970
 MonoBehaviour:
   m_ObjectHideFlags: 0
