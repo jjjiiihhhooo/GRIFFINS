@@ -50,6 +50,32 @@ public class PlayerWalkState : State<PlayerController>
 
     public override void StateUpdate(PlayerController playerController)
     {
-        //playerController.Walk();
+        playerController.Walk();
+    }
+}
+
+public class PlayerDashState : State<PlayerController>
+{
+    public override void StateChange(PlayerController playerController)
+    {
+        playerController.currentState.StateExit(playerController);
+        playerController.currentState = this;
+
+        StateEnter(playerController);
+    }
+
+    public override void StateEnter(PlayerController playerController)
+    {
+        playerController.DashEnter();
+    }
+
+    public override void StateExit(PlayerController playerController)
+    {
+        playerController.DashExit();
+    }
+
+    public override void StateUpdate(PlayerController playerController)
+    {
+        playerController.DashUpdate();
     }
 }
