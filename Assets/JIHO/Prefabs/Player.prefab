@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1620728001
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1620728002}
+  m_Layer: 8
+  m_Name: FollowTransform
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1620728002
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1620728001}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.55, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 912236180067296969}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &912236180067296965
 GameObject:
   m_ObjectHideFlags: 0
@@ -32,6 +63,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 802292219643573884}
+  - {fileID: 1620728002}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -49,12 +81,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHp: 0
   maxHp: 0
-  rayDistance: 0.5
-  jumpForce: 8
-  moveSpeed: 3
-  dashSpeed: 40
-  dashTime: 10
-  rotateSpeed: 0
+  dashGravity: -20
+  idleGravity: -20
+  jumpForce: 50
+  moveSpeed: 5
+  dashSpeed: 50
+  dashTime: 0.5
+  rotateSpeed: 10
+  groundBoxSize: {x: 0.1, y: 0.1, z: 0.1}
+  isJump: 0
   moveVec: {x: 0, y: 0, z: 0}
   layer:
     serializedVersion: 2
@@ -66,9 +101,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   playerCharacter: {fileID: 802292219643573884}
-  pm: {fileID: 0}
+  pm: {fileID: 13400000, guid: 4c4e924916f227c418b5f626e61ff989, type: 2}
   animator: {fileID: 6756099079963929606}
-  textText: {fileID: 0}
 --- !u!54 &1633998657
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -77,13 +111,13 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 912236180067296965}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
+  m_Mass: 3
+  m_Drag: 10
+  m_AngularDrag: 1
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!136 &1633998658
 CapsuleCollider:
@@ -98,7 +132,7 @@ CapsuleCollider:
   m_Radius: 0.17
   m_Height: 0.84
   m_Direction: 1
-  m_Center: {x: 0, y: 0.41, z: 0}
+  m_Center: {x: 0, y: 0.4, z: 0}
 --- !u!1 &3708567495767514444
 GameObject:
   m_ObjectHideFlags: 0
@@ -48441,7 +48475,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c56c76b9375f5cc45b1b255f938c0fc5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.25
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c56c76b9375f5cc45b1b255f938c0fc5, type: 3}
       propertyPath: m_LocalPosition.z

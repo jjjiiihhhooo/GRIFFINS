@@ -43,13 +43,13 @@ public class InputManager : MonoBehaviour
         else
         {
             if (player.currentState.GetType() == typeof(PlayerDashState)) return;
-            player.textText.text = "Idle";
             if (player.currentState.GetType() != typeof(PlayerIdleState)) player.ChangeState(player.PlayerIdleState);
         }
 
         if(Input.GetKeyDown(jumpKey))
         {
-            player.textText.text = "Jump";
+            if (player.currentState.GetType() == typeof(PlayerDashState)) return;
+            player.Jump();
         }
 
         if(Input.GetKeyDown(cursorLockKey))
@@ -61,7 +61,6 @@ public class InputManager : MonoBehaviour
 
         if(Input.GetKeyDown(dashKey))
         {
-            player.textText.text = "Dash";
             if (player.currentState.GetType() != typeof(PlayerDashState)) player.ChangeState(player.PlayerDashState);
         }
 

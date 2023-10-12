@@ -1,6 +1,7 @@
 using System.Collections;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -19,7 +20,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float dashSpeed;
     [SerializeField] private float dashTime;
     [SerializeField] private float rotateSpeed;
-    private bool isJump;
+    [SerializeField] private Vector3 groundBoxSize;
+
+    [SerializeField] private bool isJump;
     private bool isMove;
     private bool isDash;
 
@@ -37,7 +40,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 heading = Vector3.zero;
 
     private CapsuleCollider col;
-    
+
     private Rigidbody rigid;
 
     private PlayerIdleState playerIdleState;
@@ -45,12 +48,11 @@ public class PlayerController : MonoBehaviour
     private PlayerDashState playerDashState;
 
     public Animator animator;
-    public TextMeshProUGUI textText;
 
     public bool IsMove { get => isMove; set => isMove = value; }
     public bool IsJump { get => isJump; set => isJump = value; }
     public bool IsDash { get => isDash; set => isDash = value; }
-    
+
     public Vector3 MoveVec { get => moveVec; set => moveVec = value; }
 
     public PlayerIdleState PlayerIdleState { get => playerIdleState; }
@@ -60,7 +62,7 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        if(Instance == null)
+        if (Instance == null)
         {
             Instance = this;
             DontDestroyOnLoad(this.gameObject);
@@ -74,21 +76,27 @@ public class PlayerController : MonoBehaviour
 
     private void Init()
     {
-        if(rigid == null) rigid = GetComponent<Rigidbody>();
+        if (rigid == null) rigid = GetComponent<Rigidbody>();
         if (col == null) col = GetComponent<CapsuleCollider>();
 
         playerIdleState = new PlayerIdleState();
         playerWalkState = new PlayerWalkState();
         playerDashState = new PlayerDashState();
-        
+
         currentState = playerIdleState;
         previousState = playerIdleState;
+    }
+
+    private void Update()
+    {
+        GroundCheck();
     }
 
     private void FixedUpdate()
     {
         currentState.StateUpdate(this);
     }
+
 
     public void WalkEnter()
     {
@@ -112,10 +120,10 @@ public class PlayerController : MonoBehaviour
 
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, angle, 0), Time.deltaTime * rotateSpeed);
 
-        rigid.velocity = transform.forward * moveSpeed;
+        rigid.velocity = new Vector3(transform.forward.x * moveSpeed, rigid.velocity.y, transform.forward.z * moveSpeed);
 
     }
-   
+
     public void IdleEnter()
     {
         animator.SetBool("Walk", false);
@@ -127,47 +135,48 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    public void GroundCheck()
+    {
+        if (Physics.BoxCast(transform.position, groundBoxSize, -transform.up, transform.rotation, 0.08f, layer)) isJump = true;
+        Debug.DrawRay(transform.position, -transform.up, Color.red, 0.08f);
+    }
+
+    public void Jump()
+    {
+        if(isJump)
+        {
+            isJump = false;
+            rigid.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        }
+    }
+
     public void DashEnter()
     {
         isDash = true;
         col.material = pm;
         rigid.drag = 1.2f;
-        if(Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, Mathf.Infinity, layer)) dir = hit.point - transform.position;
-        
-        transform.forward = dir;
-        rigid.AddForce(transform.forward * dashSpeed, ForceMode.Impulse);
-    }
+        Physics.gravity = new Vector3(0, dashGravity, 0);
+        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, Mathf.Infinity, layer)) dir = hit.point - transform.position;
+        else dir = Camera.main.transform.forward;
 
+        dir.Normalize();
+
+        rigid.AddForce(dir * dashSpeed, ForceMode.Impulse);
+    }
 
     public void DashUpdate()
     {
         if (dashTime > 0) dashTime -= Time.fixedDeltaTime;
         else ChangeState(previousState);
-
-        //if (Physics.Raycast(transform.position, transform.forward, out hit, Mathf.Infinity, layer))
-        //{
-        //    if(Vector3.Distance(hit.point, transform.position) < 0.5f)
-        //    {
-        //        Vector3 incomingVector = transform.forward;
-        //        incomingVector = incomingVector.normalized;
-        //        Vector3 normalVector = hit.normal;
-        //        Vector3 reflectVector = Vector3.Reflect(incomingVector, normalVector);
-        //        reflectVector = reflectVector.normalized;
-        //        dir = reflectVector;
-        //        transform.forward = new Vector3(transform.forward.x, dir.y, transform.forward.z);
-        //        dir = transform.forward;
-        //    }
-        //}
-
-            
     }
 
     public void DashExit()
     {
+        dashTime = 0.5f;
         isDash = false;
-        dashTime = 2f;
-        col.material = null;
         rigid.drag = 10;
+        col.material = null;
+        Physics.gravity = new Vector3(0, idleGravity, 0);
     }
 
     public void ChangeState(State<PlayerController> state)
