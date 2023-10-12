@@ -8,10 +8,12 @@ public class PlayerController : MonoBehaviour
 {
     public static PlayerController Instance;
     public State<PlayerController> currentState;
+    public State<PlayerController> previousState;
 
     [SerializeField] private float currentHp;
     [SerializeField] private float maxHp;
-    [SerializeField] private float rayDistance;
+    [SerializeField] private float dashGravity;
+    [SerializeField] private float idleGravity;
     [SerializeField] private float jumpForce;
     [SerializeField] private float moveSpeed;
     [SerializeField] private float dashSpeed;
@@ -31,9 +33,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform playerCharacter;
     [SerializeField] private PhysicMaterial pm;
 
-    private float moveX;
-    private float moveZ;
-
     private Vector3 dir = Vector3.zero;
     private Vector3 heading = Vector3.zero;
 
@@ -51,9 +50,6 @@ public class PlayerController : MonoBehaviour
     public bool IsMove { get => isMove; set => isMove = value; }
     public bool IsJump { get => isJump; set => isJump = value; }
     public bool IsDash { get => isDash; set => isDash = value; }
-
-    public float MoveX { get => moveX; set => moveX = value; }
-    public float MoveZ { get => moveZ; set => moveZ = value; }
     
     public Vector3 MoveVec { get => moveVec; set => moveVec = value; }
 
@@ -86,6 +82,7 @@ public class PlayerController : MonoBehaviour
         playerDashState = new PlayerDashState();
         
         currentState = playerIdleState;
+        previousState = playerIdleState;
     }
 
     private void FixedUpdate()
@@ -135,8 +132,9 @@ public class PlayerController : MonoBehaviour
         isDash = true;
         col.material = pm;
         rigid.drag = 1.2f;
-        dir = Camera.main.transform.forward;
-        transform.forward = new Vector3(transform.forward.x, transform.forward.y, dir.z);
+        if(Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, Mathf.Infinity, layer)) dir = hit.point - transform.position;
+        
+        transform.forward = dir;
         rigid.AddForce(transform.forward * dashSpeed, ForceMode.Impulse);
     }
 
@@ -144,7 +142,7 @@ public class PlayerController : MonoBehaviour
     public void DashUpdate()
     {
         if (dashTime > 0) dashTime -= Time.fixedDeltaTime;
-        else ChangeState(PlayerWalkState);
+        else ChangeState(previousState);
 
         //if (Physics.Raycast(transform.position, transform.forward, out hit, Mathf.Infinity, layer))
         //{
@@ -171,12 +169,6 @@ public class PlayerController : MonoBehaviour
         col.material = null;
         rigid.drag = 10;
     }
-
-    public void WallCheck()
-    {
-        
-    }
-
 
     public void ChangeState(State<PlayerController> state)
     {

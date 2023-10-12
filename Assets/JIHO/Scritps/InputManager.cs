@@ -21,7 +21,9 @@ public class InputManager : MonoBehaviour
         {
             player = PlayerController.Instance;
         }
+
         isCursorLocked = false;
+        
     }
 
     private void Update()

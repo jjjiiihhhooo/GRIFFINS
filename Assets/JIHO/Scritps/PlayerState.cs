@@ -6,6 +6,7 @@ public class PlayerIdleState : State<PlayerController>
 {
     public override void StateChange(PlayerController playerController)
     {
+        playerController.previousState = playerController.currentState;
         playerController.currentState.StateExit(playerController);
         playerController.currentState = this;
 
@@ -32,6 +33,7 @@ public class PlayerWalkState : State<PlayerController>
 {
     public override void StateChange(PlayerController playerController)
     {
+        playerController.previousState = playerController.currentState;
         playerController.currentState.StateExit(playerController);
         playerController.currentState = this;
 
@@ -58,6 +60,7 @@ public class PlayerDashState : State<PlayerController>
 {
     public override void StateChange(PlayerController playerController)
     {
+        playerController.previousState = playerController.currentState;
         playerController.currentState.StateExit(playerController);
         playerController.currentState = this;
 
