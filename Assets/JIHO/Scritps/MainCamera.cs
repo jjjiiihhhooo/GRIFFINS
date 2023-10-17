@@ -59,7 +59,7 @@ public class MainCamera : MonoBehaviour
             finalDistance = maxDistance;
         }
 
-        cam.localPosition = Vector3.Lerp(cam.localPosition, camNormalDir * finalDistance, Time.deltaTime * smoothness);
+        cam.localPosition = Vector3.Lerp(cam.localPosition, camNormalDir * (finalDistance  +  0.1f), Time.deltaTime * smoothness);
     }
 }
 

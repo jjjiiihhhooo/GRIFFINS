@@ -82,3 +82,31 @@ public class PlayerDashState : State<PlayerController>
         playerController.DashUpdate();
     }
 }
+
+public class PlayerSuperJumpState : State<PlayerController>
+{
+    public override void StateChange(PlayerController playerController)
+    {
+        playerController.previousState = playerController.currentState;
+        playerController.currentState.StateExit(playerController);
+        playerController.currentState = this;
+
+        StateEnter(playerController);
+    }
+
+    public override void StateEnter(PlayerController playerController)
+    {
+        Debug.LogError("dd");
+        playerController.SuperJumpEnter();   
+    }
+
+    public override void StateExit(PlayerController playerController)
+    {
+        playerController.SuperJumpExit();
+    }
+
+    public override void StateUpdate(PlayerController playerController)
+    {
+        playerController.SuperJumpUpdate();
+    }
+}

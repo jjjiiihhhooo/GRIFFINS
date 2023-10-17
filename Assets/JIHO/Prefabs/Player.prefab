@@ -81,14 +81,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHp: 0
   maxHp: 0
-  dashGravity: -20
-  idleGravity: -20
-  jumpForce: 50
+  dashGravity: -50
+  idleGravity: -75
+  jumpForce: 450
   moveSpeed: 5
-  dashSpeed: 50
+  dashSpeed: 120
   dashTime: 0.5
   rotateSpeed: 10
-  groundBoxSize: {x: 0.1, y: 0.1, z: 0.1}
+  downSpeed: 15
+  superJumpSpeed: 1000
+  jumpTime: 0.25
+  test: 0.25
+  superJumpTime: 0.1
+  superTest: 0.1
   isJump: 0
   moveVec: {x: 0, y: 0, z: 0}
   layer:
@@ -118,7 +123,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!136 &1633998658
 CapsuleCollider:
   m_ObjectHideFlags: 0

@@ -20,11 +20,19 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float dashSpeed;
     [SerializeField] private float dashTime;
     [SerializeField] private float rotateSpeed;
-    [SerializeField] private Vector3 groundBoxSize;
+    [SerializeField] private float downSpeed;
+    [SerializeField] private float superJumpSpeed;
+    [SerializeField] private float jumpTime;
+    [SerializeField] private float test;
+    [SerializeField] private float superJumpTime;
+    [SerializeField] private float superTest;
+
 
     [SerializeField] private bool isJump;
+    private bool isGround;
     private bool isMove;
     private bool isDash;
+    private bool superJumpGround;
 
     [SerializeField] private Vector3 moveVec = Vector3.zero;
 
@@ -46,18 +54,24 @@ public class PlayerController : MonoBehaviour
     private PlayerIdleState playerIdleState;
     private PlayerWalkState playerWalkState;
     private PlayerDashState playerDashState;
+    private PlayerSuperJumpState playerSuperJumpState;
+
 
     public Animator animator;
 
     public bool IsMove { get => isMove; set => isMove = value; }
     public bool IsJump { get => isJump; set => isJump = value; }
     public bool IsDash { get => isDash; set => isDash = value; }
+    public bool IsGround { get => isGround; }
 
     public Vector3 MoveVec { get => moveVec; set => moveVec = value; }
 
     public PlayerIdleState PlayerIdleState { get => playerIdleState; }
     public PlayerWalkState PlayerWalkState { get => playerWalkState; }
     public PlayerDashState PlayerDashState { get => playerDashState; }
+    public PlayerSuperJumpState PlayerAirState { get => playerSuperJumpState; }
+
+    public float dashclear = 5f;
 
 
     private void Awake()
@@ -82,6 +96,7 @@ public class PlayerController : MonoBehaviour
         playerIdleState = new PlayerIdleState();
         playerWalkState = new PlayerWalkState();
         playerDashState = new PlayerDashState();
+        playerSuperJumpState = new PlayerSuperJumpState();
 
         currentState = playerIdleState;
         previousState = playerIdleState;
@@ -95,6 +110,7 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         currentState.StateUpdate(this);
+        Debug.LogError(currentState);
     }
 
 
@@ -137,17 +153,9 @@ public class PlayerController : MonoBehaviour
 
     public void GroundCheck()
     {
-        if (Physics.BoxCast(transform.position, groundBoxSize, -transform.up, transform.rotation, 0.08f, layer)) isJump = true;
+        if (Physics.Raycast(transform.position, -transform.up, 0.05f, layer)) isGround = true;
+        else isGround = false;
         Debug.DrawRay(transform.position, -transform.up, Color.red, 0.08f);
-    }
-
-    public void Jump()
-    {
-        if(isJump)
-        {
-            isJump = false;
-            rigid.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-        }
     }
 
     public void DashEnter()
@@ -158,21 +166,21 @@ public class PlayerController : MonoBehaviour
         Physics.gravity = new Vector3(0, dashGravity, 0);
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, Mathf.Infinity, layer)) dir = hit.point - transform.position;
         else dir = Camera.main.transform.forward;
-
+        
         dir.Normalize();
-
+        rigid.velocity = Vector3.zero;
         rigid.AddForce(dir * dashSpeed, ForceMode.Impulse);
     }
 
     public void DashUpdate()
     {
         if (dashTime > 0) dashTime -= Time.fixedDeltaTime;
-        else ChangeState(previousState);
+        else ChangeState(playerIdleState);
     }
 
     public void DashExit()
     {
-        dashTime = 0.5f;
+        dashTime = dashclear;
         isDash = false;
         rigid.drag = 10;
         col.material = null;
