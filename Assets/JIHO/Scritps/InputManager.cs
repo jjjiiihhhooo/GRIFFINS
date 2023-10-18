@@ -10,9 +10,9 @@ public class InputManager : MonoBehaviour
     private bool isCursorLocked = false;
 
     [SerializeField] private KeyCode jumpKey = KeyCode.Space;
-    [SerializeField] private KeyCode dashKey = KeyCode.Q;
+    [SerializeField] private KeyCode dashKey = KeyCode.LeftShift;
     [SerializeField] private KeyCode cursorLockKey = KeyCode.LeftAlt;
-    [SerializeField] private KeyCode superJumpKey = KeyCode.E;
+    [SerializeField] private KeyCode superJumpKey = KeyCode.Mouse1;
 
     public bool IsCursorLocked { get => isCursorLocked; }
     
@@ -35,25 +35,18 @@ public class InputManager : MonoBehaviour
     private void PlayerInput()
     {
 
-        if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
-        {
-            if (player.currentState.GetType() == typeof(PlayerDashState)) return;
-            if (player.currentState.GetType() == typeof(PlayerSuperJumpState)) return;
-            
-            if (player.currentState.GetType() != typeof(PlayerWalkState)) player.ChangeState(player.PlayerWalkState);
-        }
-        else
-        {
-            if (player.currentState.GetType() == typeof(PlayerDashState)) return;
-            if (player.currentState.GetType() == typeof(PlayerSuperJumpState)) return;
-            if (player.currentState.GetType() != typeof(PlayerIdleState)) player.ChangeState(player.PlayerIdleState);
-        }
+        //if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
+        //{
+        //    if (player.currentState.GetType() != typeof(PlayerWalkState)) player.ChangeState(player.PlayerWalkState);
+        //}
+        //else
+        //{
+        //    if (player.currentState.GetType() != typeof(PlayerIdleState)) player.ChangeState(player.PlayerIdleState);
+        //}
 
         if(Input.GetKeyDown(jumpKey))
         {
-            if (player.currentState.GetType() == typeof(PlayerSuperJumpState)) return;
-            if(player.IsGround) player.IsJump = true;
-
+            player.Jump();
         }
 
         if(Input.GetKeyDown(cursorLockKey))
@@ -63,19 +56,15 @@ public class InputManager : MonoBehaviour
             Cursor.visible = !isCursorLocked;
         }
 
-        if(Input.GetKeyDown(dashKey))
+        if(Input.GetMouseButtonDown(0))
         {
-            if (player.currentState.GetType() != typeof(PlayerDashState)) player.ChangeState(player.PlayerDashState);
+            Debug.Log("dd");
+            player.Dash();
         }
 
-        if(Input.GetKeyDown(superJumpKey))
+        if(Input.GetMouseButtonDown(1))
         {
-            Debug.LogError("½´Á¡1");
-            if (player.currentState.GetType() != typeof(PlayerSuperJumpState))
-            {
-                Debug.Log("½´Á¡2");
-                player.ChangeState(player.PlayerAirState);
-            }
+            player.SuperJump();
         }
 
     }

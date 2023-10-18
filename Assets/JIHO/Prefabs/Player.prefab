@@ -81,19 +81,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHp: 0
   maxHp: 0
-  dashGravity: -50
-  idleGravity: -75
-  jumpForce: 450
+  jumpForce: 6
+  superJumpForce: 18
   moveSpeed: 5
-  dashSpeed: 120
-  dashTime: 0.5
+  dashSpeed: 12
   rotateSpeed: 10
-  downSpeed: 15
-  superJumpSpeed: 1000
-  jumpTime: 0.25
-  test: 0.25
-  superJumpTime: 0.1
-  superTest: 0.1
+  groundTime: 1
+  groundMaxTime: 1
   isJump: 0
   moveVec: {x: 0, y: 0, z: 0}
   layer:
@@ -106,7 +100,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   playerCharacter: {fileID: 802292219643573884}
-  pm: {fileID: 13400000, guid: 4c4e924916f227c418b5f626e61ff989, type: 2}
+  pm: {fileID: 13400000, guid: b23578498e8274f49a6c1695671a4137, type: 2}
+  rigid: {fileID: 0}
   animator: {fileID: 6756099079963929606}
 --- !u!54 &1633998657
 Rigidbody:
@@ -116,12 +111,12 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 912236180067296965}
   serializedVersion: 2
-  m_Mass: 3
-  m_Drag: 10
-  m_AngularDrag: 1
+  m_Mass: 1
+  m_Drag: 0.4
+  m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 1
 --- !u!136 &1633998658
@@ -131,7 +126,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 912236180067296965}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: b23578498e8274f49a6c1695671a4137, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.17
@@ -48875,20 +48870,3 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eb493ea2862acfb42ba78e9b5de63ee1, type: 3}
---- !u!1 &5411318406214112231 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5165686578947433762, guid: eb493ea2862acfb42ba78e9b5de63ee1, type: 3}
-  m_PrefabInstance: {fileID: 912236178584303301}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &3708567496819405937
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5411318406214112231}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c576f3274e3ca63499583374eaf27bca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
