@@ -35,16 +35,16 @@ public class InputManager : MonoBehaviour
     private void PlayerInput()
     {
 
-        //if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
-        //{
-        //    if (player.currentState.GetType() != typeof(PlayerWalkState)) player.ChangeState(player.PlayerWalkState);
-        //}
-        //else
-        //{
-        //    if (player.currentState.GetType() != typeof(PlayerIdleState)) player.ChangeState(player.PlayerIdleState);
-        //}
+        if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
+        {
+            if (player.currentState.GetType() != typeof(PlayerWalkState)) player.ChangeState(player.PlayerWalkState);
+        }
+        else
+        {
+            if (player.currentState.GetType() != typeof(PlayerIdleState)) player.ChangeState(player.PlayerIdleState);
+        }
 
-        if(Input.GetKeyDown(jumpKey))
+        if (Input.GetKeyDown(jumpKey))
         {
             player.Jump();
         }

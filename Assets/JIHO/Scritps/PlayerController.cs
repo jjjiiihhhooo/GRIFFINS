@@ -90,35 +90,13 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         RayCheck();
-        
     }
 
     private void FixedUpdate()
     {
         currentState.StateUpdate(this);
 
-        Walk();
         Debug.LogError(currentState);
-    }
-
-    private void Walk()
-    {
-        if (Input.GetAxisRaw("Horizontal") == 0 && Input.GetAxisRaw("Vertical") == 0) return;
-            moveVec = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
-        moveVec.Normalize();
-
-        heading = new Vector3(Camera.main.transform.forward.x, 0, Camera.main.transform.forward.z);
-        heading.Normalize();
-
-        heading = heading - moveVec;
-
-        float angle = Mathf.Atan2(heading.z, heading.x) * Mathf.Rad2Deg * -2;
-
-        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, angle, 0), Time.deltaTime * rotateSpeed);
-
-        Vector3 dir = transform.forward * moveSpeed * Time.deltaTime;
-
-        rigid.MovePosition(transform.position + dir);
     }
 
     public void RayCheck()
@@ -126,6 +104,11 @@ public class PlayerController : MonoBehaviour
         if (Physics.Raycast(transform.position, -transform.up, 0.05f, layer)) //Jump
         {
             isJump = true;
+            isGround = true;
+        }
+        else
+        {
+            isGround = false;
         }
     }
 
@@ -133,6 +116,8 @@ public class PlayerController : MonoBehaviour
     {
         if (!CoolTimeManager.Instance.CoolCheck("Dash")) return;
         CoolTimeManager.Instance.GetCoolTime("Dash");
+
+        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Dash")) animator.SetTrigger("Dash");
 
         pm.bounceCombine = PhysicMaterialCombine.Maximum;
         groundTime = groundMaxTime;
@@ -150,10 +135,19 @@ public class PlayerController : MonoBehaviour
         if (!CoolTimeManager.Instance.CoolCheck("SuperJump")) return;
         CoolTimeManager.Instance.GetCoolTime("SuperJump");
 
+        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("GroundDown") && !isGround)
+        {
+            isSuperJump = true;
+            animator.SetTrigger("GroundDown");
+        }
+        else
+        {
+            isSuperJump = false;
+            animator.SetTrigger("GroundReady");
+        }
+
         pm.bounceCombine = PhysicMaterialCombine.Maximum;
         groundTime = groundMaxTime;
-        
-        isSuperJump = true;
 
         rigid.velocity = Vector3.zero;
         rigid.AddForce(Vector3.down * superJumpForce, ForceMode.Impulse);
@@ -162,6 +156,9 @@ public class PlayerController : MonoBehaviour
     public void Jump()
     {
         if (!isJump) return;
+
+        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("JumpReady")) animator.SetTrigger("JumpReady");
+
         pm.bounceCombine = PhysicMaterialCombine.Minimum;
         groundTime = groundMaxTime;
         rigid.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
@@ -178,12 +175,14 @@ public class PlayerController : MonoBehaviour
         if(collision.transform.CompareTag("Object") && isDash)
         {
             isDash = false;
+            if (!animator.GetCurrentAnimatorStateInfo(0).IsName("ObjectHit")) animator.SetTrigger("ObjectHit");
             CoolTimeManager.Instance.SetCoolTime("SuperJump", 0);
         }
 
         if ((collision.transform.CompareTag("Object") || collision.transform.CompareTag("Ground")) && isSuperJump)
         {
             isSuperJump = false;
+            if (!animator.GetCurrentAnimatorStateInfo(0).IsName("GroundReady")) animator.SetTrigger("GroundReady");
             CoolTimeManager.Instance.SetCoolTime("Dash", 0);
         }
 

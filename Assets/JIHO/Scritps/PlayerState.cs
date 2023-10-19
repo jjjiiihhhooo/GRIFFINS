@@ -55,25 +55,23 @@ public class PlayerWalkState : State<PlayerController>
 
     public override void StateUpdate(PlayerController playerController)
     {
-        //Vector3 move = playerController.MoveVec;
-        //Vector3 heading = playerController.Heading;
 
+        Vector3 moveVec = playerController.MoveVec;
+        Vector3 heading = playerController.Heading;
 
-        //move = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
-        //move.Normalize();
+        moveVec = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
+        moveVec.Normalize();
 
-        //heading = new Vector3(Camera.main.transform.forward.x, 0, Camera.main.transform.forward.z);
-        //heading.Normalize();
+        heading = new Vector3(Camera.main.transform.forward.x, 0, Camera.main.transform.forward.z);
+        heading.Normalize();
+        heading = heading - moveVec;
+        float angle = Mathf.Atan2(heading.z, heading.x) * Mathf.Rad2Deg * -2;
 
-        //heading = heading - move;
+        playerController.transform.rotation = Quaternion.Slerp(playerController.transform.rotation, Quaternion.Euler(0, angle, 0), Time.deltaTime * playerController.RotateSpeed);
 
-        //float angle = Mathf.Atan2(heading.z, heading.x) * Mathf.Rad2Deg * -2;
+        Vector3 dir = playerController.transform.forward * playerController.MoveSpeed * Time.deltaTime;
 
-        //playerController.transform.rotation = Quaternion.Slerp(playerController.transform.rotation, Quaternion.Euler(0, angle, 0), Time.fixedDeltaTime * playerController.RotateSpeed);
-
-        //Vector3 dir = playerController.transform.forward * playerController.MoveSpeed * Time.fixedDeltaTime;
-
-        //playerController.rigid.MovePosition(playerController.transform.position + dir);
+        playerController.rigid.MovePosition(playerController.transform.position + dir);
     }
 }
 
