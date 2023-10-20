@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float groundTime;
     [SerializeField] private float groundMaxTime;
     [SerializeField] private bool isJump;
+    [SerializeField] private bool isGround;
 
     [SerializeField] private Vector3 moveVec = Vector3.zero;
 
@@ -28,7 +29,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform playerCharacter;
     [SerializeField] private PhysicMaterial pm;
 
-    private bool isGround;
     private bool isMove;
     private bool isDash;
     private bool isSuperJump;
@@ -85,6 +85,7 @@ public class PlayerController : MonoBehaviour
         currentState = playerIdleState;
         previousState = playerIdleState;
         pm.bounceCombine = PhysicMaterialCombine.Minimum;
+        isJump = true;
     }
 
     private void Update()
@@ -96,20 +97,40 @@ public class PlayerController : MonoBehaviour
     {
         currentState.StateUpdate(this);
 
-        Debug.LogError(currentState);
+        //Debug.LogError(currentState);
     }
 
     public void RayCheck()
     {
         if (Physics.Raycast(transform.position, -transform.up, 0.05f, layer)) //Jump
         {
-            isJump = true;
+            if(!isJump)
+            {
+                isJump = true;
+                
+                animator.SetBool("isJump", false);
+            }
+
+            if (animator.GetCurrentAnimatorStateInfo(0).IsName("DashAir") && isDash)
+            {
+                Debug.LogError("dd");
+                isDash = false;
+                animator.SetBool("isDashAir", false);
+            }
+
+            if (animator.GetCurrentAnimatorStateInfo(0).IsName("ObjectHitAir"))
+            {
+                animator.SetBool("isObjectAir", false);
+            }
+
             isGround = true;
         }
         else
         {
             isGround = false;
         }
+
+        
     }
 
     public void Dash()
@@ -122,12 +143,14 @@ public class PlayerController : MonoBehaviour
         pm.bounceCombine = PhysicMaterialCombine.Maximum;
         groundTime = groundMaxTime;
         isDash = true;
+        animator.SetBool("isDashAir", true);
 
         Vector3 dir = Camera.main.ScreenPointToRay(Input.mousePosition).direction;
         ray = new Ray(transform.position, dir);
 
         rigid.AddForce(ray.direction * dashSpeed, ForceMode.Impulse);
-
+        transform.forward = ray.direction;
+        transform.rotation = Quaternion.Euler(new Vector3(0, transform.rotation.y, 0));
     }
 
     public void SuperJump()
@@ -135,15 +158,19 @@ public class PlayerController : MonoBehaviour
         if (!CoolTimeManager.Instance.CoolCheck("SuperJump")) return;
         CoolTimeManager.Instance.GetCoolTime("SuperJump");
 
+        isDash = false;
+
         if (!animator.GetCurrentAnimatorStateInfo(0).IsName("GroundDown") && !isGround)
         {
             isSuperJump = true;
+            animator.SetBool("GroundReady", false);
             animator.SetTrigger("GroundDown");
+            Debug.LogError("qq");
         }
         else
         {
             isSuperJump = false;
-            animator.SetTrigger("GroundReady");
+            animator.SetTrigger("GroundReadyAction");
         }
 
         pm.bounceCombine = PhysicMaterialCombine.Maximum;
@@ -155,13 +182,21 @@ public class PlayerController : MonoBehaviour
 
     public void Jump()
     {
-        if (!isJump) return;
+        if (!isJump || animator.GetCurrentAnimatorStateInfo(0).IsName("JumpReady")) return;
+
+        if (isDash) isDash = false;
 
         if (!animator.GetCurrentAnimatorStateInfo(0).IsName("JumpReady")) animator.SetTrigger("JumpReady");
+        animator.SetBool("isJump", true);
 
         pm.bounceCombine = PhysicMaterialCombine.Minimum;
         groundTime = groundMaxTime;
         rigid.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        Invoke("JumpAir", 0.1f);
+    }
+
+    private void JumpAir()
+    {
         isJump = false;
     }
 
@@ -175,17 +210,29 @@ public class PlayerController : MonoBehaviour
         if(collision.transform.CompareTag("Object") && isDash)
         {
             isDash = false;
+
+            animator.SetBool("isObjectAir", true);
             if (!animator.GetCurrentAnimatorStateInfo(0).IsName("ObjectHit")) animator.SetTrigger("ObjectHit");
             CoolTimeManager.Instance.SetCoolTime("SuperJump", 0);
+            
         }
 
         if ((collision.transform.CompareTag("Object") || collision.transform.CompareTag("Ground")) && isSuperJump)
         {
             isSuperJump = false;
-            if (!animator.GetCurrentAnimatorStateInfo(0).IsName("GroundReady")) animator.SetTrigger("GroundReady");
+            if (!animator.GetCurrentAnimatorStateInfo(0).IsName("GroundReady")) animator.SetBool("GroundReady",true);
             CoolTimeManager.Instance.SetCoolTime("Dash", 0);
         }
 
+        if(collision.transform.CompareTag("Object") || collision.transform.CompareTag("Ground"))
+        {
+            if (animator.GetCurrentAnimatorStateInfo(0).IsName("GroundJump") || animator.GetCurrentAnimatorStateInfo(0).IsName("GroundJumpAir"))
+            {
+                animator.SetTrigger("GroundExit");
+            }
+
+            
+        }
 
     }
 

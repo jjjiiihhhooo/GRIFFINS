@@ -101,30 +101,3 @@ public class PlayerDashState : State<PlayerController>
         
     }
 }
-
-public class PlayerSuperJumpState : State<PlayerController>
-{
-    public override void StateChange(PlayerController playerController)
-    {
-        playerController.previousState = playerController.currentState;
-        playerController.currentState.StateExit(playerController);
-        playerController.currentState = this;
-
-        StateEnter(playerController);
-    }
-
-    public override void StateEnter(PlayerController playerController)
-    {
-        
-    }
-
-    public override void StateExit(PlayerController playerController)
-    {
-
-    }
-
-    public override void StateUpdate(PlayerController playerController)
-    {
-
-    }
-}
