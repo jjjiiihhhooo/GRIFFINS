@@ -1,4 +1,5 @@
 
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -37,14 +38,11 @@ public class PlayerController : MonoBehaviour
     private PlayerIdleState playerIdleState;
     private PlayerWalkState playerWalkState;
     private PlayerDashState playerDashState;
-    private White whiteUnit;
-    private Red redUnit;
-    private Blue blueUnit;
-    private Green greenUnit;
-
-    public Animator[] animators;
-    public GameObject[] units;
-    public GameObject[] attackCols;
+    
+    public White whiteUnit;
+    public Red redUnit;
+    public Blue blueUnit;
+    public Green greenUnit;
 
     public float groundTime;
     public float groundMaxTime;
@@ -94,27 +92,10 @@ public class PlayerController : MonoBehaviour
         playerWalkState = new PlayerWalkState();
         playerDashState = new PlayerDashState();
 
-        whiteUnit = new White();
-        UnitInit(whiteUnit,0);
-        redUnit = new Red();
-        UnitInit(redUnit,1);
-        greenUnit = new Green();
-        UnitInit(greenUnit,2);
-        blueUnit = new Blue();
-        UnitInit(blueUnit,3);
-
         currentUnit = whiteUnit;
 
         pm.bounceCombine = PhysicMaterialCombine.Minimum;
         isJump = true;
-    }
-
-    private void UnitInit(Unit<PlayerController> unit, int index)
-    {
-        unit.currentState = playerIdleState;
-        unit.animator = animators[index];
-        unit.unit_obj = units[index];
-        unit.attackCol = attackCols[index];
     }
 
     private void Update()

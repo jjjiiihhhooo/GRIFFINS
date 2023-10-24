@@ -16,7 +16,7 @@ public class InputManager : MonoBehaviour
     public bool IsCursorLocked { get => isCursorLocked; }
     
     private void Start()
-    {
+    { 
         if (player == null)
         {
             player = PlayerController.Instance;

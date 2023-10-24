@@ -1,10 +1,13 @@
+using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Timeline;
 
+[System.Serializable]
 public class Unit<T>
 {
+
     public State<T> currentState;
     public Animator animator;
     public GameObject unit_obj;
@@ -51,6 +54,7 @@ public class Unit<T>
     }
 }
 
+[System.Serializable]
 public class White : Unit<PlayerController>
 {
     public override void ChangeUnit(PlayerController PlayerController)
@@ -147,6 +151,7 @@ public class White : Unit<PlayerController>
     }
 }
 
+[System.Serializable]
 public class Red : Unit<PlayerController>
 {
     public override void ChangeUnit(PlayerController PlayerController)
@@ -243,6 +248,7 @@ public class Red : Unit<PlayerController>
     }
 }
 
+[System.Serializable]
 public class Green : Unit<PlayerController>
 {
     public override void ChangeUnit(PlayerController PlayerController)
@@ -339,6 +345,7 @@ public class Green : Unit<PlayerController>
     }
 }
 
+[System.Serializable]
 public class Blue : Unit<PlayerController>
 {
     public override void ChangeUnit(PlayerController PlayerController)
