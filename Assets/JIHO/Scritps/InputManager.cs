@@ -1,6 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
+
 using UnityEngine;
 
 
@@ -24,6 +22,7 @@ public class InputManager : MonoBehaviour
             player = PlayerController.Instance;
         }
 
+
         isCursorLocked = false;
         
     }
@@ -38,7 +37,18 @@ public class InputManager : MonoBehaviour
 
         if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
         {
-            if (player.currentUnit.currentState.GetType() != typeof(PlayerWalkState)) player.ChangeState(player.PlayerWalkState);
+            int temp = player.currentUnit.animator.GetCurrentAnimatorStateInfo(0).fullPathHash;
+            if (player.currentUnit.currentState.GetType() != typeof(PlayerWalkState) && temp == 0)
+            {
+                if(player.currentUnit.animator.GetCurrentAnimatorStateInfo(1).IsName("AttackIdle"))
+                {
+                    player.currentUnit.animator.SetLayerWeight(1, 0f);
+                    player.currentUnit.animator.SetLayerWeight(0, 1f);
+
+                }
+
+                player.ChangeState(player.PlayerWalkState);
+            }
         }
         else
         {
@@ -57,10 +67,15 @@ public class InputManager : MonoBehaviour
             Cursor.visible = !isCursorLocked;
         }
 
-        if(Input.GetMouseButtonDown(0))
+        if(Input.GetKeyDown(dashKey))
         {
             Debug.Log("dd");
             player.Dash();
+        }
+
+        if(Input.GetMouseButtonDown(0))
+        {
+            player.BasicAttack();
         }
 
         if(Input.GetMouseButtonDown(1))

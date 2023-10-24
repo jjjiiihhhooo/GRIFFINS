@@ -8,6 +8,7 @@ public class Unit<T>
     public State<T> currentState;
     public Animator animator;
     public GameObject unit_obj;
+    public GameObject attackCol;
 
     public virtual void ChangeUnit(T PlayerController)
     {
@@ -73,7 +74,9 @@ public class White : Unit<PlayerController>
 
     public override void AttackAction(PlayerController PlayerController)
     {
-
+        animator.SetLayerWeight(0, 0f);
+        animator.SetLayerWeight(1, 1f);
+        animator.SetTrigger("AttackCombo");
     }
 
     public override void SkillAction(PlayerController PlayerController)
@@ -167,7 +170,9 @@ public class Red : Unit<PlayerController>
 
     public override void AttackAction(PlayerController PlayerController)
     {
-
+        animator.SetLayerWeight(0, 0f);
+        animator.SetLayerWeight(1, 1f);
+        animator.SetTrigger("AttackCombo");
     }
 
     public override void SkillAction(PlayerController PlayerController)
@@ -261,7 +266,9 @@ public class Green : Unit<PlayerController>
 
     public override void AttackAction(PlayerController PlayerController)
     {
-
+        animator.SetLayerWeight(0, 0f);
+        animator.SetLayerWeight(1, 1f);
+        animator.SetTrigger("AttackCombo");
     }
 
     public override void SkillAction(PlayerController PlayerController)
@@ -355,7 +362,9 @@ public class Blue : Unit<PlayerController>
 
     public override void AttackAction(PlayerController PlayerController)
     {
-
+        animator.SetLayerWeight(0, 0f);
+        animator.SetLayerWeight(1, 1f);
+        animator.SetTrigger("AttackCombo");
     }
 
     public override void SkillAction(PlayerController PlayerController)

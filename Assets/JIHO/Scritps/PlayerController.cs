@@ -1,4 +1,4 @@
-using Unity.VisualScripting;
+
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -44,6 +44,7 @@ public class PlayerController : MonoBehaviour
 
     public Animator[] animators;
     public GameObject[] units;
+    public GameObject[] attackCols;
 
     public float groundTime;
     public float groundMaxTime;
@@ -113,6 +114,7 @@ public class PlayerController : MonoBehaviour
         unit.currentState = playerIdleState;
         unit.animator = animators[index];
         unit.unit_obj = units[index];
+        unit.attackCol = attackCols[index];
     }
 
     private void Update()
@@ -228,6 +230,11 @@ public class PlayerController : MonoBehaviour
     public void JumpAir()
     {
         isJump = false;
+    }
+
+    public void BasicAttack()
+    {
+        currentUnit.AttackAction(this);
     }
 
     public void ChangeState(State<PlayerController> state)
