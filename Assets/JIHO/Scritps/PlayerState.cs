@@ -7,16 +7,15 @@ public class PlayerIdleState : State<PlayerController>
 {
     public override void StateChange(PlayerController playerController)
     {
-        playerController.previousState = playerController.currentState;
-        playerController.currentState.StateExit(playerController);
-        playerController.currentState = this;
+        playerController.currentUnit.currentState.StateExit(playerController);
+        playerController.currentUnit.currentState = this;
 
         StateEnter(playerController);
     }
 
     public override void StateEnter(PlayerController playerController)
     {
-        playerController.animator.SetBool("Walk", false);
+        playerController.currentUnit.animator.SetBool("Walk", false);
         playerController.IsMove = false;
     }
 
@@ -35,16 +34,15 @@ public class PlayerWalkState : State<PlayerController>
 {
     public override void StateChange(PlayerController playerController)
     {
-        playerController.previousState = playerController.currentState;
-        playerController.currentState.StateExit(playerController);
-        playerController.currentState = this;
+        playerController.currentUnit.currentState.StateExit(playerController);
+        playerController.currentUnit.currentState = this;
 
         StateEnter(playerController);
     }
 
     public override void StateEnter(PlayerController playerController)
     {
-        playerController.animator.SetBool("Walk", true);
+        playerController.currentUnit.animator.SetBool("Walk", true);
         playerController.IsMove = true;
     }
 
@@ -79,9 +77,8 @@ public class PlayerDashState : State<PlayerController>
 {
     public override void StateChange(PlayerController playerController)
     {
-        playerController.previousState = playerController.currentState;
-        playerController.currentState.StateExit(playerController);
-        playerController.currentState = this;
+        playerController.currentUnit.currentState.StateExit(playerController);
+        playerController.currentUnit.currentState = this;
 
         StateEnter(playerController);
     }

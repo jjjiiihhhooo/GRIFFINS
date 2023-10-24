@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -37,11 +38,11 @@ public class InputManager : MonoBehaviour
 
         if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
         {
-            if (player.currentState.GetType() != typeof(PlayerWalkState)) player.ChangeState(player.PlayerWalkState);
+            if (player.currentUnit.currentState.GetType() != typeof(PlayerWalkState)) player.ChangeState(player.PlayerWalkState);
         }
         else
         {
-            if (player.currentState.GetType() != typeof(PlayerIdleState)) player.ChangeState(player.PlayerIdleState);
+            if (player.currentUnit.currentState.GetType() != typeof(PlayerIdleState)) player.ChangeState(player.PlayerIdleState);
         }
 
         if (Input.GetKeyDown(jumpKey))
@@ -67,5 +68,24 @@ public class InputManager : MonoBehaviour
             player.SuperJump();
         }
 
+        if(Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            player.ChangeUnit(player.WhiteUnit);
+        }
+
+        if(Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            player.ChangeUnit(player.RedUnit);
+        }
+
+        if(Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            player.ChangeUnit(player.GreenUnit);
+        }
+
+        if(Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            player.ChangeUnit(player.BlueUnit);
+        }
     }
 }
