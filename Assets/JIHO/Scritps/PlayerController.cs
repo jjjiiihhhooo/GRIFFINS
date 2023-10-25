@@ -44,8 +44,8 @@ public class PlayerController : MonoBehaviour
     
     public White whiteUnit;
     public Red redUnit;
-    public Blue blueUnit;
     public Green greenUnit;
+    public Blue blueUnit;
 
     public float groundTime;
     public float groundMaxTime;
@@ -123,7 +123,7 @@ public class PlayerController : MonoBehaviour
 
     public void RayCheck()
     {
-        if (Physics.Raycast(transform.position, -transform.up, 0.05f, layer)) //Jump
+        if (Physics.Raycast(transform.position, -transform.up, 0.08f, layer)) //Jump
         {
             if(!isJump)
             {
@@ -142,6 +142,11 @@ public class PlayerController : MonoBehaviour
             if (currentUnit.animator.GetCurrentAnimatorStateInfo(0).IsName("ObjectHitAir"))
             {
                 currentUnit.animator.SetBool("isObjectAir", false);
+            }
+
+            if (currentUnit.animator.GetCurrentAnimatorStateInfo(0).IsName("GroundJump") || currentUnit.animator.GetCurrentAnimatorStateInfo(0).IsName("GroundJumpAir"))
+            {
+                currentUnit.animator.SetTrigger("GroundExit");
             }
 
             isGround = true;
@@ -264,15 +269,13 @@ public class PlayerController : MonoBehaviour
             CoolTimeManager.Instance.SetCoolTime("Dash", 0);
         }
 
-        if(collision.transform.CompareTag("Object") || collision.transform.CompareTag("Ground"))
-        {
-            if (currentUnit.animator.GetCurrentAnimatorStateInfo(0).IsName("GroundJump") || currentUnit.animator.GetCurrentAnimatorStateInfo(0).IsName("GroundJumpAir"))
-            {
-                currentUnit.animator.SetTrigger("GroundExit");
-            }
-
-            
-        }
+        //if(collision.transform.CompareTag("Object") || collision.transform.CompareTag("Ground"))
+        //{
+            //if (currentUnit.animator.GetCurrentAnimatorStateInfo(0).IsName("GroundJump") || currentUnit.animator.GetCurrentAnimatorStateInfo(0).IsName("GroundJumpAir"))
+            //{
+            //    currentUnit.animator.SetTrigger("GroundExit");
+            //}
+        //}
 
     }
 

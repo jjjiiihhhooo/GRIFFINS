@@ -12,6 +12,7 @@ public class Unit<T>
     public Animator animator;
     public GameObject unit_obj;
     public GameObject attackCol;
+    public GameObject changeEffect_obj;
 
     public virtual void ChangeUnit(T PlayerController)
     {
@@ -68,7 +69,7 @@ public class White : Unit<PlayerController>
     public override void Enter(PlayerController PlayerController)
     {
         unit_obj.SetActive(true);
-        animator.SetTrigger("ChangeUnit");
+        changeEffect_obj.SetActive(true);
     }
 
     public override void Exit(PlayerController PlayerController)
@@ -166,7 +167,7 @@ public class Red : Unit<PlayerController>
     public override void Enter(PlayerController PlayerController)
     {
         unit_obj.SetActive(true);
-        animator.SetTrigger("ChangeUnit");
+        changeEffect_obj.SetActive(true);
     }
 
     public override void Exit(PlayerController PlayerController)
@@ -264,7 +265,7 @@ public class Green : Unit<PlayerController>
     public override void Enter(PlayerController PlayerController)
     {
         unit_obj.SetActive(true);
-        animator.SetTrigger("ChangeUnit");
+        changeEffect_obj.SetActive(true);
     }
 
     public override void Exit(PlayerController PlayerController)
@@ -362,7 +363,7 @@ public class Blue : Unit<PlayerController>
     public override void Enter(PlayerController PlayerController)
     {
         unit_obj.SetActive(true);
-        animator.SetTrigger("ChangeUnit");
+        changeEffect_obj.SetActive(true);
     }
 
     public override void Exit(PlayerController PlayerController)
