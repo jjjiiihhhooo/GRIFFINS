@@ -78,8 +78,9 @@ public class White : Unit<PlayerController>
 
     public override void AttackAction(PlayerController PlayerController)
     {
-        animator.SetLayerWeight(0, 0f);
-        animator.SetLayerWeight(1, 1f);
+        //animator.SetLayerWeight(0, 0f);
+        //animator.SetLayerWeight(1, 1f);
+        PlayerController.IsAttack = true;
         animator.SetTrigger("AttackCombo");
     }
 
@@ -175,8 +176,9 @@ public class Red : Unit<PlayerController>
 
     public override void AttackAction(PlayerController PlayerController)
     {
-        animator.SetLayerWeight(0, 0f);
-        animator.SetLayerWeight(1, 1f);
+        //animator.SetLayerWeight(0, 0f);
+        //animator.SetLayerWeight(1, 1f);
+        PlayerController.IsAttack = true;
         animator.SetTrigger("AttackCombo");
     }
 
@@ -272,8 +274,9 @@ public class Green : Unit<PlayerController>
 
     public override void AttackAction(PlayerController PlayerController)
     {
-        animator.SetLayerWeight(0, 0f);
-        animator.SetLayerWeight(1, 1f);
+        //animator.SetLayerWeight(0, 0f);
+        //animator.SetLayerWeight(1, 1f);
+        PlayerController.IsAttack = true;
         animator.SetTrigger("AttackCombo");
     }
 
@@ -369,8 +372,9 @@ public class Blue : Unit<PlayerController>
 
     public override void AttackAction(PlayerController PlayerController)
     {
-        animator.SetLayerWeight(0, 0f);
-        animator.SetLayerWeight(1, 1f);
+        //animator.SetLayerWeight(0, 0f);
+        //animator.SetLayerWeight(1, 1f);
+        PlayerController.IsAttack = true;
         animator.SetTrigger("AttackCombo");
     }
 

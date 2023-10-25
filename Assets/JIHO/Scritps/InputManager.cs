@@ -1,4 +1,5 @@
 
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -23,8 +24,9 @@ public class InputManager : MonoBehaviour
         }
 
 
-        isCursorLocked = false;
-        
+        isCursorLocked = true;
+        Cursor.lockState = isCursorLocked ? CursorLockMode.Locked : CursorLockMode.None;
+        Cursor.visible = !isCursorLocked;
     }
 
     private void Update()
@@ -37,15 +39,13 @@ public class InputManager : MonoBehaviour
 
         if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
         {
-            int temp = player.currentUnit.animator.GetCurrentAnimatorStateInfo(0).fullPathHash;
-            if (player.currentUnit.currentState.GetType() != typeof(PlayerWalkState) && temp == 0)
+            if (player.currentUnit.currentState.GetType() != typeof(PlayerWalkState) && !player.currentUnit.animator.GetCurrentAnimatorStateInfo(0).IsTag("Attack"))
             {
-                if(player.currentUnit.animator.GetCurrentAnimatorStateInfo(1).IsName("AttackIdle"))
-                {
-                    player.currentUnit.animator.SetLayerWeight(1, 0f);
-                    player.currentUnit.animator.SetLayerWeight(0, 1f);
-
-                }
+                //if(player.currentUnit.animator.GetCurrentAnimatorStateInfo(1).IsName("AttackIdle"))
+                //{
+                //    player.currentUnit.animator.SetLayerWeight(1, 0f);
+                //    player.currentUnit.animator.SetLayerWeight(0, 1f);
+                //}
 
                 player.ChangeState(player.PlayerWalkState);
             }
@@ -75,7 +75,8 @@ public class InputManager : MonoBehaviour
 
         if(Input.GetMouseButtonDown(0))
         {
-            player.BasicAttack();
+            if (player.currentUnit.currentState.GetType() != typeof(PlayerAttackState)) player.ChangeState(player.PlayerAttackState);
+            
         }
 
         if(Input.GetMouseButtonDown(1))

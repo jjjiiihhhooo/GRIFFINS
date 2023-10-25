@@ -17,7 +17,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private bool isGround;
 
     [SerializeField] private Vector3 moveVec = Vector3.zero;
-
     [SerializeField] private RaycastHit hit;
     [SerializeField] private LayerMask layer;
     [SerializeField] private LayerMask groundLayers;
@@ -28,16 +27,20 @@ public class PlayerController : MonoBehaviour
     private bool isMove;
     private bool isDash;
     private bool isSuperJump;
+    [SerializeField] private bool isAttack;
     
     private Vector3 heading = Vector3.zero;
-    public Ray ray;
-
-    public PhysicMaterial pm;
-    public Rigidbody rigid;
 
     private PlayerIdleState playerIdleState;
     private PlayerWalkState playerWalkState;
     private PlayerDashState playerDashState;
+    private PlayerAttackState playerAttackState;
+
+
+    public Ray ray;
+
+    public PhysicMaterial pm;
+    public Rigidbody rigid;
     
     public White whiteUnit;
     public Red redUnit;
@@ -53,6 +56,7 @@ public class PlayerController : MonoBehaviour
     public float MoveSpeed { get => moveSpeed; }
     public float DashSpeed { get => dashSpeed; }
 
+    public bool IsAttack { get => isAttack; set => isAttack = value; }
     public bool IsMove { get => isMove; set => isMove = value; }
     public bool IsJump { get => isJump; set => isJump = value; }
     public bool IsDash { get => isDash; set => isDash = value; }
@@ -65,10 +69,11 @@ public class PlayerController : MonoBehaviour
     public PlayerIdleState PlayerIdleState { get => playerIdleState; }
     public PlayerWalkState PlayerWalkState { get => playerWalkState; }
     public PlayerDashState PlayerDashState { get => playerDashState; }
+    public PlayerAttackState PlayerAttackState { get => playerAttackState; }
     public White WhiteUnit { get => whiteUnit; }
     public Red RedUnit { get => redUnit; }
-    public Blue BlueUnit { get => blueUnit; }
     public Green GreenUnit { get => greenUnit; }
+    public Blue BlueUnit { get => blueUnit; }
 
     private void Awake()
     {
@@ -91,6 +96,12 @@ public class PlayerController : MonoBehaviour
         playerIdleState = new PlayerIdleState();
         playerWalkState = new PlayerWalkState();
         playerDashState = new PlayerDashState();
+        playerAttackState = new PlayerAttackState();
+
+        whiteUnit.currentState = playerIdleState;
+        redUnit.currentState = playerIdleState;
+        greenUnit.currentState = playerIdleState;
+        blueUnit.currentState = playerIdleState;
 
         currentUnit = whiteUnit;
 
@@ -226,6 +237,12 @@ public class PlayerController : MonoBehaviour
     public void ChangeUnit(Unit<PlayerController> unit)
     {
         unit.ChangeUnit(this);
+    }
+
+    public void AnimationEventMassage(bool _bool)
+    {
+        isAttack = _bool;
+        Debug.Log(isAttack);
     }
 
     private void OnCollisionEnter(Collision collision)
