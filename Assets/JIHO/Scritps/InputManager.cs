@@ -69,14 +69,12 @@ public class InputManager : MonoBehaviour
 
         if(Input.GetKeyDown(dashKey))
         {
-            Debug.Log("dd");
             player.Dash();
         }
 
         if(Input.GetMouseButtonDown(0))
         {
             if (player.currentUnit.currentState.GetType() != typeof(PlayerAttackState)) player.ChangeState(player.PlayerAttackState);
-            
         }
 
         if(Input.GetMouseButtonDown(1))

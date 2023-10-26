@@ -117,8 +117,6 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         currentUnit.currentState.StateUpdate(this);
-
-        //Debug.LogError(currentState);
     }
 
     public void RayCheck()
@@ -162,66 +160,16 @@ public class PlayerController : MonoBehaviour
     public void Dash()
     {
         currentUnit.Dash(this);
-        //if (!CoolTimeManager.Instance.CoolCheck("Dash")) return;
-        //CoolTimeManager.Instance.GetCoolTime("Dash");
-
-        //if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Dash")) animator.SetTrigger("Dash");
-
-        //pm.bounceCombine = PhysicMaterialCombine.Maximum;
-        //groundTime = groundMaxTime;
-        //isDash = true;
-        //animator.SetBool("isDashAir", true);
-
-        //Vector3 dir = Camera.main.ScreenPointToRay(Input.mousePosition).direction;
-        //ray = new Ray(transform.position, dir);
-
-        //rigid.AddForce(ray.direction * dashSpeed, ForceMode.Impulse);
-        //transform.forward = ray.direction;
-        //transform.rotation = Quaternion.Euler(new Vector3(0, transform.rotation.y, 0));
     }
 
     public void SuperJump()
     {
         currentUnit.SuperJump(this);
-        //if (!CoolTimeManager.Instance.CoolCheck("SuperJump")) return;
-        //CoolTimeManager.Instance.GetCoolTime("SuperJump");
-
-        //isDash = false;
-
-        //if (!animator.GetCurrentAnimatorStateInfo(0).IsName("GroundDown") && !isGround)
-        //{
-        //    isSuperJump = true;
-        //    animator.SetBool("GroundReady", false);
-        //    animator.SetTrigger("GroundDown");
-        //    Debug.LogError("qq");
-        //}
-        //else
-        //{
-        //    isSuperJump = false;
-        //    animator.SetTrigger("GroundReadyAction");
-        //}
-
-        //pm.bounceCombine = PhysicMaterialCombine.Maximum;
-        //groundTime = groundMaxTime;
-
-        //rigid.velocity = Vector3.zero;
-        //rigid.AddForce(Vector3.down * superJumpForce, ForceMode.Impulse);
     }
 
     public void Jump()
     {
         currentUnit.Jump(this);
-        //if (!isJump || animator.GetCurrentAnimatorStateInfo(0).IsName("JumpReady")) return;
-
-        //if (isDash) isDash = false;
-
-        //if (!animator.GetCurrentAnimatorStateInfo(0).IsName("JumpReady")) animator.SetTrigger("JumpReady");
-        //animator.SetBool("isJump", true);
-
-        //pm.bounceCombine = PhysicMaterialCombine.Minimum;
-        //groundTime = groundMaxTime;
-        //rigid.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-        //Invoke("JumpAir", 0.1f);
     }
 
     public void JumpAir()
@@ -247,7 +195,6 @@ public class PlayerController : MonoBehaviour
     public void AnimationEventMassage(bool _bool)
     {
         isAttack = _bool;
-        Debug.Log(isAttack);
     }
 
     private void OnCollisionEnter(Collision collision)
