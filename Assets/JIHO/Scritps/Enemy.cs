@@ -12,6 +12,7 @@ public class Enemy
     public float moveSpeed;
     public float attackDamage;
     public float attackDelay;
+    //dd
 
     public virtual void GetDamage(float damage)
     {
