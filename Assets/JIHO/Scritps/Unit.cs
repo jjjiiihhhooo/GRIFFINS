@@ -7,7 +7,7 @@ using UnityEngine.Timeline;
 [System.Serializable]
 public class Unit<T>
 {
-
+    public float curDamage;
     public State<T> currentState;
     public Animator animator;
     public GameObject unit_obj;
@@ -62,6 +62,7 @@ public class White : Unit<PlayerController>
     {
         PlayerController.currentUnit.Exit(PlayerController);
         PlayerController.currentUnit = this;
+        curDamage = 3;
         Debug.Log("White Change");
         Enter(PlayerController);
     }
@@ -158,6 +159,7 @@ public class Red : Unit<PlayerController>
     {
         PlayerController.currentUnit.Exit(PlayerController);
         PlayerController.currentUnit = this;
+        curDamage = 3;
         Debug.Log("Red Change");
         Enter(PlayerController);
     }
@@ -254,6 +256,7 @@ public class Green : Unit<PlayerController>
     {
         PlayerController.currentUnit.Exit(PlayerController);
         PlayerController.currentUnit = this;
+        curDamage = 3;
         Debug.Log("Green Change");
         Enter(PlayerController);
     }
@@ -350,6 +353,7 @@ public class Blue : Unit<PlayerController>
     {
         PlayerController.currentUnit.Exit(PlayerController);
         PlayerController.currentUnit = this;
+        curDamage = 3;
         Debug.Log("Blue Change");
         Enter(PlayerController);
     }
