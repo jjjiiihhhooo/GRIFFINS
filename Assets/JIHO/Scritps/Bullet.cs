@@ -37,7 +37,7 @@ public class Bullet : MonoBehaviour
 
     public void Exit()
     {
-        //Managers.Instance.BulletSpawner.ReturnQueue(this.gameObject);
+        Managers.Instance.BulletSpawner.ReturnQueue(this.gameObject);
     }
 
     private void OnTriggerEnter(Collider other)

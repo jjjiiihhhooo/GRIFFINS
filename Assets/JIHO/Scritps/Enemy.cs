@@ -16,9 +16,7 @@ public class Enemy
 
     public virtual void GetDamage(float damage)
     {
-        curHp -= damage;
-        Debug.Log(curHp);
-        if (animator != null) animator.SetTrigger("GetDamage");
+
     }
 
     public virtual void Action()
@@ -38,7 +36,7 @@ public class Normal_Enemy : Enemy
 
     public override void GetDamage(float damage)
     {
-        base.GetDamage(damage);
+        
     }
 }
 
@@ -52,7 +50,7 @@ public class Epic_Enemy : Enemy
 
     public override void GetDamage(float damage)
     {
-        base.GetDamage(damage);
+
     }
 }
 
@@ -66,6 +64,6 @@ public class Boss_Enemy : Enemy
 
     public override void GetDamage(float damage)
     {
-        base.GetDamage(damage);
+
     }
 }

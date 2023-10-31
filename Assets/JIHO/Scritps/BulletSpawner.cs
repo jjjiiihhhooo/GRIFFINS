@@ -12,7 +12,7 @@ public class BulletSpawner : MonoBehaviour
 
     private void Awake()
     {
-        //InitQueue();
+        InitQueue();
     }
 
     private void InitQueue()

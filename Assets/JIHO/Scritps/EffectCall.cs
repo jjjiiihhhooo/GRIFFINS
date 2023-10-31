@@ -6,18 +6,19 @@ using UnityEngine.Events;
 public class EffectCall : MonoBehaviour
 {
     [SerializeField] private float time;
+    [SerializeField] private UnityEvent _event;
 
     private void OnEnable()
     {
-        ChangeEffectMasaage();
+        _event.Invoke();
     }
 
     public void ChangeEffectMasaage()
     {
-        StartCoroutine(ChangeEffectCor());
+        StartCoroutine(changeEffectCor());
     }
 
-    private IEnumerator ChangeEffectCor()
+    private IEnumerator changeEffectCor()
     {
         
         float curTime = time;

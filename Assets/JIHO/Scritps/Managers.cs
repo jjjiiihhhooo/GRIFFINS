@@ -8,9 +8,11 @@ public class Managers : MonoBehaviour
 
     [SerializeField] private InputManager inputManager;
     [SerializeField] private SoundManager soundManager;
+    [SerializeField] private BulletSpawner bulletSpawner;
 
     public InputManager InputManager { get => inputManager; }
     public SoundManager SoundManager { get => soundManager; }
+    public BulletSpawner BulletSpawner { get => bulletSpawner; }
 
     private void Awake()
     {
