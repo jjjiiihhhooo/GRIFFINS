@@ -14,6 +14,11 @@ public class Unit<T>
     public GameObject attackCol;
     public GameObject changeEffect_obj;
 
+    public float curDamage;
+    public float normalDamage;
+    public float skillDamage;
+
+
     public virtual void ChangeUnit(T PlayerController)
     {
         
@@ -80,6 +85,15 @@ public class White : Unit<PlayerController>
     public override void AttackAction(PlayerController PlayerController)
     {
         PlayerController.IsAttack = true;
+        curDamage = normalDamage;
+
+        Vector3 dir = Camera.main.ScreenPointToRay(Input.mousePosition).direction;
+        PlayerController.ray = new Ray(PlayerController.transform.position, dir);
+
+        Vector3 dirY = new Vector3(PlayerController.ray.direction.x, 0, PlayerController.ray.direction.z);
+        Quaternion targetRotation = Quaternion.LookRotation(dirY, Vector3.up);
+        PlayerController.transform.rotation = targetRotation;
+
         animator.SetTrigger("AttackCombo");
     }
 
@@ -104,8 +118,10 @@ public class White : Unit<PlayerController>
         PlayerController.ray = new Ray(PlayerController.transform.position, dir);
 
         PlayerController.rigid.AddForce(PlayerController.ray.direction * PlayerController.DashSpeed, ForceMode.Impulse);
-        PlayerController.transform.forward = PlayerController.ray.direction;
-        PlayerController.transform.rotation = Quaternion.Euler(new Vector3(0, PlayerController.transform.rotation.y, 0));
+
+        Vector3 dirY = new Vector3(PlayerController.ray.direction.x, 0, PlayerController.ray.direction.z);
+        Quaternion targetRotation = Quaternion.LookRotation(dirY, Vector3.up);
+        PlayerController.transform.rotation = targetRotation;
     }
 
     public override void Jump(PlayerController PlayerController)
@@ -176,6 +192,15 @@ public class Red : Unit<PlayerController>
     public override void AttackAction(PlayerController PlayerController)
     {
         PlayerController.IsAttack = true;
+        curDamage = normalDamage;
+
+        Vector3 dir = Camera.main.ScreenPointToRay(Input.mousePosition).direction;
+        PlayerController.ray = new Ray(PlayerController.transform.position, dir);
+
+        Vector3 dirY = new Vector3(PlayerController.ray.direction.x, 0, PlayerController.ray.direction.z);
+        Quaternion targetRotation = Quaternion.LookRotation(dirY, Vector3.up);
+        PlayerController.transform.rotation = targetRotation;
+
         animator.SetTrigger("AttackCombo");
     }
 
@@ -200,8 +225,10 @@ public class Red : Unit<PlayerController>
         PlayerController.ray = new Ray(PlayerController.transform.position, dir);
 
         PlayerController.rigid.AddForce(PlayerController.ray.direction * PlayerController.DashSpeed, ForceMode.Impulse);
-        PlayerController.transform.forward = PlayerController.ray.direction;
-        PlayerController.transform.rotation = Quaternion.Euler(new Vector3(0, PlayerController.transform.rotation.y, 0));
+
+        Vector3 dirY = new Vector3(PlayerController.ray.direction.x, 0, PlayerController.ray.direction.z);
+        Quaternion targetRotation = Quaternion.LookRotation(dirY, Vector3.up);
+        PlayerController.transform.rotation = targetRotation;
     }
 
     public override void Jump(PlayerController PlayerController)
@@ -272,6 +299,15 @@ public class Green : Unit<PlayerController>
     public override void AttackAction(PlayerController PlayerController)
     {
         PlayerController.IsAttack = true;
+        curDamage = normalDamage;
+
+        Vector3 dir = Camera.main.ScreenPointToRay(Input.mousePosition).direction;
+        PlayerController.ray = new Ray(PlayerController.transform.position, dir);
+
+        Vector3 dirY = new Vector3(PlayerController.ray.direction.x, 0, PlayerController.ray.direction.z);
+        Quaternion targetRotation = Quaternion.LookRotation(dirY, Vector3.up);
+        PlayerController.transform.rotation = targetRotation;
+
         animator.SetTrigger("AttackCombo");
     }
 
@@ -296,8 +332,10 @@ public class Green : Unit<PlayerController>
         PlayerController.ray = new Ray(PlayerController.transform.position, dir);
 
         PlayerController.rigid.AddForce(PlayerController.ray.direction * PlayerController.DashSpeed, ForceMode.Impulse);
-        PlayerController.transform.forward = PlayerController.ray.direction;
-        PlayerController.transform.rotation = Quaternion.Euler(new Vector3(0, PlayerController.transform.rotation.y, 0));
+
+        Vector3 dirY = new Vector3(PlayerController.ray.direction.x, 0, PlayerController.ray.direction.z);
+        Quaternion targetRotation = Quaternion.LookRotation(dirY, Vector3.up);
+        PlayerController.transform.rotation = targetRotation;
     }
 
     public override void Jump(PlayerController PlayerController)
@@ -368,6 +406,15 @@ public class Blue : Unit<PlayerController>
     public override void AttackAction(PlayerController PlayerController)
     {
         PlayerController.IsAttack = true;
+        curDamage = normalDamage;
+
+        Vector3 dir = Camera.main.ScreenPointToRay(Input.mousePosition).direction;
+        PlayerController.ray = new Ray(PlayerController.transform.position, dir);
+
+        Vector3 dirY = new Vector3(PlayerController.ray.direction.x, 0, PlayerController.ray.direction.z);
+        Quaternion targetRotation = Quaternion.LookRotation(dirY, Vector3.up);
+        PlayerController.transform.rotation = targetRotation;
+
         animator.SetTrigger("AttackCombo");
     }
 
@@ -392,8 +439,10 @@ public class Blue : Unit<PlayerController>
         PlayerController.ray = new Ray(PlayerController.transform.position, dir);
 
         PlayerController.rigid.AddForce(PlayerController.ray.direction * PlayerController.DashSpeed, ForceMode.Impulse);
-        PlayerController.transform.forward = PlayerController.ray.direction;
-        PlayerController.transform.rotation = Quaternion.Euler(new Vector3(0, PlayerController.transform.rotation.y, 0));
+
+        Vector3 dirY = new Vector3(PlayerController.ray.direction.x, 0, PlayerController.ray.direction.z);
+        Quaternion targetRotation = Quaternion.LookRotation(dirY, Vector3.up);
+        PlayerController.transform.rotation = targetRotation;
     }
 
     public override void Jump(PlayerController PlayerController)

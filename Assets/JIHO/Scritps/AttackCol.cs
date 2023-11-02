@@ -6,16 +6,21 @@ public class AttackCol : MonoBehaviour
 {
     [SerializeField] private float time;
 
-    private float curTime;
-
     private void OnEnable()
     {
-        curTime = time;
+        StopCoroutine(AttackActiveCor());
+        StartCoroutine(AttackActiveCor());
     }
 
-    private void Update()
+    private IEnumerator AttackActiveCor()
     {
-        if (curTime > 0) curTime -= Time.deltaTime;
-        else gameObject.SetActive(false);
+        float curTime = time;
+        while (curTime > 0)
+        {
+            yield return new WaitForEndOfFrame();
+            curTime -= Time.deltaTime;
+        }
+
+        this.gameObject.SetActive(false);
     }
 }

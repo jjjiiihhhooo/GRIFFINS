@@ -11,6 +11,7 @@ TagManager:
   - Ground
   - SpawnPos
   - CinemachineTarget
+  - AttackCol
   layers:
   - Default
   - TransparentFX
@@ -21,8 +22,8 @@ TagManager:
   - Platform
   - Enemy
   - Player
-  - 
-  - 
+  - EnemyModel
+  - EnemyCanvas
   - 
   - 
   - 
@@ -47,4 +48,10 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: EnemyCnavas
+    uniqueID: 3135928035
+    locked: 0
+  - name: EnemyModel
+    uniqueID: 989830347
     locked: 0
