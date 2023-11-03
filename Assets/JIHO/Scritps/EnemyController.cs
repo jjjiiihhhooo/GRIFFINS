@@ -36,9 +36,15 @@ public class EnemyController : SerializedMonoBehaviour
 
             Vector3 finalCenter = (center1 + center2) / 2f;
 
-            DamageTxt(damage, finalCenter);
+            DamageEffect(damage, finalCenter);
             enemy.GetDamage(damage);
         }
+    }
+
+    private void DamageEffect(float damage, Vector3 targetPos)
+    {
+        DamageTxt(damage, targetPos);
+        
     }
 
     private void DamageTxt(float damage, Vector3 targetPos)
@@ -49,6 +55,10 @@ public class EnemyController : SerializedMonoBehaviour
         temp.SetActive(false);
         temp.transform.position = targetPos;
         temp.SetActive(true);
+    }
+
+    private void DamageHitEffect()
+    {
 
     }
 }
