@@ -9,6 +9,8 @@ public class EnemyController : SerializedMonoBehaviour
     public DmgTxt dmgTxt;
     public Canvas canvas;
     public Enemy enemy;
+    public bool isHit;
+    public float hitCool = 0.1f;
 
     private void Awake()
     {
@@ -18,6 +20,12 @@ public class EnemyController : SerializedMonoBehaviour
     private void Update()
     {
         CanvasMove();
+
+        if(isHit)
+        {
+            if (hitCool > 0) hitCool -= Time.deltaTime; 
+            else isHit = false;
+        }
     }
 
     private void CanvasMove()
@@ -36,18 +44,27 @@ public class EnemyController : SerializedMonoBehaviour
 
             Vector3 finalCenter = (center1 + center2) / 2f;
 
-            DamageEffect(damage, finalCenter);
-            enemy.GetDamage(damage);
+            DamageMessage(damage, finalCenter);
         }
+    }
+
+    public void DamageMessage(float damage, Vector3 targetPos)
+    {
+        if (isHit) return;
+        isHit = true;
+        hitCool = 0.1f;
+
+        DamageEffect(damage, targetPos);
+        enemy.GetDamage(damage);
     }
 
     private void DamageEffect(float damage, Vector3 targetPos)
     {
-        DamageTxt(damage, targetPos);
-        
+        //DamageHitTxt(damage, targetPos);
+        DamageHitEffect(targetPos);
     }
 
-    private void DamageTxt(float damage, Vector3 targetPos)
+    private void DamageHitTxt(float damage, Vector3 targetPos)
     {
         if (canvas.worldCamera == null) canvas.worldCamera = Camera.main;
         GameObject temp = Instantiate(dmgTxt.gameObject, canvas.transform);
@@ -57,8 +74,9 @@ public class EnemyController : SerializedMonoBehaviour
         temp.SetActive(true);
     }
 
-    private void DamageHitEffect()
+    private void DamageHitEffect(Vector3 targetPos)
     {
-
+        enemy.damageEffect.transform.position = targetPos;
+        enemy.damageEffect.Play();
     }
 }

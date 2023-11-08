@@ -1,6 +1,8 @@
 using Sirenix.OdinInspector;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.Timeline;
 
@@ -58,6 +60,11 @@ public class Unit<T>
     {
 
     }
+
+    public virtual void GetDamage(T PlayerController)
+    {
+
+    }
 }
 
 [System.Serializable]
@@ -104,8 +111,8 @@ public class White : Unit<PlayerController>
 
     public override void Dash(PlayerController PlayerController)
     {
-        if (!CoolTimeManager.Instance.CoolCheck("Dash")) return;
-        CoolTimeManager.Instance.GetCoolTime("Dash");
+        if (!Managers.Instance.CoolTimeManager.CoolCheck("Dash")) return;
+        Managers.Instance.CoolTimeManager.GetCoolTime("Dash");
 
         if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Dash")) animator.SetTrigger("Dash");
 
@@ -141,8 +148,8 @@ public class White : Unit<PlayerController>
 
     public override void SuperJump(PlayerController PlayerController)
     {
-        if (!CoolTimeManager.Instance.CoolCheck("SuperJump")) return;
-        CoolTimeManager.Instance.GetCoolTime("SuperJump");
+        if (!Managers.Instance.CoolTimeManager.CoolCheck("SuperJump")) return;
+        Managers.Instance.CoolTimeManager.GetCoolTime("SuperJump");
 
         PlayerController.IsDash = false;
 
@@ -164,6 +171,11 @@ public class White : Unit<PlayerController>
 
         PlayerController.rigid.velocity = Vector3.zero;
         PlayerController.rigid.AddForce(Vector3.down * PlayerController.superJumpForce, ForceMode.Impulse);
+    }
+
+    public override void GetDamage(PlayerController PlayerController)
+    {
+        animator.SetTrigger("GetDamage");
     }
 }
 
@@ -211,8 +223,8 @@ public class Red : Unit<PlayerController>
 
     public override void Dash(PlayerController PlayerController)
     {
-        if (!CoolTimeManager.Instance.CoolCheck("Dash")) return;
-        CoolTimeManager.Instance.GetCoolTime("Dash");
+        if (!Managers.Instance.CoolTimeManager.CoolCheck("Dash")) return;
+        Managers.Instance.CoolTimeManager.GetCoolTime("Dash");
 
         if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Dash")) animator.SetTrigger("Dash");
 
@@ -248,8 +260,8 @@ public class Red : Unit<PlayerController>
 
     public override void SuperJump(PlayerController PlayerController)
     {
-        if (!CoolTimeManager.Instance.CoolCheck("SuperJump")) return;
-        CoolTimeManager.Instance.GetCoolTime("SuperJump");
+        if (!Managers.Instance.CoolTimeManager.CoolCheck("SuperJump")) return;
+        Managers.Instance.CoolTimeManager.GetCoolTime("SuperJump");
 
         PlayerController.IsDash = false;
 
@@ -271,6 +283,11 @@ public class Red : Unit<PlayerController>
 
         PlayerController.rigid.velocity = Vector3.zero;
         PlayerController.rigid.AddForce(Vector3.down * PlayerController.superJumpForce, ForceMode.Impulse);
+    }
+
+    public override void GetDamage(PlayerController PlayerController)
+    {
+        animator.SetTrigger("GetDamage");
     }
 }
 
@@ -318,8 +335,8 @@ public class Green : Unit<PlayerController>
 
     public override void Dash(PlayerController PlayerController)
     {
-        if (!CoolTimeManager.Instance.CoolCheck("Dash")) return;
-        CoolTimeManager.Instance.GetCoolTime("Dash");
+        if (!Managers.Instance.CoolTimeManager.CoolCheck("Dash")) return;
+        Managers.Instance.CoolTimeManager.GetCoolTime("Dash");
 
         if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Dash")) animator.SetTrigger("Dash");
 
@@ -355,8 +372,8 @@ public class Green : Unit<PlayerController>
 
     public override void SuperJump(PlayerController PlayerController)
     {
-        if (!CoolTimeManager.Instance.CoolCheck("SuperJump")) return;
-        CoolTimeManager.Instance.GetCoolTime("SuperJump");
+        if (!Managers.Instance.CoolTimeManager.CoolCheck("SuperJump")) return;
+        Managers.Instance.CoolTimeManager.GetCoolTime("SuperJump");
 
         PlayerController.IsDash = false;
 
@@ -378,6 +395,11 @@ public class Green : Unit<PlayerController>
 
         PlayerController.rigid.velocity = Vector3.zero;
         PlayerController.rigid.AddForce(Vector3.down * PlayerController.superJumpForce, ForceMode.Impulse);
+    }
+
+    public override void GetDamage(PlayerController PlayerController)
+    {
+        animator.SetTrigger("GetDamage");
     }
 }
 
@@ -425,8 +447,8 @@ public class Blue : Unit<PlayerController>
 
     public override void Dash(PlayerController PlayerController)
     {
-        if (!CoolTimeManager.Instance.CoolCheck("Dash")) return;
-        CoolTimeManager.Instance.GetCoolTime("Dash");
+        if (!Managers.Instance.CoolTimeManager.CoolCheck("Dash")) return;
+        Managers.Instance.CoolTimeManager.GetCoolTime("Dash");
 
         if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Dash")) animator.SetTrigger("Dash");
 
@@ -462,8 +484,8 @@ public class Blue : Unit<PlayerController>
 
     public override void SuperJump(PlayerController PlayerController)
     {
-        if (!CoolTimeManager.Instance.CoolCheck("SuperJump")) return;
-        CoolTimeManager.Instance.GetCoolTime("SuperJump");
+        if (!Managers.Instance.CoolTimeManager.CoolCheck("SuperJump")) return;
+        Managers.Instance.CoolTimeManager.GetCoolTime("SuperJump");
 
         PlayerController.IsDash = false;
 
@@ -485,5 +507,10 @@ public class Blue : Unit<PlayerController>
 
         PlayerController.rigid.velocity = Vector3.zero;
         PlayerController.rigid.AddForce(Vector3.down * PlayerController.superJumpForce, ForceMode.Impulse);
+    }
+
+    public override void GetDamage(PlayerController PlayerController)
+    {
+        animator.SetTrigger("GetDamage");
     }
 }

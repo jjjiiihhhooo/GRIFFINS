@@ -55,6 +55,8 @@ public class PlayerController : MonoBehaviour
     public float RotateSpeed { get => rotateSpeed; }
     public float MoveSpeed { get => moveSpeed; }
     public float DashSpeed { get => dashSpeed; }
+    public float CurrentHp { get => currentHp; }
+    public float MaxHp { get => maxHp; }
 
     public bool IsAttack { get => isAttack; set => isAttack = value; }
     public bool IsMove { get => isMove; set => isMove = value; }
@@ -106,6 +108,9 @@ public class PlayerController : MonoBehaviour
         currentUnit = whiteUnit;
 
         pm.bounceCombine = PhysicMaterialCombine.Minimum;
+
+        currentHp = maxHp;
+
         isJump = true;
     }
 
@@ -182,6 +187,14 @@ public class PlayerController : MonoBehaviour
         currentUnit.AttackAction(this);
     }
 
+    public void GetDamage(float damage)
+    {
+        currentHp -= damage;
+        Managers.Instance.UiManager.PlayerHpUpdate();
+        currentUnit.GetDamage(this);
+        Debug.LogError(currentHp);
+    }
+
     public void ChangeState(State<PlayerController> state)
     {
         state.StateChange(this);
@@ -205,25 +218,23 @@ public class PlayerController : MonoBehaviour
 
             currentUnit.animator.SetBool("isObjectAir", true);
             if (!currentUnit.animator.GetCurrentAnimatorStateInfo(0).IsName("ObjectHit")) currentUnit.animator.SetTrigger("ObjectHit");
-            CoolTimeManager.Instance.SetCoolTime("SuperJump", 0);
+            Managers.Instance.CoolTimeManager.SetCoolTime("SuperJump", 0);
             
+        }
+
+        if(collision.transform.CompareTag("Enemy") && isDash)
+        {
+            ContactPoint contact = collision.contacts[0];
+            Vector3 pos = contact.point;
+            collision.transform.GetComponent<EnemyController>().DamageMessage(currentUnit.curDamage, pos);
         }
 
         if ((collision.transform.CompareTag("Object") || collision.transform.CompareTag("Ground")) && isSuperJump)
         {
             isSuperJump = false;
             if (!currentUnit.animator.GetCurrentAnimatorStateInfo(0).IsName("GroundReady")) currentUnit.animator.SetBool("GroundReady",true);
-            CoolTimeManager.Instance.SetCoolTime("Dash", 0);
+            Managers.Instance.CoolTimeManager.SetCoolTime("Dash", 0);
         }
-
-        //if(collision.transform.CompareTag("Object") || collision.transform.CompareTag("Ground"))
-        //{
-            //if (currentUnit.animator.GetCurrentAnimatorStateInfo(0).IsName("GroundJump") || currentUnit.animator.GetCurrentAnimatorStateInfo(0).IsName("GroundJumpAir"))
-            //{
-            //    currentUnit.animator.SetTrigger("GroundExit");
-            //}
-        //}
-
     }
 
     private void OnCollisionStay(Collision collision)

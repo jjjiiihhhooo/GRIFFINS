@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Enemy
 {
-    public GameObject damageEffect;
+    public ParticleSystem damageEffect;
     public Animator animator;
     public EnemyController enemyController;
     public float maxHp;

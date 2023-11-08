@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class CoolTimeManager : MonoBehaviour
 {
-    public static CoolTimeManager Instance;
-
     public class CoolData
     {
         public CoolData(int max, int cur)
@@ -23,17 +21,7 @@ public class CoolTimeManager : MonoBehaviour
 
     private void Awake()
     {
-        if(Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(this.gameObject);
-            Init();
-        }
-        else
-        {
-            Destroy(this.gameObject);
-        }
-        
+        Init();
     }
 
     private void Init()
@@ -69,5 +57,4 @@ public class CoolTimeManager : MonoBehaviour
         else return true;
     }
 
-    
 }

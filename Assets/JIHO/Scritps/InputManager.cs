@@ -101,5 +101,10 @@ public class InputManager : MonoBehaviour
         {
             player.ChangeUnit(player.BlueUnit);
         }
+
+        if(Input.GetKeyDown(KeyCode.P)) //HitTest
+        {
+            player.GetDamage(1);
+        }
     }
 }

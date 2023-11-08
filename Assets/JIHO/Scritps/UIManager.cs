@@ -7,15 +7,26 @@ public class UIManager : MonoBehaviour
 {
     [SerializeField] private Image dashImage;
     [SerializeField] private Image superJumpImage;
+    [SerializeField] private Image playerHpImage;
 
     private void Update()
     {
-        CoolTimeUiUpdate();
+        UIUpdate();
     }
 
-    private void CoolTimeUiUpdate()
+    private void UIUpdate()
     {
-        dashImage.fillAmount = CoolTimeManager.Instance.coolDic["Dash"].curCoolTime / CoolTimeManager.Instance.coolDic["Dash"].maxCoolTime;
-        superJumpImage.fillAmount = CoolTimeManager.Instance.coolDic["SuperJump"].curCoolTime / CoolTimeManager.Instance.coolDic["Dash"].maxCoolTime;
+        CoolTimeUIUpdate();
+    }
+
+    private void CoolTimeUIUpdate()
+    {
+        dashImage.fillAmount = Managers.Instance.CoolTimeManager.coolDic["Dash"].curCoolTime / Managers.Instance.CoolTimeManager.coolDic["Dash"].maxCoolTime;
+        superJumpImage.fillAmount = Managers.Instance.CoolTimeManager.coolDic["SuperJump"].curCoolTime / Managers.Instance.CoolTimeManager.coolDic["Dash"].maxCoolTime;
+    }
+
+    public void PlayerHpUpdate()
+    {
+        playerHpImage.fillAmount = PlayerController.Instance.CurrentHp / PlayerController.Instance.MaxHp;
     }
 }
