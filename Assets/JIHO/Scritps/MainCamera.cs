@@ -25,6 +25,9 @@ public class MainCamera : MonoBehaviour
 
         camNormalDir = cam.localPosition.normalized;
         finalDistance = cam.localPosition.magnitude;
+
+        
+           
     }
 
     private void LateUpdate()
@@ -45,6 +48,7 @@ public class MainCamera : MonoBehaviour
 
     private void CamMove()
     {
+        if (followTransform == null) followTransform = PlayerController.Instance.followTransform;
         transform.position = Vector3.MoveTowards(transform.position, followTransform.position, followSpeed * Time.deltaTime);
         camFinalDir = transform.TransformPoint(camNormalDir * maxDistance);
 

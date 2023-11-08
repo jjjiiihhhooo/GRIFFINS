@@ -72,6 +72,11 @@ public class White : Unit<PlayerController>
 {
     public override void ChangeUnit(PlayerController PlayerController)
     {
+        if (!Managers.Instance.CoolTimeManager.CoolCheck("CharacterChange")) return;
+        Managers.Instance.CoolTimeManager.GetCoolTime("CharacterChange");
+
+        Managers.Instance.UiManager.PlayerSelectUIUpdate(0);
+
         PlayerController.currentUnit.Exit(PlayerController);
         PlayerController.currentUnit = this;
         Debug.Log("White Change");
@@ -184,6 +189,11 @@ public class Red : Unit<PlayerController>
 {
     public override void ChangeUnit(PlayerController PlayerController)
     {
+        if (!Managers.Instance.CoolTimeManager.CoolCheck("CharacterChange")) return;
+        Managers.Instance.CoolTimeManager.GetCoolTime("CharacterChange");
+
+        Managers.Instance.UiManager.PlayerSelectUIUpdate(1);
+
         PlayerController.currentUnit.Exit(PlayerController);
         PlayerController.currentUnit = this;
         Debug.Log("Red Change");
@@ -296,6 +306,11 @@ public class Green : Unit<PlayerController>
 {
     public override void ChangeUnit(PlayerController PlayerController)
     {
+        if (!Managers.Instance.CoolTimeManager.CoolCheck("CharacterChange")) return;
+        Managers.Instance.CoolTimeManager.GetCoolTime("CharacterChange");
+
+        Managers.Instance.UiManager.PlayerSelectUIUpdate(2);
+
         PlayerController.currentUnit.Exit(PlayerController);
         PlayerController.currentUnit = this;
         Debug.Log("Green Change");
@@ -408,6 +423,11 @@ public class Blue : Unit<PlayerController>
 {
     public override void ChangeUnit(PlayerController PlayerController)
     {
+        if (!Managers.Instance.CoolTimeManager.CoolCheck("CharacterChange")) return;
+        Managers.Instance.CoolTimeManager.GetCoolTime("CharacterChange");
+
+        Managers.Instance.UiManager.PlayerSelectUIUpdate(3);
+
         PlayerController.currentUnit.Exit(PlayerController);
         PlayerController.currentUnit = this;
         Debug.Log("Blue Change");

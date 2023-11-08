@@ -41,6 +41,7 @@ public class PlayerController : MonoBehaviour
 
     public PhysicMaterial pm;
     public Rigidbody rigid;
+    public Transform followTransform;
     
     public White whiteUnit;
     public Red redUnit;
@@ -190,7 +191,7 @@ public class PlayerController : MonoBehaviour
     public void GetDamage(float damage)
     {
         currentHp -= damage;
-        Managers.Instance.UiManager.PlayerHpUpdate();
+        Managers.Instance.UiManager.PlayerHpUIUpdate();
         currentUnit.GetDamage(this);
         Debug.LogError(currentHp);
     }

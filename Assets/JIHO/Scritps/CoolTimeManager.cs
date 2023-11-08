@@ -29,6 +29,7 @@ public class CoolTimeManager : MonoBehaviour
         coolDic = new Dictionary<string, CoolData>();
         coolDic.Add("Dash", new CoolData(2, 0));
         coolDic.Add("SuperJump", new CoolData(2, 0));
+        coolDic.Add("CharacterChange", new CoolData(1, 0));
     }
 
     private IEnumerator CoolDownCor(string name)
@@ -38,6 +39,7 @@ public class CoolTimeManager : MonoBehaviour
             coolDic[name].curCoolTime -= Time.deltaTime;
             yield return new WaitForEndOfFrame();
         }
+        coolDic[name].curCoolTime = 0;
     }
 
     public void SetCoolTime(string name, float num)
