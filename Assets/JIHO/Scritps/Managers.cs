@@ -11,12 +11,14 @@ public class Managers : MonoBehaviour
     [SerializeField] private BulletSpawner bulletSpawner;
     [SerializeField] private CoolTimeManager coolTimeManager;
     [SerializeField] private UIManager uiManager;
+    [SerializeField] private Particles particles;
 
     public InputManager InputManager { get => inputManager; }
     public SoundManager SoundManager { get => soundManager; }
     public BulletSpawner BulletSpawner { get => bulletSpawner; }
     public CoolTimeManager CoolTimeManager { get => coolTimeManager; }
     public UIManager UiManager { get => uiManager; }
+    public Particles Particles { get => particles; }
 
     private void Awake()
     {

@@ -134,6 +134,8 @@ public class PlayerController : MonoBehaviour
                 isJump = true;
 
                 currentUnit.animator.SetBool("isJump", false);
+                Managers.Instance.Particles.groundEffect.transform.position = currentUnit.groundEffectTransform.position;
+                Managers.Instance.Particles.groundEffect.Play();
             }
 
             if (currentUnit.animator.GetCurrentAnimatorStateInfo(0).IsName("DashAir") && isDash)
@@ -141,16 +143,23 @@ public class PlayerController : MonoBehaviour
                 Debug.LogError("dd");
                 isDash = false;
                 currentUnit.animator.SetBool("isDashAir", false);
+                ChangeDashEffect();
+                Managers.Instance.Particles.groundEffect.transform.position = currentUnit.groundEffectTransform.position;
+                Managers.Instance.Particles.groundEffect.Play();
             }
 
             if (currentUnit.animator.GetCurrentAnimatorStateInfo(0).IsName("ObjectHitAir"))
             {
                 currentUnit.animator.SetBool("isObjectAir", false);
+                Managers.Instance.Particles.groundEffect.transform.position = currentUnit.groundEffectTransform.position;
+                Managers.Instance.Particles.groundEffect.Play();
             }
 
             if (currentUnit.animator.GetCurrentAnimatorStateInfo(0).IsName("GroundJump") || currentUnit.animator.GetCurrentAnimatorStateInfo(0).IsName("GroundJumpAir"))
             {
                 currentUnit.animator.SetTrigger("GroundExit");
+                Managers.Instance.Particles.groundEffect.transform.position = currentUnit.groundEffectTransform.position;
+                Managers.Instance.Particles.groundEffect.Play();
             }
 
             isGround = true;
@@ -211,6 +220,13 @@ public class PlayerController : MonoBehaviour
         isAttack = _bool;
     }
 
+    public void ChangeDashEffect()
+    {
+        //currentUnit.characterModel.transform.localScale = new Vector3(1, 1, 1);
+        Managers.Instance.Particles.dashEffect.gameObject.SetActive(false);
+    }
+
+
     private void OnCollisionEnter(Collision collision)
     {
         if(collision.transform.CompareTag("Object") && isDash)
@@ -235,6 +251,8 @@ public class PlayerController : MonoBehaviour
             isSuperJump = false;
             if (!currentUnit.animator.GetCurrentAnimatorStateInfo(0).IsName("GroundReady")) currentUnit.animator.SetBool("GroundReady",true);
             Managers.Instance.CoolTimeManager.SetCoolTime("Dash", 0);
+            Managers.Instance.Particles.jumpEffect.transform.position = currentUnit.jumpEffectTransform.position;
+            Managers.Instance.Particles.jumpEffect.Play();
         }
     }
 

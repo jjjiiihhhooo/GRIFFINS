@@ -29318,6 +29318,38 @@ Animator:
   m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 88fe8e9527c13924bbcb67994f2b5235, type: 3}
   m_PrefabInstance: {fileID: 6696008400977487923}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &5777108936105022818 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 88fe8e9527c13924bbcb67994f2b5235, type: 3}
+  m_PrefabInstance: {fileID: 6696008400977487923}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1671422838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5777108936105022818}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e26e1b862fd28584f854371e85fdb528, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  events:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4858687227001268888}
+        m_TargetAssemblyTypeName: EnemyController, Assembly-CSharp
+        m_MethodName: Dead
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!4 &6586436753030516696 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 88fe8e9527c13924bbcb67994f2b5235, type: 3}

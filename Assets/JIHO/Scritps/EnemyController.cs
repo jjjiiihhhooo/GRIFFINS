@@ -79,4 +79,9 @@ public class EnemyController : SerializedMonoBehaviour
         enemy.damageEffect.transform.position = targetPos;
         enemy.damageEffect.Play();
     }
+
+    public void Dead()
+    {
+        Destroy(this.gameObject);
+    }
 }

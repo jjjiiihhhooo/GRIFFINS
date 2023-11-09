@@ -15,6 +15,13 @@ public class Unit<T>
     public GameObject unit_obj;
     public GameObject attackCol;
     public GameObject changeEffect_obj;
+    public GameObject characterModel;
+
+    [Header("ParticleTransform")]
+    public Transform jumpEffectTransform;
+    public Transform dashStartEffectTransform;
+    public Transform dashEffectTransform;
+    public Transform groundEffectTransform;
 
     public float curDamage;
     public float normalDamage;
@@ -106,6 +113,7 @@ public class White : Unit<PlayerController>
         Quaternion targetRotation = Quaternion.LookRotation(dirY, Vector3.up);
         PlayerController.transform.rotation = targetRotation;
 
+        PlayerController.ChangeDashEffect();
         animator.SetTrigger("AttackCombo");
     }
 
@@ -121,11 +129,17 @@ public class White : Unit<PlayerController>
 
         if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Dash")) animator.SetTrigger("Dash");
 
+        Managers.Instance.Particles.dashStartEffect.transform.position = dashStartEffectTransform.position;
+        Managers.Instance.Particles.dashStartEffect.Play();
+
         PlayerController.pm.bounceCombine = PhysicMaterialCombine.Maximum;
         PlayerController.groundTime = PlayerController.groundMaxTime;
         PlayerController.IsDash = true;
         animator.SetBool("isDashAir", true);
 
+        
+
+        
         Vector3 dir = Camera.main.ScreenPointToRay(Input.mousePosition).direction;
         PlayerController.ray = new Ray(PlayerController.transform.position, dir);
 
@@ -134,6 +148,12 @@ public class White : Unit<PlayerController>
         Vector3 dirY = new Vector3(PlayerController.ray.direction.x, 0, PlayerController.ray.direction.z);
         Quaternion targetRotation = Quaternion.LookRotation(dirY, Vector3.up);
         PlayerController.transform.rotation = targetRotation;
+
+        //characterModel.transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
+
+        Managers.Instance.Particles.dashEffect.transform.position = dashEffectTransform.position;
+        Managers.Instance.Particles.dashEffect.gameObject.SetActive(true);
+
     }
 
     public override void Jump(PlayerController PlayerController)
@@ -145,10 +165,14 @@ public class White : Unit<PlayerController>
         if (!animator.GetCurrentAnimatorStateInfo(0).IsName("JumpReady")) animator.SetTrigger("JumpReady");
         animator.SetBool("isJump", true);
 
+        Managers.Instance.Particles.jumpEffect.transform.position = jumpEffectTransform.position;
+        Managers.Instance.Particles.jumpEffect.Play();
+
         PlayerController.pm.bounceCombine = PhysicMaterialCombine.Minimum;
         PlayerController.groundTime = PlayerController.groundMaxTime;
         PlayerController.rigid.AddForce(Vector3.up * PlayerController.jumpForce, ForceMode.Impulse);
         PlayerController.Invoke("JumpAir", 0.1f);
+        PlayerController.ChangeDashEffect();
     }
 
     public override void SuperJump(PlayerController PlayerController)
@@ -176,6 +200,7 @@ public class White : Unit<PlayerController>
 
         PlayerController.rigid.velocity = Vector3.zero;
         PlayerController.rigid.AddForce(Vector3.down * PlayerController.superJumpForce, ForceMode.Impulse);
+        PlayerController.ChangeDashEffect();
     }
 
     public override void GetDamage(PlayerController PlayerController)
@@ -238,6 +263,9 @@ public class Red : Unit<PlayerController>
 
         if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Dash")) animator.SetTrigger("Dash");
 
+        Managers.Instance.Particles.dashStartEffect.transform.position = dashStartEffectTransform.position;
+        Managers.Instance.Particles.dashStartEffect.Play();
+
         PlayerController.pm.bounceCombine = PhysicMaterialCombine.Maximum;
         PlayerController.groundTime = PlayerController.groundMaxTime;
         PlayerController.IsDash = true;
@@ -261,6 +289,9 @@ public class Red : Unit<PlayerController>
 
         if (!animator.GetCurrentAnimatorStateInfo(0).IsName("JumpReady")) animator.SetTrigger("JumpReady");
         animator.SetBool("isJump", true);
+
+        Managers.Instance.Particles.jumpEffect.transform.position = jumpEffectTransform.position;
+        Managers.Instance.Particles.jumpEffect.Play();
 
         PlayerController.pm.bounceCombine = PhysicMaterialCombine.Minimum;
         PlayerController.groundTime = PlayerController.groundMaxTime;
@@ -330,6 +361,7 @@ public class Green : Unit<PlayerController>
 
     public override void AttackAction(PlayerController PlayerController)
     {
+        
         PlayerController.IsAttack = true;
         curDamage = normalDamage;
 
@@ -355,6 +387,9 @@ public class Green : Unit<PlayerController>
 
         if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Dash")) animator.SetTrigger("Dash");
 
+        Managers.Instance.Particles.dashStartEffect.transform.position = dashStartEffectTransform.position;
+        Managers.Instance.Particles.dashStartEffect.Play();
+
         PlayerController.pm.bounceCombine = PhysicMaterialCombine.Maximum;
         PlayerController.groundTime = PlayerController.groundMaxTime;
         PlayerController.IsDash = true;
@@ -378,6 +413,9 @@ public class Green : Unit<PlayerController>
 
         if (!animator.GetCurrentAnimatorStateInfo(0).IsName("JumpReady")) animator.SetTrigger("JumpReady");
         animator.SetBool("isJump", true);
+
+        Managers.Instance.Particles.jumpEffect.transform.position = jumpEffectTransform.position;
+        Managers.Instance.Particles.jumpEffect.Play();
 
         PlayerController.pm.bounceCombine = PhysicMaterialCombine.Minimum;
         PlayerController.groundTime = PlayerController.groundMaxTime;
@@ -472,6 +510,9 @@ public class Blue : Unit<PlayerController>
 
         if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Dash")) animator.SetTrigger("Dash");
 
+        Managers.Instance.Particles.dashStartEffect.transform.position = dashStartEffectTransform.position;
+        Managers.Instance.Particles.dashStartEffect.Play();
+
         PlayerController.pm.bounceCombine = PhysicMaterialCombine.Maximum;
         PlayerController.groundTime = PlayerController.groundMaxTime;
         PlayerController.IsDash = true;
@@ -495,6 +536,9 @@ public class Blue : Unit<PlayerController>
 
         if (!animator.GetCurrentAnimatorStateInfo(0).IsName("JumpReady")) animator.SetTrigger("JumpReady");
         animator.SetBool("isJump", true);
+
+        Managers.Instance.Particles.jumpEffect.transform.position = jumpEffectTransform.position;
+        Managers.Instance.Particles.jumpEffect.Play();
 
         PlayerController.pm.bounceCombine = PhysicMaterialCombine.Minimum;
         PlayerController.groundTime = PlayerController.groundMaxTime;
@@ -520,6 +564,8 @@ public class Blue : Unit<PlayerController>
         {
             PlayerController.IsSuperJump = false;
             animator.SetTrigger("GroundReadyAction");
+            Managers.Instance.Particles.jumpEffect.transform.position = jumpEffectTransform.position;
+            Managers.Instance.Particles.jumpEffect.Play();
         }
 
         PlayerController.pm.bounceCombine = PhysicMaterialCombine.Maximum;

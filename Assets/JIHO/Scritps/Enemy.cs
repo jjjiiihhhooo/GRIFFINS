@@ -38,7 +38,7 @@ public class Enemy
 
     public virtual void Die()
     {
-        enemyController.gameObject.SetActive(false);
+        animator.SetTrigger("Die");
     }
 }
 
