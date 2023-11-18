@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace genshin
 {
@@ -22,6 +23,8 @@ namespace genshin
         protected Vector3 dampedTargetRotationCurrentVelocity;
         protected Vector3 dampedTargetRotationPassedTime;
 
+        protected bool shouldWalk;
+
         public PlayerMovementState(PlayerMovementStateMachine playerMovementStateMachine)
         {
             stateMachine = playerMovementStateMachine;
@@ -38,11 +41,15 @@ namespace genshin
         public virtual void Enter()
         {
             Debug.Log("State : " + GetType().Name);
+
+            AddInputActionsCallbacks();
         }
+
+        
 
         public virtual void Exit()
         {
-           
+            RemoveInputActionsCallbacks();
         }
 
         public virtual void HandleInput()
@@ -50,14 +57,14 @@ namespace genshin
             ReadMovementInput();
         }
 
+        public virtual void Update()
+        {
+
+        }
+
         public virtual void PhysicsUpdate()
         {
             Move();
-        }
-
-        public virtual void Update()
-        {
-            
         }
         #endregion
 
@@ -102,7 +109,7 @@ namespace genshin
 
         private float GetDirectionAngle(Vector3 direction)
         {
-            float directionAngle = Mathf.Atan2(direction.x, direction.y) * Mathf.Rad2Deg;
+            float directionAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
 
             if (directionAngle < 0f)
             {
@@ -195,6 +202,27 @@ namespace genshin
             return Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
         }
 
+        protected void ResetVelocity()
+        {
+            stateMachine.Player.Rigidbody.velocity = Vector3.zero;
+        }
+
+        protected virtual void AddInputActionsCallbacks()
+        {
+            stateMachine.Player.Input.PlayerActions.WalkToggle.started += OnWalkToggleStarted;
+        }
+
+        protected virtual void RemoveInputActionsCallbacks()
+        {
+            stateMachine.Player.Input.PlayerActions.WalkToggle.started -= OnWalkToggleStarted;
+        }
+        #endregion
+
+        #region Input Methods
+        protected virtual void OnWalkToggleStarted(InputAction.CallbackContext context)
+        {
+            shouldWalk = !shouldWalk;
+        }
         #endregion
     }
 
