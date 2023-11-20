@@ -17,7 +17,7 @@ namespace genshin
         {
             base.Enter();
 
-            speedModifier = 0.225f;
+            stateMachine.ReusableData.MovementSpeedModifier = movementData.WalkData.SpeedModifier;
         }
         #endregion
 
@@ -31,10 +31,6 @@ namespace genshin
             stateMachine.ChangeState(stateMachine.RunningState);
         }
 
-        protected void OnMovementCanceled(InputAction.CallbackContext obj)
-        {
-            stateMachine.ChangeState(stateMachine.IdlingState);
-        }
         #endregion
     }
 }

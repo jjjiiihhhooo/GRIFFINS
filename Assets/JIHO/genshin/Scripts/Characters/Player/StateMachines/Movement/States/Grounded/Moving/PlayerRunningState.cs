@@ -17,7 +17,7 @@ namespace genshin
         {
             base.Enter();
 
-            speedModifier = 1f;
+            stateMachine.ReusableData.MovementSpeedModifier = movementData.RunData.SpeedModifier;
         }
         #endregion
 
