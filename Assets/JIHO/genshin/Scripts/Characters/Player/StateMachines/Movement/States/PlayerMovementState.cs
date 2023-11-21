@@ -11,12 +11,10 @@ namespace genshin
         protected PlayerGroundedData movementData;
         
         
-        protected float baseSpeed = 5f;
 
         public PlayerMovementState(PlayerMovementStateMachine playerMovementStateMachine)
         {
             stateMachine = playerMovementStateMachine;
-
             movementData = stateMachine.Player.Data.GroundedData;
 
             InitializeData();
@@ -56,6 +54,21 @@ namespace genshin
         {
             Move();
         }
+
+        public virtual void OnAnimationEnterEvent()
+        {
+            
+        }
+
+        public virtual void OnAnimationExitEvent()
+        {
+            
+        }
+
+        public virtual void OnAnimationTransitionEvent()
+        {
+            
+        }
         #endregion
 
         #region Main Mathods
@@ -67,7 +80,7 @@ namespace genshin
 
         private void Move()
         {
-            if(stateMachine.ReusableData.MovementInput == Vector2.zero || stateMachine.ReusableData.MovementSpeedModifier == 0f)
+            if (stateMachine.ReusableData.MovementInput == Vector2.zero || stateMachine.ReusableData.MovementSpeedModifier == 0f)
             {
                 return;
             }
@@ -80,12 +93,12 @@ namespace genshin
 
             float movementSpeed = GetMovementSpeed();
 
-            Vector3 currentPlayerHorizontalVelocty = GetPlayerHorizontalVelocity();
+            Vector3 currentPlayerHorizontalVelocity = GetPlayerHorizontalVelocity();
 
-            stateMachine.Player.Rigidbody.AddForce(targetRotationDirection * movementSpeed - currentPlayerHorizontalVelocty, ForceMode.VelocityChange);
+            stateMachine.Player.Rigidbody.AddForce(targetRotationDirection * movementSpeed - currentPlayerHorizontalVelocity, ForceMode.VelocityChange);
         }
 
-        
+
         private float Rotate(Vector3 direction)
         {
             float directionAngle = UpdateTargetRotation(direction);
@@ -94,8 +107,8 @@ namespace genshin
 
             return directionAngle;
         }
-        
-        
+
+
 
         private float GetDirectionAngle(Vector3 direction)
         {
@@ -137,7 +150,7 @@ namespace genshin
 
         protected float GetMovementSpeed()
         {
-            return movementData.BaseSpeed * stateMachine.ReusableData.MovementSpeedModifier;
+            return movementData.BaseSpeed * stateMachine.ReusableData.MovementSpeedModifier * stateMachine.ReusableData.MovementOnSlopesSpeedModifier;
         }
 
         protected Vector3 GetPlayerHorizontalVelocity()
@@ -149,6 +162,10 @@ namespace genshin
             return playerHorizontalVelocity;
         }
 
+        protected Vector3 GetPlayerVerticalVelocity()
+        {
+            return new Vector3(0f, stateMachine.Player.Rigidbody.velocity.y, 0f);
+        }
 
         protected void RotateToWardsTargetRotation()
         {
@@ -172,12 +189,10 @@ namespace genshin
         {
             float directionAngle = GetDirectionAngle(direction);
 
-            if(shouldConsiderCameraRotation)
+            if (shouldConsiderCameraRotation)
             {
                 directionAngle = AddCameraRotationToAngle(directionAngle);
             }
-
-            directionAngle = AddCameraRotationToAngle(directionAngle);
 
             if (directionAngle != stateMachine.ReusableData.CurrentTargetRotation.y)
             {
@@ -205,6 +220,22 @@ namespace genshin
         protected virtual void RemoveInputActionsCallbacks()
         {
             stateMachine.Player.Input.PlayerActions.WalkToggle.started -= OnWalkToggleStarted;
+        }
+
+        protected void DecelerateHorizontally()
+        {
+            Vector3 playerHorizontalVelocity = GetPlayerHorizontalVelocity();
+
+            stateMachine.Player.Rigidbody.AddForce(-playerHorizontalVelocity * stateMachine.ReusableData.MovementDecelerationForce, ForceMode.Acceleration);
+        }
+
+        protected bool IsMovingHorizontally(float minimumMagnitude = 0.1f)
+        {
+            Vector3 playerHorizontalVelocity = GetPlayerHorizontalVelocity();
+
+            Vector2 playerHorizontalMovement = new Vector2(playerHorizontalVelocity.x, playerHorizontalVelocity.z);
+
+            return playerHorizontalMovement.magnitude > minimumMagnitude;
         }
         #endregion
 

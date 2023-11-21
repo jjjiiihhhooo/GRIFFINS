@@ -16,5 +16,10 @@ namespace genshin
 
         public void PhysicsUpdate();
 
+        public void OnAnimationEnterEvent();
+
+        public void OnAnimationExitEvent();
+
+        public void OnAnimationTransitionEvent();
     }
 }

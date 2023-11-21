@@ -156,6 +156,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Data>k__BackingField: {fileID: 11400000, guid: 6a73e8c18a853874288e9ed4d0627a22, type: 2}
+  <ColliderUtility>k__BackingField:
+    <DefaultColliderData>k__BackingField:
+      <Height>k__BackingField: 0.96
+      <CenterY>k__BackingField: 0.48
+      <Radius>k__BackingField: 0.1
+    <SlopeData>k__BackingField:
+      <StepHeightPercentage>k__BackingField: 0.25
+      <FloatRayDistance>k__BackingField: 2
+      <StepReachForce>k__BackingField: 25
+  <LayerData>k__BackingField:
+    <GroundLayer>k__BackingField:
+      serializedVersion: 2
+      m_Bits: 2048
 --- !u!4 &14528145
 Transform:
   m_ObjectHideFlags: 0
@@ -208,13 +221,13 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 14528143}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 93009206aadf8ae4d9b95d11c529682e, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.1
-  m_Height: 0.96
+  m_Height: 0.71999997
   m_Direction: 1
-  m_Center: {x: 0, y: 0.48, z: 0}
+  m_Center: {x: 0, y: 0.6, z: 0}
 --- !u!1 &163253264
 GameObject:
   m_ObjectHideFlags: 3
@@ -454,7 +467,7 @@ Transform:
   m_Children:
   - {fileID: 163253265}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &521349187
 MonoBehaviour:
@@ -971,6 +984,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1958226511}
+  - {fileID: 2117688950}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -980,7 +994,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh43546
+  m_Name: pb_Mesh43560
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -1660,7 +1674,7 @@ GameObject:
   - component: {fileID: 2117688947}
   - component: {fileID: 2117688946}
   - component: {fileID: 2117688945}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1982,11 +1996,11 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2117688944}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.12, y: -58.43, z: -8.05}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 8.12, y: 41.57, z: -8.05}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_Father: {fileID: 1086732025}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
