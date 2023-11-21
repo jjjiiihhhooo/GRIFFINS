@@ -1,4 +1,5 @@
 
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,6 +10,7 @@ namespace genshin
         protected PlayerMovementStateMachine stateMachine;
 
         protected PlayerGroundedData movementData;
+        protected PlayerAirborneData airborneData;
         
         
 
@@ -16,13 +18,14 @@ namespace genshin
         {
             stateMachine = playerMovementStateMachine;
             movementData = stateMachine.Player.Data.GroundedData;
+            airborneData = stateMachine.Player.Data.AirborneData;
 
             InitializeData();
         }
 
         protected void InitializeData()
         {
-            stateMachine.ReusableData.TimeToReachTargetRotation = movementData.BaseRotationData.TargetRotationReachTime;
+            SetBaseRotationData();
         }
 
         #region IState Mathods
@@ -67,8 +70,17 @@ namespace genshin
 
         public virtual void OnAnimationTransitionEvent()
         {
-            
+
         }
+
+        public virtual void OnTriggerEnter(Collider collider)
+        {
+            if(stateMachine.Player.LayerData.IsGroundLayer(collider.gameObject.layer))
+            {
+                OnContactWithGround(collider);
+            }
+        }
+
         #endregion
 
         #region Main Mathods
@@ -143,6 +155,14 @@ namespace genshin
         #endregion
 
         #region Reusable Mathods
+
+        protected void SetBaseRotationData()
+        {
+            stateMachine.ReusableData.RotationData = movementData.BaseRotationData;
+
+            stateMachine.ReusableData.TimeToReachTargetRotation = stateMachine.ReusableData.RotationData.TargetRotationReachTime;
+        }
+
         protected Vector3 GetMovementInputDirection()
         {
             return new Vector3(stateMachine.ReusableData.MovementInput.x, 0f, stateMachine.ReusableData.MovementInput.y);
@@ -229,6 +249,13 @@ namespace genshin
             stateMachine.Player.Rigidbody.AddForce(-playerHorizontalVelocity * stateMachine.ReusableData.MovementDecelerationForce, ForceMode.Acceleration);
         }
 
+        protected void DecelerateVertically()
+        {
+            Vector3 playerVerticalVelocity = GetPlayerVerticalVelocity();
+
+            stateMachine.Player.Rigidbody.AddForce(-playerVerticalVelocity * stateMachine.ReusableData.MovementDecelerationForce, ForceMode.Acceleration);
+        }
+
         protected bool IsMovingHorizontally(float minimumMagnitude = 0.1f)
         {
             Vector3 playerHorizontalVelocity = GetPlayerHorizontalVelocity();
@@ -237,6 +264,21 @@ namespace genshin
 
             return playerHorizontalMovement.magnitude > minimumMagnitude;
         }
+
+        protected bool IsMovingUp(float minimumVelocity = 0.1f)
+        {
+            return GetPlayerVerticalVelocity().y > minimumVelocity;
+        }
+        
+        protected bool IsMovingDown(float minimumVelocity = 0.1f)
+        {
+            return GetPlayerVerticalVelocity().y < -minimumVelocity;
+        }
+
+        protected virtual void OnContactWithGround(Collider collider)
+        {
+            
+        }
         #endregion
 
         #region Input Methods
@@ -244,6 +286,7 @@ namespace genshin
         {
             stateMachine.ReusableData.ShouldWalk = !stateMachine.ReusableData.ShouldWalk;
         }
+
         #endregion
     }
 

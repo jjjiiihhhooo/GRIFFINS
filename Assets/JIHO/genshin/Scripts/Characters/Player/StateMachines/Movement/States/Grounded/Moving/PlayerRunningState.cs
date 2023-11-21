@@ -24,7 +24,10 @@ namespace genshin
 
             stateMachine.ReusableData.MovementSpeedModifier = movementData.RunData.SpeedModifier;
 
+            stateMachine.ReusableData.CurrentJumpForce = airborneData.JumpData.MediumForce;
+
             startTime = Time.time;
+
         }
 
         public override void Update()

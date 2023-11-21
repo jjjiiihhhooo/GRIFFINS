@@ -17,6 +17,14 @@ namespace genshin
         }
 
         #region IState Methods
+
+        public override void Enter()
+        {
+            base.Enter();
+
+            UpdateShouldSprintState();
+        }
+
         public override void PhysicsUpdate()
         {
             base.PhysicsUpdate();
@@ -26,6 +34,21 @@ namespace genshin
         #endregion
 
         #region Main Methods
+        private void UpdateShouldSprintState()
+        {
+            if (!stateMachine.ReusableData.ShouldSprint)
+            {
+                return;
+            }
+
+            if (stateMachine.ReusableData.MovementInput != Vector2.zero)
+            {
+                return;
+            }
+
+            stateMachine.ReusableData.ShouldSprint = false;
+        }
+
         private void Float()
         {
             Vector3 capsuleColliderCenterInWorldSpace = stateMachine.Player.ColliderUtility.CapsuleColliderData.Collider.bounds.center;
@@ -76,6 +99,8 @@ namespace genshin
             stateMachine.Player.Input.PlayerActions.Movement.canceled += OnMovementCanceled;
 
             stateMachine.Player.Input.PlayerActions.Dash.started += OnDashStarted;
+
+            stateMachine.Player.Input.PlayerActions.Jump.started += OnJumpStarted;
         }
 
         protected override void RemoveInputActionsCallbacks()
@@ -85,10 +110,19 @@ namespace genshin
             stateMachine.Player.Input.PlayerActions.Movement.canceled -= OnMovementCanceled;
 
             stateMachine.Player.Input.PlayerActions.Dash.started -= OnDashStarted;
+
+            stateMachine.Player.Input.PlayerActions.Jump.started -= OnJumpStarted;
         }
 
         protected virtual void OnMove()
         {
+            if(stateMachine.ReusableData.ShouldSprint)
+            {
+                stateMachine.ChangeState(stateMachine.SprintState);
+
+                return;
+            }
+
             if (stateMachine.ReusableData.ShouldWalk)
             {
                 stateMachine.ChangeState(stateMachine.WalkingState);
@@ -110,6 +144,12 @@ namespace genshin
         {
             stateMachine.ChangeState(stateMachine.DashingState);
         }
+
+        protected virtual void OnJumpStarted(InputAction.CallbackContext context)
+        {
+            stateMachine.ChangeState(stateMachine.JumpingState);
+        }
+
         #endregion
     }
 }

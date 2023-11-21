@@ -19,6 +19,8 @@ namespace genshin
         public PlayerMediumStoppingState MediumStoppingState { get; }
         public PlayerHardStoppingState HardStoppingState { get; }
 
+        public PlayerJumpingState JumpingState { get; }
+
         public PlayerMovementStateMachine(Player player)
         {
             Player = player;
@@ -33,6 +35,8 @@ namespace genshin
             LightStoppingState = new PlayerLightStoppingState(this);
             MediumStoppingState = new PlayerMediumStoppingState(this);
             HardStoppingState = new PlayerHardStoppingState(this);
+
+            JumpingState = new PlayerJumpingState(this);
         }
 
     }

@@ -16,6 +16,8 @@ namespace genshin
             base.Enter();
 
             stateMachine.ReusableData.MovementDecelerationForce = movementData.StopData.LightDecelerationForce;
+
+            stateMachine.ReusableData.CurrentJumpForce = airborneData.JumpData.WeakForce;
         }
         #endregion
     }

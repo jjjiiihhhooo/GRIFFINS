@@ -24,6 +24,8 @@ namespace genshin
         {
             base.PhysicsUpdate();
 
+            RotateToWardsTargetRotation();
+
             if(!IsMovingHorizontally())
             {
                 return;
