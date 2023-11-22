@@ -136,6 +136,7 @@ GameObject:
   - component: {fileID: 14528147}
   - component: {fileID: 14528144}
   - component: {fileID: 14528146}
+  - component: {fileID: 14528149}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -156,19 +157,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Data>k__BackingField: {fileID: 11400000, guid: 6a73e8c18a853874288e9ed4d0627a22, type: 2}
-  <ColliderUtility>k__BackingField:
-    <DefaultColliderData>k__BackingField:
-      <Height>k__BackingField: 0.96
-      <CenterY>k__BackingField: 0.48
-      <Radius>k__BackingField: 0.1
-    <SlopeData>k__BackingField:
-      <StepHeightPercentage>k__BackingField: 0.25
-      <FloatRayDistance>k__BackingField: 2
-      <StepReachForce>k__BackingField: 25
   <LayerData>k__BackingField:
     <GroundLayer>k__BackingField:
       serializedVersion: 2
       m_Bits: 2048
+  <CameraRecenteringUtility>k__BackingField:
+    <VirtualCamera>k__BackingField: {fileID: 521349185}
+    <DefaultHorizontalWaitTime>k__BackingField: 0
+    <DefaultHorizontalRecenteringTime>k__BackingField: 4
 --- !u!4 &14528145
 Transform:
   m_ObjectHideFlags: 0
@@ -177,7 +173,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 14528143}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -49.7, z: 0}
+  m_LocalPosition: {x: 0, y: -48.95, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -229,6 +225,28 @@ CapsuleCollider:
   m_Height: 0.71999997
   m_Direction: 1
   m_Center: {x: 0, y: 0.6, z: 0}
+--- !u!114 &14528149
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 14528143}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3145f6a68d917b44a65beeca3b3f5eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <DefaultColliderData>k__BackingField:
+    <Height>k__BackingField: 0.96
+    <CenterY>k__BackingField: 0.48
+    <Radius>k__BackingField: 0.1
+  <SlopeData>k__BackingField:
+    <StepHeightPercentage>k__BackingField: 0.25
+    <FloatRayDistance>k__BackingField: 2
+    <StepReachForce>k__BackingField: 25
+  <TriggerColliderData>k__BackingField:
+    <GroundCheckCollider>k__BackingField: {fileID: 1703497488}
 --- !u!1 &132118003
 GameObject:
   m_ObjectHideFlags: 0
@@ -352,8 +370,8 @@ MonoBehaviour:
       m_LegacyVelocityFilterStrength: -1
   m_HorizontalRecentering:
     m_enabled: 0
-    m_WaitTime: 1
-    m_RecenteringTime: 2
+    m_WaitTime: 0
+    m_RecenteringTime: 4
     m_LegacyHeadingDefinition: -1
     m_LegacyVelocityFilterStrength: -1
   m_ApplyBeforeBody: 0
@@ -494,7 +512,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 521349183}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -48.8, z: -6}
+  m_LocalPosition: {x: 0, y: -48.05, z: -6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -628,7 +646,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 557474486}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -48.8, z: -6}
+  m_LocalPosition: {x: 0, y: -48.05, z: -6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1027,7 +1045,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh43560
+  m_Name: pb_Mesh43594
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -1191,7 +1209,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh43532
+  m_Name: pb_Mesh43580
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2

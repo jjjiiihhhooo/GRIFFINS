@@ -12,21 +12,32 @@ namespace genshin
         public PlayerStoppingState(PlayerMovementStateMachine playerMovementStateMachine) : base(playerMovementStateMachine)
         {
         }
-        #region IState Methods
+
         public override void Enter()
         {
+            stateMachine.ReusableData.MovementSpeedModifier = 0f;
+
+            SetBaseCameraRecenteringData();
+
             base.Enter();
 
-            stateMachine.ReusableData.MovementSpeedModifier = 0f;
+            //StartAnimation(stateMachine.Player.AnimationData.StoppingParameterHash);
+        }
+
+        public override void Exit()
+        {
+            base.Exit();
+
+           // StopAnimation(stateMachine.Player.AnimationData.StoppingParameterHash);
         }
 
         public override void PhysicsUpdate()
         {
             base.PhysicsUpdate();
 
-            RotateToWardsTargetRotation();
+            RotateTowardsTargetRotation();
 
-            if(!IsMovingHorizontally())
+            if (!IsMovingHorizontally())
             {
                 return;
             }
@@ -38,15 +49,13 @@ namespace genshin
         {
             stateMachine.ChangeState(stateMachine.IdlingState);
         }
-        #endregion
+
         protected override void AddInputActionsCallbacks()
         {
             base.AddInputActionsCallbacks();
 
             stateMachine.Player.Input.PlayerActions.Movement.started += OnMovementStarted;
         }
-
-        
 
         protected override void RemoveInputActionsCallbacks()
         {
@@ -55,21 +64,9 @@ namespace genshin
             stateMachine.Player.Input.PlayerActions.Movement.started -= OnMovementStarted;
         }
 
-        #region Reusable Methods
-
-
-        #endregion
-
-        #region Input Methods
-        protected override void OnMovementCanceled(InputAction.CallbackContext context)
-        {
-            
-        }
-
         private void OnMovementStarted(InputAction.CallbackContext context)
         {
             OnMove();
         }
-        #endregion
     }
 }

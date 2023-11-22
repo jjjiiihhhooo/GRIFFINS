@@ -2,6 +2,7 @@ using Sirenix.Utilities.Editor;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.ShaderGraph;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,20 +10,26 @@ namespace genshin
 {
     public class PlayerGroundedState : PlayerMovementState
     {
-        private SlopeData slopeData;
-
         public PlayerGroundedState(PlayerMovementStateMachine playerMovementStateMachine) : base(playerMovementStateMachine)
         {
-            slopeData = stateMachine.Player.ColliderUtility.SlopeData;
         }
-
-        #region IState Methods
 
         public override void Enter()
         {
             base.Enter();
 
+            //StartAnimation(stateMachine.Player.AnimationData.GroundedParameterHash);
+
             UpdateShouldSprintState();
+
+            UpdateCameraRecenteringState(stateMachine.ReusableData.MovementInput);
+        }
+
+        public override void Exit()
+        {
+            base.Exit();
+
+            //StopAnimation(stateMachine.Player.AnimationData.GroundedParameterHash);
         }
 
         public override void PhysicsUpdate()
@@ -31,9 +38,7 @@ namespace genshin
 
             Float();
         }
-        #endregion
 
-        #region Main Methods
         private void UpdateShouldSprintState()
         {
             if (!stateMachine.ReusableData.ShouldSprint)
@@ -51,28 +56,29 @@ namespace genshin
 
         private void Float()
         {
-            Vector3 capsuleColliderCenterInWorldSpace = stateMachine.Player.ColliderUtility.CapsuleColliderData.Collider.bounds.center;
+            Vector3 capsuleColliderCenterInWorldSpace = stateMachine.Player.ResizableCapsuleCollider.CapsuleColliderData.Collider.bounds.center;
 
             Ray downwardsRayFromCapsuleCenter = new Ray(capsuleColliderCenterInWorldSpace, Vector3.down);
 
-            if(Physics.Raycast(downwardsRayFromCapsuleCenter, out RaycastHit hit, slopeData.FloatRayDistance, stateMachine.Player.LayerData.GroundLayer, QueryTriggerInteraction.Ignore))
+            if (Physics.Raycast(downwardsRayFromCapsuleCenter, out RaycastHit hit, stateMachine.Player.ResizableCapsuleCollider.SlopeData.FloatRayDistance, stateMachine.Player.LayerData.GroundLayer, QueryTriggerInteraction.Ignore))
             {
                 float groundAngle = Vector3.Angle(hit.normal, -downwardsRayFromCapsuleCenter.direction);
-                float slopeSpeedModifier = SetSlopeSpeedmodifierOnAngle(groundAngle);
 
-                if(slopeSpeedModifier == 0f)
+                float slopeSpeedModifier = SetSlopeSpeedModifierOnAngle(groundAngle);
+
+                if (slopeSpeedModifier == 0f)
                 {
                     return;
                 }
 
-                float distanceToFloatingPoint = stateMachine.Player.ColliderUtility.CapsuleColliderData.ColliderCenterInLocalSpace.y * stateMachine.Player.transform.localScale.y - hit.distance;
-           
-                if(distanceToFloatingPoint == 0f)
+                float distanceToFloatingPoint = stateMachine.Player.ResizableCapsuleCollider.CapsuleColliderData.ColliderCenterInLocalSpace.y * stateMachine.Player.transform.localScale.y - hit.distance;
+
+                if (distanceToFloatingPoint == 0f)
                 {
                     return;
                 }
 
-                float amountToLift = distanceToFloatingPoint * slopeData.StepReachForce - GetPlayerVerticalVelocity().y;
+                float amountToLift = distanceToFloatingPoint * stateMachine.Player.ResizableCapsuleCollider.SlopeData.StepReachForce - GetPlayerVerticalVelocity().y;
 
                 Vector3 liftForce = new Vector3(0f, amountToLift, 0f);
 
@@ -80,23 +86,23 @@ namespace genshin
             }
         }
 
-        private float SetSlopeSpeedmodifierOnAngle(float angle)
+        private float SetSlopeSpeedModifierOnAngle(float angle)
         {
-            float slopeSpeedModifier = movementData.SlopeSpeedAngles.Evaluate(angle);
+            float slopeSpeedModifier = groundedData.SlopeSpeedAngles.Evaluate(angle);
 
-            stateMachine.ReusableData.MovementOnSlopesSpeedModifier = slopeSpeedModifier;
+            if (stateMachine.ReusableData.MovementOnSlopesSpeedModifier != slopeSpeedModifier)
+            {
+                stateMachine.ReusableData.MovementOnSlopesSpeedModifier = slopeSpeedModifier;
+
+                UpdateCameraRecenteringState(stateMachine.ReusableData.MovementInput);
+            }
 
             return slopeSpeedModifier;
         }
 
-        #endregion
-
-        #region Resuable Methods
         protected override void AddInputActionsCallbacks()
         {
             base.AddInputActionsCallbacks();
-
-            stateMachine.Player.Input.PlayerActions.Movement.canceled += OnMovementCanceled;
 
             stateMachine.Player.Input.PlayerActions.Dash.started += OnDashStarted;
 
@@ -107,18 +113,26 @@ namespace genshin
         {
             base.RemoveInputActionsCallbacks();
 
-            stateMachine.Player.Input.PlayerActions.Movement.canceled -= OnMovementCanceled;
-
             stateMachine.Player.Input.PlayerActions.Dash.started -= OnDashStarted;
 
             stateMachine.Player.Input.PlayerActions.Jump.started -= OnJumpStarted;
         }
 
+        protected virtual void OnDashStarted(InputAction.CallbackContext context)
+        {
+            stateMachine.ChangeState(stateMachine.DashingState);
+        }
+
+        protected virtual void OnJumpStarted(InputAction.CallbackContext context)
+        {
+            stateMachine.ChangeState(stateMachine.JumpingState);
+        }
+
         protected virtual void OnMove()
         {
-            if(stateMachine.ReusableData.ShouldSprint)
+            if (stateMachine.ReusableData.ShouldSprint)
             {
-                stateMachine.ChangeState(stateMachine.SprintState);
+                stateMachine.ChangeState(stateMachine.SprintingState);
 
                 return;
             }
@@ -132,24 +146,45 @@ namespace genshin
 
             stateMachine.ChangeState(stateMachine.RunningState);
         }
-        #endregion
 
-        #region Input Methods
-        protected virtual void OnMovementCanceled(InputAction.CallbackContext context)
+        protected override void OnContactWithGroundExited(Collider collider)
         {
-            stateMachine.ChangeState(stateMachine.IdlingState);
+            if (IsThereGroundUnderneath())
+            {
+                return;
+            }
+
+            Vector3 capsuleColliderCenterInWorldSpace = stateMachine.Player.ResizableCapsuleCollider.CapsuleColliderData.Collider.bounds.center;
+
+            Ray downwardsRayFromCapsuleBottom = new Ray(capsuleColliderCenterInWorldSpace - stateMachine.Player.ResizableCapsuleCollider.CapsuleColliderData.ColliderVerticalExtents, Vector3.down);
+
+            if (!Physics.Raycast(downwardsRayFromCapsuleBottom, out _, groundedData.GroundToFallRayDistance, stateMachine.Player.LayerData.GroundLayer, QueryTriggerInteraction.Ignore))
+            {
+                OnFall();
+            }
         }
 
-        protected virtual void OnDashStarted(InputAction.CallbackContext context)
+        private bool IsThereGroundUnderneath()
         {
-            stateMachine.ChangeState(stateMachine.DashingState);
+            PlayerTriggerColliderData triggerColliderData = stateMachine.Player.ResizableCapsuleCollider.TriggerColliderData;
+
+            Vector3 groundColliderCenterInWorldSpace = triggerColliderData.GroundCheckCollider.bounds.center;
+
+            Collider[] overlappedGroundColliders = Physics.OverlapBox(groundColliderCenterInWorldSpace, triggerColliderData.GroundCheckColliderVerticalExtents, triggerColliderData.GroundCheckCollider.transform.rotation, stateMachine.Player.LayerData.GroundLayer, QueryTriggerInteraction.Ignore);
+
+            return overlappedGroundColliders.Length > 0;
         }
 
-        protected virtual void OnJumpStarted(InputAction.CallbackContext context)
+        protected virtual void OnFall()
         {
-            stateMachine.ChangeState(stateMachine.JumpingState);
+            stateMachine.ChangeState(stateMachine.FallingState);
         }
 
-        #endregion
+        protected override void OnMovementPerformed(InputAction.CallbackContext context)
+        {
+            base.OnMovementPerformed(context);
+
+            UpdateTargetRotation(GetMovementInputDirection());
+        }
     }
 }

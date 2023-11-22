@@ -7,24 +7,24 @@ namespace genshin
 {
     public class PlayerInput : MonoBehaviour
     {
-        public PlayerInputActions InputAction { get; private set; }
-        public PlayerInputActions.PlayerActions PlayerActions { get; private set;}
+        public PlayerInputActions InputActions { get; private set; }
+        public PlayerInputActions.PlayerActions PlayerActions { get; private set; }
 
         private void Awake()
         {
-            InputAction = new PlayerInputActions();
+            InputActions = new PlayerInputActions();
 
-            PlayerActions = InputAction.Player;
+            PlayerActions = InputActions.Player;
         }
 
         private void OnEnable()
         {
-            InputAction.Enable();
+            InputActions.Enable();
         }
 
         private void OnDisable()
         {
-            InputAction.Disable();
+            InputActions.Disable();
         }
 
         public void DisableActionFor(InputAction action, float seconds)
@@ -40,7 +40,6 @@ namespace genshin
 
             action.Enable();
         }
-
     }
 }
 

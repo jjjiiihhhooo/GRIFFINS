@@ -8,8 +8,6 @@ namespace genshin
 {
     public class PlayerSprintingState : PlayerMovingState
     {
-        private PlayerSprintData sprintData;
-
         private float startTime;
 
         private bool keepSprinting;
@@ -17,30 +15,38 @@ namespace genshin
 
         public PlayerSprintingState(PlayerMovementStateMachine playerMovementStateMachine) : base(playerMovementStateMachine)
         {
-            sprintData = movementData.SprintData;
         }
 
-        #region IState Methods
         public override void Enter()
         {
+            stateMachine.ReusableData.MovementSpeedModifier = groundedData.SprintData.SpeedModifier;
+
             base.Enter();
 
-            stateMachine.ReusableData.MovementSpeedModifier = sprintData.SpeedModifier;
+           // StartAnimation(stateMachine.Player.AnimationData.SprintParameterHash);
 
             stateMachine.ReusableData.CurrentJumpForce = airborneData.JumpData.StrongForce;
 
+            startTime = Time.time;
+
             shouldResetSprintState = true;
 
-            startTime = Time.time;
+            if (!stateMachine.ReusableData.ShouldSprint)
+            {
+                keepSprinting = false;
+            }
         }
 
         public override void Exit()
         {
             base.Exit();
 
+            //StopAnimation(stateMachine.Player.AnimationData.SprintParameterHash);
+
             if (shouldResetSprintState)
             {
                 keepSprinting = false;
+
                 stateMachine.ReusableData.ShouldSprint = false;
             }
         }
@@ -49,33 +55,31 @@ namespace genshin
         {
             base.Update();
 
-            if(keepSprinting)
+            if (keepSprinting)
             {
                 return;
             }
 
-            if(Time.time < startTime + sprintData.SprintToRunTime)
+            if (Time.time < startTime + groundedData.SprintData.SprintToRunTime)
             {
                 return;
             }
 
             StopSprinting();
         }
-        #endregion
 
-        #region Main Methods
         private void StopSprinting()
         {
-            if(stateMachine.ReusableData.MovementInput == Vector2.zero)
+            if (stateMachine.ReusableData.MovementInput == Vector2.zero)
             {
                 stateMachine.ChangeState(stateMachine.IdlingState);
+
                 return;
             }
+
             stateMachine.ChangeState(stateMachine.RunningState);
         }
-        #endregion
 
-        #region Reusable Methods
         protected override void AddInputActionsCallbacks()
         {
             base.AddInputActionsCallbacks();
@@ -83,20 +87,25 @@ namespace genshin
             stateMachine.Player.Input.PlayerActions.Sprint.performed += OnSprintPerformed;
         }
 
-       
-
         protected override void RemoveInputActionsCallbacks()
         {
             base.RemoveInputActionsCallbacks();
 
             stateMachine.Player.Input.PlayerActions.Sprint.performed -= OnSprintPerformed;
         }
-        #endregion
 
-        #region Input Methods
+        private void OnSprintPerformed(InputAction.CallbackContext context)
+        {
+            keepSprinting = true;
+
+            stateMachine.ReusableData.ShouldSprint = true;
+        }
+
         protected override void OnMovementCanceled(InputAction.CallbackContext context)
         {
             stateMachine.ChangeState(stateMachine.HardStoppingState);
+
+            base.OnMovementCanceled(context);
         }
 
         protected override void OnJumpStarted(InputAction.CallbackContext context)
@@ -106,12 +115,11 @@ namespace genshin
             base.OnJumpStarted(context);
         }
 
-        private void OnSprintPerformed(InputAction.CallbackContext obj)
+        protected override void OnFall()
         {
-            keepSprinting = true;
+            shouldResetSprintState = false;
 
-            stateMachine.ReusableData.ShouldSprint = true;
+            base.OnFall();
         }
-        #endregion
     }
 }

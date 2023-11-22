@@ -7,12 +7,12 @@ namespace genshin
 {
     public class CameraZoom : MonoBehaviour
     {
-        [SerializeField] [Range(0f, 10f)] private float defaultDistance = 6f;
-        [SerializeField] [Range(0f, 10f)] private float minimumDistance = 1f;
-        [SerializeField] [Range(0f, 10f)] private float maximumDistance = 6f;
+        [SerializeField][Range(0f, 12f)] private float defaultDistance = 6f;
+        [SerializeField][Range(0f, 12f)] private float minimumDistance = 1f;
+        [SerializeField][Range(0f, 12f)] private float maximumDistance = 6f;
 
-        [SerializeField] [Range(0f, 10f)] private float smoothing = 4f;
-        [SerializeField] [Range(0f, 10f)] private float zoomSensitivity = 1f;
+        [SerializeField][Range(0f, 20f)] private float smoothing = 4f;
+        [SerializeField][Range(0f, 20f)] private float zoomSensitivity = 1f;
 
         private CinemachineFramingTransposer framingTransposer;
         private CinemachineInputProvider inputProvider;
@@ -40,7 +40,7 @@ namespace genshin
 
             float currentDistance = framingTransposer.m_CameraDistance;
 
-            if(currentDistance == currentTargetDistance)
+            if (currentDistance == currentTargetDistance)
             {
                 return;
             }

@@ -11,23 +11,33 @@ namespace genshin
         {
         }
 
-        #region IState Methods
         public override void Enter()
         {
+            stateMachine.ReusableData.MovementSpeedModifier = 0f;
+
+            stateMachine.ReusableData.BackwardsCameraRecenteringData = groundedData.IdleData.BackwardsCameraRecenteringData;
+
             base.Enter();
 
-            stateMachine.ReusableData.MovementSpeedModifier = 0f;
+           // StartAnimation(stateMachine.Player.AnimationData.IdleParameterHash);
 
             stateMachine.ReusableData.CurrentJumpForce = airborneData.JumpData.StationaryForce;
 
             ResetVelocity();
         }
 
+        public override void Exit()
+        {
+            base.Exit();
+
+            //StopAnimation(stateMachine.Player.AnimationData.IdleParameterHash);
+        }
+
         public override void Update()
         {
             base.Update();
 
-            if(stateMachine.ReusableData.MovementInput == Vector2.zero)
+            if (stateMachine.ReusableData.MovementInput == Vector2.zero)
             {
                 return;
             }
@@ -35,8 +45,17 @@ namespace genshin
             OnMove();
         }
 
-        
-        #endregion
+        public override void PhysicsUpdate()
+        {
+            base.PhysicsUpdate();
+
+            if (!IsMovingHorizontally())
+            {
+                return;
+            }
+
+            ResetVelocity();
+        }
     }
 
 }

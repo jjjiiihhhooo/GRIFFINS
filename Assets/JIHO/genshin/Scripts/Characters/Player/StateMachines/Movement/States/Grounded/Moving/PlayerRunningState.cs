@@ -7,51 +7,52 @@ namespace genshin
 {
     public class PlayerRunningState : PlayerMovingState
     {
-        private PlayerSprintData sprintData;
-
         private float startTime;
 
         public PlayerRunningState(PlayerMovementStateMachine playerMovementStateMachine) : base(playerMovementStateMachine)
         {
-            sprintData = movementData.SprintData;
         }
-
-        #region IState Methods
 
         public override void Enter()
         {
+            stateMachine.ReusableData.MovementSpeedModifier = groundedData.RunData.SpeedModifier;
+
             base.Enter();
 
-            stateMachine.ReusableData.MovementSpeedModifier = movementData.RunData.SpeedModifier;
+            //StartAnimation(stateMachine.Player.AnimationData.RunParameterHash);
 
             stateMachine.ReusableData.CurrentJumpForce = airborneData.JumpData.MediumForce;
 
             startTime = Time.time;
+        }
 
+        public override void Exit()
+        {
+            base.Exit();
+
+            //StopAnimation(stateMachine.Player.AnimationData.RunParameterHash);
         }
 
         public override void Update()
         {
             base.Update();
 
-            if(!stateMachine.ReusableData.ShouldWalk)
+            if (!stateMachine.ReusableData.ShouldWalk)
             {
                 return;
             }
 
-            if(Time.time < startTime + sprintData.RunToWalkTime)
+            if (Time.time < startTime + groundedData.SprintData.RunToWalkTime)
             {
                 return;
             }
 
             StopRunning();
         }
-        #endregion
 
-        #region Main Methods
         private void StopRunning()
         {
-            if(stateMachine.ReusableData.MovementInput == Vector2.zero)
+            if (stateMachine.ReusableData.MovementInput == Vector2.zero)
             {
                 stateMachine.ChangeState(stateMachine.IdlingState);
 
@@ -60,14 +61,6 @@ namespace genshin
 
             stateMachine.ChangeState(stateMachine.WalkingState);
         }
-        #endregion
-
-
-        #region Input Methods
-        protected override void OnMovementCanceled(InputAction.CallbackContext context)
-        {
-            stateMachine.ChangeState(stateMachine.MediumStoppingState);
-        }
 
         protected override void OnWalkToggleStarted(InputAction.CallbackContext context)
         {
@@ -75,7 +68,13 @@ namespace genshin
 
             stateMachine.ChangeState(stateMachine.WalkingState);
         }
-        #endregion
+
+        protected override void OnMovementCanceled(InputAction.CallbackContext context)
+        {
+            stateMachine.ChangeState(stateMachine.MediumStoppingState);
+
+            base.OnMovementCanceled(context);
+        }
     }
 
 }

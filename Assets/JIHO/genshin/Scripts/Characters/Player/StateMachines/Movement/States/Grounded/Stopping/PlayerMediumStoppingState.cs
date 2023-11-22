@@ -10,15 +10,22 @@ namespace genshin
         {
         }
 
-        #region IState Methods
         public override void Enter()
         {
             base.Enter();
 
-            stateMachine.ReusableData.MovementDecelerationForce = movementData.StopData.MediumDecelerationForce;
+            //StartAnimation(stateMachine.Player.AnimationData.MediumStopParameterHash);
+
+            stateMachine.ReusableData.MovementDecelerationForce = groundedData.StopData.MediumDecelerationForce;
 
             stateMachine.ReusableData.CurrentJumpForce = airborneData.JumpData.MediumForce;
         }
-        #endregion
+
+        public override void Exit()
+        {
+            base.Exit();
+
+            //StopAnimation(stateMachine.Player.AnimationData.MediumStopParameterHash);
+        }
     }
 }

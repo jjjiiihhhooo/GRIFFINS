@@ -21,8 +21,16 @@ namespace genshin
 
             CapsuleColliderData = new CapsuleColliderData();
 
-            CapsuleColliderData.Initalize(gameObject);
+            //CapsuleColliderData.Initalize(gameObject);
+
+            OnInitialize();
         }
+
+        protected virtual void OnInitialize()
+        {
+
+        }
+
 
         public void CalcuatCapsuleColliderDimensions()
         {

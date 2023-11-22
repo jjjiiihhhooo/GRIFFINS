@@ -1,5 +1,6 @@
 
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,34 +10,23 @@ namespace genshin
     {
         protected PlayerMovementStateMachine stateMachine;
 
-        protected PlayerGroundedData movementData;
-        protected PlayerAirborneData airborneData;
-        
-        
+        protected readonly PlayerGroundedData groundedData;
+        protected readonly PlayerAirborneData airborneData;
 
         public PlayerMovementState(PlayerMovementStateMachine playerMovementStateMachine)
         {
             stateMachine = playerMovementStateMachine;
-            movementData = stateMachine.Player.Data.GroundedData;
+
+            groundedData = stateMachine.Player.Data.GroundedData;
             airborneData = stateMachine.Player.Data.AirborneData;
 
             InitializeData();
         }
 
-        protected void InitializeData()
-        {
-            SetBaseRotationData();
-        }
-
-        #region IState Mathods
         public virtual void Enter()
         {
-            Debug.Log("State : " + GetType().Name);
-
             AddInputActionsCallbacks();
         }
-
-        
 
         public virtual void Exit()
         {
@@ -50,7 +40,6 @@ namespace genshin
 
         public virtual void Update()
         {
-
         }
 
         public virtual void PhysicsUpdate()
@@ -58,32 +47,107 @@ namespace genshin
             Move();
         }
 
+        public virtual void OnTriggerEnter(Collider collider)
+        {
+            if (stateMachine.Player.LayerData.IsGroundLayer(collider.gameObject.layer))
+            {
+                OnContactWithGround(collider);
+
+                return;
+            }
+        }
+
+        public virtual void OnTriggerExit(Collider collider)
+        {
+            if (stateMachine.Player.LayerData.IsGroundLayer(collider.gameObject.layer))
+            {
+                OnContactWithGroundExited(collider);
+
+                return;
+            }
+        }
+
         public virtual void OnAnimationEnterEvent()
         {
-            
         }
 
         public virtual void OnAnimationExitEvent()
         {
-            
         }
 
         public virtual void OnAnimationTransitionEvent()
         {
-
         }
 
-        public virtual void OnTriggerEnter(Collider collider)
+        private void InitializeData()
         {
-            if(stateMachine.Player.LayerData.IsGroundLayer(collider.gameObject.layer))
-            {
-                OnContactWithGround(collider);
-            }
+            SetBaseCameraRecenteringData();
+
+            SetBaseRotationData();
         }
 
-        #endregion
+        protected void SetBaseCameraRecenteringData()
+        {
+            stateMachine.ReusableData.SidewaysCameraRecenteringData = groundedData.SidewaysCameraRecenteringData;
+            stateMachine.ReusableData.BackwardsCameraRecenteringData = groundedData.BackwardsCameraRecenteringData;
+        }
 
-        #region Main Mathods
+        protected void SetBaseRotationData()
+        {
+            stateMachine.ReusableData.RotationData = groundedData.BaseRotationData;
+
+            stateMachine.ReusableData.TimeToReachTargetRotation = stateMachine.ReusableData.RotationData.TargetRotationReachTime;
+        }
+
+        protected void StartAnimation(int animationHash)
+        {
+            stateMachine.Player.Animator.SetBool(animationHash, true);
+        }
+
+        protected void StopAnimation(int animationHash)
+        {
+            stateMachine.Player.Animator.SetBool(animationHash, false);
+        }
+
+        protected virtual void AddInputActionsCallbacks()
+        {
+            stateMachine.Player.Input.PlayerActions.WalkToggle.started += OnWalkToggleStarted;
+
+            stateMachine.Player.Input.PlayerActions.Look.started += OnMouseMovementStarted;
+
+            stateMachine.Player.Input.PlayerActions.Movement.performed += OnMovementPerformed;
+            stateMachine.Player.Input.PlayerActions.Movement.canceled += OnMovementCanceled;
+        }
+
+        protected virtual void RemoveInputActionsCallbacks()
+        {
+            stateMachine.Player.Input.PlayerActions.WalkToggle.started -= OnWalkToggleStarted;
+
+            stateMachine.Player.Input.PlayerActions.Look.started -= OnMouseMovementStarted;
+
+            stateMachine.Player.Input.PlayerActions.Movement.performed -= OnMovementPerformed;
+            stateMachine.Player.Input.PlayerActions.Movement.canceled -= OnMovementCanceled;
+        }
+
+        protected virtual void OnWalkToggleStarted(InputAction.CallbackContext context)
+        {
+            stateMachine.ReusableData.ShouldWalk = !stateMachine.ReusableData.ShouldWalk;
+        }
+
+        private void OnMouseMovementStarted(InputAction.CallbackContext context)
+        {
+            UpdateCameraRecenteringState(stateMachine.ReusableData.MovementInput);
+        }
+
+        protected virtual void OnMovementPerformed(InputAction.CallbackContext context)
+        {
+            UpdateCameraRecenteringState(context.ReadValue<Vector2>());
+        }
+
+        protected virtual void OnMovementCanceled(InputAction.CallbackContext context)
+        {
+            DisableCameraRecentering();
+        }
 
         private void ReadMovementInput()
         {
@@ -110,17 +174,36 @@ namespace genshin
             stateMachine.Player.Rigidbody.AddForce(targetRotationDirection * movementSpeed - currentPlayerHorizontalVelocity, ForceMode.VelocityChange);
         }
 
+        protected Vector3 GetMovementInputDirection()
+        {
+            return new Vector3(stateMachine.ReusableData.MovementInput.x, 0f, stateMachine.ReusableData.MovementInput.y);
+        }
 
         private float Rotate(Vector3 direction)
         {
             float directionAngle = UpdateTargetRotation(direction);
 
-            RotateToWardsTargetRotation();
+            RotateTowardsTargetRotation();
 
             return directionAngle;
         }
 
+        protected float UpdateTargetRotation(Vector3 direction, bool shouldConsiderCameraRotation = true)
+        {
+            float directionAngle = GetDirectionAngle(direction);
 
+            if (shouldConsiderCameraRotation)
+            {
+                directionAngle = AddCameraRotationToAngle(directionAngle);
+            }
+
+            if (directionAngle != stateMachine.ReusableData.CurrentTargetRotation.y)
+            {
+                UpdateTargetRotationData(directionAngle);
+            }
+
+            return directionAngle;
+        }
 
         private float GetDirectionAngle(Vector3 direction)
         {
@@ -152,25 +235,40 @@ namespace genshin
 
             stateMachine.ReusableData.DampedTargetRotationPassedTime.y = 0f;
         }
-        #endregion
 
-        #region Reusable Mathods
-
-        protected void SetBaseRotationData()
+        protected void RotateTowardsTargetRotation()
         {
-            stateMachine.ReusableData.RotationData = movementData.BaseRotationData;
+            float currentYAngle = stateMachine.Player.Rigidbody.rotation.eulerAngles.y;
 
-            stateMachine.ReusableData.TimeToReachTargetRotation = stateMachine.ReusableData.RotationData.TargetRotationReachTime;
+            if (currentYAngle == stateMachine.ReusableData.CurrentTargetRotation.y)
+            {
+                return;
+            }
+
+            float smoothedYAngle = Mathf.SmoothDampAngle(currentYAngle, stateMachine.ReusableData.CurrentTargetRotation.y, ref stateMachine.ReusableData.DampedTargetRotationCurrentVelocity.y, stateMachine.ReusableData.TimeToReachTargetRotation.y - stateMachine.ReusableData.DampedTargetRotationPassedTime.y);
+
+            stateMachine.ReusableData.DampedTargetRotationPassedTime.y += Time.deltaTime;
+
+            Quaternion targetRotation = Quaternion.Euler(0f, smoothedYAngle, 0f);
+
+            stateMachine.Player.Rigidbody.MoveRotation(targetRotation);
         }
 
-        protected Vector3 GetMovementInputDirection()
+        protected Vector3 GetTargetRotationDirection(float targetRotationAngle)
         {
-            return new Vector3(stateMachine.ReusableData.MovementInput.x, 0f, stateMachine.ReusableData.MovementInput.y);
+            return Quaternion.Euler(0f, targetRotationAngle, 0f) * Vector3.forward;
         }
 
-        protected float GetMovementSpeed()
+        protected float GetMovementSpeed(bool shouldConsiderSlopes = true)
         {
-            return movementData.BaseSpeed * stateMachine.ReusableData.MovementSpeedModifier * stateMachine.ReusableData.MovementOnSlopesSpeedModifier;
+            float movementSpeed = groundedData.BaseSpeed * stateMachine.ReusableData.MovementSpeedModifier;
+
+            if (shouldConsiderSlopes)
+            {
+                movementSpeed *= stateMachine.ReusableData.MovementOnSlopesSpeedModifier;
+            }
+
+            return movementSpeed;
         }
 
         protected Vector3 GetPlayerHorizontalVelocity()
@@ -187,44 +285,79 @@ namespace genshin
             return new Vector3(0f, stateMachine.Player.Rigidbody.velocity.y, 0f);
         }
 
-        protected void RotateToWardsTargetRotation()
+        protected virtual void OnContactWithGround(Collider collider)
         {
-            float currentYAngle = stateMachine.Player.Rigidbody.rotation.eulerAngles.y;
+        }
 
-            if(currentYAngle == stateMachine.ReusableData.CurrentTargetRotation.y)
+        protected virtual void OnContactWithGroundExited(Collider collider)
+        {
+        }
+
+        protected void UpdateCameraRecenteringState(Vector2 movementInput)
+        {
+            if (movementInput == Vector2.zero)
             {
                 return;
             }
 
-            float smoothedYAngle = Mathf.SmoothDampAngle(currentYAngle, stateMachine.ReusableData.CurrentTargetRotation.y, ref stateMachine.ReusableData.DampedTargetRotationCurrentVelocity.y, stateMachine.ReusableData.TimeToReachTargetRotation.y - stateMachine.ReusableData.DampedTargetRotationPassedTime.y);
-
-            stateMachine.ReusableData.DampedTargetRotationPassedTime.y += Time.deltaTime;
-
-            Quaternion targetRotation = Quaternion.Euler(0f, smoothedYAngle, 0f);
-
-            stateMachine.Player.Rigidbody.MoveRotation(targetRotation);
-        }
-
-        protected float UpdateTargetRotation(Vector3 direction, bool shouldConsiderCameraRotation = true)
-        {
-            float directionAngle = GetDirectionAngle(direction);
-
-            if (shouldConsiderCameraRotation)
+            if (movementInput == Vector2.up)
             {
-                directionAngle = AddCameraRotationToAngle(directionAngle);
+                DisableCameraRecentering();
+
+                return;
             }
 
-            if (directionAngle != stateMachine.ReusableData.CurrentTargetRotation.y)
+            float cameraVerticalAngle = stateMachine.Player.MainCameraTransform.eulerAngles.x;
+
+            if (cameraVerticalAngle >= 270f)
             {
-                UpdateTargetRotationData(directionAngle);
+                cameraVerticalAngle -= 360f;
             }
 
-            return directionAngle;
+            cameraVerticalAngle = Mathf.Abs(cameraVerticalAngle);
+
+            if (movementInput == Vector2.down)
+            {
+                SetCameraRecenteringState(cameraVerticalAngle, stateMachine.ReusableData.BackwardsCameraRecenteringData);
+
+                return;
+            }
+
+            SetCameraRecenteringState(cameraVerticalAngle, stateMachine.ReusableData.SidewaysCameraRecenteringData);
         }
 
-        protected Vector3 GetTargetRotationDirection(float targetAngle)
+        protected void SetCameraRecenteringState(float cameraVerticalAngle, List<PlayerCameraRecenteringData> cameraRecenteringData)
         {
-            return Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+            foreach (PlayerCameraRecenteringData recenteringData in cameraRecenteringData)
+            {
+                if (!recenteringData.IsWithinRange(cameraVerticalAngle))
+                {
+                    continue;
+                }
+
+                EnableCameraRecentering(recenteringData.WaitTime, recenteringData.RecenteringTime);
+
+                return;
+            }
+
+            DisableCameraRecentering();
+        }
+
+        protected void EnableCameraRecentering(float waitTime = -1f, float recenteringTime = -1f)
+        {
+            float movementSpeed = GetMovementSpeed();
+
+            if (movementSpeed == 0f)
+            {
+                movementSpeed = groundedData.BaseSpeed;
+            }
+
+            stateMachine.Player.CameraRecenteringUtility.EnableRecentering(waitTime, recenteringTime, groundedData.BaseSpeed, movementSpeed);
+        }
+
+        protected void DisableCameraRecentering()
+        {
+            stateMachine.Player.CameraRecenteringUtility.DisableRecentering();
         }
 
         protected void ResetVelocity()
@@ -232,14 +365,11 @@ namespace genshin
             stateMachine.Player.Rigidbody.velocity = Vector3.zero;
         }
 
-        protected virtual void AddInputActionsCallbacks()
+        protected void ResetVerticalVelocity()
         {
-            stateMachine.Player.Input.PlayerActions.WalkToggle.started += OnWalkToggleStarted;
-        }
+            Vector3 playerHorizontalVelocity = GetPlayerHorizontalVelocity();
 
-        protected virtual void RemoveInputActionsCallbacks()
-        {
-            stateMachine.Player.Input.PlayerActions.WalkToggle.started -= OnWalkToggleStarted;
+            stateMachine.Player.Rigidbody.velocity = playerHorizontalVelocity;
         }
 
         protected void DecelerateHorizontally()
@@ -258,9 +388,9 @@ namespace genshin
 
         protected bool IsMovingHorizontally(float minimumMagnitude = 0.1f)
         {
-            Vector3 playerHorizontalVelocity = GetPlayerHorizontalVelocity();
+            Vector3 playerHorizontaVelocity = GetPlayerHorizontalVelocity();
 
-            Vector2 playerHorizontalMovement = new Vector2(playerHorizontalVelocity.x, playerHorizontalVelocity.z);
+            Vector2 playerHorizontalMovement = new Vector2(playerHorizontaVelocity.x, playerHorizontaVelocity.z);
 
             return playerHorizontalMovement.magnitude > minimumMagnitude;
         }
@@ -269,26 +399,11 @@ namespace genshin
         {
             return GetPlayerVerticalVelocity().y > minimumVelocity;
         }
-        
+
         protected bool IsMovingDown(float minimumVelocity = 0.1f)
         {
             return GetPlayerVerticalVelocity().y < -minimumVelocity;
         }
-
-        protected virtual void OnContactWithGround(Collider collider)
-        {
-            
-        }
-        #endregion
-
-        #region Input Methods
-        protected virtual void OnWalkToggleStarted(InputAction.CallbackContext context)
-        {
-            stateMachine.ReusableData.ShouldWalk = !stateMachine.ReusableData.ShouldWalk;
-        }
-
-        #endregion
     }
-
 }
 
