@@ -15,7 +15,9 @@ namespace genshin
         {
             base.Enter();
 
-            //StartAnimation(stateMachine.Player.AnimationData.LandingParameterHash);
+            EffectActive(stateMachine.Player.landEffect, true);
+
+            StartAnimation(stateMachine.Player.AnimationData.LandingParameterHash);
 
             DisableCameraRecentering();
         }
@@ -24,7 +26,9 @@ namespace genshin
         {
             base.Exit();
 
-            //StopAnimation(stateMachine.Player.AnimationData.LandingParameterHash);
+            EffectActive(stateMachine.Player.landEffect, false);
+
+            StopAnimation(stateMachine.Player.AnimationData.LandingParameterHash);
         }
     }
 }

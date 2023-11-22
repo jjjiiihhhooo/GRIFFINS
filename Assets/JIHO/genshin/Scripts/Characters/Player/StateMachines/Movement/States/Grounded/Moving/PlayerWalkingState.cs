@@ -20,7 +20,7 @@ namespace genshin
 
             base.Enter();
 
-            //StartAnimation(stateMachine.Player.AnimationData.WalkParameterHash);
+            StartAnimation(stateMachine.Player.AnimationData.WalkParameterHash);
 
             stateMachine.ReusableData.CurrentJumpForce = airborneData.JumpData.WeakForce;
         }
@@ -29,7 +29,7 @@ namespace genshin
         {
             base.Exit();
 
-            //StopAnimation(stateMachine.Player.AnimationData.WalkParameterHash);
+            StopAnimation(stateMachine.Player.AnimationData.WalkParameterHash);
 
             SetBaseCameraRecenteringData();
         }

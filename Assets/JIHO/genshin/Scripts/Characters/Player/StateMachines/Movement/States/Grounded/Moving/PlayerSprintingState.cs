@@ -23,7 +23,7 @@ namespace genshin
 
             base.Enter();
 
-           // StartAnimation(stateMachine.Player.AnimationData.SprintParameterHash);
+            StartAnimation(stateMachine.Player.AnimationData.SprintParameterHash);
 
             stateMachine.ReusableData.CurrentJumpForce = airborneData.JumpData.StrongForce;
 
@@ -41,7 +41,7 @@ namespace genshin
         {
             base.Exit();
 
-            //StopAnimation(stateMachine.Player.AnimationData.SprintParameterHash);
+            StopAnimation(stateMachine.Player.AnimationData.SprintParameterHash);
 
             if (shouldResetSprintState)
             {

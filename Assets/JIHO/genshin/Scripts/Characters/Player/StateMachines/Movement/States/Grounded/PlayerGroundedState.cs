@@ -18,7 +18,7 @@ namespace genshin
         {
             base.Enter();
 
-            //StartAnimation(stateMachine.Player.AnimationData.GroundedParameterHash);
+            StartAnimation(stateMachine.Player.AnimationData.GroundedParameterHash);
 
             UpdateShouldSprintState();
 
@@ -29,7 +29,7 @@ namespace genshin
         {
             base.Exit();
 
-            //StopAnimation(stateMachine.Player.AnimationData.GroundedParameterHash);
+            StopAnimation(stateMachine.Player.AnimationData.GroundedParameterHash);
         }
 
         public override void PhysicsUpdate()

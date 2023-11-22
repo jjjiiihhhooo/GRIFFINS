@@ -14,7 +14,7 @@ namespace genshin
         {
             base.Enter();
 
-            //StartAnimation(stateMachine.Player.AnimationData.HardStopParameterHash);
+            StartAnimation(stateMachine.Player.AnimationData.HardStopParameterHash);
 
             stateMachine.ReusableData.MovementDecelerationForce = groundedData.StopData.HardDecelerationForce;
 
@@ -25,7 +25,7 @@ namespace genshin
         {
             base.Exit();
 
-            //StopAnimation(stateMachine.Player.AnimationData.HardStopParameterHash);
+            StopAnimation(stateMachine.Player.AnimationData.HardStopParameterHash);
         }
 
         protected override void OnMove()

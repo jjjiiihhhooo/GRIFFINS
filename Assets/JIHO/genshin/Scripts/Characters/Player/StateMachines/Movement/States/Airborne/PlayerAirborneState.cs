@@ -14,7 +14,7 @@ namespace genshin
         {
             base.Enter();
 
-            //StartAnimation(stateMachine.Player.AnimationData.AirborneParameterHash);
+            StartAnimation(stateMachine.Player.AnimationData.AirborneParameterHash);
 
             ResetSprintState();
         }
@@ -23,7 +23,7 @@ namespace genshin
         {
             base.Exit();
 
-            //StopAnimation(stateMachine.Player.AnimationData.AirborneParameterHash);
+            StopAnimation(stateMachine.Player.AnimationData.AirborneParameterHash);
         }
 
         protected virtual void ResetSprintState()

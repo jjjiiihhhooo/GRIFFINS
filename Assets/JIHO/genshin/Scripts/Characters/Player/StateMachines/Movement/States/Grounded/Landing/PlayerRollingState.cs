@@ -17,7 +17,9 @@ namespace genshin
 
             base.Enter();
 
-            //StartAnimation(stateMachine.Player.AnimationData.RollParameterHash);
+            EffectActive(stateMachine.Player.landEffect, true);
+
+            StartAnimation(stateMachine.Player.AnimationData.RollParameterHash);
 
             stateMachine.ReusableData.ShouldSprint = false;
         }
@@ -26,7 +28,9 @@ namespace genshin
         {
             base.Exit();
 
-           //StopAnimation(stateMachine.Player.AnimationData.RollParameterHash);
+            EffectActive(stateMachine.Player.landEffect, false);
+
+            StopAnimation(stateMachine.Player.AnimationData.RollParameterHash);
         }
 
         public override void PhysicsUpdate()

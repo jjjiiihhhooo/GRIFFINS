@@ -18,6 +18,8 @@ namespace genshin
         {
             base.Enter();
 
+            EffectActive(stateMachine.Player.jumpEffect, true);
+
             stateMachine.ReusableData.MovementSpeedModifier = 0f;
 
             stateMachine.ReusableData.MovementDecelerationForce = airborneData.JumpData.DecelerationForce;
@@ -32,6 +34,8 @@ namespace genshin
         public override void Exit()
         {
             base.Exit();
+
+            EffectActive(stateMachine.Player.jumpEffect, false);
 
             SetBaseRotationData();
 

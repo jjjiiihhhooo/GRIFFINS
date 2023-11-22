@@ -18,7 +18,9 @@ namespace genshin
 
             base.Enter();
 
-            //StartAnimation(stateMachine.Player.AnimationData.HardLandParameterHash);
+            EffectActive(stateMachine.Player.landEffect, true);
+
+            StartAnimation(stateMachine.Player.AnimationData.HardLandParameterHash);
 
             stateMachine.Player.Input.PlayerActions.Movement.Disable();
 
@@ -29,7 +31,9 @@ namespace genshin
         {
             base.Exit();
 
-            //StopAnimation(stateMachine.Player.AnimationData.HardLandParameterHash);
+            EffectActive(stateMachine.Player.landEffect, false);
+
+            StopAnimation(stateMachine.Player.AnimationData.HardLandParameterHash);
 
             stateMachine.Player.Input.PlayerActions.Movement.Enable();
         }

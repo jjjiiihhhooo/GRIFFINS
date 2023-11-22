@@ -16,7 +16,7 @@ namespace genshin
         {
             base.Enter();
 
-            //StartAnimation(stateMachine.Player.AnimationData.FallParameterHash);
+            StartAnimation(stateMachine.Player.AnimationData.FallParameterHash);
 
             stateMachine.ReusableData.MovementSpeedModifier = 0f;
 
@@ -29,7 +29,7 @@ namespace genshin
         {
             base.Exit();
 
-            //StopAnimation(stateMachine.Player.AnimationData.FallParameterHash);
+            StopAnimation(stateMachine.Player.AnimationData.FallParameterHash);
         }
 
         public override void PhysicsUpdate()

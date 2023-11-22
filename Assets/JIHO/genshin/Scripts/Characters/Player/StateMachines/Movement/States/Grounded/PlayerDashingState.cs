@@ -23,7 +23,9 @@ namespace genshin
 
             base.Enter();
 
-            //StartAnimation(stateMachine.Player.AnimationData.DashParameterHash);
+            EffectActive(stateMachine.Player.dashEffect, true);
+
+            StartAnimation(stateMachine.Player.AnimationData.DashParameterHash);
 
             stateMachine.ReusableData.CurrentJumpForce = airborneData.JumpData.StrongForce;
 
@@ -42,7 +44,9 @@ namespace genshin
         {
             base.Exit();
 
-            //StopAnimation(stateMachine.Player.AnimationData.DashParameterHash);
+            EffectActive(stateMachine.Player.dashEffect, false);
+
+            StopAnimation(stateMachine.Player.AnimationData.DashParameterHash);
 
             SetBaseRotationData();
         }

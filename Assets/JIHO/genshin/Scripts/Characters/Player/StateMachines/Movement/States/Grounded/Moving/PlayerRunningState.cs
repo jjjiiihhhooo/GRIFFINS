@@ -19,7 +19,7 @@ namespace genshin
 
             base.Enter();
 
-            //StartAnimation(stateMachine.Player.AnimationData.RunParameterHash);
+            StartAnimation(stateMachine.Player.AnimationData.RunParameterHash);
 
             stateMachine.ReusableData.CurrentJumpForce = airborneData.JumpData.MediumForce;
 
@@ -30,7 +30,7 @@ namespace genshin
         {
             base.Exit();
 
-            //StopAnimation(stateMachine.Player.AnimationData.RunParameterHash);
+            StopAnimation(stateMachine.Player.AnimationData.RunParameterHash);
         }
 
         public override void Update()

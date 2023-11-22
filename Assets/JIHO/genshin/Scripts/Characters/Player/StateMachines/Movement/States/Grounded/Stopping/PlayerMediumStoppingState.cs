@@ -14,7 +14,7 @@ namespace genshin
         {
             base.Enter();
 
-            //StartAnimation(stateMachine.Player.AnimationData.MediumStopParameterHash);
+            StartAnimation(stateMachine.Player.AnimationData.MediumStopParameterHash);
 
             stateMachine.ReusableData.MovementDecelerationForce = groundedData.StopData.MediumDecelerationForce;
 
@@ -25,7 +25,7 @@ namespace genshin
         {
             base.Exit();
 
-            //StopAnimation(stateMachine.Player.AnimationData.MediumStopParameterHash);
+            StopAnimation(stateMachine.Player.AnimationData.MediumStopParameterHash);
         }
     }
 }

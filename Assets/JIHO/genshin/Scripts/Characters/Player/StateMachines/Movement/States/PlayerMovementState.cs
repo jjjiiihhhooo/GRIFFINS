@@ -86,6 +86,11 @@ namespace genshin
             SetBaseRotationData();
         }
 
+        protected void EffectActive(GameObject gameObject, bool _bool)
+        {
+            gameObject.SetActive(_bool);
+        }
+
         protected void SetBaseCameraRecenteringData()
         {
             stateMachine.ReusableData.SidewaysCameraRecenteringData = groundedData.SidewaysCameraRecenteringData;

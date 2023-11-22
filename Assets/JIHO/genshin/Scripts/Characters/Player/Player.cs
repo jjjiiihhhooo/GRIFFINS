@@ -18,7 +18,12 @@ namespace genshin
         [field: SerializeField] public PlayerCameraUtility CameraRecenteringUtility { get; private set; }
 
         [field: Header("Animations")]
-        //[field: SerializeField] public PlayerAnimationData AnimationData { get; private set; }
+        [field: SerializeField] public PlayerAnimationData AnimationData { get; private set; }
+
+        public GameObject jumpEffect;
+        public GameObject dashEffect;
+        public GameObject landEffect;
+
 
         public Rigidbody Rigidbody { get; private set; }
         public Animator Animator { get; private set; }
@@ -33,7 +38,7 @@ namespace genshin
         private void Awake()
         {
             CameraRecenteringUtility.Initialize();
-            //AnimationData.Initialize();
+            AnimationData.Initialize();
 
             Rigidbody = GetComponent<Rigidbody>();
             Animator = GetComponentInChildren<Animator>();
