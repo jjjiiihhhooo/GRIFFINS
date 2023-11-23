@@ -8,25 +8,21 @@ namespace genshin
     {
         public PlayerAttackingState(PlayerMovementStateMachine playerMovementStateMachine) : base(playerMovementStateMachine)
         {
+
         }
 
         public override void Enter()
         {
             base.Enter();
 
-            //EffectActive(stateMachine.Player.landEffect, true);
-
-            StartAnimation(stateMachine.Player.AnimationData.AttackParameterHash,1);
-
+            StartAnimation(stateMachine.Player.AnimationData.AttackParameterHash);
         }
 
         public override void Exit()
         {
             base.Exit();
 
-            //EffectActive(stateMachine.Player.landEffect, false);
-
-            //StopAnimation(stateMachine.Player.AnimationData.AttackParameterHash,);
+            StopAnimation(stateMachine.Player.AnimationData.AttackParameterHash);
         }
     }
 }

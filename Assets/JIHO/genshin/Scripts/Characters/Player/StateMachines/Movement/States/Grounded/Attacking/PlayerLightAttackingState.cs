@@ -13,7 +13,9 @@ namespace genshin
         public override void Enter()
         {
             base.Enter();
+            StartAnimation(stateMachine.Player.AnimationData.LightAttackParameterHash, 1);
 
+            ResetVelocity();
             stateMachine.ReusableData.MovementSpeedModifier = 0f;
         }
 
@@ -24,7 +26,7 @@ namespace genshin
 
         public override void OnAnimationTransitionEvent()
         {
-            
+            stateMachine.ChangeState(stateMachine.IdlingState);
         }
     }
 }
