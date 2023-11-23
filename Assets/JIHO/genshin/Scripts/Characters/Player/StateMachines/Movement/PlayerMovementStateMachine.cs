@@ -27,6 +27,9 @@ namespace genshin
         public PlayerJumpingState JumpingState { get; }
         public PlayerFallingState FallingState { get; }
 
+        public PlayerLightAttackingState LightAttackingState { get; }
+        
+
         public PlayerMovementStateMachine(Player player)
         {
             Player = player;
@@ -49,6 +52,8 @@ namespace genshin
 
             JumpingState = new PlayerJumpingState(this);
             FallingState = new PlayerFallingState(this);
+
+            LightAttackingState = new PlayerLightAttackingState(this);
         }
     }
 }

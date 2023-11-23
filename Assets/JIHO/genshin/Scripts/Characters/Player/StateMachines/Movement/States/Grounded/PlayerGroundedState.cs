@@ -107,6 +107,18 @@ namespace genshin
             stateMachine.Player.Input.PlayerActions.Dash.started += OnDashStarted;
 
             stateMachine.Player.Input.PlayerActions.Jump.started += OnJumpStarted;
+
+            stateMachine.Player.Input.PlayerActions.LightAttack.started += OnAttackStarted;
+        }
+
+        private void OnAttackStarted(InputAction.CallbackContext context)
+        {
+            if (stateMachine.GetCurrentStateType() == typeof(PlayerLightAttackingState))
+            {
+                StartAnimation(stateMachine.Player.AnimationData.LightAttackParameterHash, 1);
+                return;
+            }
+            stateMachine.ChangeState(stateMachine.LightAttackingState);
         }
 
         protected override void RemoveInputActionsCallbacks()
@@ -116,6 +128,8 @@ namespace genshin
             stateMachine.Player.Input.PlayerActions.Dash.started -= OnDashStarted;
 
             stateMachine.Player.Input.PlayerActions.Jump.started -= OnJumpStarted;
+
+            stateMachine.Player.Input.PlayerActions.LightAttack.started -= OnAttackStarted;
         }
 
         protected virtual void OnDashStarted(InputAction.CallbackContext context)

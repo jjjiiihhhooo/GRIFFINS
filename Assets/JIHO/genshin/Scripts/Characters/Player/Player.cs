@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Windows;
 
 namespace genshin
 {
@@ -61,6 +62,11 @@ namespace genshin
             movementStateMachine.HandleInput();
 
             movementStateMachine.Update();
+
+            if(UnityEngine.Input.GetKeyDown(KeyCode.R))
+            {
+
+            }
         }
 
         private void FixedUpdate()

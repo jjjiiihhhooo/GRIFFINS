@@ -104,13 +104,23 @@ namespace genshin
             stateMachine.ReusableData.TimeToReachTargetRotation = stateMachine.ReusableData.RotationData.TargetRotationReachTime;
         }
 
-        protected void StartAnimation(int animationHash)
+        protected void StartAnimation(int animationHash, int check = 0)
         {
+            if(check == 1)
+            {
+                stateMachine.Player.Animator.SetTrigger(animationHash);
+                return;
+            }
+
             stateMachine.Player.Animator.SetBool(animationHash, true);
         }
 
-        protected void StopAnimation(int animationHash)
+        protected void StopAnimation(int animationHash, int check = 0)
         {
+            if(check == 1)
+            {
+                return;
+            }
             stateMachine.Player.Animator.SetBool(animationHash, false);
         }
 

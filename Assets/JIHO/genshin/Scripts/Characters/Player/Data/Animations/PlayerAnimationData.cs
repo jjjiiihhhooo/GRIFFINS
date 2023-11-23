@@ -15,6 +15,10 @@ namespace genshin
         [SerializeField] private string stoppingParameterName = "Stopping";
         [SerializeField] private string landingParameterName = "Landing";
         [SerializeField] private string airborneParameterName = "Airborne";
+        [SerializeField] private string attackParameterName = "Attack";
+
+        [Header("Attack Parameter Names")]
+        [SerializeField] private string lightAttackParameterName = "isLightAttacking";
 
         [Header("Grounded Parameter Names")]
         [SerializeField] private string idleParameterName = "isIdling";
@@ -27,6 +31,8 @@ namespace genshin
         [SerializeField] private string rolleParameterName = "isRolling";
         [SerializeField] private string hardLandParameterName = "isHardLanding";
 
+        
+
         [Header("Airborne Parameter Names")]
         [SerializeField] private string fallParameterName = "isFalling";
 
@@ -35,6 +41,9 @@ namespace genshin
         public int StoppingParameterHash { get; private set; }
         public int LandingParameterHash { get; private set; }
         public int AirborneParameterHash { get; private set; }
+        public int AttackParameterHash { get; private set; }
+
+        public int LightAttackParameterHash { get; private set; }
 
         public int IdleParameterHash { get; private set; }
         public int DashParameterHash { get; private set; }
@@ -55,6 +64,9 @@ namespace genshin
             StoppingParameterHash = Animator.StringToHash(stoppingParameterName);
             LandingParameterHash = Animator.StringToHash(landingParameterName);
             AirborneParameterHash = Animator.StringToHash(airborneParameterName);
+            AttackParameterHash = Animator.StringToHash(attackParameterName);
+
+            LightAttackParameterHash = Animator.StringToHash(lightAttackParameterName);
 
             IdleParameterHash = Animator.StringToHash(idleParameterName);
             DashParameterHash = Animator.StringToHash(dashParameterName);

@@ -29,6 +29,8 @@ namespace genshin
             EffectActive(stateMachine.Player.landEffect, false);
 
             StopAnimation(stateMachine.Player.AnimationData.LandingParameterHash);
+
+            stateMachine.ReusableData.MovementInput = Vector2.zero;
         }
     }
 }

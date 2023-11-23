@@ -10,11 +10,18 @@ namespace genshin
 
         public void ChangeState(IState newState)
         {
+            
             currentState?.Exit();
 
             currentState = newState;
 
+            Debug.Log(currentState?.GetType().Name);
             currentState.Enter();
+        }
+
+        public System.Type GetCurrentStateType()
+        {
+            return currentState.GetType();
         }
 
         public void HandleInput()
