@@ -113,6 +113,11 @@ namespace genshin
 
         private void OnAttackStarted(InputAction.CallbackContext context)
         {
+            if(stateMachine.GetCurrentStateType() == typeof(PlayerDashingState))
+            {
+                return;
+            }
+
             if (stateMachine.GetCurrentStateType() == typeof(PlayerLightAttackingState))
             {
                 StartAnimation(stateMachine.Player.AnimationData.LightAttackParameterHash, 1);

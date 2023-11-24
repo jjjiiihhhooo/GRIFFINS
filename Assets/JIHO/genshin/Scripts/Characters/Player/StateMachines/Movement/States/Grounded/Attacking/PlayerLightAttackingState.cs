@@ -12,11 +12,12 @@ namespace genshin
 
         public override void Enter()
         {
-            base.Enter();
-            StartAnimation(stateMachine.Player.AnimationData.LightAttackParameterHash, 1);
-
-            ResetVelocity();
             stateMachine.ReusableData.MovementSpeedModifier = 0f;
+            base.Enter();
+            //StartAnimation(stateMachine.Player.AnimationData.LightAttackParameterHash, 1);
+
+            DisableCameraRecentering();
+            ResetVelocity();
         }
 
         public override void Exit()
