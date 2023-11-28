@@ -171,7 +171,7 @@ namespace genshin
 
         private void Move()
         {
-            if (stateMachine.ReusableData.MovementInput == Vector2.zero || stateMachine.ReusableData.MovementSpeedModifier == 0f)
+            if (stateMachine.ReusableData.MovementInput == Vector2.zero) // || stateMachine.ReusableData.MovementSpeedModifier == 0f
             {
                 return;
             }

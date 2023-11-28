@@ -144,6 +144,11 @@ namespace genshin
 
         protected virtual void OnJumpStarted(InputAction.CallbackContext context)
         {
+            if (stateMachine.GetCurrentStateType() == typeof(PlayerLightAttackingState))
+            {
+                return;
+            }
+
             stateMachine.ChangeState(stateMachine.JumpingState);
         }
 
