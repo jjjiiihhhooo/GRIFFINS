@@ -132,10 +132,7 @@ namespace genshin
 
             stateMachine.Player.Input.PlayerActions.Movement.performed += OnMovementPerformed;
             stateMachine.Player.Input.PlayerActions.Movement.canceled += OnMovementCanceled;
-
         }
-
-        
 
         protected virtual void RemoveInputActionsCallbacks()
         {
@@ -145,16 +142,12 @@ namespace genshin
 
             stateMachine.Player.Input.PlayerActions.Movement.performed -= OnMovementPerformed;
             stateMachine.Player.Input.PlayerActions.Movement.canceled -= OnMovementCanceled;
-
-            stateMachine.Player.Input.PlayerActions.DescentJump.started -= OnDescentJumpStarted;
         }
 
         protected virtual void OnWalkToggleStarted(InputAction.CallbackContext context)
         {
             stateMachine.ReusableData.ShouldWalk = !stateMachine.ReusableData.ShouldWalk;
         }
-
-        
 
         private void OnMouseMovementStarted(InputAction.CallbackContext context)
         {
@@ -178,7 +171,7 @@ namespace genshin
 
         private void Move()
         {
-            if (stateMachine.ReusableData.MovementInput == Vector2.zero) // || stateMachine.ReusableData.MovementSpeedModifier == 0f
+            if (stateMachine.ReusableData.MovementInput == Vector2.zero || stateMachine.ReusableData.MovementSpeedModifier == 0f)
             {
                 return;
             }

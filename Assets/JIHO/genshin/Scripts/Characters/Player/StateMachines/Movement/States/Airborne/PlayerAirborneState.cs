@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace genshin
 {
@@ -25,18 +24,6 @@ namespace genshin
             base.Exit();
 
             StopAnimation(stateMachine.Player.AnimationData.AirborneParameterHash);
-        }
-
-        protected override void AddInputActionsCallbacks()
-        {
-            base.AddInputActionsCallbacks();
-
-            stateMachine.Player.Input.PlayerActions.DescentJump.started += OnDescentJumpStarted;
-        }
-
-        private void OnDescentJumpStarted(InputAction.CallbackContext obj)
-        {
-
         }
 
         protected virtual void ResetSprintState()
