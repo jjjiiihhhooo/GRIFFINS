@@ -76,6 +76,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "DescentJump",
+                    "type": "Button",
+                    "id": "dfaa74a2-0e5d-4e57-b213-269b0be4f8cc",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -202,17 +211,6 @@
                 },
                 {
                     "name": "",
-                    "id": "d34d9607-9320-4454-ac61-e81c394a8227",
-                    "path": "<Mouse>/rightButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Sprint",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "a794f9f9-cdf0-433f-abf4-66ea90c53abd",
                     "path": "<Keyboard>/space",
                     "interactions": "",
@@ -230,6 +228,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "LightAttack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7189d5ba-4406-46cb-bf70-e5c49365204c",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DescentJump",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -18,7 +18,7 @@ namespace genshin
 
             StartAnimation(stateMachine.Player.AnimationData.FallParameterHash);
 
-            stateMachine.ReusableData.MovementSpeedModifier = 0f;
+            //stateMachine.ReusableData.MovementSpeedModifier = 0f;
 
             playerPositionOnEnter = stateMachine.Player.transform.position;
 
