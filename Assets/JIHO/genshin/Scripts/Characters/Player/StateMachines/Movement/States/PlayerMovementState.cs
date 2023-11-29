@@ -49,6 +49,11 @@ namespace genshin
 
         public virtual void OnTriggerEnter(Collider collider)
         {
+            if(collider.CompareTag("QuestPos"))
+            {
+                QuestManager.instance.QuestPositionCheck(collider.name);
+            }
+
             if (stateMachine.Player.LayerData.IsGroundLayer(collider.gameObject.layer))
             {
                 OnContactWithGround(collider);

@@ -33,6 +33,7 @@ namespace genshin
         public PlayerResizableCapsuleCollider ResizableCapsuleCollider { get; private set; }
 
         public Transform MainCameraTransform { get; private set; }
+        public PlayerInteraction PlayerInteraction;
 
         private PlayerMovementStateMachine movementStateMachine;
 
@@ -40,6 +41,7 @@ namespace genshin
         {
             CameraRecenteringUtility.Initialize();
             AnimationData.Initialize();
+            PlayerInteraction = GetComponent<PlayerInteraction>();
 
             Rigidbody = GetComponent<Rigidbody>();
             Animator = GetComponentInChildren<Animator>();
@@ -72,6 +74,7 @@ namespace genshin
         private void FixedUpdate()
         {
             movementStateMachine.PhysicsUpdate();
+            PlayerInteraction.PhysicsUpdate();
         }
 
         private void OnTriggerEnter(Collider collider)
