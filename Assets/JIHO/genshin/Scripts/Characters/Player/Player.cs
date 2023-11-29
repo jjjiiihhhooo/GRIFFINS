@@ -37,6 +37,10 @@ namespace genshin
 
         private PlayerMovementStateMachine movementStateMachine;
 
+        public AttackCol attackCol;
+        public bool isInteraction;
+        public float damage;
+
         private void Awake()
         {
             CameraRecenteringUtility.Initialize();
@@ -52,6 +56,8 @@ namespace genshin
             MainCameraTransform = Camera.main.transform;
 
             movementStateMachine = new PlayerMovementStateMachine(this);
+
+            isInteraction = false;
         }
 
         private void Start()
@@ -64,16 +70,19 @@ namespace genshin
             movementStateMachine.HandleInput();
 
             movementStateMachine.Update();
+                
 
-            if(UnityEngine.Input.GetKeyDown(KeyCode.R))
+            if(UnityEngine.Input.GetKeyDown(KeyCode.LeftAlt))
             {
-
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
             }
         }
 
         private void FixedUpdate()
         {
             movementStateMachine.PhysicsUpdate();
+
             PlayerInteraction.PhysicsUpdate();
         }
 
@@ -100,6 +109,12 @@ namespace genshin
         public void OnMovementStateAnimationTransitionEvent()
         {
             movementStateMachine.OnAnimationTransitionEvent();
+        }
+
+        public void AttackColActive()
+        {
+            attackCol.damage = damage;
+            attackCol.gameObject.SetActive(true);
         }
     }
 }

@@ -3,6 +3,7 @@ using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace genshin
 {
@@ -51,11 +52,11 @@ namespace genshin
                 //    if (questUI.checking_Quest == false) questUI.checking_Quest = true;
                 //}
 
-                if (currentQuest == null && tempQuest != null)
-                {
-                    QuestInput(tempQuest.questInfoDatas[0].title);
-                    tempQuest = null;
-                }
+                //if (currentQuest == null && tempQuest != null)
+                //{
+                //    QuestInput(tempQuest.questInfoDatas[0].title);
+                //    tempQuest = null;
+                //}
             //}
 
         }
@@ -87,7 +88,7 @@ namespace genshin
                 currentQuest.action.Invoke();
 
             currentQuest = null;
-            questUI.SetActiveQuest(6, false);
+            questUI.SetActiveQuest(5, false);
 
 
 
@@ -96,9 +97,9 @@ namespace genshin
 
             Debug.Log(QuestAllClear());
 
-            if (QuestAllClear())
-                StopAllCoroutines();
-            else StartCoroutine(QuestClearAni());
+            if (QuestAllClear()) StartCoroutine(QuestClearAni());
+            //StopAllCoroutines();
+            //else StartCoroutine(QuestClearAni());
 
 
         }
@@ -248,6 +249,38 @@ namespace genshin
                 }
                 i++;
             }
+        }
+
+        public void QuestMonsterCheck(string name)
+        {
+            if (currentQuest == null) return;
+
+            int i = 0;
+            while (currentQuest != null && i < currentQuest.questInfoDatas.Length)
+            {
+                if (currentQuest.questInfoDatas[i].questType == QuestType.Monster)
+                    if (currentQuest.questInfoDatas[i].monsterName == name)
+                    {
+                        if (currentQuest.questInfoDatas[i].isClear)
+                        {
+                            i++;
+                            continue;
+                        }
+
+                        currentQuest.questInfoDatas[i].monsterCurrentCount++;
+                        if (currentQuest.questInfoDatas[i].monsterCurrentCount >= currentQuest.questInfoDatas[i].monsterCompleteCount)
+                        {
+                            currentQuest.questInfoDatas[i].isClear = true;
+
+                            Debug.Log("Äù½ºÆ® ¿Ï·á");
+                            if (currentQuest.questInfoDatas[i].action != null)
+                                currentQuest.questInfoDatas[i].action.Invoke();
+                        }
+                    }
+                i++;
+            }
+
+            QuestClearCheck();
         }
 
         public void ResetQuestCheck()

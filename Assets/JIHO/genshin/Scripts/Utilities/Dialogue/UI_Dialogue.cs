@@ -40,12 +40,14 @@ namespace genshin
         [SerializeField] private Image popup_Image_UI;
         [SerializeField] private GameObject triangle;
 
-
+        private Player player;
 
         private float textInterval = .02f;
 
         public void PlayDialogue(DialogueSequence[] dialogues)
         {
+            
+
             dialogueGroup.SetActive(true);
             StopAllCoroutines();
             StartCoroutine(Cor_PlayDialogue(dialogues));
@@ -69,6 +71,10 @@ namespace genshin
                     portrait_L_Face.gameObject.SetActive(false);
                     portrait_L.sprite = dialogues[i].portrait_L;
                 }
+                else
+                {
+                    portrait_L.gameObject.SetActive(false);
+                }
 
                 if (dialogues[i].portrait_R != null)
                 {
@@ -76,11 +82,19 @@ namespace genshin
                     portrait_R_Face.gameObject.SetActive(false);
                     portrait_R.sprite = dialogues[i].portrait_R;
                 }
+                else
+                {
+                    portrait_R.gameObject.SetActive(false);
+                }
 
                 if (dialogues[i].portrait_LFace != null)
                 {
                     portrait_L_Face.gameObject.SetActive(true);
                     portrait_L_Face.sprite = dialogues[i].portrait_LFace;
+                }
+                else
+                {
+                    portrait_L_Face.gameObject.SetActive(false);
                 }
 
                 if (dialogues[i].portrait_RFace != null)
@@ -88,12 +102,17 @@ namespace genshin
                     portrait_R_Face.gameObject.SetActive(true);
                     portrait_R_Face.sprite = dialogues[i].portrait_RFace;
                 }
+                else
+                {
+                    portrait_R_Face.gameObject.SetActive(false);
+                }
 
                 if (dialogues[i].popup_Image != null)
                 {
                     popup_Image_UI.gameObject.SetActive(true);
                     popup_Image_UI.sprite = dialogues[i].popup_Image;
                 }
+                
                 if (dialogues[i].popup_Image == null)
                 {
                     popup_Image_UI.gameObject.SetActive(false);
@@ -108,7 +127,7 @@ namespace genshin
 
                     for (float t = textInterval; t > 0; t -= Time.deltaTime)
                     {
-                        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
+                        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.U))
                         {
                             skipFlag = true;
                         }
@@ -125,7 +144,7 @@ namespace genshin
 
                 yield return new WaitForSeconds(0.5f);
                 triangle.SetActive(true);
-                yield return new WaitUntil(() => Input.GetMouseButton(0) || Input.GetKeyDown(KeyCode.Space));
+                yield return new WaitUntil(() => Input.GetMouseButton(0) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.U));
                 triangle.SetActive(false);
 
                 if (dialogues[i].action != null)
@@ -134,6 +153,8 @@ namespace genshin
                 yield return null;
             }
 
+            if (player == null) player = FindObjectOfType<Player>();
+            player.isInteraction = false;
             dialogueGroup.SetActive(false);
         }
     }

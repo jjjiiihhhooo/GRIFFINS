@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -31,6 +32,11 @@ namespace genshin
             //public Ingredient_Item item;
             public int itemCompleteCount;
             public int itemCurrentCount;
+
+            [Header("몬스터사냥 퀘스트 전용[Monster]")]
+            public string monsterName;
+            public int monsterCompleteCount;
+            public int monsterCurrentCount;
 
             [Header("대화퀘스트 전용[Chat] (대화 키값)")]
             public string chatKey;

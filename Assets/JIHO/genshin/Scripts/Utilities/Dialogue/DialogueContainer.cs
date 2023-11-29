@@ -14,10 +14,15 @@ namespace genshin
         [SerializeField] private Dictionary<string, DialogueSequence[]> dialogues;
         [SerializeField] private Dictionary<string, LargeDialogueData[]> cutscene_dialogues;
 
+        private Player player;
+
         public void StartDialogue(string key)
         {
             UI_Dialogue dialogueUI = GameObject.FindObjectOfType<UI_Dialogue>();
             if (dialogueUI == null) { Debug.LogError("UI_Dialogue를 포함하는 게임오브젝트를 찾을 수 없습니다. 해당 스크립트를 가진 오브젝트와 함께 사용해 주세요."); return; }
+
+            if (player == null) player = FindObjectOfType<Player>();
+            player.isInteraction = true;
 
             dialogueUI.PlayDialogue(dialogues[key]);
 

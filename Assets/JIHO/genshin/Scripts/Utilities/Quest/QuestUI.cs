@@ -52,6 +52,12 @@ namespace genshin
                     //                    + currentQuest.questInfoDatas[i].item.count.ToString() + "/"
                     //                    + currentQuest.questInfoDatas[i].itemCompleteCount.ToString() + ")";
                 }
+                else if(currentQuest.questInfoDatas[i].questType == QuestType.Monster)
+                {
+                    quest_Texts[i].text = currentQuest.questInfoDatas[i].description + " ("
+                                        + currentQuest.questInfoDatas[i].monsterCurrentCount.ToString() + "/"
+                                        + currentQuest.questInfoDatas[i].monsterCompleteCount.ToString() + ")";
+                }
                 else
                 {
                     if (currentQuest.questInfoDatas[i].isClear) quest_Texts[i].text = currentQuest.questInfoDatas[i].description + " (1/1)";

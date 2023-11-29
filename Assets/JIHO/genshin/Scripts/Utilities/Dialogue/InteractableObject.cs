@@ -16,8 +16,7 @@ namespace genshin
 
         public void OnInteract()
         {
-            if (actionOnInteract != null)
-                actionOnInteract.Invoke();
+             actionOnInteract?.Invoke();
         }
     }
 

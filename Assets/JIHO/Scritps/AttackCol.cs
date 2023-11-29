@@ -6,6 +6,8 @@ public class AttackCol : MonoBehaviour
 {
     [SerializeField] private float time;
 
+    public float damage;
+
     private void OnEnable()
     {
         StopCoroutine(AttackActiveCor());
