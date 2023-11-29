@@ -222,7 +222,6 @@ public class PlayerController : MonoBehaviour
 
     public void ChangeDashEffect()
     {
-        //currentUnit.characterModel.transform.localScale = new Vector3(1, 1, 1);
         Managers.Instance.Particles.dashEffect.gameObject.SetActive(false);
     }
 
