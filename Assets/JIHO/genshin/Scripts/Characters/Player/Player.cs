@@ -38,7 +38,6 @@ namespace genshin
         private PlayerMovementStateMachine movementStateMachine;
 
         public AttackCol attackCol;
-
         public bool isInteraction;
         public float damage;
 

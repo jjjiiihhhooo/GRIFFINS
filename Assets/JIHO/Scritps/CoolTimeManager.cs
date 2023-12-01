@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class CoolTimeManager : MonoBehaviour
 {
-    public static CoolTimeManager Instance;
-
     public class CoolData
     {
         public CoolData(int max, int cur)
@@ -28,17 +26,8 @@ public class CoolTimeManager : MonoBehaviour
 
     private void Init()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(this.gameObject);
-        }
-        else
-        {
-            Destroy(this.gameObject);
-        }
         coolDic = new Dictionary<string, CoolData>();
-        coolDic.Add("Dash", new CoolData(5, 0));
+        coolDic.Add("Dash", new CoolData(2, 0));
         coolDic.Add("SuperJump", new CoolData(2, 0));
         coolDic.Add("CharacterChange", new CoolData(1, 0));
     }
