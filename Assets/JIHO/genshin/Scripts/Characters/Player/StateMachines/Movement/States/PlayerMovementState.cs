@@ -176,6 +176,11 @@ namespace genshin
 
         private void Move()
         {
+            if (stateMachine.GetCurrentStateType() == typeof(PlayerDashingState) || stateMachine.GetCurrentStateType() == typeof(PlayerAirDashingState))
+            {
+                return;
+            }
+
             if (stateMachine.ReusableData.MovementInput == Vector2.zero) // || stateMachine.ReusableData.MovementSpeedModifier == 0f
             {
                 return;

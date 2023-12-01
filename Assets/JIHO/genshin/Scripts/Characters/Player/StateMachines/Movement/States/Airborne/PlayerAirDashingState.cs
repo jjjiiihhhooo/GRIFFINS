@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 namespace genshin
 {
-    public class PlayerDashingState : PlayerGroundedState
+    public class PlayerAirDashingState : PlayerAirborneState
     {
         private float startTime;
 
@@ -13,25 +13,27 @@ namespace genshin
 
         private bool shouldKeepRotating;
 
-        public PlayerDashingState(PlayerMovementStateMachine playerMovementStateMachine) : base(playerMovementStateMachine)
+        public PlayerAirDashingState(PlayerMovementStateMachine playerMovementStateMachine) : base(playerMovementStateMachine)
         {
         }
 
         public override void Enter()
         {
-            stateMachine.ReusableData.MovementSpeedModifier = groundedData.DashData.SpeedModifier;
+            stateMachine.ReusableData.MovementSpeedModifier = airborneData.AirDashData.SpeedModifier;
 
             base.Enter();
 
+            stateMachine.Player.Rigidbody.useGravity = false;
+
             EffectActive(stateMachine.Player.dashEffect, true);
 
-            StartAnimation(stateMachine.Player.AnimationData.DashParameterHash);
+            StartAnimation(stateMachine.Player.AnimationData.AirDashParameterHash);
 
             stateMachine.ReusableData.CurrentJumpForce = airborneData.JumpData.StrongForce;
 
-            stateMachine.ReusableData.RotationData = groundedData.DashData.RotationData;
+            stateMachine.ReusableData.RotationData = airborneData.AirDashData.RotationData;
 
-            Dash();
+            AirDash();
 
             shouldKeepRotating = stateMachine.ReusableData.MovementInput != Vector2.zero;
 
@@ -43,10 +45,11 @@ namespace genshin
         public override void Exit()
         {
             base.Exit();
+            stateMachine.Player.Rigidbody.useGravity = true;
 
             EffectActive(stateMachine.Player.dashEffect, false);
 
-            StopAnimation(stateMachine.Player.AnimationData.DashParameterHash);
+            StopAnimation(stateMachine.Player.AnimationData.AirDashParameterHash);
 
             SetBaseRotationData();
         }
@@ -65,14 +68,7 @@ namespace genshin
 
         public override void OnAnimationTransitionEvent()
         {
-            if (stateMachine.ReusableData.MovementInput == Vector2.zero)
-            {
-                stateMachine.ChangeState(stateMachine.HardStoppingState);
-
-                return;
-            }
-
-            stateMachine.ChangeState(stateMachine.SprintingState);
+            stateMachine.ChangeState(stateMachine.FallingState);
         }
 
         //protected override void AddInputActionsCallbacks()
@@ -97,7 +93,7 @@ namespace genshin
         //    shouldKeepRotating = true;
         //}
 
-        private void Dash()
+        private void AirDash()
         {
             Vector3 dashDirection = stateMachine.Player.transform.forward;
 
@@ -140,5 +136,6 @@ namespace genshin
         protected override void OnDashStarted(InputAction.CallbackContext context)
         {
         }
+
     }
 }

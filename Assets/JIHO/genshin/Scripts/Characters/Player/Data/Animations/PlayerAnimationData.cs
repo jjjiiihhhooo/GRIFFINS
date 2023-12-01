@@ -23,6 +23,7 @@ namespace genshin
         [Header("Grounded Parameter Names")]
         [SerializeField] private string idleParameterName = "isIdling";
         [SerializeField] private string dashParameterName = "isDashing";
+        [SerializeField] private string airDashParameterName = "isAirDashing";
         [SerializeField] private string walkParameterName = "isWalking";
         [SerializeField] private string runParameterName = "isRunning";
         [SerializeField] private string sprintParameterName = "isSprinting";
@@ -47,6 +48,7 @@ namespace genshin
 
         public int IdleParameterHash { get; private set; }
         public int DashParameterHash { get; private set; }
+        public int AirDashParameterHash { get; private set; }
         public int WalkParameterHash { get; private set; }
         public int RunParameterHash { get; private set; }
         public int SprintParameterHash { get; private set; }
@@ -70,6 +72,7 @@ namespace genshin
 
             IdleParameterHash = Animator.StringToHash(idleParameterName);
             DashParameterHash = Animator.StringToHash(dashParameterName);
+            AirDashParameterHash = Animator.StringToHash(airDashParameterName);
             WalkParameterHash = Animator.StringToHash(walkParameterName);
             RunParameterHash = Animator.StringToHash(runParameterName);
             SprintParameterHash = Animator.StringToHash(sprintParameterName);

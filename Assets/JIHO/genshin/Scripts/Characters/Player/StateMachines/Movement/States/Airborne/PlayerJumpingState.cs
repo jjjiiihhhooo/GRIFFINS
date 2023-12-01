@@ -22,11 +22,11 @@ namespace genshin
 
             //stateMachine.ReusableData.MovementSpeedModifier = 0f;
 
-            //stateMachine.ReusableData.MovementDecelerationForce = airborneData.JumpData.DecelerationForce;
+            stateMachine.ReusableData.MovementDecelerationForce = airborneData.JumpData.DecelerationForce;
 
-            //stateMachine.ReusableData.RotationData = airborneData.JumpData.RotationData;
+            stateMachine.ReusableData.RotationData = airborneData.JumpData.RotationData;
 
-            //shouldKeepRotating = stateMachine.ReusableData.MovementInput != Vector2.zero;
+            shouldKeepRotating = stateMachine.ReusableData.MovementInput != Vector2.zero;
 
             Jump();
         }
@@ -78,21 +78,21 @@ namespace genshin
         {
             Vector3 jumpForce = stateMachine.ReusableData.CurrentJumpForce;
 
-            //Vector3 jumpDirection = stateMachine.Player.transform.forward;
+            Vector3 jumpDirection = stateMachine.Player.transform.forward;
 
-            //if (shouldKeepRotating)
-            //{
-            //    UpdateTargetRotation(GetMovementInputDirection());
+            if (shouldKeepRotating)
+            {
+                UpdateTargetRotation(GetMovementInputDirection());
 
-            //    jumpDirection = GetTargetRotationDirection(stateMachine.ReusableData.CurrentTargetRotation.y);
-            //}
+                jumpDirection = GetTargetRotationDirection(stateMachine.ReusableData.CurrentTargetRotation.y);
+            }
 
             //jumpForce.x *= jumpDirection.x;
             //jumpForce.z *= jumpDirection.z;
 
-            //jumpForce = GetJumpForceOnSlope(jumpForce);
+            jumpForce = GetJumpForceOnSlope(jumpForce);
 
-            //ResetVelocity();
+            ResetVelocity();
 
             stateMachine.Player.Rigidbody.AddForce(jumpForce, ForceMode.VelocityChange);
         }
@@ -107,13 +107,13 @@ namespace genshin
             {
                 float groundAngle = Vector3.Angle(hit.normal, -downwardsRayFromCapsuleCenter.direction);
 
-                if (IsMovingUp())
-                {
-                    float forceModifier = airborneData.JumpData.JumpForceModifierOnSlopeUpwards.Evaluate(groundAngle);
+                //if (IsMovingUp())
+                //{
+                //    float forceModifier = airborneData.JumpData.JumpForceModifierOnSlopeUpwards.Evaluate(groundAngle);
 
-                    jumpForce.x *= forceModifier;
-                    jumpForce.z *= forceModifier;
-                }
+                //    jumpForce.x *= forceModifier;
+                //    jumpForce.z *= forceModifier;
+                //}
 
                 if (IsMovingDown())
                 {

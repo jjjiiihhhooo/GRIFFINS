@@ -25,6 +25,7 @@ namespace genshin
         public PlayerHardLandingState HardLandingState { get; }
 
         public PlayerJumpingState JumpingState { get; }
+        public PlayerAirDashingState AirDashingState { get; }
         public PlayerFallingState FallingState { get; }
 
         public PlayerLightAttackingState LightAttackingState { get; }
@@ -51,6 +52,7 @@ namespace genshin
             HardLandingState = new PlayerHardLandingState(this);
 
             JumpingState = new PlayerJumpingState(this);
+            AirDashingState = new PlayerAirDashingState(this);
             FallingState = new PlayerFallingState(this);
 
             LightAttackingState = new PlayerLightAttackingState(this);
