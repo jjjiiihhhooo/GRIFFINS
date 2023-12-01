@@ -139,6 +139,8 @@ namespace genshin
 
         protected virtual void OnDashStarted(InputAction.CallbackContext context)
         {
+            if (!CoolTimeManager.Instance.CoolCheck("Dash")) return;
+
             stateMachine.ChangeState(stateMachine.DashingState);
         }
 
@@ -178,12 +180,18 @@ namespace genshin
                 return;
             }
 
+            if (stateMachine.GetCurrentStateType() == typeof(PlayerDashingState))
+            {
+                return;
+            }
+
             Vector3 capsuleColliderCenterInWorldSpace = stateMachine.Player.ResizableCapsuleCollider.CapsuleColliderData.Collider.bounds.center;
 
             Ray downwardsRayFromCapsuleBottom = new Ray(capsuleColliderCenterInWorldSpace - stateMachine.Player.ResizableCapsuleCollider.CapsuleColliderData.ColliderVerticalExtents, Vector3.down);
 
             if (!Physics.Raycast(downwardsRayFromCapsuleBottom, out _, groundedData.GroundToFallRayDistance, stateMachine.Player.LayerData.GroundLayer, QueryTriggerInteraction.Ignore))
             {
+                
                 OnFall();
             }
         }
