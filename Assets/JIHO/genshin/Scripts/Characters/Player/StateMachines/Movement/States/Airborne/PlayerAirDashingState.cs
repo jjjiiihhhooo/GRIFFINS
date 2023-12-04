@@ -19,7 +19,7 @@ namespace genshin
 
         public override void Enter()
         {
-            stateMachine.ReusableData.MovementSpeedModifier = airborneData.AirDashData.SpeedModifier;
+            //stateMachine.ReusableData.MovementSpeedModifier = airborneData.AirDashData.SpeedModifier;
 
             base.Enter();
 
@@ -27,11 +27,11 @@ namespace genshin
 
             EffectActive(stateMachine.Player.dashEffect, true);
 
-            StartAnimation(stateMachine.Player.AnimationData.AirDashParameterHash);
+            //StartAnimation(stateMachine.Player.AnimationData.AirDashParameterHash);
 
             stateMachine.ReusableData.CurrentJumpForce = airborneData.JumpData.StrongForce;
 
-            stateMachine.ReusableData.RotationData = airborneData.AirDashData.RotationData;
+            //stateMachine.ReusableData.RotationData = airborneData.AirDashData.RotationData;
 
             AirDash();
 
@@ -49,7 +49,7 @@ namespace genshin
 
             EffectActive(stateMachine.Player.dashEffect, false);
 
-            StopAnimation(stateMachine.Player.AnimationData.AirDashParameterHash);
+            //StopAnimation(stateMachine.Player.AnimationData.AirDashParameterHash);
 
             SetBaseRotationData();
         }

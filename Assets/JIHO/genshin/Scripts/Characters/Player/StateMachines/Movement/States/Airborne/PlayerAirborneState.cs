@@ -33,18 +33,37 @@ namespace genshin
 
             stateMachine.Player.Input.PlayerActions.Dash.started += OnDashStarted;
 
+            stateMachine.Player.Input.PlayerActions.Stream.started += OnStreamStarted;
+
+        }
+
+        private void OnStreamStarted(InputAction.CallbackContext context)
+        {
+            if (stateMachine.GetCurrentStateType() == typeof(PlayerDashingState))
+            {
+                return;
+            }
+
+            stateMachine.ChangeState(stateMachine.DownStreamState);
         }
 
         protected virtual void OnDashStarted(InputAction.CallbackContext context)
         {
-            stateMachine.ChangeState(stateMachine.AirDashingState);
+            if(stateMachine.GetCurrentStateType() == typeof(PlayerDownStreamState))
+            {
+                return;
+            }
+
+            stateMachine.ChangeState(stateMachine.DashingState);
         }
 
         protected override void RemoveInputActionsCallbacks()
         {
             base.RemoveInputActionsCallbacks();
 
-            stateMachine.Player.Input.PlayerActions.Dash.started -= OnDashStarted;
+            stateMachine.Player.Input.PlayerActions.Dash.started -= OnDashStarted; 
+            
+            stateMachine.Player.Input.PlayerActions.Stream.started += OnStreamStarted;
 
         }
 

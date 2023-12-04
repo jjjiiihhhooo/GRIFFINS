@@ -114,6 +114,14 @@ MonoBehaviour:
       <HardDecelerationForce>k__BackingField: 5
     <RollData>k__BackingField:
       <SpeedModifier>k__BackingField: 1
+    <UpStreamData>k__BackingField:
+      <SpeedModifier>k__BackingField: 2
+      <RotationData>k__BackingField:
+        <TargetRotationReachTime>k__BackingField: {x: 0, y: 0, z: 0}
+      <upPower>k__BackingField: 1
+      <ConsecutiveDashesLimitAmount>k__BackingField: 2
+      <DashLimitReachedCooldown>k__BackingField: 1.75
+      fallCount: 0
     <AttackData>k__BackingField:
       <AttackDamage>k__BackingField: 1
   <AirborneData>k__BackingField:
@@ -222,10 +230,6 @@ MonoBehaviour:
     <FallData>k__BackingField:
       <FallSpeedLimit>k__BackingField: 10
       <MinimumDistanceToBeConsideredHardFall>k__BackingField: 3
-    <AirDashData>k__BackingField:
-      <SpeedModifier>k__BackingField: 3
-      <RotationData>k__BackingField:
-        <TargetRotationReachTime>k__BackingField: {x: 0, y: 0, z: 0}
-      <TimeToBeConsideredConsecutive>k__BackingField: 1
-      <ConsecutiveDashesLimitAmount>k__BackingField: 3
-      <DashLimitReachedCooldown>k__BackingField: 1.2
+    <DownStreamData>k__BackingField:
+      <FallSpeedLimit>k__BackingField: 80
+      <MinimumDistanceToBeConsideredHardFall>k__BackingField: 3

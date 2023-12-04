@@ -20,6 +20,7 @@ namespace genshin
         [field: SerializeField] public PlayerSprintData SprintData { get; private set; }
         [field: SerializeField] public PlayerStopData StopData { get; private set; }
         [field: SerializeField] public PlayerRollData RollData { get; private set; }
+        [field: SerializeField] public PlayerUpStreamData UpStreamData { get; private set; }
         [field: SerializeField] public PlayerAttackData AttackData { get; private set; }
     }
 }

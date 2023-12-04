@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Windows;
+using static UnityEditor.PlayerSettings;
 
 namespace genshin
 {
@@ -38,9 +39,15 @@ namespace genshin
         private PlayerMovementStateMachine movementStateMachine;
 
         public AttackCol attackCol;
+        public PhysicMaterial pm;
+
         public bool isInteraction;
         public float damage;
+        public float groundTime;
+        public float groundMaxTime;
 
+        public Vector3 dir;
+        public Ray ray;
         private void Awake()
         {
             CameraRecenteringUtility.Initialize();
@@ -65,12 +72,16 @@ namespace genshin
             movementStateMachine.ChangeState(movementStateMachine.IdlingState);
         }
 
+        private void OnDrawGizmos()
+        {
+            Gizmos.DrawRay(ray);
+        }
         private void Update()
         {
+            dir = MainCameraTransform.forward;
+            ray = new Ray(new Vector3(transform.position.x, transform.position.y + 2f, transform.position.z), dir);
             movementStateMachine.HandleInput();
-
             movementStateMachine.Update();
-                
 
             if(UnityEngine.Input.GetKeyDown(KeyCode.LeftAlt))
             {
@@ -89,6 +100,11 @@ namespace genshin
         private void OnTriggerEnter(Collider collider)
         {
             movementStateMachine.OnTriggerEnter(collider);
+        }
+
+        private void OnTriggerStay(Collider collider)
+        {
+            movementStateMachine.OnTriggerStay(collider);
         }
 
         private void OnTriggerExit(Collider collider)

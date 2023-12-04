@@ -108,7 +108,19 @@ namespace genshin
 
             stateMachine.Player.Input.PlayerActions.Jump.started += OnJumpStarted;
 
+            stateMachine.Player.Input.PlayerActions.Stream.started += OnStreamStarted;
+
             stateMachine.Player.Input.PlayerActions.LightAttack.started += OnAttackStarted;
+        }
+
+        private void OnStreamStarted(InputAction.CallbackContext context)
+        {
+            if (stateMachine.GetCurrentStateType() == typeof(PlayerDashingState) || stateMachine.GetCurrentStateType() == typeof(PlayerLightAttackingState))
+            {
+                return;
+            }
+
+            stateMachine.ChangeState(stateMachine.UpStreamState);
         }
 
         private void OnAttackStarted(InputAction.CallbackContext context)
@@ -134,11 +146,18 @@ namespace genshin
 
             stateMachine.Player.Input.PlayerActions.Jump.started -= OnJumpStarted;
 
+            stateMachine.Player.Input.PlayerActions.Stream.started -= OnStreamStarted;
+
             stateMachine.Player.Input.PlayerActions.LightAttack.started -= OnAttackStarted;
         }
 
         protected virtual void OnDashStarted(InputAction.CallbackContext context)
         {
+            if (stateMachine.GetCurrentStateType() == typeof(PlayerLightAttackingState))
+            {
+                return;
+            }
+
             stateMachine.ChangeState(stateMachine.DashingState);
         }
 
@@ -184,9 +203,27 @@ namespace genshin
 
             if (!Physics.Raycast(downwardsRayFromCapsuleBottom, out _, groundedData.GroundToFallRayDistance, stateMachine.Player.LayerData.GroundLayer, QueryTriggerInteraction.Ignore))
             {
-                OnFall();
+                if (stateMachine.GetCurrentStateType() != typeof(PlayerUpStreamState))
+                    OnFall();
             }
         }
+
+        protected override void OnStayGround(Collider collider)
+        {
+
+            if (stateMachine.Player.pm.bounceCombine == PhysicMaterialCombine.Maximum)
+            {
+                if (stateMachine.Player.groundTime < 0)
+                {
+                    stateMachine.Player.pm.bounceCombine = PhysicMaterialCombine.Minimum;
+                }
+                else
+                {
+                    stateMachine.Player.groundTime -= Time.deltaTime;
+                }
+            }
+        }
+
 
         private bool IsThereGroundUnderneath()
         {

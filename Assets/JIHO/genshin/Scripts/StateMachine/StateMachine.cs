@@ -49,6 +49,11 @@ namespace genshin
             currentState?.OnTriggerExit(collider);
         }
 
+        public void OnTriggerStay(Collider collider)
+        {
+            currentState?.OnTriggerStay(collider);
+        }
+
         public void OnAnimationEnterEvent()
         {
             currentState?.OnAnimationEnterEvent();
