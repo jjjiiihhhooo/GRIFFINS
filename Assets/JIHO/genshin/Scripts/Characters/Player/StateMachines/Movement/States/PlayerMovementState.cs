@@ -72,16 +72,6 @@ namespace genshin
             }
         }
 
-        public virtual void OnTriggerStay(Collider collider)
-        {
-            if (stateMachine.Player.LayerData.IsGroundLayer(collider.gameObject.layer))
-            {
-                OnStayGround(collider);
-
-                return;
-            }
-        }
-
         public virtual void OnAnimationEnterEvent()
         {
         }
@@ -326,11 +316,6 @@ namespace genshin
 
         protected virtual void OnContactWithGroundExited(Collider collider)
         {
-        }
-
-        protected virtual void OnStayGround(Collider collider)
-        {
-
         }
 
         protected void UpdateCameraRecenteringState(Vector2 movementInput)

@@ -11,7 +11,6 @@ namespace genshin
 
         public PlayerIdlingState IdlingState { get; }
         public PlayerDashingState DashingState { get; }
-        public PlayerUpStreamState UpStreamState { get; }
 
         public PlayerWalkingState WalkingState { get; }
         public PlayerRunningState RunningState { get; }
@@ -26,7 +25,7 @@ namespace genshin
         public PlayerHardLandingState HardLandingState { get; }
 
         public PlayerJumpingState JumpingState { get; }
-        public PlayerDownStreamState DownStreamState { get; }
+        public PlayerAirDashingState AirDashingState { get; }
         public PlayerFallingState FallingState { get; }
 
         public PlayerLightAttackingState LightAttackingState { get; }
@@ -39,7 +38,6 @@ namespace genshin
 
             IdlingState = new PlayerIdlingState(this);
             DashingState = new PlayerDashingState(this);
-            UpStreamState = new PlayerUpStreamState(this);
 
             WalkingState = new PlayerWalkingState(this);
             RunningState = new PlayerRunningState(this);
@@ -54,7 +52,7 @@ namespace genshin
             HardLandingState = new PlayerHardLandingState(this);
 
             JumpingState = new PlayerJumpingState(this);
-            DownStreamState = new PlayerDownStreamState(this);
+            AirDashingState = new PlayerAirDashingState(this);
             FallingState = new PlayerFallingState(this);
 
             LightAttackingState = new PlayerLightAttackingState(this);

@@ -23,7 +23,7 @@ namespace genshin
         [Header("Grounded Parameter Names")]
         [SerializeField] private string idleParameterName = "isIdling";
         [SerializeField] private string dashParameterName = "isDashing";
-        [SerializeField] private string upStreamParameterName = "isUpStream";
+        [SerializeField] private string airDashParameterName = "isAirDashing";
         [SerializeField] private string walkParameterName = "isWalking";
         [SerializeField] private string runParameterName = "isRunning";
         [SerializeField] private string sprintParameterName = "isSprinting";
@@ -36,7 +36,6 @@ namespace genshin
 
         [Header("Airborne Parameter Names")]
         [SerializeField] private string fallParameterName = "isFalling";
-        [SerializeField] private string dowmStreamParameterName = "isDownStream";
 
         public int GroundedParameterHash { get; private set; }
         public int MovingParameterHash { get; private set; }
@@ -49,8 +48,8 @@ namespace genshin
 
         public int IdleParameterHash { get; private set; }
         public int DashParameterHash { get; private set; }
+        public int AirDashParameterHash { get; private set; }
         public int WalkParameterHash { get; private set; }
-        public int UpStreamParameterHash { get; private set; }
         public int RunParameterHash { get; private set; }
         public int SprintParameterHash { get; private set; }
         public int MediumStopParameterHash { get; private set; }
@@ -59,7 +58,6 @@ namespace genshin
         public int HardLandParameterHash { get; private set; }
 
         public int FallParameterHash { get; private set; }
-        public int DownStreamParameterHash { get; private set; }
 
         public void Initialize()
         {
@@ -74,7 +72,7 @@ namespace genshin
 
             IdleParameterHash = Animator.StringToHash(idleParameterName);
             DashParameterHash = Animator.StringToHash(dashParameterName);
-            UpStreamParameterHash = Animator.StringToHash(upStreamParameterName);
+            AirDashParameterHash = Animator.StringToHash(airDashParameterName);
             WalkParameterHash = Animator.StringToHash(walkParameterName);
             RunParameterHash = Animator.StringToHash(runParameterName);
             SprintParameterHash = Animator.StringToHash(sprintParameterName);
@@ -83,7 +81,6 @@ namespace genshin
             RollParameterHash = Animator.StringToHash(rolleParameterName);
             HardLandParameterHash = Animator.StringToHash(hardLandParameterName);
             FallParameterHash = Animator.StringToHash(fallParameterName);
-            DownStreamParameterHash = Animator.StringToHash(dowmStreamParameterName);
         }
     }
 }

@@ -10,6 +10,6 @@ namespace genshin
     {
         [field: SerializeField] public PlayerJumpData JumpData { get; private set; }
         [field: SerializeField] public PlayerFallData FallData { get; private set; }
-        [field: SerializeField] public PlayerDownStreamData DownStreamData { get; private set; }
+        [field: SerializeField] public PlayerAirDashData AirDashData { get; private set; }
     }
 }
