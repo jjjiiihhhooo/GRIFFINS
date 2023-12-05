@@ -12,7 +12,10 @@ namespace genshin
 
         public override void Enter()
         {
-            stateMachine.ReusableData.MovementSpeedModifier = 0;
+            if(stateMachine.GetPreviousState() != typeof(PlayerDashingState))
+            {
+                stateMachine.ReusableData.MovementSpeedModifier = 0;
+            }
 
             base.Enter();
 

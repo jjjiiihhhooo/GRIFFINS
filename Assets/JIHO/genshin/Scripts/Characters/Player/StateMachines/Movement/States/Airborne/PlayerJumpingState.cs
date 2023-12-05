@@ -20,7 +20,7 @@ namespace genshin
 
             EffectActive(stateMachine.Player.jumpEffect, true);
 
-            //stateMachine.ReusableData.MovementSpeedModifier = 0f;
+            stateMachine.ReusableData.MovementSpeedModifier = 0f;
 
             stateMachine.ReusableData.MovementDecelerationForce = airborneData.JumpData.DecelerationForce;
 
@@ -87,8 +87,8 @@ namespace genshin
                 jumpDirection = GetTargetRotationDirection(stateMachine.ReusableData.CurrentTargetRotation.y);
             }
 
-            //jumpForce.x *= jumpDirection.x;
-            //jumpForce.z *= jumpDirection.z;
+            jumpForce.x *= jumpDirection.x;
+            jumpForce.z *= jumpDirection.z;
 
             jumpForce = GetJumpForceOnSlope(jumpForce);
 
@@ -107,13 +107,13 @@ namespace genshin
             {
                 float groundAngle = Vector3.Angle(hit.normal, -downwardsRayFromCapsuleCenter.direction);
 
-                //if (IsMovingUp())
-                //{
-                //    float forceModifier = airborneData.JumpData.JumpForceModifierOnSlopeUpwards.Evaluate(groundAngle);
+                if (IsMovingUp())
+                {
+                    float forceModifier = airborneData.JumpData.JumpForceModifierOnSlopeUpwards.Evaluate(groundAngle);
 
-                //    jumpForce.x *= forceModifier;
-                //    jumpForce.z *= forceModifier;
-                //}
+                    jumpForce.x *= forceModifier;
+                    jumpForce.z *= forceModifier;
+                }
 
                 if (IsMovingDown())
                 {

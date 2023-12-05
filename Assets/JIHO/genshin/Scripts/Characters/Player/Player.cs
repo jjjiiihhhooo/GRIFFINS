@@ -41,6 +41,9 @@ namespace genshin
         public bool isInteraction;
         public float damage;
 
+        public Ray ray;
+        public Vector3 dir;
+
         private void Awake()
         {
             CameraRecenteringUtility.Initialize();
@@ -60,6 +63,11 @@ namespace genshin
             isInteraction = false;
         }
 
+        private void OnDrawGizmos()
+        {
+            Gizmos.DrawRay(ray);
+        }
+
         private void Start()
         {
             movementStateMachine.ChangeState(movementStateMachine.IdlingState);
@@ -67,6 +75,9 @@ namespace genshin
 
         private void Update()
         {
+            dir = MainCameraTransform.forward;
+            ray = new Ray(new Vector3(transform.position.x, transform.position.y + 2f, transform.position.z), dir);
+
             movementStateMachine.HandleInput();
 
             movementStateMachine.Update();

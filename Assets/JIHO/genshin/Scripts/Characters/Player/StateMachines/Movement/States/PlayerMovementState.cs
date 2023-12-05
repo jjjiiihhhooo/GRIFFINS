@@ -181,7 +181,8 @@ namespace genshin
                 return;
             }
 
-            if (stateMachine.ReusableData.MovementInput == Vector2.zero) // || stateMachine.ReusableData.MovementSpeedModifier == 0f
+
+            if (stateMachine.ReusableData.MovementInput == Vector2.zero || stateMachine.ReusableData.MovementSpeedModifier == 0f)
             {
                 return;
             }
@@ -189,6 +190,7 @@ namespace genshin
             Vector3 movementDirection = GetMovementInputDirection();
 
             float targetRotationYAngle = Rotate(movementDirection);
+            
 
             Vector3 targetRotationDirection = GetTargetRotationDirection(targetRotationYAngle);
 
