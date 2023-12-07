@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -32,12 +34,31 @@ namespace genshin
             base.AddInputActionsCallbacks();
 
             stateMachine.Player.Input.PlayerActions.Dash.started += OnDashStarted;
+            stateMachine.Player.Input.PlayerActions.DownStream.started += OnDownStreamStarted;
+            stateMachine.Player.Input.PlayerActions.Tornado.started += OnTornadoStarted;
+        }
 
+        private void OnTornadoStarted(InputAction.CallbackContext context)
+        {
+            stateMachine.ChangeState(stateMachine.TornadoState);
         }
 
         protected virtual void OnDashStarted(InputAction.CallbackContext context)
         {
-            stateMachine.ChangeState(stateMachine.AirDashingState);
+            if (!CoolTimeManager.instance.CoolCheck("Dash")) return;
+
+            CoolTimeManager.instance.GetCoolTime("Dash");
+
+            stateMachine.ChangeState(stateMachine.DashingState);
+        }
+
+        protected virtual void OnDownStreamStarted(InputAction.CallbackContext context)
+        {
+            if (!CoolTimeManager.instance.CoolCheck("DownStream")) return;
+
+            CoolTimeManager.instance.GetCoolTime("DownStream");
+
+            stateMachine.ChangeState(stateMachine.DownStreamState);
         }
 
         protected override void RemoveInputActionsCallbacks()
@@ -45,7 +66,8 @@ namespace genshin
             base.RemoveInputActionsCallbacks();
 
             stateMachine.Player.Input.PlayerActions.Dash.started -= OnDashStarted;
-
+            stateMachine.Player.Input.PlayerActions.DownStream.started -= OnDownStreamStarted;
+            stateMachine.Player.Input.PlayerActions.Tornado.started -= OnTornadoStarted;
         }
 
         protected virtual void ResetSprintState()
@@ -55,7 +77,10 @@ namespace genshin
 
         protected override void OnContactWithGround(Collider collider)
         {
-            stateMachine.ChangeState(stateMachine.LightLandingState);
+            if (stateMachine.GetCurrentStateType() != typeof(PlayerDownStreamState))
+            {
+                stateMachine.ChangeState(stateMachine.LightLandingState);
+            }
         }
     }
 }

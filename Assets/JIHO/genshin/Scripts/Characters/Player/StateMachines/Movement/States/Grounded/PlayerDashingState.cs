@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 
 namespace genshin
 {
-    public class PlayerDashingState : PlayerGroundedState
+    public class PlayerDashingState : PlayerAirborneState
     {
         private float startTime;
 
@@ -26,6 +26,8 @@ namespace genshin
 
             EffectActive(stateMachine.Player.dashEffect, true);
 
+            stateMachine.Player.DashColActive(100);
+
             StartAnimation(stateMachine.Player.AnimationData.DashParameterHash);
 
             stateMachine.ReusableData.CurrentJumpForce = airborneData.JumpData.StrongForce;
@@ -44,7 +46,7 @@ namespace genshin
         public override void Exit()
         {
             base.Exit();
-
+            stateMachine.Player.DashColActive();
             EffectActive(stateMachine.Player.dashEffect, false);
 
             StopAnimation(stateMachine.Player.AnimationData.DashParameterHash);
@@ -66,6 +68,8 @@ namespace genshin
 
         public override void OnAnimationTransitionEvent()
         {
+            
+
             //if (stateMachine.ReusableData.MovementInput == Vector2.zero)
             //{
             //    stateMachine.ChangeState(stateMachine.HardStoppingState);
@@ -75,6 +79,7 @@ namespace genshin
 
             //stateMachine.ChangeState(stateMachine.SprintingState);
         }
+
 
         //protected override void AddInputActionsCallbacks()
         //{
@@ -116,8 +121,12 @@ namespace genshin
             //stateMachine.Player.Rigidbody.velocity = dashDirection * GetMovementSpeed(false);
 
             //Vector3 dir = stateMachine.Player.dir;
+
+            stateMachine.Player.pm.bounceCombine = PhysicMaterialCombine.Maximum;
+            stateMachine.Player.groundTime = stateMachine.Player.groundMaxTime;
+
             Vector3 pos = stateMachine.Player.transform.position;
-            stateMachine.Player.Rigidbody.AddForce(stateMachine.Player.ray.direction * 30f, ForceMode.Impulse);
+            stateMachine.Player.Rigidbody.AddForce(stateMachine.Player.ray.direction * stateMachine.Player.Data.GroundedData.DashData.SpeedModifier, ForceMode.VelocityChange);
             Vector3 dirY = new Vector3(stateMachine.Player.ray.direction.x, 0, stateMachine.Player.ray.direction.z);
             Quaternion targetRot = Quaternion.LookRotation(dirY, Vector3.up);
             stateMachine.Player.transform.rotation = targetRot;

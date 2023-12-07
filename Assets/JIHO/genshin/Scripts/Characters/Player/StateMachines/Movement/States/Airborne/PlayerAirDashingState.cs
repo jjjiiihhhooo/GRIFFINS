@@ -27,8 +27,6 @@ namespace genshin
 
             EffectActive(stateMachine.Player.dashEffect, true);
 
-            StartAnimation(stateMachine.Player.AnimationData.AirDashParameterHash);
-
             stateMachine.ReusableData.CurrentJumpForce = airborneData.JumpData.StrongForce;
 
             stateMachine.ReusableData.RotationData = airborneData.AirDashData.RotationData;
@@ -49,7 +47,6 @@ namespace genshin
 
             EffectActive(stateMachine.Player.dashEffect, false);
 
-            StopAnimation(stateMachine.Player.AnimationData.AirDashParameterHash);
 
             SetBaseRotationData();
         }
@@ -133,9 +130,6 @@ namespace genshin
             return Time.time < startTime + groundedData.DashData.TimeToBeConsideredConsecutive;
         }
 
-        protected override void OnDashStarted(InputAction.CallbackContext context)
-        {
-        }
 
     }
 }

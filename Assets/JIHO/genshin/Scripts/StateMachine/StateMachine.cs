@@ -42,12 +42,17 @@ namespace genshin
 
         public System.Type GetPreviousState()
         {
-            return previousState.GetType();
+            return previousState?.GetType();
         }
 
         public void OnTriggerEnter(Collider collider)
         {
             currentState?.OnTriggerEnter(collider);
+        }
+
+        public void OnTriggerStay(Collider collider)
+        {
+            currentState?.OnTriggerStay(collider);
         }
 
         public void OnTriggerExit(Collider collider)

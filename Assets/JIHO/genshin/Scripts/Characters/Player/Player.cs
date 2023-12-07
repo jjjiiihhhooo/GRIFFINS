@@ -35,11 +35,18 @@ namespace genshin
         public Transform MainCameraTransform { get; private set; }
         public PlayerInteraction PlayerInteraction;
 
-        private PlayerMovementStateMachine movementStateMachine;
+        public PlayerMovementStateMachine movementStateMachine;
 
+
+        public GameObject tornadoSkillObject;
         public AttackCol attackCol;
+        public AttackCol dashCol;
         public bool isInteraction;
+        public bool isSkill;
         public float damage;
+        public float groundTime;
+        public float groundMaxTime;
+        public PhysicMaterial pm;
 
         public Ray ray;
         public Vector3 dir;
@@ -81,13 +88,14 @@ namespace genshin
             movementStateMachine.HandleInput();
 
             movementStateMachine.Update();
-                
+            
 
             if(UnityEngine.Input.GetKeyDown(KeyCode.LeftAlt))
             {
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
             }
+
         }
 
         private void FixedUpdate()
@@ -100,6 +108,11 @@ namespace genshin
         private void OnTriggerEnter(Collider collider)
         {
             movementStateMachine.OnTriggerEnter(collider);
+        }
+
+        private void OnTriggerStay(Collider collider)
+        {
+            movementStateMachine.OnTriggerStay(collider);
         }
 
         private void OnTriggerExit(Collider collider)
@@ -122,11 +135,33 @@ namespace genshin
             movementStateMachine.OnAnimationTransitionEvent();
         }
 
-        public void AttackColActive()
+        public void StartCor(IEnumerator coroutine)
         {
+            StartCoroutine(coroutine);
+        }
+
+        public void StopCor(IEnumerator coroutine)
+        {
+            StopCoroutine(coroutine);
+        }
+
+        public void AttackColActive(float time = 0.2f)
+        {
+            attackCol.gameObject.SetActive(false);
             attackCol.damage = damage;
+            attackCol.time = time;
             attackCol.gameObject.SetActive(true);
         }
+
+        public void DashColActive(float time = 0f)
+        {
+            dashCol.gameObject.SetActive(false);
+            dashCol.damage = damage;
+            dashCol.time = time;
+            dashCol.gameObject.SetActive(true);
+        }
+
+        
     }
 }
 

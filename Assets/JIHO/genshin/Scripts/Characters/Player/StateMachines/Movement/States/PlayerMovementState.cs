@@ -62,6 +62,25 @@ namespace genshin
             }
         }
 
+        public virtual void OnTriggerStay(Collider collider)
+        {
+            if (stateMachine.Player.LayerData.IsGroundLayer(collider.gameObject.layer))
+            {
+                if (stateMachine.Player.pm.bounceCombine == PhysicMaterialCombine.Maximum)
+                {
+                    if (stateMachine.Player.groundTime < 0)
+                    {
+                        stateMachine.Player.pm.bounceCombine = PhysicMaterialCombine.Minimum;
+                        stateMachine.ChangeState(stateMachine.IdlingState);
+                    }
+                    else
+                    {
+                        stateMachine.Player.groundTime -= Time.deltaTime;
+                    }
+                }
+            }
+        }
+
         public virtual void OnTriggerExit(Collider collider)
         {
             if (stateMachine.Player.LayerData.IsGroundLayer(collider.gameObject.layer))
@@ -176,10 +195,10 @@ namespace genshin
 
         private void Move()
         {
-            if (stateMachine.GetCurrentStateType() == typeof(PlayerDashingState) || stateMachine.GetCurrentStateType() == typeof(PlayerAirDashingState))
-            {
-                return;
-            }
+            //if (stateMachine.GetCurrentStateType() == typeof(PlayerDashingState) || stateMachine.GetCurrentStateType() == typeof(PlayerAirDashingState))
+            //{
+            //    return;
+            //}
 
 
             if (stateMachine.ReusableData.MovementInput == Vector2.zero || stateMachine.ReusableData.MovementSpeedModifier == 0f)
@@ -431,6 +450,8 @@ namespace genshin
         {
             return GetPlayerVerticalVelocity().y < -minimumVelocity;
         }
+
+        
     }
 }
 

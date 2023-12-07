@@ -98,6 +98,24 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""DownStream"",
+                    ""type"": ""Button"",
+                    ""id"": ""f20d57e2-4ad0-4e7b-ba46-e4ca1ba8f4a5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Tornado"",
+                    ""type"": ""Button"",
+                    ""id"": ""e8f6d7ab-a9dd-4a55-a080-8ebf68781e7e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -202,39 +220,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""b2996c7e-f9fd-4cd8-af01-40ae60d78936"",
-                    ""path"": ""<Mouse>/rightButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Dash"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""6bfcb6eb-df4e-4947-a9bd-0f3050621868"",
-                    ""path"": ""<Keyboard>/leftShift"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Sprint"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""d34d9607-9320-4454-ac61-e81c394a8227"",
-                    ""path"": ""<Mouse>/rightButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Sprint"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""a794f9f9-cdf0-433f-abf4-66ea90c53abd"",
                     ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
@@ -254,6 +239,28 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""LightAttack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""579e4aa3-1e6c-473b-9607-71df1a566729"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DownStream"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bfba1752-fc1b-41a0-b67f-2a13da516505"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Tornado"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -270,6 +277,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_LightAttack = m_Player.FindAction("LightAttack", throwIfNotFound: true);
+        m_Player_DownStream = m_Player.FindAction("DownStream", throwIfNotFound: true);
+        m_Player_Tornado = m_Player.FindAction("Tornado", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -339,6 +348,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Sprint;
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_LightAttack;
+    private readonly InputAction m_Player_DownStream;
+    private readonly InputAction m_Player_Tornado;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -351,6 +362,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @Sprint => m_Wrapper.m_Player_Sprint;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @LightAttack => m_Wrapper.m_Player_LightAttack;
+        public InputAction @DownStream => m_Wrapper.m_Player_DownStream;
+        public InputAction @Tornado => m_Wrapper.m_Player_Tornado;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -384,6 +397,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @LightAttack.started += instance.OnLightAttack;
             @LightAttack.performed += instance.OnLightAttack;
             @LightAttack.canceled += instance.OnLightAttack;
+            @DownStream.started += instance.OnDownStream;
+            @DownStream.performed += instance.OnDownStream;
+            @DownStream.canceled += instance.OnDownStream;
+            @Tornado.started += instance.OnTornado;
+            @Tornado.performed += instance.OnTornado;
+            @Tornado.canceled += instance.OnTornado;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -412,6 +431,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @LightAttack.started -= instance.OnLightAttack;
             @LightAttack.performed -= instance.OnLightAttack;
             @LightAttack.canceled -= instance.OnLightAttack;
+            @DownStream.started -= instance.OnDownStream;
+            @DownStream.performed -= instance.OnDownStream;
+            @DownStream.canceled -= instance.OnDownStream;
+            @Tornado.started -= instance.OnTornado;
+            @Tornado.performed -= instance.OnTornado;
+            @Tornado.canceled -= instance.OnTornado;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -439,5 +464,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnSprint(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnLightAttack(InputAction.CallbackContext context);
+        void OnDownStream(InputAction.CallbackContext context);
+        void OnTornado(InputAction.CallbackContext context);
     }
 }

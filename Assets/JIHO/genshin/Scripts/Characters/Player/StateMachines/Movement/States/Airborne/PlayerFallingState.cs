@@ -17,12 +17,14 @@ namespace genshin
             base.Enter();
 
             StartAnimation(stateMachine.Player.AnimationData.FallParameterHash);
-
-            stateMachine.ReusableData.MovementSpeedModifier = 0f;
-
             playerPositionOnEnter = stateMachine.Player.transform.position;
 
-            ResetVerticalVelocity();
+            if (stateMachine.GetPreviousState() != typeof(PlayerDownStreamState))
+            {
+                stateMachine.ReusableData.MovementSpeedModifier = 0f;
+
+                ResetVerticalVelocity();
+            }
         }
 
         public override void Exit()
@@ -48,7 +50,7 @@ namespace genshin
                 return;
             }
 
-            Vector3 limitedVelocityForce = new Vector3(0f, -airborneData.FallData.FallSpeedLimit - playerVerticalVelocity.y, 0f);
+            Vector3 limitedVelocityForce = new Vector3(stateMachine.Player.Rigidbody.velocity.x, -airborneData.FallData.FallSpeedLimit - playerVerticalVelocity.y, stateMachine.Player.Rigidbody.velocity.z);
 
             if (stateMachine.ReusableData.MovementInput != Vector2.zero)
             {
