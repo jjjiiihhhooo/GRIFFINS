@@ -31,6 +31,8 @@ namespace genshin
         public GroundTornadoState GroundTornadoState { get; }
 
         public PlayerLightAttackingState LightAttackingState { get; }
+
+        public ObjectDashState ObjectDashState { get; }
         
 
         public PlayerMovementStateMachine(Player player)
@@ -60,6 +62,8 @@ namespace genshin
             TornadoState = new TornadoState(this);
             GroundTornadoState = new GroundTornadoState(this);
             LightAttackingState = new PlayerLightAttackingState(this);
+
+            ObjectDashState = new ObjectDashState(this);
         }
     }
 }

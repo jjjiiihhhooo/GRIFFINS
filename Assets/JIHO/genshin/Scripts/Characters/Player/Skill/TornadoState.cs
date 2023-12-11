@@ -41,15 +41,18 @@ namespace genshin
         private IEnumerator TornadoCor()
         {
             
+            stateMachine.Player.Rigidbody.useGravity = true;
             stateMachine.Player.tornadoSkillObject.transform.position = new Vector3(stateMachine.Player.transform.position.x, stateMachine.Player.transform.position.y + 1f, stateMachine.Player.transform.position.z);
             Vector3 dir = stateMachine.Player.MainCameraTransform.forward;
+            stateMachine.Player.tornadoSkillObject.GetComponent<TornadoEvent>().TornadoEffect.SetActive(false);
+            stateMachine.Player.tornadoSkillObject.SetActive(false);
             stateMachine.Player.tornadoSkillObject.SetActive(true);
 
             //skillMachine.Player.skillObject.transform.forward = skillMachine.Player.dir;
             //skillMachine.Player.skillObject.transform.rotation = Quaternion.Euler(skillMachine.Player.skillObject.transform.rotation.x, 0f, skillMachine.Player.skillObject.transform.rotation.z);
             //skillMachine.Player.skillObject.transform.eulerAngles = new Vector3(skillMachine.Player.skillObject.transform.rotation.x, 0f, skillMachine.Player.skillObject.transform.rotation.z);
             //skillMachine.Player.skillObject.GetComponent<Rigidbody>().AddForce(skillMachine.Player.skillObject.transform.forward * 30f, ForceMode.Impulse);
-
+            stateMachine.ChangeState(stateMachine.FallingState);
             float time = 0;
             while (time < 1f)
             {
@@ -58,8 +61,7 @@ namespace genshin
                 yield return new WaitForEndOfFrame();
             }
             stateMachine.Player.tornadoSkillObject.GetComponent<TornadoEvent>().Tornado();
-            stateMachine.Player.Rigidbody.useGravity = true;
-            stateMachine.ChangeState(stateMachine.FallingState);
+            
         }
 
         public override void OnAnimationTransitionEvent()

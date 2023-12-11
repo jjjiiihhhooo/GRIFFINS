@@ -12,5 +12,6 @@ namespace genshin
         [field: SerializeField] public PlayerFallData FallData { get; private set; }
         [field: SerializeField] public PlayerAirDashData AirDashData { get; private set; }
         [field: SerializeField] public PlayerDownStreamData DownStreamData { get; private set; }
+        [field: SerializeField] public ObjectDashData ObjectDashData { get; private set; }
     }
 }

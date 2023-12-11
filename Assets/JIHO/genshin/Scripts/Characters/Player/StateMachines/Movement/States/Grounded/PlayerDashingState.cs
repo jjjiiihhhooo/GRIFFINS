@@ -68,8 +68,11 @@ namespace genshin
 
         public override void OnAnimationTransitionEvent()
         {
-            
+            shouldGroundChecking = true;
 
+
+            stateMachine.Player.pm.bounceCombine = PhysicMaterialCombine.Maximum;
+            stateMachine.Player.groundTime = stateMachine.Player.groundMaxTime;
             //if (stateMachine.ReusableData.MovementInput == Vector2.zero)
             //{
             //    stateMachine.ChangeState(stateMachine.HardStoppingState);
@@ -105,6 +108,7 @@ namespace genshin
 
         private void Dash()
         {
+
             //Vector3 dashDirection = stateMachine.Player.transform.forward;
 
             //dashDirection.y = 0f;
@@ -121,12 +125,12 @@ namespace genshin
             //stateMachine.Player.Rigidbody.velocity = dashDirection * GetMovementSpeed(false);
 
             //Vector3 dir = stateMachine.Player.dir;
+            shouldGroundChecking = false;
 
-            stateMachine.Player.pm.bounceCombine = PhysicMaterialCombine.Maximum;
-            stateMachine.Player.groundTime = stateMachine.Player.groundMaxTime;
 
             Vector3 pos = stateMachine.Player.transform.position;
-            stateMachine.Player.Rigidbody.AddForce(stateMachine.Player.ray.direction * stateMachine.Player.Data.GroundedData.DashData.SpeedModifier, ForceMode.VelocityChange);
+            
+            stateMachine.Player.Rigidbody.AddForce(stateMachine.Player.ray.direction * stateMachine.ReusableData.MovementSpeedModifier, ForceMode.VelocityChange);
             Vector3 dirY = new Vector3(stateMachine.Player.ray.direction.x, 0, stateMachine.Player.ray.direction.z);
             Quaternion targetRot = Quaternion.LookRotation(dirY, Vector3.up);
             stateMachine.Player.transform.rotation = targetRot;
@@ -161,6 +165,8 @@ namespace genshin
 
         protected override void OnContactWithGround(Collider collider)
         {
+            if (!shouldGroundChecking) return;
+
             stateMachine.ChangeState(stateMachine.LightLandingState);
         }
     }

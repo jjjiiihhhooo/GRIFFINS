@@ -39,6 +39,7 @@ namespace genshin
         [Header("Airborne Parameter Names")]
         [SerializeField] private string fallParameterName = "isFalling";
         [SerializeField] private string downStreamParameterName = "isDownStream";
+        [SerializeField] private string objectDashParameterName = "objectDash";
 
 
         public int GroundedParameterHash { get; private set; }
@@ -66,6 +67,8 @@ namespace genshin
         public int FallParameterHash { get; private set; }
         public int DownStreamParameterHash { get; private set; }
 
+        public int ObjectDashParameterHash { get; private set; }
+
         public void Initialize()
         {
             GroundedParameterHash = Animator.StringToHash(groundedParameterName);
@@ -92,6 +95,8 @@ namespace genshin
             
             FallParameterHash = Animator.StringToHash(fallParameterName);
             DownStreamParameterHash = Animator.StringToHash(downStreamParameterName);
+
+            ObjectDashParameterHash = Animator.StringToHash(objectDashParameterName);
         }
     }
 }

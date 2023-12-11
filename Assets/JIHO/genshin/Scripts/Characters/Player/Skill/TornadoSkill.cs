@@ -32,6 +32,8 @@ namespace genshin
             skillMachine.Player.Rigidbody.useGravity = true;
             skillMachine.Player.tornadoSkillObject.transform.position = new Vector3(skillMachine.Player.transform.position.x, skillMachine.Player.transform.position.y + 1f, skillMachine.Player.transform.position.z);
             Vector3 dir = skillMachine.Player.MainCameraTransform.forward;
+
+            skillMachine.Player.tornadoSkillObject.GetComponent<TornadoEvent>().TornadoEffect.SetActive(false);
             skillMachine.Player.tornadoSkillObject.SetActive(true);
             skillMachine.Player.movementStateMachine.ChangeState(skillMachine.Player.movementStateMachine.FallingState);
 

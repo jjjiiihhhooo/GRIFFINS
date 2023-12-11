@@ -111,6 +111,17 @@ namespace genshin
             stateMachine.Player.Input.PlayerActions.DownStream.started += OnDownStreamStarted;
 
             stateMachine.Player.Input.PlayerActions.Tornado.started += OnTornadoStarted;
+
+            stateMachine.Player.Input.PlayerActions.Dash.started += OnDashStarted;
+        }
+
+        private void OnDashStarted(InputAction.CallbackContext context)
+        {
+            if (!CoolTimeManager.instance.CoolCheck("Dash")) return;
+
+            CoolTimeManager.instance.GetCoolTime("Dash");
+
+            stateMachine.ChangeState(stateMachine.DashingState);
         }
 
         protected virtual void OnTornadoStarted(InputAction.CallbackContext context)
@@ -153,6 +164,8 @@ namespace genshin
             stateMachine.Player.Input.PlayerActions.DownStream.started -= OnDownStreamStarted;
 
             stateMachine.Player.Input.PlayerActions.Tornado.started -= OnTornadoStarted;
+
+            stateMachine.Player.Input.PlayerActions.Dash.started -= OnDashStarted;
         }
 
         protected virtual void OnJumpStarted(InputAction.CallbackContext context)

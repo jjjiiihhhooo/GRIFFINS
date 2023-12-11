@@ -22,13 +22,14 @@ namespace genshin
 
         public void Tornado()
         {
-            
+            StopCoroutine(TornadoDamage());
             StartCoroutine(TornadoDamage());
         }
 
         private IEnumerator TornadoDamage()
         {
             posEffect.SetActive(false);
+            TornadoEffect.SetActive(false);
             TornadoEffect.SetActive(true);
             isTarget = true;
             float time = 0;

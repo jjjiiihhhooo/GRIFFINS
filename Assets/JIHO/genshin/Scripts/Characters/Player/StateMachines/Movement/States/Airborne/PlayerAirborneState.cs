@@ -13,6 +13,8 @@ namespace genshin
         {
         }
 
+        protected bool shouldGroundChecking;
+
         public override void Enter()
         {
             base.Enter();
