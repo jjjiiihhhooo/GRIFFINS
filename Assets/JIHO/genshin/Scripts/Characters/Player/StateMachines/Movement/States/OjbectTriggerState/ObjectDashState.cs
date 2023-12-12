@@ -54,7 +54,7 @@ namespace genshin
         private void Dash()
         {
             shouldGroundChecking = false;
-
+            stateMachine.Player.Rigidbody.velocity = Vector3.zero;
             stateMachine.Player.pm.bounceCombine = PhysicMaterialCombine.Maximum;
             stateMachine.Player.groundTime = stateMachine.Player.groundMaxTime;
 
