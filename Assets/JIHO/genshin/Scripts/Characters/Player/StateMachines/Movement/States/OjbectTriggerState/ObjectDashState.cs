@@ -22,7 +22,7 @@ namespace genshin
 
             Dash();
 
-            StartAnimation(stateMachine.Player.AnimationData.DashParameterHash);
+            StartAnimation(stateMachine.Player.AnimationData.ObjectDashParameterHash);
 
 
         }
@@ -33,7 +33,7 @@ namespace genshin
             stateMachine.Player.DashColActive();
             EffectActive(stateMachine.Player.dashEffect, false);
 
-            StopAnimation(stateMachine.Player.AnimationData.DashParameterHash);
+            StopAnimation(stateMachine.Player.AnimationData.ObjectDashParameterHash);
 
             //SetBaseRotationData();
         }
@@ -68,10 +68,6 @@ namespace genshin
 
         }
 
-
-        protected override void OnDashStarted(InputAction.CallbackContext context)
-        {
-        }
 
         protected override void OnContactWithGround(Collider collider)
         {

@@ -42,11 +42,17 @@ namespace genshin
         public AttackCol attackCol;
         public AttackCol dashCol;
         public bool isInteraction;
+        public bool isGround;
         public bool isSkill;
         public float damage;
         public float groundTime;
         public float groundMaxTime;
         public PhysicMaterial pm;
+
+        public Animator whiteAnimator;
+        public Animator greenAnimator;
+        public Animator redAnimator;
+        public Animator blueAnimator;
 
         public Ray ray;
         public Vector3 dir;
@@ -58,7 +64,7 @@ namespace genshin
             PlayerInteraction = GetComponent<PlayerInteraction>();
 
             Rigidbody = GetComponent<Rigidbody>();
-            Animator = GetComponentInChildren<Animator>();
+            Animator = whiteAnimator;
 
             Input = GetComponent<PlayerInput>();
             ResizableCapsuleCollider = GetComponent<PlayerResizableCapsuleCollider>();
@@ -88,14 +94,12 @@ namespace genshin
             movementStateMachine.HandleInput();
 
             movementStateMachine.Update();
-            
 
             if(UnityEngine.Input.GetKeyDown(KeyCode.LeftAlt))
             {
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
             }
-
         }
 
         private void FixedUpdate()

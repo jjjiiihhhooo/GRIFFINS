@@ -42,6 +42,10 @@ namespace genshin
 
         private void OnTornadoStarted(InputAction.CallbackContext context)
         {
+            if (!CoolTimeManager.instance.CoolCheck("Tornado")) return;
+
+            CoolTimeManager.instance.GetCoolTime("Tornado");
+
             stateMachine.ChangeState(stateMachine.TornadoState);
         }
 

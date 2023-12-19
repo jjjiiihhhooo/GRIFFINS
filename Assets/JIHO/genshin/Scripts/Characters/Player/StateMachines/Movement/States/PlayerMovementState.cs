@@ -66,6 +66,8 @@ namespace genshin
         {
             if (stateMachine.Player.LayerData.IsGroundLayer(collider.gameObject.layer))
             {
+                if(!stateMachine.Player.isGround) stateMachine.Player.isGround = true;
+
                 if (stateMachine.Player.pm.bounceCombine == PhysicMaterialCombine.Maximum)
                 {
                     if (stateMachine.Player.groundTime < 0)
@@ -85,6 +87,7 @@ namespace genshin
         {
             if (stateMachine.Player.LayerData.IsGroundLayer(collider.gameObject.layer))
             {
+                stateMachine.Player.isGround = false;
                 OnContactWithGroundExited(collider);
 
                 return;

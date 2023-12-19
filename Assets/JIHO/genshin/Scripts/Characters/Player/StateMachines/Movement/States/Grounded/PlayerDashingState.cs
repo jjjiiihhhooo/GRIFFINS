@@ -108,7 +108,6 @@ namespace genshin
 
         private void Dash()
         {
-
             //Vector3 dashDirection = stateMachine.Player.transform.forward;
 
             //dashDirection.y = 0f;
@@ -129,8 +128,15 @@ namespace genshin
 
 
             Vector3 pos = stateMachine.Player.transform.position;
+            Vector3 dir = stateMachine.Player.ray.direction;
+
+            if (stateMachine.Player.isGround)
+            {
+                dir = new Vector3(dir.x, dir.y + 0.3f, dir.z);
+            }
+
+            stateMachine.Player.Rigidbody.AddForce(dir * stateMachine.ReusableData.MovementSpeedModifier, ForceMode.VelocityChange);
             
-            stateMachine.Player.Rigidbody.AddForce(stateMachine.Player.ray.direction * stateMachine.ReusableData.MovementSpeedModifier, ForceMode.VelocityChange);
             Vector3 dirY = new Vector3(stateMachine.Player.ray.direction.x, 0, stateMachine.Player.ray.direction.z);
             Quaternion targetRot = Quaternion.LookRotation(dirY, Vector3.up);
             stateMachine.Player.transform.rotation = targetRot;

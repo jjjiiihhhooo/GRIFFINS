@@ -126,7 +126,11 @@ namespace genshin
 
         protected virtual void OnTornadoStarted(InputAction.CallbackContext context)
         {
-            stateMachine.ChangeState(stateMachine.GroundTornadoState);
+            if (!CoolTimeManager.instance.CoolCheck("Tornado")) return;
+
+            CoolTimeManager.instance.GetCoolTime("Tornado");
+
+            stateMachine.ChangeState(stateMachine.TornadoState);
         }
 
         protected virtual void OnDownStreamStarted(InputAction.CallbackContext context)

@@ -41,6 +41,7 @@ public class CoolTimeManager : MonoBehaviour
         coolDic.Add("Dash", new CoolData(2, 0));
         coolDic.Add("DownStream", new CoolData(2, 0));
         coolDic.Add("CharacterChange", new CoolData(1, 0));
+        coolDic.Add("Tornado", new CoolData(5, 0));
     }
 
     private IEnumerator CoolDownCor(string name)
