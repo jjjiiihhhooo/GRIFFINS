@@ -22,6 +22,9 @@ namespace genshin
 
         private int currentCollisionCount;
         private int currentBoolIndex;
+        private Vector3 targetPos;
+        private Vector3 startPos;
+        private GameObject parent_object;
 
         private bool currentIsDash;
         private bool currentIsCollision;
@@ -43,10 +46,22 @@ namespace genshin
         public bool actionGravity;
         [Header("이동 기믹")]
         public bool actionMove;
+        [Header("이동반복적용")]
+        public bool repeatMove;
 
         private void Awake()
         {
-            rigid = GetComponent<Rigidbody>();
+            rigid = GetComponentInParent<Rigidbody>();
+            parent_object = transform.parent.gameObject;
+            startPos = parent_object.transform.position;
+            targetPos = startPos;
+        }
+
+        private void DataReset()
+        {
+            currentIsDash = false;
+            currentIsCollision = false;
+            currentCollisionCount = 0;
         }
 
         private void BoolCheck(Collider collider)
@@ -64,7 +79,7 @@ namespace genshin
             {
                 currentCollisionCount++;
 
-                if (completeCollisionCount == currentCollisionCount && !currentIsCollision)
+                if (completeCollisionCount <= currentCollisionCount && !currentIsCollision)
                 {
                     currentIsCollision = true;
                     currentBoolIndex++;
@@ -102,11 +117,9 @@ namespace genshin
             }
         }
 
-
-
         private void ActionDestroy()
         {
-            Destroy(this.gameObject);
+            Destroy(parent_object);
         }
 
         private void ActionDash(Collider collider)
@@ -126,14 +139,29 @@ namespace genshin
 
         private void ActionMove()
         {
+            DataReset();
+            StopCoroutine(ActionMoveCor());
             StartCoroutine(ActionMoveCor());
         }
 
         private IEnumerator ActionMoveCor()
         {
-            while (Vector3.Distance(transform.position, targetTransform.position) > 0.3f)
+            if(repeatMove)
             {
-                transform.position = Vector3.MoveTowards(transform.position, targetTransform.position, Time.deltaTime * speed);
+                if (targetTransform.position == targetPos)
+                {
+                    targetPos = startPos;
+                    Debug.LogError("targetPos = startPos");
+                }
+                else if (startPos == targetPos)
+                {
+                    targetPos = targetTransform.position;
+                    Debug.LogError("targetPos = targetTransformPos");
+                }
+            }
+            while (Vector3.Distance(parent_object.transform.position, targetPos) > 0.3f)
+            {
+                parent_object.transform.position = Vector3.MoveTowards(parent_object.transform.position, targetPos, Time.deltaTime * speed);
                 yield return new WaitForEndOfFrame();
             }
 
@@ -143,7 +171,6 @@ namespace genshin
         private void OnTriggerEnter(Collider collider)
         {
             if(collider.tag == "AttackCol") BoolCheck(collider);
-
         }
     }
 }
