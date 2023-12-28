@@ -67,9 +67,14 @@ namespace genshin
 
         protected override void OnContactWithGroundExited(Collider collider)
         {
-            
+
+            stateMachine.Player.StartCor(DelayCor());
+        }
+        
+        private IEnumerator DelayCor()
+        {
+            yield return new WaitForSeconds(0.2f);
             stateMachine.ChangeState(stateMachine.FallingState);
         }
-
     }
 }

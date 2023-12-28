@@ -106,7 +106,7 @@ namespace genshin
 
             ResetVelocity();
 
-            stateMachine.Player.Rigidbody.AddForce(new Vector3(stateMachine.Player.Rigidbody.velocity.x + jumpForce.x, jumpForce.y, stateMachine.Player.Rigidbody.velocity.z + jumpForce.z), ForceMode.VelocityChange);
+            stateMachine.Player.Rigidbody.AddForce(jumpForce, ForceMode.VelocityChange);
         }
 
         private Vector3 GetJumpForceOnSlope(Vector3 jumpForce)
@@ -142,8 +142,5 @@ namespace genshin
         {
         }
 
-        protected override void OnMovementCanceled(InputAction.CallbackContext context)
-        {
-        }
     }
 }

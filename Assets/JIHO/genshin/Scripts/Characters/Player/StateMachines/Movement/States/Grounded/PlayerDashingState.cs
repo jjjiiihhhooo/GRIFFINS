@@ -20,6 +20,7 @@ namespace genshin
 
         public override void Enter()
         {
+            stateMachine.Player.Rigidbody.velocity = Vector3.zero;
             stateMachine.ReusableData.MovementSpeedModifier = groundedData.DashData.SpeedModifier;
 
             base.Enter();
@@ -83,21 +84,15 @@ namespace genshin
             //stateMachine.ChangeState(stateMachine.SprintingState);
         }
 
+        protected override void AddInputActionsCallbacks()
+        {
+            base.AddInputActionsCallbacks();
+        }
 
-        //protected override void AddInputActionsCallbacks()
-        //{
-        //    base.AddInputActionsCallbacks();
-
-        //    stateMachine.Player.Input.PlayerActions.Movement.performed += OnMovementPerformed;
-
-        //}
-
-        //protected override void RemoveInputActionsCallbacks()
-        //{
-        //    base.RemoveInputActionsCallbacks();
-
-        //    stateMachine.Player.Input.PlayerActions.Movement.performed -= OnMovementPerformed;
-        //}
+        protected override void RemoveInputActionsCallbacks()
+        {
+            base.RemoveInputActionsCallbacks();
+        }
 
         //protected override void OnMovementPerformed(InputAction.CallbackContext context)
         //{
@@ -132,7 +127,7 @@ namespace genshin
 
             if (stateMachine.Player.isGround)
             {
-                dir = new Vector3(dir.x, dir.y + 0.3f, dir.z);
+                dir = new Vector3(dir.x, dir.y + 0.6f, dir.z);
             }
 
             stateMachine.Player.Rigidbody.AddForce(dir * stateMachine.ReusableData.MovementSpeedModifier, ForceMode.VelocityChange);
@@ -165,9 +160,6 @@ namespace genshin
             return Time.time < startTime + groundedData.DashData.TimeToBeConsideredConsecutive;
         }
 
-        protected override void OnDashStarted(InputAction.CallbackContext context)
-        {
-        }
 
         protected override void OnContactWithGround(Collider collider)
         {
