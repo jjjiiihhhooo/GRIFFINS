@@ -20,7 +20,7 @@ namespace genshin
 
             EffectActive(stateMachine.Player.jumpEffect, true);
 
-            stateMachine.ReusableData.MovementSpeedModifier = 0f;
+            //stateMachine.ReusableData.MovementSpeedModifier = 0f;
 
             stateMachine.ReusableData.MovementDecelerationForce = airborneData.JumpData.DecelerationForce;
 
@@ -63,6 +63,8 @@ namespace genshin
         {
             base.PhysicsUpdate();
 
+            
+
             if (shouldKeepRotating)
             {
                 RotateTowardsTargetRotation();
@@ -72,6 +74,16 @@ namespace genshin
             {
                 DecelerateVertically();
             }
+        }
+
+        protected override void AddInputActionsCallbacks()
+        {
+            base.AddInputActionsCallbacks();
+        }
+
+        protected override void RemoveInputActionsCallbacks()
+        {
+            base.RemoveInputActionsCallbacks();
         }
 
         private void Jump()
@@ -94,7 +106,7 @@ namespace genshin
 
             ResetVelocity();
 
-            stateMachine.Player.Rigidbody.AddForce(jumpForce, ForceMode.VelocityChange);
+            stateMachine.Player.Rigidbody.AddForce(new Vector3(stateMachine.Player.Rigidbody.velocity.x + jumpForce.x, jumpForce.y, stateMachine.Player.Rigidbody.velocity.z + jumpForce.z), ForceMode.VelocityChange);
         }
 
         private Vector3 GetJumpForceOnSlope(Vector3 jumpForce)

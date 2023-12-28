@@ -28,6 +28,7 @@ namespace genshin
 
         private bool currentIsDash;
         private bool currentIsCollision;
+        private bool currentIsRepeat;
 
         private Rigidbody rigid;
 
@@ -146,19 +147,23 @@ namespace genshin
 
         private IEnumerator ActionMoveCor()
         {
-            if(repeatMove)
+            if (repeatMove)
             {
-                if (targetTransform.position == targetPos)
-                {
-                    targetPos = startPos;
-                    Debug.LogError("targetPos = startPos");
-                }
-                else if (startPos == targetPos)
+                if (!currentIsRepeat)
                 {
                     targetPos = targetTransform.position;
-                    Debug.LogError("targetPos = targetTransformPos");
                 }
+                else
+                {
+                    targetPos = startPos;
+                }
+                currentIsRepeat = !currentIsRepeat;
             }
+            else
+            {
+                targetPos = targetTransform.position;
+            }
+
             while (Vector3.Distance(parent_object.transform.position, targetPos) > 0.3f)
             {
                 parent_object.transform.position = Vector3.MoveTowards(parent_object.transform.position, targetPos, Time.deltaTime * speed);
@@ -170,7 +175,8 @@ namespace genshin
 
         private void OnTriggerEnter(Collider collider)
         {
-            if(collider.tag == "AttackCol") BoolCheck(collider);
+
+            if (collider.tag == "AttackCol") BoolCheck(collider); 
         }
     }
 }

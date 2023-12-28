@@ -10,6 +10,7 @@ namespace genshin
 
         public PlayerFallingState(PlayerMovementStateMachine playerMovementStateMachine) : base(playerMovementStateMachine)
         {
+
         }
 
         public override void Enter()
@@ -19,12 +20,12 @@ namespace genshin
             StartAnimation(stateMachine.Player.AnimationData.FallParameterHash);
             playerPositionOnEnter = stateMachine.Player.transform.position;
 
-            if (stateMachine.GetPreviousState() != typeof(PlayerDownStreamState))
-            {
-                stateMachine.ReusableData.MovementSpeedModifier = 0f;
+            //if (stateMachine.GetPreviousState() != typeof(PlayerDownStreamState))
+            //{
+            //    stateMachine.ReusableData.MovementSpeedModifier = 0f;
 
-                ResetVerticalVelocity();
-            }
+            //    ResetVerticalVelocity();
+            //}
         }
 
         public override void Exit()
@@ -32,6 +33,16 @@ namespace genshin
             base.Exit();
 
             StopAnimation(stateMachine.Player.AnimationData.FallParameterHash);
+        }
+
+        protected override void AddInputActionsCallbacks()
+        {
+            base.AddInputActionsCallbacks();
+        }
+
+        protected override void RemoveInputActionsCallbacks()
+        {
+            base.RemoveInputActionsCallbacks();
         }
 
         public override void PhysicsUpdate()

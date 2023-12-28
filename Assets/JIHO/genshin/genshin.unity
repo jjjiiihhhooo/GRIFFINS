@@ -908,7 +908,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh44040
+  m_Name: pb_Mesh43934
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -3050,7 +3050,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4858687227001268891, guid: c2454013f6fb47443934d8c4fea4a9f5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 50.82482
+      value: 31.6
       objectReference: {fileID: 0}
     - target: {fileID: 4858687227001268891, guid: c2454013f6fb47443934d8c4fea4a9f5, type: 3}
       propertyPath: m_LocalPosition.y
@@ -3058,7 +3058,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4858687227001268891, guid: c2454013f6fb47443934d8c4fea4a9f5, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.5816035
+      value: -7.9
       objectReference: {fileID: 0}
     - target: {fileID: 4858687227001268891, guid: c2454013f6fb47443934d8c4fea4a9f5, type: 3}
       propertyPath: m_LocalRotation.w
@@ -10959,6 +10959,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4a6d0d5d501f8f6488d43ce94c8881d5, type: 3}
+--- !u!4 &1413255991 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4858687227001268891, guid: c2454013f6fb47443934d8c4fea4a9f5, type: 3}
+  m_PrefabInstance: {fileID: 770433327}
+  m_PrefabAsset: {fileID: 0}
 --- !u!95 &1487727051 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 974912221648508322, guid: c2454013f6fb47443934d8c4fea4a9f5, type: 3}
@@ -13114,7 +13119,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.05, y: 0.31, z: 0.05}
+  m_Size: {x: 0.05, y: 0.17, z: 0.05}
   m_Center: {x: 0, y: 0.1, z: 0}
 --- !u!1001 &1730535795
 PrefabInstance:
@@ -15889,7 +15894,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh44226
+  m_Name: pb_Mesh44080
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -30955,9 +30960,13 @@ PrefabInstance:
     m_TransformParent: {fileID: 5034097917758799307}
     m_Modifications:
     - target: {fileID: 2311069994347875025, guid: 63045f46da5cd604f99580aa6e694d90, type: 3}
+      propertyPath: repeatMove
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2311069994347875025, guid: 63045f46da5cd604f99580aa6e694d90, type: 3}
       propertyPath: targetTransform
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1413255991}
     - target: {fileID: 2311069994347875030, guid: 63045f46da5cd604f99580aa6e694d90, type: 3}
       propertyPath: m_Name
       value: ObjectTool
