@@ -32,7 +32,7 @@ namespace genshin
                 tempQuest = null;
                 DontDestroyOnLoad(gameObject);
                 titleDotweenAni = GetComponentInChildren<DOTweenAnimation>();
-                QuestInput("a");
+                QuestInput("Tutorial_Quest_1");
             }
             else
             {
