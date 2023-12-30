@@ -8,6 +8,7 @@ public class Enemy
     public ParticleSystem damageEffect;
     public Animator animator;
     public EnemyController enemyController;
+    public string name;
     public float maxHp;
     public float curHp;
     public float moveSpeed;
@@ -24,10 +25,11 @@ public class Enemy
 
     public virtual void GetDamage(float damage)
     {
+        if (curHp <= 0) Die();
+
         if (animator != null) animator.SetTrigger("GetDamage");
         curHp -= damage;
 
-        if (curHp <= 0) Die();
         Debug.Log(curHp);
     }
 
@@ -38,6 +40,9 @@ public class Enemy
 
     public virtual void Die()
     {
+        if (animator.GetBool("Dead")) return;
+        animator.SetBool("Dead", true);
+
         animator.SetTrigger("Die");
     }
 }

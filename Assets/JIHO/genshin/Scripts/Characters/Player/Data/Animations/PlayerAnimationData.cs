@@ -16,9 +16,11 @@ namespace genshin
         [SerializeField] private string landingParameterName = "Landing";
         [SerializeField] private string airborneParameterName = "Airborne";
         [SerializeField] private string attackParameterName = "Attack";
+        [SerializeField] private string skillParameterName = "Skill";
 
         [Header("Attack Parameter Names")]
         [SerializeField] private string lightAttackParameterName = "isLightAttacking";
+        [SerializeField] private string breezeSkillParameterName = "isBreeze";
 
         [Header("Grounded Parameter Names")]
         [SerializeField] private string idleParameterName = "isIdling";
@@ -31,10 +33,15 @@ namespace genshin
         [SerializeField] private string rolleParameterName = "isRolling";
         [SerializeField] private string hardLandParameterName = "isHardLanding";
 
-        
-
         [Header("Airborne Parameter Names")]
         [SerializeField] private string fallParameterName = "isFalling";
+        [SerializeField] private string downStreamParameterName = "isDownStream";
+        [SerializeField] private string objectDashParameterName = "isObjectDash";
+
+        [Header("Skill Parameter Names")]
+        [SerializeField] private string tornadoParameterName = "isTornado";
+        [SerializeField] private string breezeParameterName = "isBreeze";
+
 
         public int GroundedParameterHash { get; private set; }
         public int MovingParameterHash { get; private set; }
@@ -44,6 +51,8 @@ namespace genshin
         public int AttackParameterHash { get; private set; }
 
         public int LightAttackParameterHash { get; private set; }
+        public int BreezeParameterHash { get; private set; }
+        public int GroundTorandoParameterHash { get; private set; }
 
         public int IdleParameterHash { get; private set; }
         public int DashParameterHash { get; private set; }
@@ -56,6 +65,12 @@ namespace genshin
         public int HardLandParameterHash { get; private set; }
 
         public int FallParameterHash { get; private set; }
+        public int DownStreamParameterHash { get; private set; }
+        public int ObjectDashParameterHash { get; private set; }
+
+        public int SkillParameterHash { get; private set; }
+        public int TornadoParameterHash { get; private set; }
+
 
         public void Initialize()
         {
@@ -67,6 +82,8 @@ namespace genshin
             AttackParameterHash = Animator.StringToHash(attackParameterName);
 
             LightAttackParameterHash = Animator.StringToHash(lightAttackParameterName);
+            TornadoParameterHash = Animator.StringToHash(tornadoParameterName);
+            BreezeParameterHash = Animator.StringToHash(breezeSkillParameterName);
 
             IdleParameterHash = Animator.StringToHash(idleParameterName);
             DashParameterHash = Animator.StringToHash(dashParameterName);
@@ -77,7 +94,13 @@ namespace genshin
             HardStopParameterHash = Animator.StringToHash(hardStopParameterName);
             RollParameterHash = Animator.StringToHash(rolleParameterName);
             HardLandParameterHash = Animator.StringToHash(hardLandParameterName);
+            
             FallParameterHash = Animator.StringToHash(fallParameterName);
+            DownStreamParameterHash = Animator.StringToHash(downStreamParameterName);
+
+            ObjectDashParameterHash = Animator.StringToHash(objectDashParameterName);
+
+            SkillParameterHash = Animator.StringToHash(skillParameterName);
         }
     }
 }

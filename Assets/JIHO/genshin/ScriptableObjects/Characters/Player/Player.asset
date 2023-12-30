@@ -89,12 +89,12 @@ MonoBehaviour:
         <WaitTime>k__BackingField: 0
         <RecenteringTime>k__BackingField: 0.5
     <DashData>k__BackingField:
-      <SpeedModifier>k__BackingField: 2
+      <SpeedModifier>k__BackingField: 20
       <RotationData>k__BackingField:
         <TargetRotationReachTime>k__BackingField: {x: 0, y: 0.02, z: 0}
       <TimeToBeConsideredConsecutive>k__BackingField: 1
-      <ConsecutiveDashesLimitAmount>k__BackingField: 2
-      <DashLimitReachedCooldown>k__BackingField: 1.75
+      <ConsecutiveDashesLimitAmount>k__BackingField: 3
+      <DashLimitReachedCooldown>k__BackingField: 1.2
     <WalkData>k__BackingField:
       <SpeedModifier>k__BackingField: 0.225
       <BackwardsCameraRecenteringData>k__BackingField:
@@ -214,11 +214,23 @@ MonoBehaviour:
         m_RotationOrder: 4
       <RotationData>k__BackingField:
         <TargetRotationReachTime>k__BackingField: {x: 0, y: 0.02, z: 0}
-      <StationaryForce>k__BackingField: {x: 0, y: 5, z: 0}
-      <WeakForce>k__BackingField: {x: 1, y: 5, z: 1}
-      <MediumForce>k__BackingField: {x: 3.5, y: 5, z: 3.5}
-      <StrongForce>k__BackingField: {x: 5, y: 10, z: 5}
+      <StationaryForce>k__BackingField: {x: 0, y: 10, z: 0}
+      <WeakForce>k__BackingField: {x: 5, y: 10, z: 5}
+      <MediumForce>k__BackingField: {x: 5, y: 10, z: 5}
+      <StrongForce>k__BackingField: {x: 0, y: 10, z: 0}
       <DecelerationForce>k__BackingField: 1.5
     <FallData>k__BackingField:
-      <FallSpeedLimit>k__BackingField: 15
+      <FallSpeedLimit>k__BackingField: 10
       <MinimumDistanceToBeConsideredHardFall>k__BackingField: 3
+    <AirDashData>k__BackingField:
+      <SpeedModifier>k__BackingField: 3
+      <RotationData>k__BackingField:
+        <TargetRotationReachTime>k__BackingField: {x: 0, y: 0, z: 0}
+      <TimeToBeConsideredConsecutive>k__BackingField: 1
+      <ConsecutiveDashesLimitAmount>k__BackingField: 3
+      <DashLimitReachedCooldown>k__BackingField: 1.2
+    <DownStreamData>k__BackingField:
+      <SpeedModifier>k__BackingField: 20
+    <ObjectDashData>k__BackingField:
+      <SpeedModifier>k__BackingField: 20
+      <Direction>k__BackingField: {x: 0.76047754, y: 0.6117592, z: 0}

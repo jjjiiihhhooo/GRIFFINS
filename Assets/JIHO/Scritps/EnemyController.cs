@@ -1,3 +1,4 @@
+using genshin;
 using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
@@ -37,7 +38,7 @@ public class EnemyController : SerializedMonoBehaviour
     {
         if(other.CompareTag("AttackCol"))
         {
-            float damage = PlayerController.Instance.currentUnit.curDamage;
+            float damage = other.GetComponent<AttackCol>().damage;
             
             Vector3 center1 = other.bounds.center;
             Vector3 center2 = transform.GetComponent<BoxCollider>().bounds.center;
@@ -82,6 +83,7 @@ public class EnemyController : SerializedMonoBehaviour
 
     public void Dead()
     {
+        QuestManager.instance.QuestMonsterCheck(enemy.name);
         Destroy(this.gameObject);
     }
 }

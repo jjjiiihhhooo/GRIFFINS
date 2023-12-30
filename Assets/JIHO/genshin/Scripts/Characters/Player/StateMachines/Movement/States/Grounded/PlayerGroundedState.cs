@@ -104,14 +104,45 @@ namespace genshin
         {
             base.AddInputActionsCallbacks();
 
-            stateMachine.Player.Input.PlayerActions.Dash.started += OnDashStarted;
-
             stateMachine.Player.Input.PlayerActions.Jump.started += OnJumpStarted;
 
             stateMachine.Player.Input.PlayerActions.LightAttack.started += OnAttackStarted;
+
+            stateMachine.Player.Input.PlayerActions.DownStream.started += OnDownStreamStarted;
+
+            stateMachine.Player.Input.PlayerActions.Tornado.started += OnTornadoStarted;
+
+            stateMachine.Player.Input.PlayerActions.Dash.started += OnDashStarted;
         }
 
-        private void OnAttackStarted(InputAction.CallbackContext context)
+        private void OnDashStarted(InputAction.CallbackContext context)
+        {
+            if (!CoolTimeManager.instance.CoolCheck("Dash")) return;
+
+            CoolTimeManager.instance.GetCoolTime("Dash");
+
+            stateMachine.ChangeState(stateMachine.DashingState);
+        }
+
+        protected virtual void OnTornadoStarted(InputAction.CallbackContext context)
+        {
+            if (!CoolTimeManager.instance.CoolCheck("Tornado")) return;
+
+            CoolTimeManager.instance.GetCoolTime("Tornado");
+
+            stateMachine.ChangeState(stateMachine.TornadoState);
+        }
+
+        protected virtual void OnDownStreamStarted(InputAction.CallbackContext context)
+        {
+            if (!CoolTimeManager.instance.CoolCheck("DownStream")) return;
+
+            CoolTimeManager.instance.GetCoolTime("DownStream");
+
+            stateMachine.ChangeState(stateMachine.DownStreamState);
+        }
+
+        protected virtual void OnAttackStarted(InputAction.CallbackContext context)
         {
             if(stateMachine.GetCurrentStateType() == typeof(PlayerDashingState))
             {
@@ -130,25 +161,34 @@ namespace genshin
         {
             base.RemoveInputActionsCallbacks();
 
-            stateMachine.Player.Input.PlayerActions.Dash.started -= OnDashStarted;
-
             stateMachine.Player.Input.PlayerActions.Jump.started -= OnJumpStarted;
 
             stateMachine.Player.Input.PlayerActions.LightAttack.started -= OnAttackStarted;
-        }
 
-        protected virtual void OnDashStarted(InputAction.CallbackContext context)
-        {
-            stateMachine.ChangeState(stateMachine.DashingState);
+            stateMachine.Player.Input.PlayerActions.DownStream.started -= OnDownStreamStarted;
+
+            stateMachine.Player.Input.PlayerActions.Tornado.started -= OnTornadoStarted;
+
+            stateMachine.Player.Input.PlayerActions.Dash.started -= OnDashStarted;
         }
 
         protected virtual void OnJumpStarted(InputAction.CallbackContext context)
         {
+            //if (stateMachine.GetCurrentStateType() == typeof(PlayerLightAttackingState))
+            //{
+            //    return;
+            //}
+
             stateMachine.ChangeState(stateMachine.JumpingState);
         }
 
         protected virtual void OnMove()
         {
+            if (stateMachine.GetPreviousState() == typeof(PlayerDashingState))
+            {
+                return;
+            }
+
             if (stateMachine.ReusableData.ShouldSprint)
             {
                 stateMachine.ChangeState(stateMachine.SprintingState);

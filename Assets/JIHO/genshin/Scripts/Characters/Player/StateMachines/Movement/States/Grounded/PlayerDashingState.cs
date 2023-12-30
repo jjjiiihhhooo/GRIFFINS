@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,7 +6,7 @@ using UnityEngine.InputSystem;
 
 namespace genshin
 {
-    public class PlayerDashingState : PlayerGroundedState
+    public class PlayerDashingState : PlayerAirborneState
     {
         private float startTime;
 
@@ -25,6 +26,8 @@ namespace genshin
 
             EffectActive(stateMachine.Player.dashEffect, true);
 
+            stateMachine.Player.DashColActive(100);
+
             StartAnimation(stateMachine.Player.AnimationData.DashParameterHash);
 
             stateMachine.ReusableData.CurrentJumpForce = airborneData.JumpData.StrongForce;
@@ -35,7 +38,7 @@ namespace genshin
 
             shouldKeepRotating = stateMachine.ReusableData.MovementInput != Vector2.zero;
 
-            UpdateConsecutiveDashes();
+            //UpdateConsecutiveDashes();
 
             startTime = Time.time;
         }
@@ -43,7 +46,7 @@ namespace genshin
         public override void Exit()
         {
             base.Exit();
-
+            stateMachine.Player.DashColActive();
             EffectActive(stateMachine.Player.dashEffect, false);
 
             StopAnimation(stateMachine.Player.AnimationData.DashParameterHash);
@@ -53,66 +56,91 @@ namespace genshin
 
         public override void PhysicsUpdate()
         {
-            base.PhysicsUpdate();
+           // base.PhysicsUpdate();
 
             if (!shouldKeepRotating)
             {
                 return;
             }
 
-            RotateTowardsTargetRotation();
+            //RotateTowardsTargetRotation();
         }
 
         public override void OnAnimationTransitionEvent()
         {
-            if (stateMachine.ReusableData.MovementInput == Vector2.zero)
-            {
-                stateMachine.ChangeState(stateMachine.HardStoppingState);
+            shouldGroundChecking = true;
 
-                return;
-            }
 
-            stateMachine.ChangeState(stateMachine.SprintingState);
+            stateMachine.Player.pm.bounceCombine = PhysicMaterialCombine.Maximum;
+            stateMachine.Player.groundTime = stateMachine.Player.groundMaxTime;
+            //if (stateMachine.ReusableData.MovementInput == Vector2.zero)
+            //{
+            //    stateMachine.ChangeState(stateMachine.HardStoppingState);
+
+            //    return;
+            //}
+
+            //stateMachine.ChangeState(stateMachine.SprintingState);
         }
 
-        protected override void AddInputActionsCallbacks()
-        {
-            base.AddInputActionsCallbacks();
 
-            stateMachine.Player.Input.PlayerActions.Movement.performed += OnMovementPerformed;
+        //protected override void AddInputActionsCallbacks()
+        //{
+        //    base.AddInputActionsCallbacks();
 
-        }
+        //    stateMachine.Player.Input.PlayerActions.Movement.performed += OnMovementPerformed;
 
-        protected override void RemoveInputActionsCallbacks()
-        {
-            base.RemoveInputActionsCallbacks();
+        //}
 
-            stateMachine.Player.Input.PlayerActions.Movement.performed -= OnMovementPerformed;
-        }
+        //protected override void RemoveInputActionsCallbacks()
+        //{
+        //    base.RemoveInputActionsCallbacks();
 
-        protected override void OnMovementPerformed(InputAction.CallbackContext context)
-        {
-            base.OnMovementPerformed(context);
+        //    stateMachine.Player.Input.PlayerActions.Movement.performed -= OnMovementPerformed;
+        //}
 
-            shouldKeepRotating = true;
-        }
+        //protected override void OnMovementPerformed(InputAction.CallbackContext context)
+        //{
+        //    base.OnMovementPerformed(context);
+
+        //    shouldKeepRotating = true;
+        //}
 
         private void Dash()
         {
-            Vector3 dashDirection = stateMachine.Player.transform.forward;
+            //Vector3 dashDirection = stateMachine.Player.transform.forward;
 
-            dashDirection.y = 0f;
+            //dashDirection.y = 0f;
 
-            UpdateTargetRotation(dashDirection, false);
+            //UpdateTargetRotation(dashDirection, false);
 
-            if (stateMachine.ReusableData.MovementInput != Vector2.zero)
+            //if (stateMachine.ReusableData.MovementInput != Vector2.zero)
+            //{
+            //    UpdateTargetRotation(GetMovementInputDirection());
+
+            //    dashDirection = GetTargetRotationDirection(stateMachine.ReusableData.CurrentTargetRotation.y);
+            //}
+
+            //stateMachine.Player.Rigidbody.velocity = dashDirection * GetMovementSpeed(false);
+
+            //Vector3 dir = stateMachine.Player.dir;
+            shouldGroundChecking = false;
+
+
+            Vector3 pos = stateMachine.Player.transform.position;
+            Vector3 dir = stateMachine.Player.ray.direction;
+
+            if (stateMachine.Player.isGround)
             {
-                UpdateTargetRotation(GetMovementInputDirection());
-
-                dashDirection = GetTargetRotationDirection(stateMachine.ReusableData.CurrentTargetRotation.y);
+                dir = new Vector3(dir.x, dir.y + 0.3f, dir.z);
             }
 
-            stateMachine.Player.Rigidbody.velocity = dashDirection * GetMovementSpeed(false);
+            stateMachine.Player.Rigidbody.AddForce(dir * stateMachine.ReusableData.MovementSpeedModifier, ForceMode.VelocityChange);
+            
+            Vector3 dirY = new Vector3(stateMachine.Player.ray.direction.x, 0, stateMachine.Player.ray.direction.z);
+            Quaternion targetRot = Quaternion.LookRotation(dirY, Vector3.up);
+            stateMachine.Player.transform.rotation = targetRot;
+
         }
 
         private void UpdateConsecutiveDashes()
@@ -139,6 +167,13 @@ namespace genshin
 
         protected override void OnDashStarted(InputAction.CallbackContext context)
         {
+        }
+
+        protected override void OnContactWithGround(Collider collider)
+        {
+            if (!shouldGroundChecking) return;
+
+            stateMachine.ChangeState(stateMachine.LightLandingState);
         }
     }
 }

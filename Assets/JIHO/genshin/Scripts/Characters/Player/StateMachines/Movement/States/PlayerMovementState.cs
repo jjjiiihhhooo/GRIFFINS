@@ -49,6 +49,11 @@ namespace genshin
 
         public virtual void OnTriggerEnter(Collider collider)
         {
+            if(collider.CompareTag("QuestPos"))
+            {
+                QuestManager.instance.QuestPositionCheck(collider.name);
+            }
+
             if (stateMachine.Player.LayerData.IsGroundLayer(collider.gameObject.layer))
             {
                 OnContactWithGround(collider);
@@ -57,10 +62,32 @@ namespace genshin
             }
         }
 
+        public virtual void OnTriggerStay(Collider collider)
+        {
+            if (stateMachine.Player.LayerData.IsGroundLayer(collider.gameObject.layer))
+            {
+                if(!stateMachine.Player.isGround) stateMachine.Player.isGround = true;
+
+                if (stateMachine.Player.pm.bounceCombine == PhysicMaterialCombine.Maximum)
+                {
+                    if (stateMachine.Player.groundTime < 0)
+                    {
+                        stateMachine.Player.pm.bounceCombine = PhysicMaterialCombine.Minimum;
+                        stateMachine.ChangeState(stateMachine.IdlingState);
+                    }
+                    else
+                    {
+                        stateMachine.Player.groundTime -= Time.deltaTime;
+                    }
+                }
+            }
+        }
+
         public virtual void OnTriggerExit(Collider collider)
         {
             if (stateMachine.Player.LayerData.IsGroundLayer(collider.gameObject.layer))
             {
+                stateMachine.Player.isGround = false;
                 OnContactWithGroundExited(collider);
 
                 return;
@@ -171,6 +198,12 @@ namespace genshin
 
         private void Move()
         {
+            //if (stateMachine.GetCurrentStateType() == typeof(PlayerDashingState) || stateMachine.GetCurrentStateType() == typeof(PlayerAirDashingState))
+            //{
+            //    return;
+            //}
+
+
             if (stateMachine.ReusableData.MovementInput == Vector2.zero || stateMachine.ReusableData.MovementSpeedModifier == 0f)
             {
                 return;
@@ -179,6 +212,7 @@ namespace genshin
             Vector3 movementDirection = GetMovementInputDirection();
 
             float targetRotationYAngle = Rotate(movementDirection);
+            
 
             Vector3 targetRotationDirection = GetTargetRotationDirection(targetRotationYAngle);
 
@@ -419,6 +453,8 @@ namespace genshin
         {
             return GetPlayerVerticalVelocity().y < -minimumVelocity;
         }
+
+        
     }
 }
 
