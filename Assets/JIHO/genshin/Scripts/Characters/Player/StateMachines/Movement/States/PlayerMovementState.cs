@@ -56,6 +56,7 @@ namespace genshin
 
             if (stateMachine.Player.LayerData.IsGroundLayer(collider.gameObject.layer))
             {
+                Debug.LogError("Enter");
                 OnContactWithGround(collider);
 
                 return;
@@ -87,7 +88,7 @@ namespace genshin
         {
             if (stateMachine.Player.LayerData.IsGroundLayer(collider.gameObject.layer))
             {
-                stateMachine.Player.isGround = false;
+                Debug.LogError("Exit");
                 OnContactWithGroundExited(collider);
 
                 return;
@@ -203,24 +204,51 @@ namespace genshin
             //    return;
             //}
 
+            
+
+            if (!stateMachine.Player.isGround)
+            {
+                if (Input.GetAxisRaw("Horizontal") == 0 && Input.GetAxisRaw("Vertical") == 0) return;
+                Vector3 heading;
+                Vector3 moveVec;
+
+                moveVec = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
+                moveVec.Normalize();
+
+                heading = new Vector3(Camera.main.transform.forward.x, 0, Camera.main.transform.forward.z);
+                heading.Normalize();
+                heading = heading - moveVec;
+                float angle = Mathf.Atan2(heading.z, heading.x) * Mathf.Rad2Deg * -2;
+
+                stateMachine.Player.transform.rotation = Quaternion.Slerp(stateMachine.Player.transform.rotation, Quaternion.Euler(0, angle, 0), Time.deltaTime * stateMachine.Player.rotateSpeed);
+
+                Vector3 dir = stateMachine.Player.transform.forward * stateMachine.Player.moveSpeed * Time.deltaTime;
+
+                //stateMachine.Player.Rigidbody.AddForce(stateMachine.Player.transform.position + dir);
+
+                stateMachine.Player.Rigidbody.MovePosition(stateMachine.Player.transform.position + dir);
+                return;
+            }
+            else
+            {
+                Vector3 movementDirection = GetMovementInputDirection();
+
+                float targetRotationYAngle = Rotate(movementDirection);
+
+
+                Vector3 targetRotationDirection = GetTargetRotationDirection(targetRotationYAngle);
+
+                float movementSpeed = GetMovementSpeed();
+
+                Vector3 currentPlayerHorizontalVelocity = GetPlayerHorizontalVelocity();
+
+                stateMachine.Player.Rigidbody.AddForce(targetRotationDirection * movementSpeed - currentPlayerHorizontalVelocity, ForceMode.VelocityChange);
+            }
 
             if (stateMachine.ReusableData.MovementInput == Vector2.zero || stateMachine.ReusableData.MovementSpeedModifier == 0f)
             {
                 return;
             }
-
-            Vector3 movementDirection = GetMovementInputDirection();
-
-            float targetRotationYAngle = Rotate(movementDirection);
-            
-
-            Vector3 targetRotationDirection = GetTargetRotationDirection(targetRotationYAngle);
-
-            float movementSpeed = GetMovementSpeed();
-
-            Vector3 currentPlayerHorizontalVelocity = GetPlayerHorizontalVelocity();
-
-            stateMachine.Player.Rigidbody.AddForce(targetRotationDirection * movementSpeed - currentPlayerHorizontalVelocity, ForceMode.VelocityChange);
         }
 
         protected Vector3 GetMovementInputDirection()
@@ -336,10 +364,12 @@ namespace genshin
 
         protected virtual void OnContactWithGround(Collider collider)
         {
+
         }
 
         protected virtual void OnContactWithGroundExited(Collider collider)
         {
+            stateMachine.Player.isGround = false;
         }
 
         protected void UpdateCameraRecenteringState(Vector2 movementInput)

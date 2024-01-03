@@ -9,6 +9,12 @@ namespace genshin
     [RequireComponent(typeof(PlayerResizableCapsuleCollider))]
     public class Player : MonoBehaviour
     {
+
+        public float moveSpeed;
+        public float rotateSpeed;
+        public float dashSpeed;
+        public float jumpSpeed;
+
         [field: Header("References")]
         [field: SerializeField] public PlayerSO Data { get; private set; }
 
@@ -165,7 +171,14 @@ namespace genshin
             dashCol.gameObject.SetActive(true);
         }
 
-        
+        public void InvokeMessage(float time)
+        {
+            Invoke("DashToFall", time);
+        }
+        private void DashToFall()
+        {
+            movementStateMachine.ChangeState(movementStateMachine.FallingState);
+        }
     }
 }
 
