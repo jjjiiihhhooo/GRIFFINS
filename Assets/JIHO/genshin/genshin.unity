@@ -157,9 +157,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a1b33e9b6f6d0d4bbd7829414d6023f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
+  moveSpeed: 8
   rotateSpeed: 8
-  dashSpeed: 10
+  dashSpeed: 20
   jumpSpeed: 7
   <Data>k__BackingField: {fileID: 11400000, guid: 6a73e8c18a853874288e9ed4d0627a22, type: 2}
   <LayerData>k__BackingField:
@@ -205,7 +205,7 @@ MonoBehaviour:
   isGround: 0
   isSkill: 0
   damage: 1
-  groundTime: 0.3
+  groundTime: -1
   groundMaxTime: 0.3
   pm: {fileID: 13400000, guid: b23578498e8274f49a6c1695671a4137, type: 2}
   whiteAnimator: {fileID: 1730535798}
@@ -912,7 +912,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh423700
+  m_Name: pb_Mesh43934
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -1184,7 +1184,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh223852
+  m_Name: pb_Mesh44110
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -15898,7 +15898,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh223824
+  m_Name: pb_Mesh44082
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2

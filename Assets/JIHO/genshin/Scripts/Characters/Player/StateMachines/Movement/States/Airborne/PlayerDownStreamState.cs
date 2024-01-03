@@ -18,7 +18,7 @@ namespace genshin
 
             StartAnimation(stateMachine.Player.AnimationData.DownStreamParameterHash);
 
-            stateMachine.ReusableData.MovementSpeedModifier = 0f;
+            //stateMachine.ReusableData.MovementSpeedModifier = 0f;
 
             stateMachine.ReusableData.MovementDecelerationForce = airborneData.JumpData.DecelerationForce;
 

@@ -36,6 +36,21 @@ namespace genshin
             StopAnimation(stateMachine.Player.AnimationData.FallParameterHash);
         }
 
+        protected override void AddInputActionsCallbacks()
+        {
+            base.AddInputActionsCallbacks();
+        }
+
+        protected override void RemoveInputActionsCallbacks()
+        {
+            base.RemoveInputActionsCallbacks();
+        }
+
+        public override void HandleInput()
+        {
+            base.HandleInput();
+        }
+
 
         public override void PhysicsUpdate()
         {

@@ -62,7 +62,10 @@ namespace genshin
 
         public Ray ray;
         public Vector3 dir;
-
+        public Ray testRay;
+        public Ray testRay1;
+        public Ray testRay2;
+        
         private void Awake()
         {
             CameraRecenteringUtility.Initialize();

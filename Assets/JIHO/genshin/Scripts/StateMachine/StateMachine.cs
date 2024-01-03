@@ -16,7 +16,7 @@ namespace genshin
             previousState = currentState;
             currentState = newState;
 
-            Debug.Log(currentState?.GetType().Name);
+            //Debug.Log(currentState?.GetType().Name);
             currentState.Enter();
         }
 

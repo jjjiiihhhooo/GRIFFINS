@@ -56,7 +56,6 @@ namespace genshin
 
             if (stateMachine.Player.LayerData.IsGroundLayer(collider.gameObject.layer))
             {
-                Debug.LogError("Enter");
                 OnContactWithGround(collider);
 
                 return;
@@ -88,7 +87,6 @@ namespace genshin
         {
             if (stateMachine.Player.LayerData.IsGroundLayer(collider.gameObject.layer))
             {
-                Debug.LogError("Exit");
                 OnContactWithGroundExited(collider);
 
                 return;
@@ -197,58 +195,94 @@ namespace genshin
             stateMachine.ReusableData.MovementInput = stateMachine.Player.Input.PlayerActions.Movement.ReadValue<Vector2>();
         }
 
+        
         private void Move()
         {
             //if (stateMachine.GetCurrentStateType() == typeof(PlayerDashingState) || stateMachine.GetCurrentStateType() == typeof(PlayerAirDashingState))
             //{
             //    return;
             //}
+            
+            
+
+            if (stateMachine.ReusableData.MovementInput == Vector2.zero)
+            {
+                Debug.Log("MoveError");
+                return;
+            }
+
+            if (stateMachine.Player.groundTime > 0 && (stateMachine.GetCurrentStateType() != typeof(PlayerFallingState))) return;
+               
+
+            Vector3 movementDirection = GetMovementInputDirection();
+
+            float targetRotationYAngle = Rotate(movementDirection);
+
+
+            Vector3 targetRotationDirection = GetTargetRotationDirection(targetRotationYAngle);
+            Ray ray = new Ray(stateMachine.Player.transform.position + Vector3.up, targetRotationDirection);
+            Ray ray_1 = new Ray(stateMachine.Player.transform.position + Vector3.up * 0.05f, targetRotationDirection);
+            Ray ray_2 = new Ray(stateMachine.Player.transform.position + Vector3.up * 0.9f, targetRotationDirection);
+
+            stateMachine.Player.testRay = ray;
+            stateMachine.Player.testRay1 = ray_1;
+            stateMachine.Player.testRay2 = ray_2;
+
+            if (Physics.Raycast(ray_2, 0.3f, stateMachine.Player.LayerData.GroundLayer, QueryTriggerInteraction.Ignore))
+            {
+                stateMachine.Player.Rigidbody.velocity = new Vector3(0f, stateMachine.Player.Rigidbody.velocity.y, 0f);
+                return;
+            }
+            if (Physics.Raycast(ray, 0.3f, stateMachine.Player.LayerData.GroundLayer, QueryTriggerInteraction.Ignore))
+            {
+                stateMachine.Player.Rigidbody.velocity = new Vector3(0f, stateMachine.Player.Rigidbody.velocity.y, 0f);
+                return;
+            }
+            if (!stateMachine.Player.isGround)
+            {
+                
+
+                if (Physics.Raycast(ray_1, 0.3f, stateMachine.Player.LayerData.GroundLayer, QueryTriggerInteraction.Ignore))
+                {
+                    stateMachine.Player.Rigidbody.velocity = new Vector3(0f, stateMachine.Player.Rigidbody.velocity.y, 0f);
+                    return;
+                }
+            }
+            
+            
+            //float movementSpeed = GetMovementSpeed();
+            //Debug.LogError(movementSpeed);
+            Vector3 currentPlayerHorizontalVelocity = GetPlayerHorizontalVelocity();
+
+
+            stateMachine.Player.Rigidbody.AddForce(targetRotationDirection * 7.5f - currentPlayerHorizontalVelocity, ForceMode.VelocityChange);
 
             
 
-            if (!stateMachine.Player.isGround)
-            {
-                if (Input.GetAxisRaw("Horizontal") == 0 && Input.GetAxisRaw("Vertical") == 0) return;
-                Vector3 heading;
-                Vector3 moveVec;
+            //if (!stateMachine.Player.isGround)
+            //{
+            //    if (Input.GetAxisRaw("Horizontal") == 0 && Input.GetAxisRaw("Vertical") == 0) return;
+            //    Vector3 heading;
+            //    Vector3 moveVec;
 
-                moveVec = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
-                moveVec.Normalize();
+            //    moveVec = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
+            //    moveVec.Normalize();
 
-                heading = new Vector3(Camera.main.transform.forward.x, 0, Camera.main.transform.forward.z);
-                heading.Normalize();
-                heading = heading - moveVec;
-                float angle = Mathf.Atan2(heading.z, heading.x) * Mathf.Rad2Deg * -2;
+            //    heading = new Vector3(Camera.main.transform.forward.x, 0, Camera.main.transform.forward.z);
+            //    heading.Normalize();
+            //    heading = heading - moveVec;
+            //    float angle = Mathf.Atan2(heading.z, heading.x) * Mathf.Rad2Deg * -2;
 
-                stateMachine.Player.transform.rotation = Quaternion.Slerp(stateMachine.Player.transform.rotation, Quaternion.Euler(0, angle, 0), Time.deltaTime * stateMachine.Player.rotateSpeed);
+            //    stateMachine.Player.transform.rotation = Quaternion.Slerp(stateMachine.Player.transform.rotation, Quaternion.Euler(0, angle, 0), Time.deltaTime * stateMachine.Player.rotateSpeed);
 
-                Vector3 dir = stateMachine.Player.transform.forward * stateMachine.Player.moveSpeed * Time.deltaTime;
+            //    Vector3 dir = stateMachine.Player.transform.forward * stateMachine.Player.moveSpeed * Time.deltaTime;
 
-                //stateMachine.Player.Rigidbody.AddForce(stateMachine.Player.transform.position + dir);
-
-                stateMachine.Player.Rigidbody.MovePosition(stateMachine.Player.transform.position + dir);
-                return;
-            }
-            else
-            {
-                Vector3 movementDirection = GetMovementInputDirection();
-
-                float targetRotationYAngle = Rotate(movementDirection);
-
-
-                Vector3 targetRotationDirection = GetTargetRotationDirection(targetRotationYAngle);
-
-                float movementSpeed = GetMovementSpeed();
-
-                Vector3 currentPlayerHorizontalVelocity = GetPlayerHorizontalVelocity();
-
-                stateMachine.Player.Rigidbody.AddForce(targetRotationDirection * movementSpeed - currentPlayerHorizontalVelocity, ForceMode.VelocityChange);
-            }
-
-            if (stateMachine.ReusableData.MovementInput == Vector2.zero || stateMachine.ReusableData.MovementSpeedModifier == 0f)
-            {
-                return;
-            }
+            //    stateMachine.Player.Rigidbody.MovePosition(stateMachine.Player.transform.position + dir);
+            //    return;
+            //}
+            //else
+            //{
+            //    }
         }
 
         protected Vector3 GetMovementInputDirection()
@@ -464,6 +498,7 @@ namespace genshin
 
             stateMachine.Player.Rigidbody.AddForce(-playerVerticalVelocity * stateMachine.ReusableData.MovementDecelerationForce, ForceMode.Acceleration);
         }
+
 
         protected bool IsMovingHorizontally(float minimumMagnitude = 0.1f)
         {

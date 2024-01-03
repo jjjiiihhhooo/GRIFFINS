@@ -31,6 +31,11 @@ namespace genshin
             Jump();
         }
 
+        public override void HandleInput()
+        {
+            base.HandleInput();
+        }
+
         public override void Exit()
         {
             base.Exit();
@@ -65,6 +70,15 @@ namespace genshin
 
         }
 
+        protected override void AddInputActionsCallbacks()
+        {
+            base.AddInputActionsCallbacks();
+        }
+
+        protected override void RemoveInputActionsCallbacks()
+        {
+            base.RemoveInputActionsCallbacks();
+        }
 
         private void Jump()
         {
