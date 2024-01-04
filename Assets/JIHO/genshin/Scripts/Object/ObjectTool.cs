@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace genshin
 {
@@ -19,6 +20,8 @@ namespace genshin
         public float speed;
         [Header("목표 타겟")]
         public Transform targetTransform;
+        [Header("이벤트")]
+        public UnityEvent _event;
 
         private int currentCollisionCount;
         private int currentBoolIndex;
@@ -39,6 +42,7 @@ namespace genshin
         public bool isCollsion;
 
         [Header("---------기믹 타입---------")]
+        [Header("전부 미 체크시 이벤트만 발동")]
         [Header("파괴 기믹")]
         public bool actionDestroy;
         [Header("대쉬 기믹")]
@@ -96,31 +100,41 @@ namespace genshin
 
         private void Action(Collider collider)
         {
-            if(actionDash)
+            ActionEvent();
+
+            if (actionDash)
             {
                 ActionDash(collider);
-                return;
             }
             else if(actionDestroy)
             {
                 ActionDestroy();
-                return;
             }
             else if(actionGravity)
             {
                 ActionGravity();
-                return;
             }
             else if(actionMove)
             {
                 ActionMove();
-                return;
             }
         }
 
         private void ActionDestroy()
         {
+            StartCoroutine(DestroyCor());
+        }
+
+        private IEnumerator DestroyCor()
+        {
+            //나중에 애니메이션 효과로 바꿀 예정 이건 임시
+            yield return new WaitForSeconds(0.3f);
             Destroy(parent_object);
+        }
+
+        private void ActionEvent()
+        {
+            _event?.Invoke();
         }
 
         private void ActionDash(Collider collider)
