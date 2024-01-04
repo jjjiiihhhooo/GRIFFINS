@@ -18,7 +18,7 @@ namespace genshin
 
             StartAnimation(stateMachine.Player.AnimationData.DownStreamParameterHash);
 
-            stateMachine.ReusableData.MovementSpeedModifier = 0f;
+            //stateMachine.ReusableData.MovementSpeedModifier = 0f;
 
             stateMachine.ReusableData.MovementDecelerationForce = airborneData.JumpData.DecelerationForce;
 
@@ -67,9 +67,14 @@ namespace genshin
 
         protected override void OnContactWithGroundExited(Collider collider)
         {
-            
+
+            stateMachine.Player.StartCor(DelayCor());
+        }
+        
+        private IEnumerator DelayCor()
+        {
+            yield return new WaitForSeconds(0.2f);
             stateMachine.ChangeState(stateMachine.FallingState);
         }
-
     }
 }

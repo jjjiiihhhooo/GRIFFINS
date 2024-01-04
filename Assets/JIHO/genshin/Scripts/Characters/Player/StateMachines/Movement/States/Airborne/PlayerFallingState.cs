@@ -20,6 +20,7 @@ namespace genshin
             StartAnimation(stateMachine.Player.AnimationData.FallParameterHash);
             playerPositionOnEnter = stateMachine.Player.transform.position;
 
+            //stateMachine.Player.Rigidbody.velocity = Vector3.zero;
             //if (stateMachine.GetPreviousState() != typeof(PlayerDownStreamState))
             //{
             //    stateMachine.ReusableData.MovementSpeedModifier = 0f;
@@ -45,12 +46,24 @@ namespace genshin
             base.RemoveInputActionsCallbacks();
         }
 
+        public override void HandleInput()
+        {
+            base.HandleInput();
+        }
+
+
         public override void PhysicsUpdate()
         {
             base.PhysicsUpdate();
 
-            LimitVerticalVelocity();
+            //LimitVerticalVelocity();
         }
+
+        public override void Update()
+        {
+            
+        }
+
 
         private void LimitVerticalVelocity()
         {
@@ -81,6 +94,7 @@ namespace genshin
 
         protected override void OnContactWithGround(Collider collider)
         {
+            stateMachine.Player.isGround = true;
             float fallDistance = playerPositionOnEnter.y - stateMachine.Player.transform.position.y;
 
             if (fallDistance < airborneData.FallData.MinimumDistanceToBeConsideredHardFall)
