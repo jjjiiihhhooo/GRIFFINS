@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -340790334, guid: 67cc4cb7839cd3741b63733d5adf0442, type: 3}
+  m_Name: Maki_Menu
+  m_EditorClassIdentifier: 
+  controls:
+  - name: "\u8863\u88C5"
+    icon: {fileID: 2800000, guid: 884d945f8dc1ee240bae8e1f39c5983c, type: 3}
+    type: 103
+    parameter:
+      name: 
+    value: 1
+    style: 0
+    subMenu: {fileID: 11400000, guid: bc17732937031004cb8fd5a663c28a39, type: 2}
+    subParameters: []
+    labels: []
+  - name: "\u9AEA\u578B"
+    icon: {fileID: 2800000, guid: 943f735357b49e241a2646112c0309a2, type: 3}
+    type: 103
+    parameter:
+      name: 
+    value: 1
+    style: 0
+    subMenu: {fileID: 11400000, guid: 68d54eb37a3449c40af97d7c7f73c11f, type: 2}
+    subParameters: []
+    labels: []
+  - name: "\u732B"
+    icon: {fileID: 2800000, guid: 59c71c44caa2f1b47b56b7356ccae106, type: 3}
+    type: 102
+    parameter:
+      name: CatControl
+    value: 1
+    style: 0
+    subMenu: {fileID: 0}
+    subParameters: []
+    labels: []
+  - name: "\u30DE\u30B9\u30AF"
+    icon: {fileID: 2800000, guid: f9cc3a0bf1976cb4cab018f6404191a4, type: 3}
+    type: 102
+    parameter:
+      name: MaskControl
+    value: 1
+    style: 0
+    subMenu: {fileID: 0}
+    subParameters: []
+    labels: []

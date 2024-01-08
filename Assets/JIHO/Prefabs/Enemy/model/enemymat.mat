@@ -12,6 +12,7 @@ Material:
   m_ValidKeywords:
   - N_F_EAL_ON
   - N_F_NFD_ON
+  - N_F_NM_ON
   - N_F_O_ON
   - N_F_RDC_ON
   - N_F_RELGI_ON
@@ -92,7 +93,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 0220e5707cb1a5342a66a66f5440dc92, type: 3}
+        m_Texture: {fileID: 2800000, guid: a1f8043bc63158b4b9f31a83a5ab4948, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MaskGloss:
@@ -116,7 +117,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 8901e4164238f3a48b4022c6da19217d, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
@@ -237,7 +238,7 @@ Material:
     - _N_F_MSSOLTFO: 0
     - _N_F_NFD: 1
     - _N_F_NLASOBF: 0
-    - _N_F_NM: 0
+    - _N_F_NM: 1
     - _N_F_O: 1
     - _N_F_OFLMB: 0
     - _N_F_PT: 0
