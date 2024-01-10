@@ -20,20 +20,15 @@ namespace genshin
 
             EffectActive(stateMachine.Player.jumpEffect, true);
 
-            //stateMachine.ReusableData.MovementSpeedModifier = 0f;
+            stateMachine.ReusableData.MovementSpeedModifier = 0f;
 
-            //stateMachine.ReusableData.MovementDecelerationForce = airborneData.JumpData.DecelerationForce;
+            stateMachine.ReusableData.MovementDecelerationForce = airborneData.JumpData.DecelerationForce;
 
-            //stateMachine.ReusableData.RotationData = airborneData.JumpData.RotationData;
+            stateMachine.ReusableData.RotationData = airborneData.JumpData.RotationData;
 
-            //shouldKeepRotating = stateMachine.ReusableData.MovementInput != Vector2.zero;
+            shouldKeepRotating = stateMachine.ReusableData.MovementInput != Vector2.zero;
 
             Jump();
-        }
-
-        public override void HandleInput()
-        {
-            base.HandleInput();
         }
 
         public override void Exit()
@@ -42,72 +37,65 @@ namespace genshin
 
             EffectActive(stateMachine.Player.jumpEffect, false);
 
-            //SetBaseRotationData();
+            SetBaseRotationData();
 
             canStartFalling = false;
         }
 
         public override void Update()
         {
-            //base.Update();
-            
-            //if (!canStartFalling && IsMovingUp(0f))
-            //{
-            //    canStartFalling = true;
-            //}
+            base.Update();
 
-            //if (!canStartFalling || IsMovingUp(0f))
-            //{
-            //    return;
-            //}
+            if (!canStartFalling && IsMovingUp(0f))
+            {
+                canStartFalling = true;
+            }
 
-            //stateMachine.ChangeState(stateMachine.FallingState);
+            if (!canStartFalling || IsMovingUp(0f))
+            {
+                return;
+            }
+
+            stateMachine.ChangeState(stateMachine.FallingState);
         }
 
         public override void PhysicsUpdate()
         {
             base.PhysicsUpdate();
 
-        }
+            if (shouldKeepRotating)
+            {
+                RotateTowardsTargetRotation();
+            }
 
-        protected override void AddInputActionsCallbacks()
-        {
-            base.AddInputActionsCallbacks();
-        }
-
-        protected override void RemoveInputActionsCallbacks()
-        {
-            base.RemoveInputActionsCallbacks();
+            if (IsMovingUp())
+            {
+                DecelerateVertically();
+            }
         }
 
         private void Jump()
         {
-            //stateMachine.Player.Rigidbody.AddForce(Vector3.up * 8f, ForceMode.Impulse);
-            
-            //Vector3 jumpForce = stateMachine.ReusableData.CurrentJumpForce;
+            Vector3 jumpForce = stateMachine.ReusableData.CurrentJumpForce;
 
-            //Vector3 jumpDirection = stateMachine.Player.transform.forward;
+            Vector3 jumpDirection = stateMachine.Player.transform.forward;
 
-            //if (shouldKeepRotating)
-            //{
-            //    UpdateTargetRotation(GetMovementInputDirection());
+            if (shouldKeepRotating)
+            {
+                UpdateTargetRotation(GetMovementInputDirection());
 
-            //    jumpDirection = GetTargetRotationDirection(stateMachine.ReusableData.CurrentTargetRotation.y);
-            //}
+                jumpDirection = GetTargetRotationDirection(stateMachine.ReusableData.CurrentTargetRotation.y);
+            }
 
-            //jumpForce.x = 0f;
-            //jumpForce.z = 0f;
+            jumpForce.x *= jumpDirection.x;
+            jumpForce.z *= jumpDirection.z;
 
-            //jumpForce = GetJumpForceOnSlope(jumpForce);
-            
-            //ResetVelocity();
+            jumpForce = GetJumpForceOnSlope(jumpForce);
 
-            stateMachine.Player.Rigidbody.AddForce(Vector3.up * stateMachine.Player.jumpSpeed, ForceMode.VelocityChange);
+            ResetVelocity();
 
-            stateMachine.Player.InvokeMessage(0.1f);
+            stateMachine.Player.Rigidbody.AddForce(jumpForce, ForceMode.VelocityChange);
         }
-
-
 
         private Vector3 GetJumpForceOnSlope(Vector3 jumpForce)
         {
@@ -123,8 +111,8 @@ namespace genshin
                 {
                     float forceModifier = airborneData.JumpData.JumpForceModifierOnSlopeUpwards.Evaluate(groundAngle);
 
-                    jumpForce.x *= 0;
-                    jumpForce.z *= 0;
+                    jumpForce.x *= forceModifier;
+                    jumpForce.z *= forceModifier;
                 }
 
                 if (IsMovingDown())
@@ -142,10 +130,8 @@ namespace genshin
         {
         }
 
-        protected override void OnContactWithGroundExited(Collider collider)
+        protected override void OnMovementCanceled(InputAction.CallbackContext context)
         {
-            base.OnContactWithGroundExited(collider);
         }
-
     }
 }

@@ -154,7 +154,7 @@ namespace genshin
             }
 
             if (player == null) player = FindObjectOfType<Player>();
-            player.isInteraction = false;
+            
             dialogueGroup.SetActive(false);
         }
     }

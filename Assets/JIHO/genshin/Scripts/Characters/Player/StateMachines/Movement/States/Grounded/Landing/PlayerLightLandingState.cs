@@ -12,20 +12,13 @@ namespace genshin
 
         public override void Enter()
         {
-            if(stateMachine.GetPreviousState() != typeof(PlayerDashingState))
-            {
-                stateMachine.ReusableData.MovementSpeedModifier = 0;
-            }
+            stateMachine.ReusableData.MovementSpeedModifier = 0;
 
             base.Enter();
 
             stateMachine.ReusableData.CurrentJumpForce = airborneData.JumpData.StationaryForce;
 
-            if (stateMachine.GetPreviousState() != typeof(PlayerDashingState))
-            {
-                ResetVelocity();
-            }
-
+            ResetVelocity();
         }
 
         public override void Update()
@@ -42,25 +35,19 @@ namespace genshin
 
         public override void PhysicsUpdate()
         {
-            if (stateMachine.GetPreviousState() != typeof(PlayerDashingState))
+            base.PhysicsUpdate();
+
+            if (!IsMovingHorizontally())
             {
-                base.PhysicsUpdate();
-
-                if (!IsMovingHorizontally())
-                {
-                    return;
-                }
-
-                ResetVelocity();
+                return;
             }
+
+            ResetVelocity();
         }
 
         public override void OnAnimationTransitionEvent()
         {
-            if (stateMachine.GetPreviousState() != typeof(PlayerDashingState))
-            {
-                stateMachine.ChangeState(stateMachine.IdlingState);
-            }
+            stateMachine.ChangeState(stateMachine.IdlingState);
         }
     }
 }

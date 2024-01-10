@@ -43,13 +43,6 @@ namespace genshin
             player.OnMovementStateAnimationTransitionEvent();
         }
 
-        public void TriggerOnAttackAnimationEvent()
-        {
-
-            player.AttackColActive();
-
-        }
-
         private bool IsInAnimationTransition(int layerIndex = 0)
         {
             return player.Animator.IsInTransition(layerIndex);

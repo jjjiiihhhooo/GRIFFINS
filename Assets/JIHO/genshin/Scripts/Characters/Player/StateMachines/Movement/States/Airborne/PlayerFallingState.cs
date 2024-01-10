@@ -10,7 +10,6 @@ namespace genshin
 
         public PlayerFallingState(PlayerMovementStateMachine playerMovementStateMachine) : base(playerMovementStateMachine)
         {
-
         }
 
         public override void Enter()
@@ -18,15 +17,12 @@ namespace genshin
             base.Enter();
 
             StartAnimation(stateMachine.Player.AnimationData.FallParameterHash);
+
+            stateMachine.ReusableData.MovementSpeedModifier = 0f;
+
             playerPositionOnEnter = stateMachine.Player.transform.position;
 
-            //stateMachine.Player.Rigidbody.velocity = Vector3.zero;
-            //if (stateMachine.GetPreviousState() != typeof(PlayerDownStreamState))
-            //{
-            //    stateMachine.ReusableData.MovementSpeedModifier = 0f;
-
-            //    ResetVerticalVelocity();
-            //}
+            ResetVerticalVelocity();
         }
 
         public override void Exit()
@@ -36,34 +32,12 @@ namespace genshin
             StopAnimation(stateMachine.Player.AnimationData.FallParameterHash);
         }
 
-        protected override void AddInputActionsCallbacks()
-        {
-            base.AddInputActionsCallbacks();
-        }
-
-        protected override void RemoveInputActionsCallbacks()
-        {
-            base.RemoveInputActionsCallbacks();
-        }
-
-        public override void HandleInput()
-        {
-            base.HandleInput();
-        }
-
-
         public override void PhysicsUpdate()
         {
             base.PhysicsUpdate();
 
-            //LimitVerticalVelocity();
+            LimitVerticalVelocity();
         }
-
-        public override void Update()
-        {
-            
-        }
-
 
         private void LimitVerticalVelocity()
         {
@@ -74,18 +48,9 @@ namespace genshin
                 return;
             }
 
-            Vector3 limitedVelocityForce = new Vector3(stateMachine.Player.Rigidbody.velocity.x, -airborneData.FallData.FallSpeedLimit - playerVerticalVelocity.y, stateMachine.Player.Rigidbody.velocity.z);
+            Vector3 limitedVelocityForce = new Vector3(0f, -airborneData.FallData.FallSpeedLimit - playerVerticalVelocity.y, 0f);
 
-            if (stateMachine.ReusableData.MovementInput != Vector2.zero)
-            {
-                stateMachine.Player.Rigidbody.AddForce(limitedVelocityForce * 1.2f, ForceMode.VelocityChange);
-            }
-            else
-            {
-                stateMachine.Player.Rigidbody.AddForce(limitedVelocityForce, ForceMode.VelocityChange);
-            }
-
-            
+            stateMachine.Player.Rigidbody.AddForce(limitedVelocityForce, ForceMode.VelocityChange);
         }
 
         protected override void ResetSprintState()
@@ -94,7 +59,6 @@ namespace genshin
 
         protected override void OnContactWithGround(Collider collider)
         {
-            stateMachine.Player.isGround = true;
             float fallDistance = playerPositionOnEnter.y - stateMachine.Player.transform.position.y;
 
             if (fallDistance < airborneData.FallData.MinimumDistanceToBeConsideredHardFall)

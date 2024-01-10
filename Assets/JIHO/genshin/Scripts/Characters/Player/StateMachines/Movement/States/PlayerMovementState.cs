@@ -49,37 +49,11 @@ namespace genshin
 
         public virtual void OnTriggerEnter(Collider collider)
         {
-            if(collider.CompareTag("QuestPos"))
-            {
-                QuestManager.instance.QuestPositionCheck(collider.name);
-            }
-
             if (stateMachine.Player.LayerData.IsGroundLayer(collider.gameObject.layer))
             {
                 OnContactWithGround(collider);
 
                 return;
-            }
-        }
-
-        public virtual void OnTriggerStay(Collider collider)
-        {
-            if (stateMachine.Player.LayerData.IsGroundLayer(collider.gameObject.layer))
-            {
-                if(!stateMachine.Player.isGround) stateMachine.Player.isGround = true;
-
-                if (stateMachine.Player.pm.bounceCombine == PhysicMaterialCombine.Maximum)
-                {
-                    if (stateMachine.Player.groundTime < 0)
-                    {
-                        stateMachine.Player.pm.bounceCombine = PhysicMaterialCombine.Minimum;
-                        stateMachine.ChangeState(stateMachine.IdlingState);
-                    }
-                    else
-                    {
-                        stateMachine.Player.groundTime -= Time.deltaTime;
-                    }
-                }
             }
         }
 
@@ -130,23 +104,13 @@ namespace genshin
             stateMachine.ReusableData.TimeToReachTargetRotation = stateMachine.ReusableData.RotationData.TargetRotationReachTime;
         }
 
-        protected void StartAnimation(int animationHash, int check = 0)
+        protected void StartAnimation(int animationHash)
         {
-            if(check == 1)
-            {
-                stateMachine.Player.Animator.SetTrigger(animationHash);
-                return;
-            }
-
             stateMachine.Player.Animator.SetBool(animationHash, true);
         }
 
-        protected void StopAnimation(int animationHash, int check = 0)
+        protected void StopAnimation(int animationHash)
         {
-            if(check == 1)
-            {
-                return;
-            }
             stateMachine.Player.Animator.SetBool(animationHash, false);
         }
 
@@ -195,94 +159,24 @@ namespace genshin
             stateMachine.ReusableData.MovementInput = stateMachine.Player.Input.PlayerActions.Movement.ReadValue<Vector2>();
         }
 
-        
         private void Move()
         {
-            //if (stateMachine.GetCurrentStateType() == typeof(PlayerDashingState) || stateMachine.GetCurrentStateType() == typeof(PlayerAirDashingState))
-            //{
-            //    return;
-            //}
-            
-            
-
-            if (stateMachine.ReusableData.MovementInput == Vector2.zero)
+            if (stateMachine.ReusableData.MovementInput == Vector2.zero || stateMachine.ReusableData.MovementSpeedModifier == 0f)
             {
-                Debug.Log("MoveError");
                 return;
             }
-
-            if (stateMachine.Player.groundTime > 0 && (stateMachine.GetCurrentStateType() != typeof(PlayerFallingState))) return;
-               
 
             Vector3 movementDirection = GetMovementInputDirection();
 
             float targetRotationYAngle = Rotate(movementDirection);
 
-
             Vector3 targetRotationDirection = GetTargetRotationDirection(targetRotationYAngle);
-            Ray ray = new Ray(stateMachine.Player.transform.position + Vector3.up, targetRotationDirection);
-            Ray ray_1 = new Ray(stateMachine.Player.transform.position + Vector3.up * 0.05f, targetRotationDirection);
-            Ray ray_2 = new Ray(stateMachine.Player.transform.position + Vector3.up * 0.9f, targetRotationDirection);
 
-            stateMachine.Player.testRay = ray;
-            stateMachine.Player.testRay1 = ray_1;
-            stateMachine.Player.testRay2 = ray_2;
+            float movementSpeed = GetMovementSpeed();
 
-            if (Physics.Raycast(ray_2, 0.3f, stateMachine.Player.LayerData.GroundLayer, QueryTriggerInteraction.Ignore))
-            {
-                stateMachine.Player.Rigidbody.velocity = new Vector3(0f, stateMachine.Player.Rigidbody.velocity.y, 0f);
-                return;
-            }
-            if (Physics.Raycast(ray, 0.3f, stateMachine.Player.LayerData.GroundLayer, QueryTriggerInteraction.Ignore))
-            {
-                stateMachine.Player.Rigidbody.velocity = new Vector3(0f, stateMachine.Player.Rigidbody.velocity.y, 0f);
-                return;
-            }
-            if (!stateMachine.Player.isGround)
-            {
-                
-
-                if (Physics.Raycast(ray_1, 0.3f, stateMachine.Player.LayerData.GroundLayer, QueryTriggerInteraction.Ignore))
-                {
-                    stateMachine.Player.Rigidbody.velocity = new Vector3(0f, stateMachine.Player.Rigidbody.velocity.y, 0f);
-                    return;
-                }
-            }
-            
-            
-            //float movementSpeed = GetMovementSpeed();
-            //Debug.LogError(movementSpeed);
             Vector3 currentPlayerHorizontalVelocity = GetPlayerHorizontalVelocity();
 
-
-            stateMachine.Player.Rigidbody.AddForce(targetRotationDirection * 7.5f - currentPlayerHorizontalVelocity, ForceMode.VelocityChange);
-
-            
-
-            //if (!stateMachine.Player.isGround)
-            //{
-            //    if (Input.GetAxisRaw("Horizontal") == 0 && Input.GetAxisRaw("Vertical") == 0) return;
-            //    Vector3 heading;
-            //    Vector3 moveVec;
-
-            //    moveVec = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
-            //    moveVec.Normalize();
-
-            //    heading = new Vector3(Camera.main.transform.forward.x, 0, Camera.main.transform.forward.z);
-            //    heading.Normalize();
-            //    heading = heading - moveVec;
-            //    float angle = Mathf.Atan2(heading.z, heading.x) * Mathf.Rad2Deg * -2;
-
-            //    stateMachine.Player.transform.rotation = Quaternion.Slerp(stateMachine.Player.transform.rotation, Quaternion.Euler(0, angle, 0), Time.deltaTime * stateMachine.Player.rotateSpeed);
-
-            //    Vector3 dir = stateMachine.Player.transform.forward * stateMachine.Player.moveSpeed * Time.deltaTime;
-
-            //    stateMachine.Player.Rigidbody.MovePosition(stateMachine.Player.transform.position + dir);
-            //    return;
-            //}
-            //else
-            //{
-            //    }
+            stateMachine.Player.Rigidbody.AddForce(targetRotationDirection * movementSpeed - currentPlayerHorizontalVelocity, ForceMode.VelocityChange);
         }
 
         protected Vector3 GetMovementInputDirection()
@@ -398,12 +292,10 @@ namespace genshin
 
         protected virtual void OnContactWithGround(Collider collider)
         {
-
         }
 
         protected virtual void OnContactWithGroundExited(Collider collider)
         {
-            stateMachine.Player.isGround = false;
         }
 
         protected void UpdateCameraRecenteringState(Vector2 movementInput)
@@ -499,7 +391,6 @@ namespace genshin
             stateMachine.Player.Rigidbody.AddForce(-playerVerticalVelocity * stateMachine.ReusableData.MovementDecelerationForce, ForceMode.Acceleration);
         }
 
-
         protected bool IsMovingHorizontally(float minimumMagnitude = 0.1f)
         {
             Vector3 playerHorizontaVelocity = GetPlayerHorizontalVelocity();
@@ -518,8 +409,6 @@ namespace genshin
         {
             return GetPlayerVerticalVelocity().y < -minimumVelocity;
         }
-
-        
     }
 }
 

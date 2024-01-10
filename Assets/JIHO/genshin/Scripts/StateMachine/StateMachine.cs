@@ -7,22 +7,14 @@ namespace genshin
     public abstract class StateMachine
     {
         protected IState currentState;
-        protected IState previousState;
 
         public void ChangeState(IState newState)
         {
-            
             currentState?.Exit();
-            previousState = currentState;
+
             currentState = newState;
 
-            //Debug.Log(currentState?.GetType().Name);
             currentState.Enter();
-        }
-
-        public System.Type GetCurrentStateType()
-        {
-            return currentState.GetType();
         }
 
         public void HandleInput()
@@ -40,19 +32,9 @@ namespace genshin
             currentState?.PhysicsUpdate();
         }
 
-        public System.Type GetPreviousState()
-        {
-            return previousState?.GetType();
-        }
-
         public void OnTriggerEnter(Collider collider)
         {
             currentState?.OnTriggerEnter(collider);
-        }
-
-        public void OnTriggerStay(Collider collider)
-        {
-            currentState?.OnTriggerStay(collider);
         }
 
         public void OnTriggerExit(Collider collider)
@@ -74,7 +56,6 @@ namespace genshin
         {
             currentState?.OnAnimationTransitionEvent();
         }
-
     }
 }
 

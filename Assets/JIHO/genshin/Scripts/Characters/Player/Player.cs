@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Windows;
 
 namespace genshin
 {
@@ -9,12 +8,6 @@ namespace genshin
     [RequireComponent(typeof(PlayerResizableCapsuleCollider))]
     public class Player : MonoBehaviour
     {
-
-        public float moveSpeed;
-        public float rotateSpeed;
-        public float dashSpeed;
-        public float jumpSpeed;
-
         [field: Header("References")]
         [field: SerializeField] public PlayerSO Data { get; private set; }
 
@@ -39,41 +32,16 @@ namespace genshin
         public PlayerResizableCapsuleCollider ResizableCapsuleCollider { get; private set; }
 
         public Transform MainCameraTransform { get; private set; }
-        public PlayerInteraction PlayerInteraction;
 
-        public PlayerMovementStateMachine movementStateMachine;
+        private PlayerMovementStateMachine movementStateMachine;
 
-
-        public GameObject tornadoSkillObject;
-        public AttackCol attackCol;
-        public AttackCol dashCol;
-        public bool isInteraction;
-        public bool isGround;
-        public bool isSkill;
-        public float damage;
-        public float groundTime;
-        public float groundMaxTime;
-        public PhysicMaterial pm;
-
-        public Animator whiteAnimator;
-        public Animator greenAnimator;
-        public Animator redAnimator;
-        public Animator blueAnimator;
-
-        public Ray ray;
-        public Vector3 dir;
-        public Ray testRay;
-        public Ray testRay1;
-        public Ray testRay2;
-        
         private void Awake()
         {
             CameraRecenteringUtility.Initialize();
             AnimationData.Initialize();
-            PlayerInteraction = GetComponent<PlayerInteraction>();
 
             Rigidbody = GetComponent<Rigidbody>();
-            Animator = whiteAnimator;
+            Animator = GetComponentInChildren<Animator>();
 
             Input = GetComponent<PlayerInput>();
             ResizableCapsuleCollider = GetComponent<PlayerResizableCapsuleCollider>();
@@ -81,13 +49,6 @@ namespace genshin
             MainCameraTransform = Camera.main.transform;
 
             movementStateMachine = new PlayerMovementStateMachine(this);
-
-            isInteraction = false;
-        }
-
-        private void OnDrawGizmos()
-        {
-            Gizmos.DrawRay(ray);
         }
 
         private void Start()
@@ -97,35 +58,19 @@ namespace genshin
 
         private void Update()
         {
-            dir = MainCameraTransform.forward;
-            ray = new Ray(new Vector3(transform.position.x, transform.position.y + 2f, transform.position.z), dir);
-
             movementStateMachine.HandleInput();
 
             movementStateMachine.Update();
-
-            if(UnityEngine.Input.GetKeyDown(KeyCode.LeftAlt))
-            {
-                Cursor.lockState = CursorLockMode.Locked;
-                Cursor.visible = false;
-            }
         }
 
         private void FixedUpdate()
         {
             movementStateMachine.PhysicsUpdate();
-
-            PlayerInteraction.PhysicsUpdate();
         }
 
         private void OnTriggerEnter(Collider collider)
         {
             movementStateMachine.OnTriggerEnter(collider);
-        }
-
-        private void OnTriggerStay(Collider collider)
-        {
-            movementStateMachine.OnTriggerStay(collider);
         }
 
         private void OnTriggerExit(Collider collider)
@@ -146,41 +91,6 @@ namespace genshin
         public void OnMovementStateAnimationTransitionEvent()
         {
             movementStateMachine.OnAnimationTransitionEvent();
-        }
-
-        public void StartCor(IEnumerator coroutine)
-        {
-            StartCoroutine(coroutine);
-        }
-
-        public void StopCor(IEnumerator coroutine)
-        {
-            StopCoroutine(coroutine);
-        }
-
-        public void AttackColActive(float time = 0.2f)
-        {
-            attackCol.gameObject.SetActive(false);
-            attackCol.damage = damage;
-            attackCol.time = time;
-            attackCol.gameObject.SetActive(true);
-        }
-
-        public void DashColActive(float time = 0f)
-        {
-            dashCol.gameObject.SetActive(false);
-            dashCol.damage = damage;
-            dashCol.time = time;
-            dashCol.gameObject.SetActive(true);
-        }
-
-        public void InvokeMessage(float time)
-        {
-            Invoke("DashToFall", time);
-        }
-        private void DashToFall()
-        {
-            movementStateMachine.ChangeState(movementStateMachine.FallingState);
         }
     }
 }

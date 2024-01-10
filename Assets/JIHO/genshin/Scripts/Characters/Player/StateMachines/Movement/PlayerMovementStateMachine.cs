@@ -25,15 +25,7 @@ namespace genshin
         public PlayerHardLandingState HardLandingState { get; }
 
         public PlayerJumpingState JumpingState { get; }
-        public PlayerDownStreamState DownStreamState { get; }
         public PlayerFallingState FallingState { get; }
-        public TornadoState TornadoState { get; }
-        public GroundTornadoState GroundTornadoState { get; }
-
-        public PlayerLightAttackingState LightAttackingState { get; }
-
-        public ObjectDashState ObjectDashState { get; }
-        
 
         public PlayerMovementStateMachine(Player player)
         {
@@ -56,14 +48,7 @@ namespace genshin
             HardLandingState = new PlayerHardLandingState(this);
 
             JumpingState = new PlayerJumpingState(this);
-            DownStreamState = new PlayerDownStreamState(this);
             FallingState = new PlayerFallingState(this);
-
-            TornadoState = new TornadoState(this);
-            GroundTornadoState = new GroundTornadoState(this);
-            LightAttackingState = new PlayerLightAttackingState(this);
-
-            ObjectDashState = new ObjectDashState(this);
         }
     }
 }
