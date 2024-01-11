@@ -8,6 +8,8 @@ namespace genshin
     [RequireComponent(typeof(PlayerResizableCapsuleCollider))]
     public class Player : MonoBehaviour
     {
+        public static Player Instance;
+
         [field: Header("References")]
         [field: SerializeField] public PlayerSO Data { get; private set; }
 
@@ -37,18 +39,28 @@ namespace genshin
 
         private void Awake()
         {
-            CameraRecenteringUtility.Initialize();
-            AnimationData.Initialize();
+            if(Instance == null)
+            {
+                Instance = this;
+                CameraRecenteringUtility.Initialize();
+                AnimationData.Initialize();
 
-            Rigidbody = GetComponent<Rigidbody>();
-            Animator = GetComponentInChildren<Animator>();
+                Rigidbody = GetComponent<Rigidbody>();
+                Animator = GetComponentInChildren<Animator>();
 
-            Input = GetComponent<PlayerInput>();
-            ResizableCapsuleCollider = GetComponent<PlayerResizableCapsuleCollider>();
+                Input = GetComponent<PlayerInput>();
+                ResizableCapsuleCollider = GetComponent<PlayerResizableCapsuleCollider>();
 
-            MainCameraTransform = Camera.main.transform;
+                MainCameraTransform = Camera.main.transform;
 
-            movementStateMachine = new PlayerMovementStateMachine(this);
+                movementStateMachine = new PlayerMovementStateMachine(this);
+                DontDestroyOnLoad(this.gameObject);
+            }
+            else
+            {
+                Destroy(this.gameObject);
+            }
+            
         }
 
         private void Start()
