@@ -136,6 +136,8 @@ namespace genshin
 
         protected virtual void OnWalkToggleStarted(InputAction.CallbackContext context)
         {
+            if (stateMachine.Player.skillData.isHand) return;
+            Debug.Log("dd");
             stateMachine.ReusableData.ShouldWalk = !stateMachine.ReusableData.ShouldWalk;
         }
 

@@ -8,14 +8,16 @@ namespace genshin
     public class CameraZoom : MonoBehaviour
     {
         [SerializeField][Range(0f, 12f)] private float defaultDistance = 6f;
-        [SerializeField][Range(0f, 12f)] private float minimumDistance = 1f;
-        [SerializeField][Range(0f, 12f)] private float maximumDistance = 6f;
+        [SerializeField][Range(0f, 12f)] public float minimumDistance = 1f;
+        [SerializeField][Range(0f, 12f)] public float maximumDistance = 6f;
 
         [SerializeField][Range(0f, 20f)] private float smoothing = 4f;
         [SerializeField][Range(0f, 20f)] private float zoomSensitivity = 1f;
 
         private CinemachineFramingTransposer framingTransposer;
         private CinemachineInputProvider inputProvider;
+        public CinemachineVirtualCamera virtualCamera;
+
 
         private float currentTargetDistance;
 
@@ -31,6 +33,7 @@ namespace genshin
         {
             Zoom();
         }
+
 
         private void Zoom()
         {

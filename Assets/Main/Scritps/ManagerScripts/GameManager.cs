@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
     public SoundManager soundManager;
+    public InputData inputData;
+    public DotweenAnimManager dotweenAnimManager;
 
     private void Awake()
     {
@@ -25,6 +27,7 @@ public class GameManager : MonoBehaviour
 
     private void Init()
     {
-        
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 }

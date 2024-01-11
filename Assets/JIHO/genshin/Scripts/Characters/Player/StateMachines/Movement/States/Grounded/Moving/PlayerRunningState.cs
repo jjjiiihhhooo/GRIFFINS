@@ -64,6 +64,7 @@ namespace genshin
 
         protected override void OnWalkToggleStarted(InputAction.CallbackContext context)
         {
+            if (stateMachine.Player.skillData.isHand) return;
             base.OnWalkToggleStarted(context);
 
             stateMachine.ChangeState(stateMachine.WalkingState);

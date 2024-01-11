@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace genshin
 {
@@ -35,7 +36,13 @@ namespace genshin
 
         public Transform MainCameraTransform { get; private set; }
 
-        private PlayerMovementStateMachine movementStateMachine;
+        public TargetSet targetSet;
+        public SkillData skillData;
+        public SkillFunction skillFunction;
+
+        public PlayerMovementStateMachine movementStateMachine;
+
+
 
         private void Awake()
         {
@@ -70,6 +77,12 @@ namespace genshin
 
         private void Update()
         {
+            if(skillData.isHand)
+            {
+                transform.rotation = FindObjectOfType<CameraZoom>().transform.rotation;
+                transform.rotation = new Quaternion(0f, FindObjectOfType<CameraZoom>().transform.rotation.y, 0f, transform.rotation.w);
+            }
+
             movementStateMachine.HandleInput();
 
             movementStateMachine.Update();
