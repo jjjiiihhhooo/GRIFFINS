@@ -4,122 +4,122 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace genshin
+
+
+public class PlayerSprintingState : PlayerMovingState
 {
-    public class PlayerSprintingState : PlayerMovingState
+    private float startTime;
+
+    private bool keepSprinting;
+    private bool shouldResetSprintState;
+
+    public PlayerSprintingState(PlayerMovementStateMachine playerMovementStateMachine) : base(playerMovementStateMachine)
     {
-        private float startTime;
+    }
 
-        private bool keepSprinting;
-        private bool shouldResetSprintState;
+    public override void Enter()
+    {
+        stateMachine.Player.skillFunction.isSprint = true;
+        stateMachine.ReusableData.MovementSpeedModifier = groundedData.SprintData.SpeedModifier;
+        base.Enter();
 
-        public PlayerSprintingState(PlayerMovementStateMachine playerMovementStateMachine) : base(playerMovementStateMachine)
+        StartAnimation(stateMachine.Player.AnimationData.SprintParameterHash);
+
+        stateMachine.ReusableData.CurrentJumpForce = airborneData.JumpData.StrongForce;
+
+        startTime = Time.time;
+
+        shouldResetSprintState = true;
+
+        if (!stateMachine.ReusableData.ShouldSprint)
         {
+            keepSprinting = false;
+        }
+    }
+
+    public override void Exit()
+    {
+        stateMachine.Player.skillFunction.isSprint = false;
+        base.Exit();
+
+        StopAnimation(stateMachine.Player.AnimationData.SprintParameterHash);
+
+        if (shouldResetSprintState)
+        {
+            keepSprinting = false;
+
+            stateMachine.ReusableData.ShouldSprint = false;
+        }
+    }
+
+    public override void Update()
+    {
+        base.Update();
+
+        if (keepSprinting)
+        {
+            return;
         }
 
-        public override void Enter()
+        if (Time.time < startTime + groundedData.SprintData.SprintToRunTime)
         {
-            stateMachine.ReusableData.MovementSpeedModifier = groundedData.SprintData.SpeedModifier;
-
-            base.Enter();
-
-            StartAnimation(stateMachine.Player.AnimationData.SprintParameterHash);
-
-            stateMachine.ReusableData.CurrentJumpForce = airborneData.JumpData.StrongForce;
-
-            startTime = Time.time;
-
-            shouldResetSprintState = true;
-
-            if (!stateMachine.ReusableData.ShouldSprint)
-            {
-                keepSprinting = false;
-            }
+            return;
         }
 
-        public override void Exit()
+        StopSprinting();
+    }
+
+    private void StopSprinting()
+    {
+        if (stateMachine.ReusableData.MovementInput == Vector2.zero)
         {
-            base.Exit();
+            stateMachine.ChangeState(stateMachine.IdlingState);
 
-            StopAnimation(stateMachine.Player.AnimationData.SprintParameterHash);
-
-            if (shouldResetSprintState)
-            {
-                keepSprinting = false;
-
-                stateMachine.ReusableData.ShouldSprint = false;
-            }
+            return;
         }
 
-        public override void Update()
-        {
-            base.Update();
+        stateMachine.ChangeState(stateMachine.RunningState);
+    }
 
-            if (keepSprinting)
-            {
-                return;
-            }
+    protected override void AddInputActionsCallbacks()
+    {
+        base.AddInputActionsCallbacks();
 
-            if (Time.time < startTime + groundedData.SprintData.SprintToRunTime)
-            {
-                return;
-            }
+        stateMachine.Player.Input.PlayerActions.Sprint.performed += OnSprintPerformed;
+    }
 
-            StopSprinting();
-        }
+    protected override void RemoveInputActionsCallbacks()
+    {
+        base.RemoveInputActionsCallbacks();
 
-        private void StopSprinting()
-        {
-            if (stateMachine.ReusableData.MovementInput == Vector2.zero)
-            {
-                stateMachine.ChangeState(stateMachine.IdlingState);
+        stateMachine.Player.Input.PlayerActions.Sprint.performed -= OnSprintPerformed;
+    }
 
-                return;
-            }
+    private void OnSprintPerformed(InputAction.CallbackContext context)
+    {
+        keepSprinting = true;
 
-            stateMachine.ChangeState(stateMachine.RunningState);
-        }
+        stateMachine.ReusableData.ShouldSprint = true;
+    }
 
-        protected override void AddInputActionsCallbacks()
-        {
-            base.AddInputActionsCallbacks();
+    protected override void OnMovementCanceled(InputAction.CallbackContext context)
+    {
+        stateMachine.ChangeState(stateMachine.HardStoppingState);
 
-            stateMachine.Player.Input.PlayerActions.Sprint.performed += OnSprintPerformed;
-        }
+        base.OnMovementCanceled(context);
+    }
 
-        protected override void RemoveInputActionsCallbacks()
-        {
-            base.RemoveInputActionsCallbacks();
+    protected override void OnJumpStarted(InputAction.CallbackContext context)
+    {
+        shouldResetSprintState = false;
 
-            stateMachine.Player.Input.PlayerActions.Sprint.performed -= OnSprintPerformed;
-        }
+        base.OnJumpStarted(context);
+    }
 
-        private void OnSprintPerformed(InputAction.CallbackContext context)
-        {
-            keepSprinting = true;
+    protected override void OnFall()
+    {
+        shouldResetSprintState = false;
 
-            stateMachine.ReusableData.ShouldSprint = true;
-        }
-
-        protected override void OnMovementCanceled(InputAction.CallbackContext context)
-        {
-            stateMachine.ChangeState(stateMachine.HardStoppingState);
-
-            base.OnMovementCanceled(context);
-        }
-
-        protected override void OnJumpStarted(InputAction.CallbackContext context)
-        {
-            shouldResetSprintState = false;
-
-            base.OnJumpStarted(context);
-        }
-
-        protected override void OnFall()
-        {
-            shouldResetSprintState = false;
-
-            base.OnFall();
-        }
+        base.OnFall();
     }
 }

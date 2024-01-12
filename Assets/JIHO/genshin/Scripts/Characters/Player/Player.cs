@@ -1,122 +1,131 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
+using UnityEngine.UI;
 
-namespace genshin
+
+
+[RequireComponent(typeof(PlayerInput))]
+[RequireComponent(typeof(PlayerResizableCapsuleCollider))]
+public class Player : MonoBehaviour
 {
-    [RequireComponent(typeof(PlayerInput))]
-    [RequireComponent(typeof(PlayerResizableCapsuleCollider))]
-    public class Player : MonoBehaviour
+    public static Player Instance;
+
+    [field: Header("References")]
+    [field: SerializeField] public PlayerSO Data { get; private set; }
+
+    [field: Header("Collisions")]
+    [field: SerializeField] public PlayerLayerData LayerData { get; private set; }
+    [field: Header("Camera")]
+    [field: SerializeField] public PlayerCameraUtility CameraRecenteringUtility { get; private set; }
+
+    [field: Header("Animations")]
+    [field: SerializeField] public PlayerAnimationData AnimationData { get; private set; }
+
+    public GameObject jumpEffect;
+    public GameObject dashEffect;
+    public GameObject landEffect;
+
+
+    public Rigidbody Rigidbody { get; private set; }
+    public Animator Animator { get; private set; }
+
+    public PlayerInput Input { get; private set; }
+    public PlayerResizableCapsuleCollider ResizableCapsuleCollider { get; private set; }
+
+    public Transform MainCameraTransform { get; private set; }
+
+    public TargetSet targetSet;
+    public SkillData skillData;
+    public SkillFunction skillFunction;
+
+    public Canvas playerCanvas;
+    public UnityEngine.UI.Image staminaFill;
+    public PlayerMovementStateMachine movementStateMachine;
+
+
+
+    private void Awake()
     {
-        public static Player Instance;
-
-        [field: Header("References")]
-        [field: SerializeField] public PlayerSO Data { get; private set; }
-
-        [field: Header("Collisions")]
-        [field: SerializeField] public PlayerLayerData LayerData { get; private set; }
-        [field: Header("Camera")]
-        [field: SerializeField] public PlayerCameraUtility CameraRecenteringUtility { get; private set; }
-
-        [field: Header("Animations")]
-        [field: SerializeField] public PlayerAnimationData AnimationData { get; private set; }
-
-        public GameObject jumpEffect;
-        public GameObject dashEffect;
-        public GameObject landEffect;
-
-
-        public Rigidbody Rigidbody { get; private set; }
-        public Animator Animator { get; private set; }
-
-        public PlayerInput Input { get; private set; }
-        public PlayerResizableCapsuleCollider ResizableCapsuleCollider { get; private set; }
-
-        public Transform MainCameraTransform { get; private set; }
-
-        public TargetSet targetSet;
-        public SkillData skillData;
-        public SkillFunction skillFunction;
-
-        public PlayerMovementStateMachine movementStateMachine;
-
-
-
-        private void Awake()
+        if (Instance == null)
         {
-            if(Instance == null)
-            {
-                Instance = this;
-                CameraRecenteringUtility.Initialize();
-                AnimationData.Initialize();
+            if (playerCanvas.worldCamera == null) playerCanvas.worldCamera = Camera.main;
+            Instance = this;
+            CameraRecenteringUtility.Initialize();
+            AnimationData.Initialize();
 
-                Rigidbody = GetComponent<Rigidbody>();
-                Animator = GetComponentInChildren<Animator>();
+            Rigidbody = GetComponent<Rigidbody>();
+            Animator = GetComponentInChildren<Animator>();
 
-                Input = GetComponent<PlayerInput>();
-                ResizableCapsuleCollider = GetComponent<PlayerResizableCapsuleCollider>();
+            Input = GetComponent<PlayerInput>();
+            ResizableCapsuleCollider = GetComponent<PlayerResizableCapsuleCollider>();
 
-                MainCameraTransform = Camera.main.transform;
+            MainCameraTransform = Camera.main.transform;
 
-                movementStateMachine = new PlayerMovementStateMachine(this);
-                DontDestroyOnLoad(this.gameObject);
-            }
-            else
-            {
-                Destroy(this.gameObject);
-            }
-            
+            movementStateMachine = new PlayerMovementStateMachine(this);
+
+            DontDestroyOnLoad(this.gameObject);
+        }
+        else
+        {
+            Destroy(this.gameObject);
         }
 
-        private void Start()
+    }
+
+    private void Start()
+    {
+        movementStateMachine.ChangeState(movementStateMachine.IdlingState);
+    }
+
+    private void Update()
+    {
+
+
+        if (Animator.GetCurrentAnimatorStateInfo(1).IsName("White_Idle") || Animator.GetCurrentAnimatorStateInfo(1).IsName("White_Throw"))
         {
-            movementStateMachine.ChangeState(movementStateMachine.IdlingState);
+            Debug.Log("anim");
+            transform.rotation = CameraRecenteringUtility.VirtualCamera.transform.rotation;
+            transform.rotation = new Quaternion(0f, CameraRecenteringUtility.VirtualCamera.transform.rotation.y, 0f, transform.rotation.w);
         }
 
-        private void Update()
-        {
-            if(skillData.isHand)
-            {
-                transform.rotation = CameraRecenteringUtility.VirtualCamera.transform.rotation;
-                transform.rotation = new Quaternion(0f, CameraRecenteringUtility.VirtualCamera.transform.rotation.y, 0f, transform.rotation.w);
-            }
+        movementStateMachine.HandleInput();
 
-            movementStateMachine.HandleInput();
+        movementStateMachine.Update();
+    }
 
-            movementStateMachine.Update();
-        }
+    private void FixedUpdate()
+    {
+        movementStateMachine.PhysicsUpdate();
+    }
 
-        private void FixedUpdate()
-        {
-            movementStateMachine.PhysicsUpdate();
-        }
+    private void OnTriggerEnter(Collider collider)
+    {
+        movementStateMachine.OnTriggerEnter(collider);
+    }
 
-        private void OnTriggerEnter(Collider collider)
-        {
-            movementStateMachine.OnTriggerEnter(collider);
-        }
+    private void OnTriggerExit(Collider collider)
+    {
+        movementStateMachine.OnTriggerExit(collider);
+    }
 
-        private void OnTriggerExit(Collider collider)
-        {
-            movementStateMachine.OnTriggerExit(collider);
-        }
+    public void OnMovementStateAnimationEnterEvent()
+    {
+        movementStateMachine.OnAnimationEnterEvent();
+    }
 
-        public void OnMovementStateAnimationEnterEvent()
-        {
-            movementStateMachine.OnAnimationEnterEvent();
-        }
+    public void OnMovementStateAnimationExitEvent()
+    {
+        movementStateMachine.OnAnimationExitEvent();
+    }
 
-        public void OnMovementStateAnimationExitEvent()
-        {
-            movementStateMachine.OnAnimationExitEvent();
-        }
-
-        public void OnMovementStateAnimationTransitionEvent()
-        {
-            movementStateMachine.OnAnimationTransitionEvent();
-        }
+    public void OnMovementStateAnimationTransitionEvent()
+    {
+        movementStateMachine.OnAnimationTransitionEvent();
     }
 }
+
 
 

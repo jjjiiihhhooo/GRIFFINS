@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace genshin
-{
+
+
     public class triggeranimation : MonoBehaviour
     {
         public Animator animator; // 사용할 애니메이터
@@ -17,4 +17,4 @@ namespace genshin
             }
         }
     }
-}
+

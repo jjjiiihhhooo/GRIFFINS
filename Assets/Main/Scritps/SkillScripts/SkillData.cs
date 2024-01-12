@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
-using genshin;
 using Sirenix.Serialization;
 
 public class SkillData : MonoBehaviour
@@ -13,13 +12,18 @@ public class SkillData : MonoBehaviour
     };
     public int skillIndex;
     public bool isHand; //잡았는지
-    
+    private Player player;
+
 
     private void Catch() //잡는거
     {
-        if (Player.Instance.targetSet.targetGameObject == null || isHand) return;
+        if (player == null) player = Player.Instance;
 
-        Player player = Player.Instance;
+        if (player.targetSet.targetGameObject == null || isHand || player.skillFunction.handObj != null) return;
+        if (player.Animator.GetCurrentAnimatorStateInfo(1).IsName("White_Idle") || player.Animator.GetCurrentAnimatorStateInfo(1).IsName("White_Throw")) return;
+        if (!GameManager.Instance.staminaManager.ChechStamina(20f)) return;
+        
+        GameManager.Instance.staminaManager.MinusStamina(20f);
         player.Animator.SetBool("isHand", true);
         SkillFunction skill = player.skillFunction;
         skill.handObj = player.targetSet.targetGameObject;
@@ -29,7 +33,7 @@ public class SkillData : MonoBehaviour
         Outline outLine = skill.handObj.GetComponent<Outline>();
         
         isHand = true;
-
+        skill.handObj.tag = "usingObject";
         rigid.useGravity = false;
         rigid.isKinematic = true;
         skill.handObj.transform.DOKill(false);
@@ -67,14 +71,13 @@ public class SkillData : MonoBehaviour
                 Debug.Log("[Minus]value : " + value + "current : " + outLine.OutlineWidth);
                 yield return new WaitForEndOfFrame();
             }
+            outLine.tag = "useObject";
         }
-
     }
 
     private void Throw() //던지는거
     {
-        if (!isHand) return;
-        Player player = Player.Instance;
+        if (!isHand || player.skillFunction.handObj == null) return;
         SkillFunction skill = player.skillFunction;
         player.Animator.SetBool("isHand", false); //나중에 던지는 애니메이션으로 바꿀 생각
         Rigidbody rigid = skill.handObj.GetComponent<Rigidbody>();
@@ -98,6 +101,7 @@ public class SkillData : MonoBehaviour
 
         //DOTween.To(() => outLine.OutlineWidth, x => outLine.OutlineWidth = x, 0f, 0.3f);
         //outLine.OutlineWidth = 0f;
+        isHand = false;
         player.Rigidbody.velocity = Vector3.zero; 
         skill.handObj = null;
         Debug.Log("던지다");

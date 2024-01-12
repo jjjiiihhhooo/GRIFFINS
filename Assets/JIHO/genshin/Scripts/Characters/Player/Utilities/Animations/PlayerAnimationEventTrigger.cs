@@ -2,55 +2,55 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace genshin
+
+
+public class PlayerAnimationEventTrigger : MonoBehaviour
 {
-    public class PlayerAnimationEventTrigger : MonoBehaviour
+    private Player player;
+
+    private void Awake()
     {
-        private Player player;
+        player = transform.parent.GetComponent<Player>();
+    }
 
-        private void Awake()
+    public void TriggerOnMovementStateAnimationEnterEvent()
+    {
+        if (IsInAnimationTransition())
         {
-            player = transform.parent.GetComponent<Player>();
+            return;
         }
 
-        public void TriggerOnMovementStateAnimationEnterEvent()
-        {
-            if (IsInAnimationTransition())
-            {
-                return;
-            }
+        player.OnMovementStateAnimationEnterEvent();
+    }
 
-            player.OnMovementStateAnimationEnterEvent();
+    public void TriggerOnMovementStateAnimationExitEvent()
+    {
+        if (IsInAnimationTransition())
+        {
+            return;
         }
 
-        public void TriggerOnMovementStateAnimationExitEvent()
-        {
-            if (IsInAnimationTransition())
-            {
-                return;
-            }
+        player.OnMovementStateAnimationExitEvent();
+    }
 
-            player.OnMovementStateAnimationExitEvent();
+    public void TriggerOnMovementStateAnimationTransitionEvent()
+    {
+        if (IsInAnimationTransition())
+        {
+            return;
         }
 
-        public void TriggerOnMovementStateAnimationTransitionEvent()
-        {
-            if (IsInAnimationTransition())
-            {
-                return;
-            }
+        player.OnMovementStateAnimationTransitionEvent();
+    }
 
-            player.OnMovementStateAnimationTransitionEvent();
-        }
+    private bool IsInAnimationTransition(int layerIndex = 0)
+    {
+        return player.Animator.IsInTransition(layerIndex);
+    }
 
-        private bool IsInAnimationTransition(int layerIndex = 0)
-        {
-            return player.Animator.IsInTransition(layerIndex);
-        }
-
-        public void ThrowExit()
-        {
-            player.skillData.isHand = false;
-        }
+    public void ThrowExit()
+    {
+        player.skillData.isHand = false;
     }
 }
+

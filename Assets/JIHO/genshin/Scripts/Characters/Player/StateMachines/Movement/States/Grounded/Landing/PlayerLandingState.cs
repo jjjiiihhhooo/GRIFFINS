@@ -3,32 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace genshin
+
+
+public class PlayerLandingState : PlayerGroundedState
 {
-    public class PlayerLandingState : PlayerGroundedState
+    public PlayerLandingState(PlayerMovementStateMachine playerMovementStateMachine) : base(playerMovementStateMachine)
     {
-        public PlayerLandingState(PlayerMovementStateMachine playerMovementStateMachine) : base(playerMovementStateMachine)
-        {
-        }
+    }
 
-        public override void Enter()
-        {
-            base.Enter();
+    public override void Enter()
+    {
+        base.Enter();
 
-            EffectActive(stateMachine.Player.landEffect, true);
+        EffectActive(stateMachine.Player.landEffect, true);
 
-            StartAnimation(stateMachine.Player.AnimationData.LandingParameterHash);
+        StartAnimation(stateMachine.Player.AnimationData.LandingParameterHash);
 
-            DisableCameraRecentering();
-        }
+        DisableCameraRecentering();
+    }
 
-        public override void Exit()
-        {
-            base.Exit();
+    public override void Exit()
+    {
+        base.Exit();
 
-            EffectActive(stateMachine.Player.landEffect, false);
+        EffectActive(stateMachine.Player.landEffect, false);
 
-            StopAnimation(stateMachine.Player.AnimationData.LandingParameterHash);
-        }
+        StopAnimation(stateMachine.Player.AnimationData.LandingParameterHash);
     }
 }
+

@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using genshin;
 
 public class GameManager : MonoBehaviour
 {
@@ -9,7 +8,7 @@ public class GameManager : MonoBehaviour
 
     public SoundManager soundManager;
     public InputData inputData;
-    public DotweenAnimManager dotweenAnimManager;
+    public StaminaManager staminaManager;
 
     private void Awake()
     {

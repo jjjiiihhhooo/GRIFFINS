@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-using genshin;
+
 
 public class TargetSet : MonoBehaviour
 {
@@ -38,11 +38,14 @@ public class TargetSet : MonoBehaviour
             {
                 if (targetGameObject == null)
                 { 
-                    targetGameObject = target.gameObject; 
+                    if(target.gameObject.tag == "useObject")
+                        targetGameObject = target.gameObject;
+                    
                 }
                 else if (Vector3.Distance(transform.position, target.position) < Vector3.Distance(transform.position, targetGameObject.transform.position))
                 {
-                    targetGameObject = target.gameObject;
+                    if (target.gameObject.tag == "useObject")
+                        targetGameObject = target.gameObject;
                 }
 
                 Targets.Add(target);
