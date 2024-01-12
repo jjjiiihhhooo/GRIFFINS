@@ -27,6 +27,7 @@ public class TargetSet : MonoBehaviour
     {
         if (Player.Instance.skillData.isHand) return;
         Targets.Clear();
+        targetGameObject = null;
         Collider[] TargetCollider = Physics.OverlapSphere(transform.position, viewArea, targetMask);
 
         for (int i = 0; i < TargetCollider.Length; i++)
@@ -35,7 +36,15 @@ public class TargetSet : MonoBehaviour
             Vector3 direction = target.position - transform.position;
             if (Vector3.Dot(direction.normalized, transform.forward) > GetAngle(viewAngle / 2).z)
             {
-                targetGameObject = target.gameObject;
+                if (targetGameObject == null)
+                { 
+                    targetGameObject = target.gameObject; 
+                }
+                else if (Vector3.Distance(transform.position, target.position) < Vector3.Distance(transform.position, targetGameObject.transform.position))
+                {
+                    targetGameObject = target.gameObject;
+                }
+
                 Targets.Add(target);
             }
         }

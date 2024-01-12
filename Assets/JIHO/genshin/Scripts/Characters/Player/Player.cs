@@ -16,7 +16,6 @@ namespace genshin
 
         [field: Header("Collisions")]
         [field: SerializeField] public PlayerLayerData LayerData { get; private set; }
-
         [field: Header("Camera")]
         [field: SerializeField] public PlayerCameraUtility CameraRecenteringUtility { get; private set; }
 
@@ -79,8 +78,8 @@ namespace genshin
         {
             if(skillData.isHand)
             {
-                transform.rotation = FindObjectOfType<CameraZoom>().transform.rotation;
-                transform.rotation = new Quaternion(0f, FindObjectOfType<CameraZoom>().transform.rotation.y, 0f, transform.rotation.w);
+                transform.rotation = CameraRecenteringUtility.VirtualCamera.transform.rotation;
+                transform.rotation = new Quaternion(0f, CameraRecenteringUtility.VirtualCamera.transform.rotation.y, 0f, transform.rotation.w);
             }
 
             movementStateMachine.HandleInput();

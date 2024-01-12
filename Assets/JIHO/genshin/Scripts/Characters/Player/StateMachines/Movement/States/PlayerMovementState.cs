@@ -49,7 +49,7 @@ namespace genshin
 
         public virtual void OnTriggerEnter(Collider collider)
         {
-            if (stateMachine.Player.LayerData.IsGroundLayer(collider.gameObject.layer))
+            if (stateMachine.Player.LayerData.IsGroundLayer(collider.gameObject.layer) || stateMachine.Player.LayerData.IsUseObjectLayer(collider.gameObject.layer))
             {
                 OnContactWithGround(collider);
 
@@ -59,7 +59,7 @@ namespace genshin
 
         public virtual void OnTriggerExit(Collider collider)
         {
-            if (stateMachine.Player.LayerData.IsGroundLayer(collider.gameObject.layer))
+            if (stateMachine.Player.LayerData.IsGroundLayer(collider.gameObject.layer) || stateMachine.Player.LayerData.IsUseObjectLayer(collider.gameObject.layer))
             {
                 OnContactWithGroundExited(collider);
 
@@ -179,6 +179,7 @@ namespace genshin
             Vector3 currentPlayerHorizontalVelocity = GetPlayerHorizontalVelocity();
 
             stateMachine.Player.Rigidbody.AddForce(targetRotationDirection * movementSpeed - currentPlayerHorizontalVelocity, ForceMode.VelocityChange);
+            
         }
 
         protected Vector3 GetMovementInputDirection()
@@ -258,6 +259,7 @@ namespace genshin
 
             Quaternion targetRotation = Quaternion.Euler(0f, smoothedYAngle, 0f);
 
+            
             stateMachine.Player.Rigidbody.MoveRotation(targetRotation);
         }
 

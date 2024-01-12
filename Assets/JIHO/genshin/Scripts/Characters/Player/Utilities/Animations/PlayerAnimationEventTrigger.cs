@@ -47,5 +47,10 @@ namespace genshin
         {
             return player.Animator.IsInTransition(layerIndex);
         }
+
+        public void ThrowExit()
+        {
+            player.skillData.isHand = false;
+        }
     }
 }

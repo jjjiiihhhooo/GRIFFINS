@@ -120,6 +120,7 @@ namespace genshin
 
         protected virtual void OnDashStarted(InputAction.CallbackContext context)
         {
+            if (Player.Instance.skillData.isHand) return;
             stateMachine.ChangeState(stateMachine.DashingState);
         }
 

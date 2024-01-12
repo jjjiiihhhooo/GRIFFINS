@@ -9,6 +9,7 @@ namespace genshin
     public class PlayerLayerData
     {
         [field: SerializeField] public LayerMask GroundLayer { get; private set; }
+        [field: SerializeField] public LayerMask UseObejctLayer { get; private set; }
 
         public bool ContainsLayer(LayerMask layerMask, int layer)
         {
@@ -18,6 +19,11 @@ namespace genshin
         public bool IsGroundLayer(int layer)
         {
             return ContainsLayer(GroundLayer, layer);
+        }
+
+        public bool IsUseObjectLayer(int layer)
+        {
+            return ContainsLayer(UseObejctLayer, layer);
         }
     }
 }
