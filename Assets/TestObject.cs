@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace genshin
-{
+
+
     public class TestObject : MonoBehaviour
     {
         public Transform leftwall;
@@ -29,4 +29,4 @@ namespace genshin
             yield return null;
         }
     }
-}
+

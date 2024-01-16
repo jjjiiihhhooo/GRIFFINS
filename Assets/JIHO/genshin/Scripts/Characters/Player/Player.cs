@@ -1,70 +1,63 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Windows;
+using UnityEngine.UIElements;
+using UnityEngine.UI;
 
-namespace genshin
+
+
+[RequireComponent(typeof(PlayerInput))]
+[RequireComponent(typeof(PlayerResizableCapsuleCollider))]
+public class Player : MonoBehaviour
 {
-    [RequireComponent(typeof(PlayerInput))]
-    [RequireComponent(typeof(PlayerResizableCapsuleCollider))]
-    public class Player : MonoBehaviour
+    public static Player Instance;
+
+    [field: Header("References")]
+    [field: SerializeField] public PlayerSO Data { get; private set; }
+
+    [field: Header("Collisions")]
+    [field: SerializeField] public PlayerLayerData LayerData { get; private set; }
+    [field: Header("Camera")]
+    [field: SerializeField] public PlayerCameraUtility CameraRecenteringUtility { get; private set; }
+
+    [field: Header("Animations")]
+    [field: SerializeField] public PlayerAnimationData AnimationData { get; private set; }
+
+    public GameObject jumpEffect;
+    public GameObject dashEffect;
+    public GameObject landEffect;
+
+
+    public Rigidbody Rigidbody { get; private set; }
+    public Animator Animator { get; private set; }
+
+    public PlayerInput Input { get; private set; }
+    public PlayerResizableCapsuleCollider ResizableCapsuleCollider { get; private set; }
+
+    public Transform MainCameraTransform { get; private set; }
+
+    public TargetSet targetSet;
+    public SkillData skillData;
+    public SkillFunction skillFunction;
+
+    public Canvas playerCanvas;
+    public UnityEngine.UI.Image staminaFill;
+    public PlayerMovementStateMachine movementStateMachine;
+
+
+
+    private void Awake()
     {
-        [field: Header("References")]
-        [field: SerializeField] public PlayerSO Data { get; private set; }
-
-        [field: Header("Collisions")]
-        [field: SerializeField] public PlayerLayerData LayerData { get; private set; }
-
-        [field: Header("Camera")]
-        [field: SerializeField] public PlayerCameraUtility CameraRecenteringUtility { get; private set; }
-
-        [field: Header("Animations")]
-        [field: SerializeField] public PlayerAnimationData AnimationData { get; private set; }
-
-        public GameObject jumpEffect;
-        public GameObject dashEffect;
-        public GameObject landEffect;
-
-
-        public Rigidbody Rigidbody { get; private set; }
-        public Animator Animator { get; private set; }
-
-        public PlayerInput Input { get; private set; }
-        public PlayerResizableCapsuleCollider ResizableCapsuleCollider { get; private set; }
-
-        public Transform MainCameraTransform { get; private set; }
-        public PlayerInteraction PlayerInteraction;
-
-        public PlayerMovementStateMachine movementStateMachine;
-
-
-        public GameObject tornadoSkillObject;
-        public AttackCol attackCol;
-        public AttackCol dashCol;
-        public bool isInteraction;
-        public bool isGround;
-        public bool isSkill;
-        public float damage;
-        public float groundTime;
-        public float groundMaxTime;
-        public PhysicMaterial pm;
-
-        public Animator whiteAnimator;
-        public Animator greenAnimator;
-        public Animator redAnimator;
-        public Animator blueAnimator;
-
-        public Ray ray;
-        public Vector3 dir;
-
-        private void Awake()
+        if (Instance == null)
         {
+            if (playerCanvas.worldCamera == null) playerCanvas.worldCamera = Camera.main;
+            Instance = this;
             CameraRecenteringUtility.Initialize();
             AnimationData.Initialize();
-            PlayerInteraction = GetComponent<PlayerInteraction>();
 
             Rigidbody = GetComponent<Rigidbody>();
-            Animator = whiteAnimator;
+            Animator = GetComponentInChildren<Animator>();
 
             Input = GetComponent<PlayerInput>();
             ResizableCapsuleCollider = GetComponent<PlayerResizableCapsuleCollider>();
@@ -73,100 +66,66 @@ namespace genshin
 
             movementStateMachine = new PlayerMovementStateMachine(this);
 
-            isInteraction = false;
+            DontDestroyOnLoad(this.gameObject);
         }
-
-        private void OnDrawGizmos()
+        else
         {
-            Gizmos.DrawRay(ray);
+            Destroy(this.gameObject);
         }
 
-        private void Start()
+    }
+
+    private void Start()
+    {
+        movementStateMachine.ChangeState(movementStateMachine.IdlingState);
+    }
+
+    private void Update()
+    {
+
+
+        if (Animator.GetCurrentAnimatorStateInfo(1).IsName("White_Idle") || Animator.GetCurrentAnimatorStateInfo(1).IsName("White_Throw"))
         {
-            movementStateMachine.ChangeState(movementStateMachine.IdlingState);
+            Debug.Log("anim");
+            transform.rotation = CameraRecenteringUtility.VirtualCamera.transform.rotation;
+            transform.rotation = new Quaternion(0f, CameraRecenteringUtility.VirtualCamera.transform.rotation.y, 0f, transform.rotation.w);
         }
 
-        private void Update()
-        {
-            dir = MainCameraTransform.forward;
-            ray = new Ray(new Vector3(transform.position.x, transform.position.y + 2f, transform.position.z), dir);
+        movementStateMachine.HandleInput();
 
-            movementStateMachine.HandleInput();
+        movementStateMachine.Update();
+    }
 
-            movementStateMachine.Update();
+    private void FixedUpdate()
+    {
+        movementStateMachine.PhysicsUpdate();
+    }
 
-            if(UnityEngine.Input.GetKeyDown(KeyCode.LeftAlt))
-            {
-                Cursor.lockState = CursorLockMode.Locked;
-                Cursor.visible = false;
-            }
-        }
+    private void OnTriggerEnter(Collider collider)
+    {
+        movementStateMachine.OnTriggerEnter(collider);
+    }
 
-        private void FixedUpdate()
-        {
-            movementStateMachine.PhysicsUpdate();
+    private void OnTriggerExit(Collider collider)
+    {
+        movementStateMachine.OnTriggerExit(collider);
+    }
 
-            PlayerInteraction.PhysicsUpdate();
-        }
+    public void OnMovementStateAnimationEnterEvent()
+    {
+        movementStateMachine.OnAnimationEnterEvent();
+    }
 
-        private void OnTriggerEnter(Collider collider)
-        {
-            movementStateMachine.OnTriggerEnter(collider);
-        }
+    public void OnMovementStateAnimationExitEvent()
+    {
+        movementStateMachine.OnAnimationExitEvent();
+    }
 
-        private void OnTriggerStay(Collider collider)
-        {
-            movementStateMachine.OnTriggerStay(collider);
-        }
-
-        private void OnTriggerExit(Collider collider)
-        {
-            movementStateMachine.OnTriggerExit(collider);
-        }
-
-        public void OnMovementStateAnimationEnterEvent()
-        {
-            movementStateMachine.OnAnimationEnterEvent();
-        }
-
-        public void OnMovementStateAnimationExitEvent()
-        {
-            movementStateMachine.OnAnimationExitEvent();
-        }
-
-        public void OnMovementStateAnimationTransitionEvent()
-        {
-            movementStateMachine.OnAnimationTransitionEvent();
-        }
-
-        public void StartCor(IEnumerator coroutine)
-        {
-            StartCoroutine(coroutine);
-        }
-
-        public void StopCor(IEnumerator coroutine)
-        {
-            StopCoroutine(coroutine);
-        }
-
-        public void AttackColActive(float time = 0.2f)
-        {
-            attackCol.gameObject.SetActive(false);
-            attackCol.damage = damage;
-            attackCol.time = time;
-            attackCol.gameObject.SetActive(true);
-        }
-
-        public void DashColActive(float time = 0f)
-        {
-            dashCol.gameObject.SetActive(false);
-            dashCol.damage = damage;
-            dashCol.time = time;
-            dashCol.gameObject.SetActive(true);
-        }
-
-        
+    public void OnMovementStateAnimationTransitionEvent()
+    {
+        movementStateMachine.OnAnimationTransitionEvent();
     }
 }
+
 
 
