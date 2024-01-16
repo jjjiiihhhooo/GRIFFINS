@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 using Sirenix.Serialization;
+using Sirenix.Utilities;
 
 public class SkillData : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class SkillData : MonoBehaviour
     public bool isHand; //잡았는지
     private Player player;
 
+    
 
     private void Catch() //잡는거
     {
@@ -119,5 +121,46 @@ public class SkillData : MonoBehaviour
         skill.handObj = null;
         Debug.Log("던지다");
         
+    }
+
+    private void StartGrapple()
+    {
+        if (player == null) player = Player.Instance;
+        SkillFunction skill = player.skillFunction;
+
+        if (skill.grapplingCdTimer > 0) return;
+
+        skill.grappling = true;
+
+        RaycastHit hit;
+        if(Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, skill.maxGrappleDistance, skill.grappleMask))
+        {
+            skill.grapplePoint = hit.point;
+            Invoke(nameof(ExecuteGrapple), skill.grappleDelayTime);
+        }
+        else
+        {
+            skill.grapplePoint = Camera.main.transform.position + Camera.main.transform.forward * skill.maxGrappleDistance;
+            Invoke(nameof(StopGrapple), skill.grappleDelayTime);
+        }
+
+        skill.lr.enabled = true;
+        skill.lr.SetPosition(1, skill.grapplePoint);
+    }
+
+    private void ExecuteGrapple()
+    {
+
+    }
+
+    private void StopGrapple()
+    {
+        if (player == null) player = Player.Instance;
+        SkillFunction skill = player.skillFunction;
+
+        skill.grappling = false;
+        skill.grapplingCdTimer = skill.grapplingCd;
+
+        skill.lr.enabled = false;
     }
 }

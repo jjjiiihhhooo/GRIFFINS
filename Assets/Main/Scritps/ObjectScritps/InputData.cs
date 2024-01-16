@@ -25,6 +25,11 @@ public class InputData : MonoBehaviour
             Player.Instance.skillData.Invoke(Player.Instance.skillData.skillName[Player.Instance.skillData.skillIndex], 0f);
             //Player.Instance.skillData.SendMessage(Player.Instance.skillData.skillName[Player.Instance.skillData.skillIndex]);
         }
+        else if(Input.GetKeyDown(Player.Instance.skillFunction.grappleKey))
+        {
+            Player.Instance.skillData.skillIndex = 2;
+            Player.Instance.skillData.Invoke(Player.Instance.skillData.skillName[Player.Instance.skillData.skillIndex], 0f);
+        }
 
         
     }
