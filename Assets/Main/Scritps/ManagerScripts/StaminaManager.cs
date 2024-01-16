@@ -118,7 +118,8 @@ public class StaminaManager : MonoBehaviour
         }
         else
         {
-            DOTween.To(() => curStamina, data => curStamina = data, curStamina + value, 0.5f).OnComplete(() => Debug.Log("³¡"));
+            staminaImage.color = Color.cyan;
+            DOTween.To(() => curStamina, data => curStamina = data, curStamina + value, 0.3f).OnComplete(() => staminaImage.color = Color.yellow);
         }
     }
 

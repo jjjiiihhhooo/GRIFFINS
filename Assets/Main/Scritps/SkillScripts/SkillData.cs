@@ -23,7 +23,7 @@ public class SkillData : MonoBehaviour
         if (player.Animator.GetCurrentAnimatorStateInfo(1).IsName("White_Idle") || player.Animator.GetCurrentAnimatorStateInfo(1).IsName("White_Throw")) return;
         if (!GameManager.Instance.staminaManager.ChechStamina(20f)) return;
         
-        GameManager.Instance.staminaManager.MinusStamina(20f);
+        
         player.Animator.SetBool("isHand", true);
         SkillFunction skill = player.skillFunction;
         skill.handObj = player.targetSet.targetGameObject;
@@ -79,16 +79,30 @@ public class SkillData : MonoBehaviour
     {
         if (!isHand || player.skillFunction.handObj == null) return;
         SkillFunction skill = player.skillFunction;
-        player.Animator.SetBool("isHand", false); //나중에 던지는 애니메이션으로 바꿀 생각
+        
+
         Rigidbody rigid = skill.handObj.GetComponent<Rigidbody>();
         CameraZoom camZoom = FindObjectOfType<CameraZoom>();
         Outline outLine = skill.handObj.GetComponent<Outline>();
 
+        if (skill.handObj.gameObject.name == "Stamina_obj")
+        {
+            player.Animator.SetBool("isHand", false);
+            GameManager.Instance.staminaManager.PlusStamina(30f);
+            Destroy(skill.handObj.gameObject);
+        }
+        else
+        {
+            player.Animator.SetTrigger("isThrow");
+            player.Animator.SetBool("isHand", false);
+            GameManager.Instance.staminaManager.MinusStamina(20f);
+            rigid.useGravity = true;
+            skill.handObj.transform.SetParent(null);
+            rigid.isKinematic = false;
+            rigid.AddForce(Camera.main.transform.forward * 30f, ForceMode.Impulse);
+            StartCoroutine(outLineCor(outLine, 0f, -1f, 10f));
+        }
         
-        rigid.useGravity = true;
-        skill.handObj.transform.SetParent(null);
-        rigid.isKinematic = false;
-        rigid.AddForce(Camera.main.transform.forward * 30f,ForceMode.Impulse);
         camZoom.minimumDistance = 6f;
         camZoom.maximumDistance = 6f;
         camZoom.transform.DOLocalMove(Vector3.zero, 0.3f).OnComplete(()=> camZoom.minimumDistance = 1f);
@@ -97,8 +111,7 @@ public class SkillData : MonoBehaviour
         player.movementStateMachine.ReusableData.ShouldWalk = false;
         if(player.movementStateMachine.ReusableData.MovementInput != Vector2.zero) player.movementStateMachine.ChangeState(player.movementStateMachine.RunningState);
 
-        StartCoroutine(outLineCor(outLine, 0f, -1f, 10f));
-
+        
         //DOTween.To(() => outLine.OutlineWidth, x => outLine.OutlineWidth = x, 0f, 0.3f);
         //outLine.OutlineWidth = 0f;
         isHand = false;
