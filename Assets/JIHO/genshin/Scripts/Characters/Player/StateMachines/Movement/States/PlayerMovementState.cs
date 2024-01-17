@@ -1,4 +1,5 @@
 
+using MoreMountains.Feedbacks;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -176,6 +177,7 @@ public class PlayerMovementState : IState
         float movementSpeed = GetMovementSpeed();
 
         Vector3 currentPlayerHorizontalVelocity = GetPlayerHorizontalVelocity();
+
 
         stateMachine.Player.Rigidbody.AddForce(targetRotationDirection * movementSpeed - currentPlayerHorizontalVelocity, ForceMode.VelocityChange);
 

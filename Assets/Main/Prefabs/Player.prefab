@@ -42744,6 +42744,7 @@ MonoBehaviour:
   skillFunction: {fileID: 4943424079398178716}
   playerCanvas: {fileID: 801795073}
   staminaFill: {fileID: 1882920195}
+  isGround: 0
 --- !u!114 &4943424079398178709
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42846,51 +42847,22 @@ MonoBehaviour:
   catchTransform: {fileID: 4943424078397151458}
   lookatTransform: {fileID: 4943424079742441160}
   handObj: {fileID: 0}
-  isSprint: 0
-  cam: {fileID: 0}
+  maxGrappleDistance: 250
+  grappleDelayTime: 0
+  overshootYAxis: 1
   shoot_obj: {fileID: 1370935670}
+  grapplingCd: 0.3
+  grapplingCdTimer: 0
   grappleMask:
     serializedVersion: 2
     m_Bits: 2048
   lr: {fileID: 293956261}
-  maxGrappleDistance: 25
-  grappleDelayTime: 0.25
   grapplePoint: {x: 0, y: 0, z: 0}
-  grapplingCd: 1
-  grapplingCdTimer: 0
+  velocity: {x: 0, y: 0, z: 0}
   grappleKey: 101
   grappling: 0
-  currentGrapplePosition: {x: 0, y: 0, z: 0}
-  quality: 500
-  damper: 14
-  strength: 800
-  velocity: 15
-  waveCount: 3
-  waveHeight: 1
-  affectCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0.22418952
-      outSlope: 0.22418952
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.10344827
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
+  touch: 0
+  isSprint: 0
 --- !u!1 &4943424079416362632
 GameObject:
   m_ObjectHideFlags: 0

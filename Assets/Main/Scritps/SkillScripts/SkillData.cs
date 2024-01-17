@@ -4,6 +4,7 @@ using DG.Tweening;
 using UnityEngine;
 using Sirenix.Serialization;
 using Sirenix.Utilities;
+using UnityEngine.InputSystem.EnhancedTouch;
 
 public class SkillData : MonoBehaviour
 {
@@ -125,18 +126,18 @@ public class SkillData : MonoBehaviour
 
     private void StartGrapple()
     {
+        Debug.Log("start");
         if (player == null) player = Player.Instance;
         SkillFunction skill = player.skillFunction;
 
         if (skill.grapplingCdTimer > 0) return;
-
         skill.grappling = true;
-
         RaycastHit hit;
-        if(Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, skill.maxGrappleDistance, skill.grappleMask))
+        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, skill.maxGrappleDistance, skill.grappleMask))
         {
             skill.grapplePoint = hit.point;
-            Invoke(nameof(ExecuteGrapple), skill.grappleDelayTime);
+            if(!player.isGround) Invoke(nameof(ExecuteGrapple), skill.grappleDelayTime);
+
         }
         else
         {
@@ -148,19 +149,56 @@ public class SkillData : MonoBehaviour
         skill.lr.SetPosition(1, skill.grapplePoint);
     }
 
-    private void ExecuteGrapple()
+    public void ExecuteGrapple()
     {
+        Debug.Log("execute");
 
-    }
-
-    private void StopGrapple()
-    {
         if (player == null) player = Player.Instance;
         SkillFunction skill = player.skillFunction;
+        player.Animator.SetBool("isGrappling", true);
+        transform.rotation = player.CameraRecenteringUtility.VirtualCamera.transform.rotation;
+        transform.rotation = new Quaternion(0f, player.CameraRecenteringUtility.VirtualCamera.transform.rotation.y, 0f, transform.rotation.w);
 
+        Vector3 lowestPoint = new Vector3(transform.position.x, transform.position.y - 1f, transform.position.z);
+
+        
+
+        float grapplePointRelativeYPos = skill.grapplePoint.y - lowestPoint.y;
+        float highestPointOnArc = grapplePointRelativeYPos + skill.overshootYAxis;
+
+        if (grapplePointRelativeYPos < 0) highestPointOnArc = skill.overshootYAxis;
+
+        skill.velocity = CalculateJumpVelocity(transform.position, skill.grapplePoint, highestPointOnArc);
+        player.ResizableCapsuleCollider.SlopeData.StepHeightPercentage = 0f;
+        skill.touch = true;
+        GetComponent<Rigidbody>().velocity = skill.velocity;
+        
+    }
+
+
+    public void StopGrapple()
+    {
+        Debug.Log("stop");
+        if (player == null) player = Player.Instance;
+        SkillFunction skill = player.skillFunction;
+        player.Animator.SetBool("isGrappling", false);
+        player.ResizableCapsuleCollider.SlopeData.StepHeightPercentage = 0.25f;
         skill.grappling = false;
         skill.grapplingCdTimer = skill.grapplingCd;
 
         skill.lr.enabled = false;
+    }
+
+    public Vector3 CalculateJumpVelocity(Vector3 startPoint, Vector3 endPoint, float trajectoryHeight) //목표 위치까지 포물선 trajectoryHeight 높이 추가
+    {
+        float gravity = Physics.gravity.y;
+        float displacementY = endPoint.y - startPoint.y;
+        Vector3 displacementXZ = new Vector3(endPoint.x - startPoint.x, 0f, endPoint.z - startPoint.z);
+
+        Vector3 velocityY = Vector3.up * Mathf.Sqrt(-2 * gravity * trajectoryHeight);
+        Vector3 velocityXZ = displacementXZ / (Mathf.Sqrt(-2 * trajectoryHeight / gravity)
+          + Mathf.Sqrt(2 * (displacementY - trajectoryHeight) / gravity));
+
+        return (velocityXZ + velocityY);
     }
 }

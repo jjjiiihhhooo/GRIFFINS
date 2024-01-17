@@ -9,23 +9,26 @@ public class SkillFunction : MonoBehaviour
     public Transform lookatTransform; //잡았을 때 카메라가 바라볼 위치
     public GameObject handObj; //잡은 오브젝트
 
-    public Transform cam;
+    public float maxGrappleDistance;
+    public float grappleDelayTime;
+    public float overshootYAxis;
+
     public Transform shoot_obj;
+
+    [Header("Cooldown")]
+    public float grapplingCd;
+    public float grapplingCdTimer;
+
     public LayerMask grappleMask;
     public LineRenderer lr;
 
-    public float maxGrappleDistance;
-    public float grappleDelayTime;
-
     public Vector3 grapplePoint;
-
-    public float grapplingCd;
-    public float grapplingCdTimer;
+    public Vector3 velocity;
 
     public KeyCode grappleKey = KeyCode.E;
 
     public bool grappling;
-
+    public bool touch;
     public bool isSprint;
 
     private void Update()

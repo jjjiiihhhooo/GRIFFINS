@@ -45,7 +45,7 @@ public class Player : MonoBehaviour
     public UnityEngine.UI.Image staminaFill;
     public PlayerMovementStateMachine movementStateMachine;
 
-
+    public bool isGround;
 
     private void Awake()
     {
@@ -82,8 +82,7 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-
-
+        if (skillFunction.touch) return;
         if (Animator.GetCurrentAnimatorStateInfo(1).IsName("White_Idle") || Animator.GetCurrentAnimatorStateInfo(1).IsName("White_Throw"))
         {
             Debug.Log("anim");
@@ -98,16 +97,38 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (skillFunction.touch) return;
         movementStateMachine.PhysicsUpdate();
     }
 
     private void OnTriggerEnter(Collider collider)
     {
+        if (skillFunction.touch)
+        {
+            skillFunction.touch = false;
+            skillData.StopGrapple();
+        }
         movementStateMachine.OnTriggerEnter(collider);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (skillFunction.touch)
+        {
+            skillFunction.touch = false;
+            skillData.StopGrapple();
+        }
+    }
+
+
+    private void OnTriggerStay(Collider collider)
+    {
+        if (!isGround) isGround = true;
     }
 
     private void OnTriggerExit(Collider collider)
     {
+        if (isGround) isGround = false;
         movementStateMachine.OnTriggerExit(collider);
     }
 
