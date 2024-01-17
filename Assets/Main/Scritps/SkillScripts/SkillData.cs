@@ -11,9 +11,13 @@ public class SkillData : MonoBehaviour
 
     public string[] skillName = { "Catch" //0 Q
                                 , "Throw" //1 좌클릭
+                                , "StartGrapple"
+                                , "GCatch"
+                                , "GPull"
     };
     public int skillIndex;
     public bool isHand; //잡았는지
+    public bool isGHand;
     private Player player;
 
     
@@ -155,6 +159,11 @@ public class SkillData : MonoBehaviour
 
         if (player == null) player = Player.Instance;
         SkillFunction skill = player.skillFunction;
+
+        if (!GameManager.Instance.staminaManager.ChechStamina(20f)) return;
+        GameManager.Instance.staminaManager.MinusStamina(20f);
+
+
         player.Animator.SetBool("isGrappling", true);
         transform.rotation = player.CameraRecenteringUtility.VirtualCamera.transform.rotation;
         transform.rotation = new Quaternion(0f, player.CameraRecenteringUtility.VirtualCamera.transform.rotation.y, 0f, transform.rotation.w);
@@ -188,6 +197,77 @@ public class SkillData : MonoBehaviour
 
         skill.lr.enabled = false;
     }
+
+    public void GCatch()
+    {
+        if (player == null) player = Player.Instance;
+        SkillFunction skill = player.skillFunction;
+        if (player.targetSet.grappleTargetObject == null || isGHand || player.skillFunction.GhandObj != null) return;
+        if (skill.grapplingCdTimer > 0) return;
+
+        if (!GameManager.Instance.staminaManager.ChechStamina(20f)) return;
+        GameManager.Instance.staminaManager.MinusStamina(20f);
+
+
+        skill.GhandObj = player.targetSet.grappleTargetObject;
+
+        skill.Gjoint = skill.GhandObj.gameObject.AddComponent<SpringJoint>();
+        skill.Gjoint.autoConfigureConnectedAnchor = false;
+        //skill.Gjoint.connectedAnchor = transform.position;
+
+        skill.distanceFromPoint = Vector3.Distance(transform.position, player.skillFunction.GhandObj.transform.position);
+
+        // the distance grapple will try to keep from grapple point. 
+        skill.Gjoint.maxDistance = skill.distanceFromPoint * 0.8f;
+        skill.Gjoint.minDistance = skill.distanceFromPoint * 0.25f;
+
+        // customize values as you like
+        skill.Gjoint.spring = 4.5f;
+        skill.Gjoint.damper = 7f;
+        skill.Gjoint.massScale = 4.5f;
+
+        isGHand = true;
+
+        skill.Glr.enabled = true;
+    }
+
+    public void GPull()
+    {
+        if (player == null) player = Player.Instance;
+        SkillFunction skill = player.skillFunction;
+        Destroy(skill.Gjoint);
+
+        Vector3 lowestPoint = new Vector3(skill.GhandObj.transform.position.x, skill.GhandObj.transform.position.y - 1f, skill.GhandObj.transform.position.z);
+
+
+        float grapplePointRelativeYPos = transform.position.y - lowestPoint.y;
+        float highestPointOnArc = grapplePointRelativeYPos + skill.overshootYAxis;
+
+        if (grapplePointRelativeYPos < 0) highestPointOnArc = skill.overshootYAxis;
+
+        skill.Gvelocity = CalculateJumpVelocity(skill.GhandObj.transform.position, transform.position, highestPointOnArc);
+        isGHand = false;
+        skill.GhandObj.transform.GetComponent<Rigidbody>().velocity = skill.Gvelocity;
+        skill.Glr.enabled = false;
+        skill.GhandObj = null;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public Vector3 CalculateJumpVelocity(Vector3 startPoint, Vector3 endPoint, float trajectoryHeight) //목표 위치까지 포물선 trajectoryHeight 높이 추가
     {

@@ -40,12 +40,14 @@ public class Player : MonoBehaviour
     public TargetSet targetSet;
     public SkillData skillData;
     public SkillFunction skillFunction;
-
+    public Swinging swinging;
     public Canvas playerCanvas;
     public UnityEngine.UI.Image staminaFill;
     public PlayerMovementStateMachine movementStateMachine;
 
     public bool isGround;
+
+    public bool isGrapple;
 
     private void Awake()
     {
@@ -55,7 +57,7 @@ public class Player : MonoBehaviour
             Instance = this;
             CameraRecenteringUtility.Initialize();
             AnimationData.Initialize();
-
+            swinging = GetComponent<Swinging>();
             Rigidbody = GetComponent<Rigidbody>();
             Animator = GetComponentInChildren<Animator>();
 
@@ -83,6 +85,7 @@ public class Player : MonoBehaviour
     private void Update()
     {
         if (skillFunction.touch) return;
+        if (swinging.swinging) return;
         if (Animator.GetCurrentAnimatorStateInfo(1).IsName("White_Idle") || Animator.GetCurrentAnimatorStateInfo(1).IsName("White_Throw"))
         {
             Debug.Log("anim");
@@ -98,6 +101,7 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         if (skillFunction.touch) return;
+        if (swinging.swinging) return;
         movementStateMachine.PhysicsUpdate();
     }
 
@@ -108,6 +112,13 @@ public class Player : MonoBehaviour
             skillFunction.touch = false;
             skillData.StopGrapple();
         }
+
+        if(swinging.swinging)
+        {
+            swinging.swinging = false;
+            swinging.StopSwing();
+        }
+
         movementStateMachine.OnTriggerEnter(collider);
     }
 
@@ -118,6 +129,7 @@ public class Player : MonoBehaviour
             skillFunction.touch = false;
             skillData.StopGrapple();
         }
+
     }
 
 
