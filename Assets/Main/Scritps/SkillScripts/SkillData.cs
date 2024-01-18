@@ -4,15 +4,20 @@ using DG.Tweening;
 using UnityEngine;
 using Sirenix.Serialization;
 using Sirenix.Utilities;
+using UnityEngine.InputSystem.EnhancedTouch;
 
 public class SkillData : MonoBehaviour
 {
 
     public string[] skillName = { "Catch" //0 Q
                                 , "Throw" //1 좌클릭
+                                , "StartGrapple"
+                                , "GCatch"
+                                , "GPull"
     };
     public int skillIndex;
     public bool isHand; //잡았는지
+    public bool isGHand;
     private Player player;
 
     
@@ -125,18 +130,18 @@ public class SkillData : MonoBehaviour
 
     private void StartGrapple()
     {
+        Debug.Log("start");
         if (player == null) player = Player.Instance;
         SkillFunction skill = player.skillFunction;
 
         if (skill.grapplingCdTimer > 0) return;
-
         skill.grappling = true;
-
         RaycastHit hit;
-        if(Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, skill.maxGrappleDistance, skill.grappleMask))
+        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, skill.maxGrappleDistance, skill.grappleMask))
         {
             skill.grapplePoint = hit.point;
-            Invoke(nameof(ExecuteGrapple), skill.grappleDelayTime);
+            if(!player.isGround) Invoke(nameof(ExecuteGrapple), skill.grappleDelayTime);
+
         }
         else
         {
@@ -148,19 +153,132 @@ public class SkillData : MonoBehaviour
         skill.lr.SetPosition(1, skill.grapplePoint);
     }
 
-    private void ExecuteGrapple()
+    public void ExecuteGrapple()
     {
+        Debug.Log("execute");
 
-    }
-
-    private void StopGrapple()
-    {
         if (player == null) player = Player.Instance;
         SkillFunction skill = player.skillFunction;
 
+        if (!GameManager.Instance.staminaManager.ChechStamina(20f)) return;
+        GameManager.Instance.staminaManager.MinusStamina(20f);
+
+
+        player.Animator.SetBool("isGrappling", true);
+        transform.rotation = player.CameraRecenteringUtility.VirtualCamera.transform.rotation;
+        transform.rotation = new Quaternion(0f, player.CameraRecenteringUtility.VirtualCamera.transform.rotation.y, 0f, transform.rotation.w);
+
+        Vector3 lowestPoint = new Vector3(transform.position.x, transform.position.y - 1f, transform.position.z);
+
+        
+
+        float grapplePointRelativeYPos = skill.grapplePoint.y - lowestPoint.y;
+        float highestPointOnArc = grapplePointRelativeYPos + skill.overshootYAxis;
+
+        if (grapplePointRelativeYPos < 0) highestPointOnArc = skill.overshootYAxis;
+
+        skill.velocity = CalculateJumpVelocity(transform.position, skill.grapplePoint, highestPointOnArc);
+        player.ResizableCapsuleCollider.SlopeData.StepHeightPercentage = 0f;
+        skill.touch = true;
+        GetComponent<Rigidbody>().velocity = skill.velocity;
+        
+    }
+
+
+    public void StopGrapple()
+    {
+        Debug.Log("stop");
+        if (player == null) player = Player.Instance;
+        SkillFunction skill = player.skillFunction;
+        player.Animator.SetBool("isGrappling", false);
+        player.ResizableCapsuleCollider.SlopeData.StepHeightPercentage = 0.25f;
         skill.grappling = false;
         skill.grapplingCdTimer = skill.grapplingCd;
 
         skill.lr.enabled = false;
+    }
+
+    public void GCatch()
+    {
+        if (player == null) player = Player.Instance;
+        SkillFunction skill = player.skillFunction;
+        if (player.targetSet.grappleTargetObject == null || isGHand || player.skillFunction.GhandObj != null) return;
+        if (skill.grapplingCdTimer > 0) return;
+
+        if (!GameManager.Instance.staminaManager.ChechStamina(20f)) return;
+        GameManager.Instance.staminaManager.MinusStamina(20f);
+
+
+        skill.GhandObj = player.targetSet.grappleTargetObject;
+
+        skill.Gjoint = skill.GhandObj.gameObject.AddComponent<SpringJoint>();
+        skill.Gjoint.autoConfigureConnectedAnchor = false;
+        //skill.Gjoint.connectedAnchor = transform.position;
+
+        skill.distanceFromPoint = Vector3.Distance(transform.position, player.skillFunction.GhandObj.transform.position);
+
+        // the distance grapple will try to keep from grapple point. 
+        skill.Gjoint.maxDistance = skill.distanceFromPoint * 0.8f;
+        skill.Gjoint.minDistance = skill.distanceFromPoint * 0.25f;
+
+        // customize values as you like
+        skill.Gjoint.spring = 4.5f;
+        skill.Gjoint.damper = 7f;
+        skill.Gjoint.massScale = 4.5f;
+
+        isGHand = true;
+
+        skill.Glr.enabled = true;
+    }
+
+    public void GPull()
+    {
+        if (player == null) player = Player.Instance;
+        SkillFunction skill = player.skillFunction;
+        Destroy(skill.Gjoint);
+
+        Vector3 lowestPoint = new Vector3(skill.GhandObj.transform.position.x, skill.GhandObj.transform.position.y - 1f, skill.GhandObj.transform.position.z);
+
+
+        float grapplePointRelativeYPos = transform.position.y - lowestPoint.y;
+        float highestPointOnArc = grapplePointRelativeYPos + skill.overshootYAxis;
+
+        if (grapplePointRelativeYPos < 0) highestPointOnArc = skill.overshootYAxis;
+
+        skill.Gvelocity = CalculateJumpVelocity(skill.GhandObj.transform.position, transform.position, highestPointOnArc);
+        isGHand = false;
+        skill.GhandObj.transform.GetComponent<Rigidbody>().velocity = skill.Gvelocity;
+        skill.Glr.enabled = false;
+        skill.GhandObj = null;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public Vector3 CalculateJumpVelocity(Vector3 startPoint, Vector3 endPoint, float trajectoryHeight) //목표 위치까지 포물선 trajectoryHeight 높이 추가
+    {
+        float gravity = Physics.gravity.y;
+        float displacementY = endPoint.y - startPoint.y;
+        Vector3 displacementXZ = new Vector3(endPoint.x - startPoint.x, 0f, endPoint.z - startPoint.z);
+
+        Vector3 velocityY = Vector3.up * Mathf.Sqrt(-2 * gravity * trajectoryHeight);
+        Vector3 velocityXZ = displacementXZ / (Mathf.Sqrt(-2 * trajectoryHeight / gravity)
+          + Mathf.Sqrt(2 * (displacementY - trajectoryHeight) / gravity));
+
+        return (velocityXZ + velocityY);
     }
 }

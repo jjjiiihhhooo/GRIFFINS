@@ -9,6 +9,10 @@ public class GameManager : MonoBehaviour
     public SoundManager soundManager;
     public InputData inputData;
     public StaminaManager staminaManager;
+    public GameObject grappleImage;
+    public GameObject normalImage;
+
+
 
     private void Awake()
     {

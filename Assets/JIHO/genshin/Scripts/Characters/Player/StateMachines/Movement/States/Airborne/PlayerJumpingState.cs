@@ -1,3 +1,4 @@
+using MoreMountains.Feedbacks;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -55,8 +56,9 @@ public class PlayerJumpingState : PlayerAirborneState
         {
             return;
         }
+        if (stateMachine.Player.skillFunction.grappling) stateMachine.Player.skillData.ExecuteGrapple();
+        else stateMachine.ChangeState(stateMachine.FallingState);
 
-        stateMachine.ChangeState(stateMachine.FallingState);
     }
 
     public override void PhysicsUpdate()
