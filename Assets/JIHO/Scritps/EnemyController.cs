@@ -22,6 +22,8 @@ public class EnemyController : SerializedMonoBehaviour
     {
         CanvasMove();
 
+        enemy.EnemyUpdate();
+
         if(isHit)
         {
             if (hitCool > 0) hitCool -= Time.deltaTime; 
@@ -31,16 +33,32 @@ public class EnemyController : SerializedMonoBehaviour
 
     private void CanvasMove()
     {
-        canvas.transform.LookAt(canvas.transform.position + Camera.main.transform.rotation * Vector3.forward, Camera.main.transform.rotation * Vector3.up);
+        //canvas.transform.LookAt(canvas.transform.position + Camera.main.transform.rotation * Vector3.forward, Camera.main.transform.rotation * Vector3.up);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("AttackCol"))
+        if(other.CompareTag("usingObject"))
         {
-            float damage = other.GetComponent<AttackCol>().damage;
-            
+            //float damage = other.GetComponent<AttackCol>().damage;
+            float damage = 1f;
+
             Vector3 center1 = other.bounds.center;
+            Vector3 center2 = transform.GetComponent<BoxCollider>().bounds.center;
+
+            Vector3 finalCenter = (center1 + center2) / 2f;
+
+            DamageMessage(damage, finalCenter);
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.transform.CompareTag("usingObject"))
+        {
+            float damage = 1f;
+
+            Vector3 center1 = collision.collider.bounds.center;
             Vector3 center2 = transform.GetComponent<BoxCollider>().bounds.center;
 
             Vector3 finalCenter = (center1 + center2) / 2f;
@@ -77,6 +95,7 @@ public class EnemyController : SerializedMonoBehaviour
 
     private void DamageHitEffect(Vector3 targetPos)
     {
+        if (enemy.damageEffect == null) return;
         enemy.damageEffect.transform.position = targetPos;
         enemy.damageEffect.Play();
     }

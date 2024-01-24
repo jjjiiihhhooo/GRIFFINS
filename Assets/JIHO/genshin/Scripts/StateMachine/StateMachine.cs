@@ -15,7 +15,6 @@ public abstract class StateMachine
 
         currentState = newState;
 
-        Debug.Log(currentState);
         currentState.Enter();
     }
 

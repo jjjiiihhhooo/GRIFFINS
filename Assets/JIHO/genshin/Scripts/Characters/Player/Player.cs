@@ -49,6 +49,8 @@ public class Player : MonoBehaviour
 
     public bool isGrapple;
 
+    public float testHp;
+
     private void Awake()
     {
         if (Instance == null)

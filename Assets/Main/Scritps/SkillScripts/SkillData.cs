@@ -30,10 +30,13 @@ public class SkillData : MonoBehaviour
         if (player.Animator.GetCurrentAnimatorStateInfo(1).IsName("White_Idle") || player.Animator.GetCurrentAnimatorStateInfo(1).IsName("White_Throw")) return;
         if (!GameManager.Instance.staminaManager.ChechStamina(20f)) return;
         
-        
+
         player.Animator.SetBool("isHand", true);
         SkillFunction skill = player.skillFunction;
         skill.handObj = player.targetSet.targetGameObject;
+
+        skill.handObj.GetComponent<BoxCollider>().isTrigger = true;
+
 
         Rigidbody rigid = skill.handObj.GetComponent<Rigidbody>();
         CameraZoom camZoom = FindObjectOfType<CameraZoom>();    
@@ -54,7 +57,6 @@ public class SkillData : MonoBehaviour
         //outLine.OutlineWidth = 10f;
         StartCoroutine(outLineCor(outLine, 10f, 1f, 10f));
         //DOTween.To(() => outLine.OutlineWidth, x => outLine.OutlineWidth = x, 10f,0.3f);
-        Debug.Log("잡다");
         
     }
 
@@ -66,7 +68,6 @@ public class SkillData : MonoBehaviour
             {
                 outLine.OutlineWidth += Time.deltaTime * oper * pitch;
                 yield return new WaitForEndOfFrame();
-                Debug.Log("[Plus]value : " + value + "current : " + outLine.OutlineWidth);
                 if (!isHand) break;
             }
         }
@@ -75,7 +76,6 @@ public class SkillData : MonoBehaviour
             while (outLine.OutlineWidth > value)
             {
                 outLine.OutlineWidth += Time.deltaTime * oper * pitch;
-                Debug.Log("[Minus]value : " + value + "current : " + outLine.OutlineWidth);
                 yield return new WaitForEndOfFrame();
             }
             outLine.tag = "useObject";
@@ -109,7 +109,9 @@ public class SkillData : MonoBehaviour
             rigid.AddForce(Camera.main.transform.forward * 30f, ForceMode.Impulse);
             StartCoroutine(outLineCor(outLine, 0f, -1f, 10f));
         }
-        
+
+        skill.handObj.GetComponent<BoxCollider>().isTrigger = false;
+
         camZoom.minimumDistance = 6f;
         camZoom.maximumDistance = 6f;
         camZoom.transform.DOLocalMove(Vector3.zero, 0.3f).OnComplete(()=> camZoom.minimumDistance = 1f);
@@ -124,13 +126,11 @@ public class SkillData : MonoBehaviour
         isHand = false;
         player.Rigidbody.velocity = Vector3.zero; 
         skill.handObj = null;
-        Debug.Log("던지다");
         
     }
 
     private void StartGrapple()
     {
-        Debug.Log("start");
         if (player == null) player = Player.Instance;
         SkillFunction skill = player.skillFunction;
 
@@ -155,7 +155,6 @@ public class SkillData : MonoBehaviour
 
     public void ExecuteGrapple()
     {
-        Debug.Log("execute");
 
         if (player == null) player = Player.Instance;
         SkillFunction skill = player.skillFunction;
@@ -187,7 +186,6 @@ public class SkillData : MonoBehaviour
 
     public void StopGrapple()
     {
-        Debug.Log("stop");
         if (player == null) player = Player.Instance;
         SkillFunction skill = player.skillFunction;
         player.Animator.SetBool("isGrappling", false);
