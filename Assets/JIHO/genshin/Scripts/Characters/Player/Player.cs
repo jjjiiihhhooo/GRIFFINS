@@ -42,9 +42,16 @@ public class Player : MonoBehaviour
     public SkillFunction skillFunction;
     public Swinging swinging;
     public Canvas playerCanvas;
+    public SpawnPoint spawn;
     public UnityEngine.UI.Image staminaFill;
     public PlayerMovementStateMachine movementStateMachine;
 
+    public Vector3 dir;
+    public Ray ray;
+    public Ray testRay;
+    public Ray testRay1;
+    public Ray testRay2;
+    
     public bool isGround;
 
     public bool isGrapple;
@@ -86,6 +93,8 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        dir = MainCameraTransform.forward;
+        ray = new Ray(new Vector3(transform.position.x, transform.position.y + 2f, transform.position.z), dir);
         if (skillFunction.touch) return;
         if (swinging.swinging) return;
         if (Animator.GetCurrentAnimatorStateInfo(1).IsName("White_Idle") || Animator.GetCurrentAnimatorStateInfo(1).IsName("White_Throw"))
@@ -98,6 +107,13 @@ public class Player : MonoBehaviour
         movementStateMachine.HandleInput();
 
         movementStateMachine.Update();
+    }
+
+    private void OnDrawGizmos()
+    {
+        Debug.DrawRay(testRay.origin, testRay.direction, Color.red);    
+        Debug.DrawRay(testRay1.origin, testRay.direction, Color.red);    
+        Debug.DrawRay(testRay2.origin, testRay.direction, Color.red);    
     }
 
     private void FixedUpdate()
@@ -121,6 +137,11 @@ public class Player : MonoBehaviour
             swinging.StopSwing();
         }
 
+        if(collider.tag == "Laser")
+        {
+            PlayerDead();
+        }
+
         movementStateMachine.OnTriggerEnter(collider);
     }
 
@@ -134,7 +155,6 @@ public class Player : MonoBehaviour
 
     }
 
-
     private void OnTriggerStay(Collider collider)
     {
         if (!isGround) isGround = true;
@@ -144,6 +164,11 @@ public class Player : MonoBehaviour
     {
         if (isGround) isGround = false;
         movementStateMachine.OnTriggerExit(collider);
+    }
+
+    public void PlayerDead()
+    {
+        spawn.Spawn();
     }
 
     public void OnMovementStateAnimationEnterEvent()

@@ -21,14 +21,14 @@ public class PlayerJumpingState : PlayerAirborneState
 
         EffectActive(stateMachine.Player.jumpEffect, true);
 
-        stateMachine.ReusableData.MovementSpeedModifier = 0f;
+        stateMachine.ReusableData.MovementSpeedModifier = 1.5f;
 
         stateMachine.ReusableData.MovementDecelerationForce = airborneData.JumpData.DecelerationForce;
 
         stateMachine.ReusableData.RotationData = airborneData.JumpData.RotationData;
 
         shouldKeepRotating = stateMachine.ReusableData.MovementInput != Vector2.zero;
-
+        //stateMachine.Player.Rigidbody.velocity = Vector3.zero;
         Jump();
     }
 
@@ -67,9 +67,9 @@ public class PlayerJumpingState : PlayerAirborneState
 
         if (shouldKeepRotating)
         {
-            RotateTowardsTargetRotation();
+            
         }
-
+        RotateTowardsTargetRotation();
         if (IsMovingUp())
         {
             DecelerateVertically();
@@ -93,6 +93,8 @@ public class PlayerJumpingState : PlayerAirborneState
         jumpForce.z *= jumpDirection.z;
 
         jumpForce = GetJumpForceOnSlope(jumpForce);
+        jumpForce.x = 0f;
+        jumpForce.z = 0f;
 
         ResetVelocity();
 
