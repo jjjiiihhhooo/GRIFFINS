@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: 6df9e85c80f750b49bd7efd50e538501, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: e756ebe4e3d12314ea958920b761deae, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1098501232}
-  m_IndirectSpecularColor: {r: 0.6716516, g: 0.87989986, b: 1.1204268, a: 1}
+  m_IndirectSpecularColor: {r: 0.19552773, g: 0.23696658, b: 0.310313, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -60450,6 +60450,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: STINGRAY_Sun
       objectReference: {fileID: 0}
+    - target: {fileID: 8980631772532270976, guid: bb8ccaed090ae264f9d2f3d13991c588, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8980631772532270977, guid: bb8ccaed090ae264f9d2f3d13991c588, type: 3}
       propertyPath: m_Color.b
       value: 0.7968835
@@ -74495,7 +74499,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!108 &2137166674
 Light:
   m_ObjectHideFlags: 0
@@ -74507,8 +74511,8 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 0.8915094, g: 0.99885535, b: 1, a: 1}
-  m_Intensity: 0.57
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -74757,6 +74761,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 707133521, guid: eefddb4d058dc7049a1cfaee4b193de9, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3912300992046117308, guid: eefddb4d058dc7049a1cfaee4b193de9, type: 3}
       propertyPath: m_Name
       value: OnlySigleton
