@@ -35,7 +35,7 @@ public class SkillData : MonoBehaviour
         SkillFunction skill = player.skillFunction;
         skill.handObj = player.targetSet.targetGameObject;
 
-        skill.handObj.GetComponent<BoxCollider>().isTrigger = true;
+        skill.handObj.GetComponent<Collider>().isTrigger = true;
 
 
         Rigidbody rigid = skill.handObj.GetComponent<Rigidbody>();
