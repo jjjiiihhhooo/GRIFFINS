@@ -46,6 +46,12 @@ public class Player : MonoBehaviour
     public UnityEngine.UI.Image staminaFill;
     public PlayerMovementStateMachine movementStateMachine;
 
+    public Animator[] animators;
+
+    public int animHash;
+
+    public bool[] charBools;
+
     public Vector3 dir;
     public Ray ray;
     public Ray testRay;
@@ -68,7 +74,7 @@ public class Player : MonoBehaviour
             AnimationData.Initialize();
             swinging = GetComponent<Swinging>();
             Rigidbody = GetComponent<Rigidbody>();
-            Animator = GetComponentInChildren<Animator>();
+            Animator = animators[0];
 
             Input = GetComponent<PlayerInput>();
             ResizableCapsuleCollider = GetComponent<PlayerResizableCapsuleCollider>();
@@ -97,7 +103,7 @@ public class Player : MonoBehaviour
         ray = new Ray(new Vector3(transform.position.x, transform.position.y + 2f, transform.position.z), dir);
         if (skillFunction.touch) return;
         if (swinging.swinging) return;
-        if (Animator.GetCurrentAnimatorStateInfo(1).IsName("White_Idle") || Animator.GetCurrentAnimatorStateInfo(1).IsName("White_Throw"))
+        if (Animator.GetCurrentAnimatorStateInfo(1).IsName("Idle") || Animator.GetCurrentAnimatorStateInfo(1).IsName("Throw"))
         {
             Debug.Log("anim");
             transform.rotation = CameraRecenteringUtility.VirtualCamera.transform.rotation;
@@ -184,6 +190,41 @@ public class Player : MonoBehaviour
     public void OnMovementStateAnimationTransitionEvent()
     {
         movementStateMachine.OnAnimationTransitionEvent();
+    }
+
+    public void ChangeCharacter(int index)
+    {
+        animators[index].gameObject.SetActive(true);
+        foreach (AnimatorControllerParameter paramA in Animator.parameters)
+        {
+            switch (paramA.type)
+            {
+                case AnimatorControllerParameterType.Bool:
+                    animators[index].SetBool(paramA.name, Animator.GetBool(paramA.name));
+                    break;
+                case AnimatorControllerParameterType.Float:
+                    animators[index].SetFloat(paramA.name, Animator.GetFloat(paramA.name));
+                    break;
+                case AnimatorControllerParameterType.Int:
+                    animators[index].SetInteger(paramA.name, Animator.GetInteger(paramA.name));
+                    break;
+                case AnimatorControllerParameterType.Trigger:
+                    if (Animator.GetBool(paramA.name))
+                    {
+                        animators[index].SetTrigger(paramA.name);
+                    }
+                    break;
+            }
+        }
+        Animator.gameObject.SetActive(false);
+
+        for (int i = 0; i < animators.Length; i++)
+        {
+            charBools[i] = false;
+        }
+
+        Animator = animators[index];
+        charBools[index] = true;
     }
 }
 

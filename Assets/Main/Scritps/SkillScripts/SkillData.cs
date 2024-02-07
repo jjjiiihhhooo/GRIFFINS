@@ -29,7 +29,7 @@ public class SkillData : MonoBehaviour
         if (player.targetSet.targetGameObject == null || isHand || player.skillFunction.handObj != null) return;
         if (player.Animator.GetCurrentAnimatorStateInfo(1).IsName("White_Idle") || player.Animator.GetCurrentAnimatorStateInfo(1).IsName("White_Throw")) return;
         if (!GameManager.Instance.staminaManager.ChechStamina(20f)) return;
-        
+        GameManager.Instance.crossHair.SetActive(true);
 
         player.Animator.SetBool("isHand", true);
         SkillFunction skill = player.skillFunction;
@@ -86,7 +86,7 @@ public class SkillData : MonoBehaviour
     {
         if (!isHand || player.skillFunction.handObj == null) return;
         SkillFunction skill = player.skillFunction;
-        
+        GameManager.Instance.crossHair.SetActive(false);
 
         Rigidbody rigid = skill.handObj.GetComponent<Rigidbody>();
         CameraZoom camZoom = FindObjectOfType<CameraZoom>();
@@ -103,10 +103,14 @@ public class SkillData : MonoBehaviour
             player.Animator.SetTrigger("isThrow");
             player.Animator.SetBool("isHand", false);
             GameManager.Instance.staminaManager.MinusStamina(20f);
-            rigid.useGravity = true;
-            skill.handObj.transform.SetParent(null);
+            //rigid.useGravity = true;
+            
             rigid.isKinematic = false;
-            rigid.AddForce(Camera.main.transform.forward * 30f, ForceMode.Impulse);
+            Vector3 aimDir = (GameManager.Instance.inputData.MouseWorldPosition - skill.catchTransform.position).normalized;
+            GameObject temp = Instantiate(GameManager.Instance.inputData.projectTile, skill.catchTransform.position, Quaternion.LookRotation(aimDir, Vector3.up));
+            skill.handObj.transform.SetParent(temp.transform);
+
+            //rigid.AddForce(Camera.main.transform.forward * 30f, ForceMode.Impulse);
             StartCoroutine(outLineCor(outLine, 0f, -1f, 10f));
         }
 
@@ -183,7 +187,6 @@ public class SkillData : MonoBehaviour
         
     }
 
-
     public void StopGrapple()
     {
         if (player == null) player = Player.Instance;
@@ -249,19 +252,6 @@ public class SkillData : MonoBehaviour
         skill.Glr.enabled = false;
         skill.GhandObj = null;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

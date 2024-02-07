@@ -13,6 +13,8 @@ public class PlayerMovementState : IState
     protected readonly PlayerGroundedData groundedData;
     protected readonly PlayerAirborneData airborneData;
 
+    public int animHash;
+
     public PlayerMovementState(PlayerMovementStateMachine playerMovementStateMachine)
     {
         stateMachine = playerMovementStateMachine;
@@ -106,12 +108,14 @@ public class PlayerMovementState : IState
         stateMachine.ReusableData.TimeToReachTargetRotation = stateMachine.ReusableData.RotationData.TargetRotationReachTime;
     }
 
-    protected void StartAnimation(int animationHash)
+    public void StartAnimation(int animationHash)
     {
+        stateMachine.Player.animHash = animationHash;
         stateMachine.Player.Animator.SetBool(animationHash, true);
     }
 
-    protected void StopAnimation(int animationHash)
+
+    public void StopAnimation(int animationHash)
     {
         stateMachine.Player.Animator.SetBool(animationHash, false);
     }
@@ -446,6 +450,8 @@ public class PlayerMovementState : IState
     {
         return GetPlayerVerticalVelocity().y < -minimumVelocity;
     }
+
+    
 }
 
 

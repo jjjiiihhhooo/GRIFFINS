@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     public StaminaManager staminaManager;
     public GameObject grappleImage;
     public GameObject normalImage;
-
+    public GameObject crossHair;
 
 
     private void Awake()

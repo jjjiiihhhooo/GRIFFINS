@@ -97,15 +97,15 @@ public class TargetSet : MonoBehaviour
     }
 
 
-    private void OnDrawGizmos()
-    {
-        Handles.DrawWireArc(transform.position, Vector3.up, transform.forward, 360, GviewArea);
-        Handles.DrawLine(transform.position, transform.position + GetAngle(-GviewAngle / 2) * GviewArea);
-        Handles.DrawLine(transform.position, transform.position + GetAngle(GviewAngle / 2) * GviewArea);
+    //private void OnDrawGizmos()
+    //{
+    //    Handles.DrawWireArc(transform.position, Vector3.up, transform.forward, 360, GviewArea);
+    //    Handles.DrawLine(transform.position, transform.position + GetAngle(-GviewAngle / 2) * GviewArea);
+    //    Handles.DrawLine(transform.position, transform.position + GetAngle(GviewAngle / 2) * GviewArea);
 
-        foreach (Transform Target in ObjectGrappleTargets)
-        {
-            Handles.DrawLine(transform.position, Target.position);
-        }
-    }
+    //    foreach (Transform Target in ObjectGrappleTargets)
+    //    {
+    //        Handles.DrawLine(transform.position, Target.position);
+    //    }
+    //}
 }
