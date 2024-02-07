@@ -52,5 +52,11 @@ public class PlayerAnimationEventTrigger : MonoBehaviour
     {
         player.skillData.isHand = false;
     }
+
+    public void NormalAttackExit()
+    {
+        player.isAttack = false;
+        player.currentCharacter.animator.SetBool("isNormalAttack_1", false);
+    }
 }
 

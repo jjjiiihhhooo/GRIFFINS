@@ -58119,7 +58119,6 @@ GameObject:
   - component: {fileID: 4943424079398178711}
   - component: {fileID: 4943424079398178719}
   - component: {fileID: 4943424079398178718}
-  - component: {fileID: 4943424079398178716}
   - component: {fileID: 2098397367}
   m_Layer: 0
   m_Name: Player
@@ -58199,6 +58198,101 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a1b33e9b6f6d0d4bbd7829414d6023f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects:
+    - {fileID: 4943424080356347240}
+    - {fileID: 4943424080356347245}
+    - {fileID: 7291144500045682380}
+    - {fileID: 3568135499573988997}
+    - {fileID: 7153281548657267446}
+    - {fileID: 8769470985991566262}
+    - {fileID: 2168867586551217076}
+    - {fileID: 5725701668723139026}
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: movementStateMachine
+      Entry: 6
+      Data: 
+    - Name: currentCharacter
+      Entry: 6
+      Data: 
+    - Name: characters
+      Entry: 7
+      Data: 0|PlayerCharacter[], Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 4
+    - Name: 
+      Entry: 7
+      Data: 1|WhiteCharacter, Assembly-CSharp
+    - Name: animator
+      Entry: 10
+      Data: 0
+    - Name: model
+      Entry: 10
+      Data: 1
+    - Name: index
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 2|GreenCharacter, Assembly-CSharp
+    - Name: animator
+      Entry: 10
+      Data: 2
+    - Name: model
+      Entry: 10
+      Data: 3
+    - Name: index
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 3|BlueCharacter, Assembly-CSharp
+    - Name: animator
+      Entry: 10
+      Data: 4
+    - Name: model
+      Entry: 10
+      Data: 5
+    - Name: index
+      Entry: 3
+      Data: 2
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 4|RedCharacter, Assembly-CSharp
+    - Name: animator
+      Entry: 10
+      Data: 6
+    - Name: model
+      Entry: 10
+      Data: 7
+    - Name: index
+      Entry: 3
+      Data: 3
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
   <Data>k__BackingField: {fileID: 11400000, guid: 6a73e8c18a853874288e9ed4d0627a22, type: 2}
   <LayerData>k__BackingField:
     <GroundLayer>k__BackingField:
@@ -58232,7 +58326,6 @@ MonoBehaviour:
   landEffect: {fileID: 4943424079945503237}
   targetSet: {fileID: 4943424079398178719}
   skillData: {fileID: 4943424079398178718}
-  skillFunction: {fileID: 4943424079398178716}
   swinging: {fileID: 0}
   playerCanvas: {fileID: 801795073}
   spawn: {fileID: 0}
@@ -58242,11 +58335,11 @@ MonoBehaviour:
   - {fileID: 7291144500045682380}
   - {fileID: 7153281548657267446}
   - {fileID: 2168867586551217076}
-  animHash: 0
-  charBools: 01000000
   dir: {x: 0, y: 0, z: 0}
   isGround: 0
   isGrapple: 0
+  isAttack: 0
+  isPsyche: 0
   testHp: 0
 --- !u!114 &4943424079398178709
 MonoBehaviour:
@@ -58310,16 +58403,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 981b833554892a442b13412a54f90d94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  viewArea: 5
-  GviewArea: 20
-  viewAngle: 270
-  GviewAngle: 60
-  targetMask:
+  objectViewArea: 5
+  enemyViewArea: 4
+  objectTargetMask:
     serializedVersion: 2
     m_Bits: 16384
-  Targets: []
-  ObjectGrappleTargets: []
-  targetGameObject: {fileID: 0}
+  enemyTargetMask:
+    serializedVersion: 2
+    m_Bits: 128
+  targetObject: {fileID: 0}
+  targetEnemy: {fileID: 0}
   grappleTargetObject: {fileID: 0}
 --- !u!114 &4943424079398178718
 MonoBehaviour:
@@ -58333,38 +58426,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c79ddf5424a42d48a0d96bab762c551, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillName:
-  - Catch
-  - Throw
-  - StartGrapple
-  - GCatch
-  - GPull
-  skillIndex: 0
   isHand: 0
-  isGHand: 0
---- !u!114 &4943424079398178716
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4943424079398178710}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31730dd4816d6744f85ca0942af309e6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  handObj: {fileID: 0}
+  camZoom: {fileID: 0}
   catchTransform: {fileID: 4943424078397151458}
   lookatTransform: {fileID: 4943424079742441160}
-  handObj: {fileID: 0}
-  GhandObj: {fileID: 0}
+  isGHand: 0
   maxGrappleDistance: 250
   grappleDelayTime: 0
   overshootYAxis: 1
-  shoot_obj: {fileID: 1370935670}
-  Gshoot_obj: {fileID: 1287208878}
+  distanceFromPoint: 0
   grapplingCd: 0.3
   grapplingCdTimer: 0
+  grappling: 0
+  touch: 0
+  isSprint: 0
   grappleMask:
     serializedVersion: 2
     m_Bits: 2048
@@ -58374,10 +58450,9 @@ MonoBehaviour:
   velocity: {x: 0, y: 0, z: 0}
   Gvelocity: {x: 0, y: 0, z: 0}
   Gjoint: {fileID: 0}
-  distanceFromPoint: 0
-  grappling: 0
-  touch: 0
-  isSprint: 0
+  GhandObj: {fileID: 0}
+  shoot_obj: {fileID: 1370935670}
+  Gshoot_obj: {fileID: 1287208878}
 --- !u!114 &2098397367
 MonoBehaviour:
   m_ObjectHideFlags: 0

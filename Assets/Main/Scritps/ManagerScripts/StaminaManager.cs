@@ -65,7 +65,7 @@ public class StaminaManager : MonoBehaviour
 
     private void SprintMinusStamina()
     {
-        if (!Player.Instance.skillFunction.isSprint) return;
+        if (!Player.Instance.skillData.isSprint) return;
         //ShowStaminaTrigger();
 
         if (curStamina <= 0)

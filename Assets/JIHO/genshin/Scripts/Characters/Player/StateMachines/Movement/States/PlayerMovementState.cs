@@ -42,8 +42,7 @@ public class PlayerMovementState : IState
 
     public virtual void Update()
     {
-        Debug.Log("moveVec" + stateMachine.ReusableData.MovementInput);
-        Debug.Log("velocity " + stateMachine.Player.Rigidbody.velocity);   
+
     }
 
     public virtual void PhysicsUpdate()
@@ -110,7 +109,6 @@ public class PlayerMovementState : IState
 
     public void StartAnimation(int animationHash)
     {
-        stateMachine.Player.animHash = animationHash;
         stateMachine.Player.Animator.SetBool(animationHash, true);
     }
 
@@ -169,6 +167,7 @@ public class PlayerMovementState : IState
 
     private void Move()
     {
+        if (stateMachine.Player.isAttack) return;
         if (stateMachine.ReusableData.MovementInput == Vector2.zero || stateMachine.ReusableData.MovementSpeedModifier == 0f)
         {
             stateMachine.Player.Rigidbody.velocity = new Vector3(0f, stateMachine.Player.Rigidbody.velocity.y, 0f);

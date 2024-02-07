@@ -5,11 +5,12 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.UI;
 
+using Sirenix.OdinInspector;
 
 
 [RequireComponent(typeof(PlayerInput))]
 [RequireComponent(typeof(PlayerResizableCapsuleCollider))]
-public class Player : MonoBehaviour
+public class Player : SerializedMonoBehaviour
 {
     public static Player Instance;
 
@@ -39,18 +40,16 @@ public class Player : MonoBehaviour
 
     public TargetSet targetSet;
     public SkillData skillData;
-    public SkillFunction skillFunction;
     public Swinging swinging;
     public Canvas playerCanvas;
     public SpawnPoint spawn;
     public UnityEngine.UI.Image staminaFill;
     public PlayerMovementStateMachine movementStateMachine;
 
+    public PlayerCharacter currentCharacter;
+    public PlayerCharacter[] characters;
+
     public Animator[] animators;
-
-    public int animHash;
-
-    public bool[] charBools;
 
     public Vector3 dir;
     public Ray ray;
@@ -58,9 +57,13 @@ public class Player : MonoBehaviour
     public Ray testRay1;
     public Ray testRay2;
     
-    public bool isGround;
+    public bool isGround; //땅에 있는 상태인지
 
-    public bool isGrapple;
+    public bool isGrapple; //그래플링 상태인지
+
+    public bool isAttack; //공격 상태인지
+
+    public bool isPsyche; //염력 상태인지
 
     public float testHp;
 
@@ -74,7 +77,10 @@ public class Player : MonoBehaviour
             AnimationData.Initialize();
             swinging = GetComponent<Swinging>();
             Rigidbody = GetComponent<Rigidbody>();
-            Animator = animators[0];
+            currentCharacter = characters[0];
+            currentCharacter.model.SetActive(true);
+            Animator = currentCharacter.animator;
+
 
             Input = GetComponent<PlayerInput>();
             ResizableCapsuleCollider = GetComponent<PlayerResizableCapsuleCollider>();
@@ -101,9 +107,9 @@ public class Player : MonoBehaviour
     {
         dir = MainCameraTransform.forward;
         ray = new Ray(new Vector3(transform.position.x, transform.position.y + 2f, transform.position.z), dir);
-        if (skillFunction.touch) return;
+        if (skillData.touch) return;
         if (swinging.swinging) return;
-        if (Animator.GetCurrentAnimatorStateInfo(1).IsName("Idle") || Animator.GetCurrentAnimatorStateInfo(1).IsName("Throw"))
+        if (currentCharacter.animator.GetCurrentAnimatorStateInfo(1).IsName("Idle") || currentCharacter.animator.GetCurrentAnimatorStateInfo(1).IsName("Throw"))
         {
             Debug.Log("anim");
             transform.rotation = CameraRecenteringUtility.VirtualCamera.transform.rotation;
@@ -124,17 +130,18 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (skillFunction.touch) return;
+        if (skillData.touch) return;
         if (swinging.swinging) return;
         movementStateMachine.PhysicsUpdate();
     }
 
     private void OnTriggerEnter(Collider collider)
     {
-        if (skillFunction.touch)
+        if (skillData.touch)
         {
-            skillFunction.touch = false;
-            skillData.StopGrapple();
+            skillData.touch = false;
+            currentCharacter.StopGrapple(this);
+            //skillData.StopGrapple();
         }
 
         if(swinging.swinging)
@@ -153,10 +160,10 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (skillFunction.touch)
+        if (skillData.touch)
         {
-            skillFunction.touch = false;
-            skillData.StopGrapple();
+            skillData.touch = false;
+            currentCharacter.StopGrapple(this);
         }
 
     }
@@ -194,38 +201,52 @@ public class Player : MonoBehaviour
 
     public void ChangeCharacter(int index)
     {
-        animators[index].gameObject.SetActive(true);
-        foreach (AnimatorControllerParameter paramA in Animator.parameters)
+        if (index == currentCharacter.index) return;
+
+        characters[index].model.SetActive(true);
+        foreach (AnimatorControllerParameter paramA in currentCharacter.animator.parameters)
         {
             switch (paramA.type)
             {
                 case AnimatorControllerParameterType.Bool:
-                    animators[index].SetBool(paramA.name, Animator.GetBool(paramA.name));
+                    characters[index].animator.SetBool(paramA.name, currentCharacter.animator.GetBool(paramA.name));
                     break;
                 case AnimatorControllerParameterType.Float:
-                    animators[index].SetFloat(paramA.name, Animator.GetFloat(paramA.name));
+                    characters[index].animator.SetFloat(paramA.name, currentCharacter.animator.GetFloat(paramA.name));
                     break;
                 case AnimatorControllerParameterType.Int:
-                    animators[index].SetInteger(paramA.name, Animator.GetInteger(paramA.name));
+                    characters[index].animator.SetInteger(paramA.name, currentCharacter.animator.GetInteger(paramA.name));
                     break;
                 case AnimatorControllerParameterType.Trigger:
-                    if (Animator.GetBool(paramA.name))
+                    if (currentCharacter.animator.GetBool(paramA.name))
                     {
-                        animators[index].SetTrigger(paramA.name);
+                        characters[index].animator.SetTrigger(paramA.name);
                     }
                     break;
             }
         }
-        Animator.gameObject.SetActive(false);
+        currentCharacter.model.SetActive(false);
+        currentCharacter = characters[index];
+        Animator = currentCharacter.animator;
 
-        for (int i = 0; i < animators.Length; i++)
-        {
-            charBools[i] = false;
-        }
-
-        Animator = animators[index];
-        charBools[index] = true;
     }
+
+    public void CoroutineEvent(IEnumerator enumerator)
+    {
+        StopCoroutine(enumerator);
+        StartCoroutine(enumerator);
+    }
+
+    public void DestroyEvent(UnityEngine.Object obj, float delay = 0f)
+    {
+        Destroy(obj, delay);
+    }
+
+    public GameObject InstantiateEvent(GameObject obj, Vector3 transform, Quaternion quaternion)
+    {
+       return Instantiate(obj, transform, quaternion);
+    }
+
 }
 
 

@@ -29,16 +29,12 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "useObject" || other.tag == "usingObject")
-        {
-
-        }
-        else
+        if(!(other.tag == "useObject" || other.tag == "usingObject"))
         {
             if (isCol) return;
 
             isCol = true;
-            if (Player.Instance.charBools[3])
+            if (Player.Instance.currentCharacter.index == 3)
             {
                 Rigidbody temp = this.transform.GetChild(0).GetComponent<Rigidbody>();
                 Destroy(temp);
@@ -48,11 +44,12 @@ public class Projectile : MonoBehaviour
             }
             else
             {
-                transform.GetChild(0).GetComponent<Rigidbody>().useGravity = true;
+                Rigidbody rigid = transform.GetChild(0).GetComponent<Rigidbody>();
                 transform.GetChild(0).transform.SetParent(null);
+                rigid.velocity = this.rigid.velocity;
+                rigid.useGravity = true;
                 Destroy(this.gameObject);
             }
-            
         }
 
     }

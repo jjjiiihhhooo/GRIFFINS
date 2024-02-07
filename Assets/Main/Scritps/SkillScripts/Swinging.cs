@@ -103,7 +103,7 @@ public class Swinging : MonoBehaviour
         GameManager.Instance.staminaManager.MinusStamina(20f);
 
 
-        Player.Instance.skillData.StopGrapple(); 
+        Player.Instance.currentCharacter.StopGrapple(Player.Instance); 
 
         // deactivate active grapple
         //if (GetComponent<Grappling>() != null)
