@@ -50,7 +50,7 @@ public class InputData : MonoBehaviour
     {
         if(Input.GetKeyDown(Attack) && !player.isGrapple && !player.isPsyche)
         {
-            player.currentCharacter.NormalAttack(player);
+            player.currentCharacter.NormalAttack();
         }
 
         if(!player.isAttack)
@@ -61,7 +61,7 @@ public class InputData : MonoBehaviour
                 {
                     GameManager.Instance.normalImage.SetActive(true);
                     GameManager.Instance.grappleImage.SetActive(false);
-                    player.currentCharacter.StopGrapple(player);
+                    player.currentCharacter.StopGrapple();
                     player.swinging.StopSwing();
                 }
                 else
@@ -92,11 +92,11 @@ public class InputData : MonoBehaviour
             {
                 if (Input.GetKeyDown(Grapple))
                 {
-                    player.currentCharacter.StartGrapple(player);
+                    player.currentCharacter.StartGrapple();
                 }
                 else if (Input.GetKeyDown(GrappleCut) && !player.isGround)
                 {
-                    player.currentCharacter.StopGrapple(player);
+                    player.currentCharacter.StopGrapple();
                     player.swinging.StopSwing();
                 }
 
@@ -107,19 +107,19 @@ public class InputData : MonoBehaviour
             {
                 if (Input.GetKeyDown(Catch))
                 {
-                    player.currentCharacter.Catch(player);
+                    player.currentCharacter.Catch();
                 }
                 else if (Input.GetKeyDown(Throw) && player.isPsyche)
                 {
-                    player.currentCharacter.Throw(player);
+                    player.currentCharacter.Throw();
                 }
                 else if(Input.GetKeyDown(ObjectGrapple) && !player.skillData.isGHand)
                 {
-                    player.currentCharacter.GCatch(player);
+                    player.currentCharacter.GCatch();
                 }
                 else if (Input.GetKeyDown(ObjectPull) && player.skillData.isGHand)
                 {
-                    player.currentCharacter.GPull(player);
+                    player.currentCharacter.GPull();
                 }
             }
         }

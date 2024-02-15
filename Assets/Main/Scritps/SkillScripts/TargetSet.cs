@@ -13,7 +13,7 @@ public class TargetSet : MonoBehaviour
     public LayerMask enemyTargetMask;
 
     public GameObject targetObject;
-    public GameObject targetEnemy;
+    public EnemyController targetEnemy;
 
     public GameObject grappleTargetObject;
 
@@ -63,23 +63,26 @@ public class TargetSet : MonoBehaviour
         if (EnemyColliders.Length > 0)
         {
             float closestAngle = Mathf.Infinity;
-            GameObject closestEnemy = null;
+            EnemyController closestEnemy = null;
 
             foreach (Collider collider in EnemyColliders)
             {
                 Vector3 direction = collider.transform.position - transform.position;
                 float angle = Vector3.Angle(Camera.main.transform.forward, direction);
 
-                if (angle < closestAngle)
+                if (angle <= closestAngle)
                 {
                     if (collider.tag == "Enemy")
                     {
                         closestAngle = angle;
-                        closestEnemy = collider.gameObject;
+                        closestEnemy = collider.GetComponent<EnemyController>();
                     }
                 }
             }
+
+            if (targetEnemy != null) targetEnemy.TargetCheck(false);
             targetEnemy = closestEnemy;
+            if(targetEnemy != null) targetEnemy.TargetCheck(true);
         }
         else
         {

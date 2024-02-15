@@ -47,15 +47,20 @@ public class Player : SerializedMonoBehaviour
     public PlayerMovementStateMachine movementStateMachine;
 
     public PlayerCharacter currentCharacter;
-    public PlayerCharacter[] characters;
 
-    public Animator[] animators;
+    public PlayerCharacter[] characters; 
+    //1: white
+    //2: green
+    //3: blue
+    //4: red
+
 
     public Vector3 dir;
     public Ray ray;
     public Ray testRay;
     public Ray testRay1;
     public Ray testRay2;
+    public Ray camRay;
     
     public bool isGround; //땅에 있는 상태인지
 
@@ -71,15 +76,24 @@ public class Player : SerializedMonoBehaviour
     {
         if (Instance == null)
         {
+            movementStateMachine = new PlayerMovementStateMachine(this);
             if (playerCanvas.worldCamera == null) playerCanvas.worldCamera = Camera.main;
             Instance = this;
             CameraRecenteringUtility.Initialize();
             AnimationData.Initialize();
             swinging = GetComponent<Swinging>();
             Rigidbody = GetComponent<Rigidbody>();
+
+            for(int i = 0; i < characters.Length; i++)
+            {
+                characters[i].Init(this);
+            }
+
             currentCharacter = characters[0];
             currentCharacter.model.SetActive(true);
+
             Animator = currentCharacter.animator;
+
 
 
             Input = GetComponent<PlayerInput>();
@@ -87,7 +101,7 @@ public class Player : SerializedMonoBehaviour
 
             MainCameraTransform = Camera.main.transform;
 
-            movementStateMachine = new PlayerMovementStateMachine(this);
+            
 
             DontDestroyOnLoad(this.gameObject);
         }
@@ -105,8 +119,13 @@ public class Player : SerializedMonoBehaviour
 
     private void Update()
     {
+        currentCharacter.Update();
+
+
         dir = MainCameraTransform.forward;
         ray = new Ray(new Vector3(transform.position.x, transform.position.y + 2f, transform.position.z), dir);
+        camRay = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
+
         if (skillData.touch) return;
         if (swinging.swinging) return;
         if (currentCharacter.animator.GetCurrentAnimatorStateInfo(1).IsName("Idle") || currentCharacter.animator.GetCurrentAnimatorStateInfo(1).IsName("Throw"))
@@ -125,7 +144,7 @@ public class Player : SerializedMonoBehaviour
     {
         Debug.DrawRay(testRay.origin, testRay.direction, Color.red);    
         Debug.DrawRay(testRay1.origin, testRay.direction, Color.red);    
-        Debug.DrawRay(testRay2.origin, testRay.direction, Color.red);    
+        Debug.DrawRay(testRay2.origin, testRay.direction, Color.red);
     }
 
     private void FixedUpdate()
@@ -140,7 +159,7 @@ public class Player : SerializedMonoBehaviour
         if (skillData.touch)
         {
             skillData.touch = false;
-            currentCharacter.StopGrapple(this);
+            currentCharacter.StopGrapple();
             //skillData.StopGrapple();
         }
 
@@ -163,7 +182,7 @@ public class Player : SerializedMonoBehaviour
         if (skillData.touch)
         {
             skillData.touch = false;
-            currentCharacter.StopGrapple(this);
+            currentCharacter.StopGrapple();
         }
 
     }
@@ -240,6 +259,14 @@ public class Player : SerializedMonoBehaviour
     public void DestroyEvent(UnityEngine.Object obj, float delay = 0f)
     {
         Destroy(obj, delay);
+    }
+
+    public void EndCombo()
+    {
+        Debug.Log("EndCombo ");
+        currentCharacter.weapon_obj.SetActive(false);
+        currentCharacter.comboCounter = 0;
+        currentCharacter.lastComboEnd = Time.time;
     }
 
     public GameObject InstantiateEvent(GameObject obj, Vector3 transform, Quaternion quaternion)
