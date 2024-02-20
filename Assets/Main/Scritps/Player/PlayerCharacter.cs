@@ -236,7 +236,6 @@ public class PlayerCharacter
             if (Time.time - lastClickedTime >= 0.4f)
             {
                 weapon_obj.SetActive(true);
-                weapon_obj.GetComponent<Collider>().enabled = true;
                 player.isAttack = true;
                 player.currentCharacter.animator.Play(attackAnim[comboCounter].name, 3, 0f);
                 comboCounter++;

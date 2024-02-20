@@ -79,9 +79,8 @@ public class EnemyController : SerializedMonoBehaviour
             DamageMessage(damage, finalCenter);
         }
 
-        if(other.CompareTag("Attack"))
+        if(other.CompareTag("AttackCol"))
         {
-            other.enabled = false;
             float damage = Player.Instance.currentCharacter.normalAttackDamage;
 
             Vector3 center1 = other.bounds.center;

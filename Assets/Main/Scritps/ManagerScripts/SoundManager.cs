@@ -19,14 +19,11 @@ public class SoundManager : MonoBehaviour
 
     [SerializeField] private AudioSource[] audioSources;
     //Manager.Instance.soundManager.Play(Manager.Instance.soundManager.audioDictionary["¿Ã∏ß"], false);
-    private void Awake()
+
+
+    public void Init()
     {
         audioDictionary = new Dictionary<string, AudioClip>();
-        AudioDataInit();
-    }
-
-    private void AudioDataInit()
-    {
         for (int i = 0; i < audioDatas.Length; i++) audioDictionary.Add(audioDatas[i].audioName, audioDatas[i].audio);
 
         //Play(audioDictionary["MainBGM"], true);

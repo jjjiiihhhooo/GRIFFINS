@@ -16,6 +16,11 @@ public class StaminaManager : MonoBehaviour
     
     public Image staminaImage;
 
+    public void Init()
+    {
+
+    }
+
     private void Update()
     {
         DefaultPlusStamina();
@@ -45,23 +50,7 @@ public class StaminaManager : MonoBehaviour
             if(!staminaImage.transform.parent.gameObject.activeSelf) staminaImage.transform.parent.gameObject.SetActive(true);
         }
     }
-    //private void ShowStamina()
-    //{
-    //    if (!isStaminaShow) return;
-        
-    //    if(staminaShowCurTime <= 0)
-    //    {
-    //        staminaShowCurTime = staminaShowMaxTime;
-    //        staminaImage.transform.parent.gameObject.SetActive(false);
-    //        isStaminaShow = false;
-    //        return;
-    //    }
-    //    else
-    //    {
-            
-    //        staminaShowCurTime -= Time.deltaTime;
-    //    }
-    //}
+
 
     private void SprintMinusStamina()
     {
@@ -95,20 +84,7 @@ public class StaminaManager : MonoBehaviour
         }
     }
 
-    //private void ShowStaminaTrigger()
-    //{
-    //    if(isStaminaShow)
-    //    {
-    //        staminaShowCurTime = staminaShowMaxTime;
-    //    }
-    //    else
-    //    {
-    //        if (!staminaImage.transform.parent.gameObject.activeSelf) staminaImage.transform.parent.gameObject.SetActive(true);
-    //        isStaminaShow = true;
-    //    }
-
-    //}
-
+   
     public void PlusStamina(float value, bool isCor = false)
     {
         //ShowStaminaTrigger();

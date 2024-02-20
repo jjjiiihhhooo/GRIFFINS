@@ -25,6 +25,8 @@ public class Player : SerializedMonoBehaviour
     [field: Header("Animations")]
     [field: SerializeField] public PlayerAnimationData AnimationData { get; private set; }
 
+
+    public AttackCol attackCol;
     public GameObject jumpEffect;
     public GameObject dashEffect;
     public GameObject landEffect;

@@ -29,6 +29,11 @@ public class InputData : MonoBehaviour
     public GameObject projectTile;
     private Player player;
 
+
+    public void Init()
+    {
+
+    }
     private void Update()
     {
         if (player == null) player = Player.Instance;
@@ -124,79 +129,5 @@ public class InputData : MonoBehaviour
             }
         }
 
-        
-
-
-
-
-        //if(Input.GetKeyDown(Catch) && !Player.Instance.isGrapple && !Player.Instance.isAttack)
-        //{
-        //    Player.Instance.currentCharacter.Catch(player);
-        //}
-        //else if(Input.GetKeyDown(Throw) && Player.Instance.isPsyche)
-        //{
-        //    Player.Instance.currentCharacter.Throw(player);
-        //}
-        //else if(Input.GetKeyDown(Grapple) && Player.Instance.isGrapple && !Player.Instance.isAttack)
-        //{
-        //    Player.Instance.currentCharacter.StartGrapple(player);
-        //}
-        //else if(Input.GetKeyDown(Attack) && !Player.Instance.isGrapple && !Player.Instance.skillData.isGHand)
-        //{
-
-        //}
-        //else if (Input.GetKeyDown(Change) && !Player.Instance.isAttack)
-        //{
-        //    if (Player.Instance.isGrapple)
-        //    {
-        //        GameManager.Instance.normalImage.SetActive(true);
-        //        GameManager.Instance.grappleImage.SetActive(false);
-        //        Player.Instance.currentCharacter.StopGrapple(player);
-        //        Player.Instance.swinging.StopSwing();
-        //    }
-        //    else
-        //    {
-        //        GameManager.Instance.grappleImage.SetActive(true);
-        //        GameManager.Instance.normalImage.SetActive(false);
-        //    }
-        //    Player.Instance.isGrapple = !Player.Instance.isGrapple;
-        //}
-        //else if(Input.GetKeyDown(GrappleCut) && Player.Instance.isGrapple && !Player.Instance.isAttack)
-        //{
-        //    if(!Player.Instance.isGround)
-        //    {
-        //        Player.Instance.currentCharacter.StopGrapple(player);
-        //        Player.Instance.swinging.StopSwing();
-        //    }
-        //}
-        //else if(Input.GetKeyDown(ObjectGrapple) && !Player.Instance.skillData.isGHand)
-        //{
-        //    Player.Instance.currentCharacter.GCatch(player);
-        //}
-        //else if(Input.GetKeyDown(ObjectPull) && Player.Instance.skillData.isGHand)
-        //{
-        //    Player.Instance.currentCharacter.GPull(player);
-        //}
-        //else if(Input.GetKeyDown(WhiteKey) && !Player.Instance.isAttack)
-        //{
-        //    Player.Instance.ChangeCharacter(0);
-        //}
-        //else if (Input.GetKeyDown(GreenKey) && !Player.Instance.isAttack)
-        //{
-        //    Player.Instance.ChangeCharacter(1);
-        //}
-        //else if (Input.GetKeyDown(BlueKey) && !Player.Instance.isAttack)
-        //{
-        //    Player.Instance.ChangeCharacter(2);
-        //}
-        //else if (Input.GetKeyDown(RedKey) && !Player.Instance.isAttack)
-        //{
-        //    Player.Instance.ChangeCharacter(3);
-        //}
-
-        //if (Input.GetKeyDown(Swinging) && Player.Instance.isGrapple && !Player.Instance.isAttack) Player.Instance.swinging.StartSwing();
-        //if (Input.GetKeyUp(Swinging) && Player.Instance.isGrapple && !Player.Instance.isAttack) Player.Instance.swinging.StopSwing();
-        
-        
     }
 }

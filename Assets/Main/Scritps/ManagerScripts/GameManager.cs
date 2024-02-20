@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public SoundManager soundManager;
     public InputData inputData;
     public StaminaManager staminaManager;
+    public TimelineManager timelineManager;
     public GameObject grappleImage;
     public GameObject normalImage;
     public GameObject crossHair;
@@ -32,5 +33,9 @@ public class GameManager : MonoBehaviour
     {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+        soundManager.Init();
+        inputData.Init();
+        staminaManager.Init();
+        timelineManager.Init();
     }
 }
