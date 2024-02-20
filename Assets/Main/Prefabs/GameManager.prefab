@@ -438,6 +438,84 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &1737578032
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1737578035}
+  - component: {fileID: 1737578033}
+  - component: {fileID: 1737578034}
+  m_Layer: 0
+  m_Name: TimelineManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1737578035
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1737578032}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6394712287444513183}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1737578033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1737578032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c58d391c19961114f871b608c005f017, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: playableAssetDic
+      Entry: 6
+      Data: 
+  playableAsset: {fileID: 0}
+  playableDirecter: {fileID: 0}
+--- !u!320 &1737578034
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1737578032}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: 93575b2fa687c3a4a9d3300d36e303c9, type: 2}
+  m_InitialState: 1
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings:
+  - key: {fileID: -860591127682534862, guid: 93575b2fa687c3a4a9d3300d36e303c9, type: 2}
+    value: {fileID: 0}
+  m_ExposedReferences:
+    m_References: []
 --- !u!1 &2649054690566171682
 GameObject:
   m_ObjectHideFlags: 0
@@ -487,9 +565,11 @@ MonoBehaviour:
   Grapple: 323
   Swinging: 324
   Change: 49
+  Attack: 323
   GrappleCut: 32
   ObjectGrapple: 50
   ObjectPull: 323
+  InteractionKey: 102
   WhiteKey: 122
   GreenKey: 120
   BlueKey: 99
@@ -498,7 +578,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2048
   MouseWorldPosition: {x: 0, y: 0, z: 0}
-  debugTransform: {fileID: 0}
   projectTile: {fileID: 1258855589034943919, guid: ea151109168d599479cf806313fb9bea, type: 3}
 --- !u!1 &6394712286293591810
 GameObject:
@@ -839,6 +918,7 @@ Transform:
   - {fileID: 2649054690566171683}
   - {fileID: 1080450218}
   - {fileID: 1184086350}
+  - {fileID: 1737578035}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -857,6 +937,7 @@ MonoBehaviour:
   soundManager: {fileID: 6394712286937859096}
   inputData: {fileID: 2649054690566171680}
   staminaManager: {fileID: 1080450219}
+  timelineManager: {fileID: 1737578033}
   grappleImage: {fileID: 1527270982}
   normalImage: {fileID: 1386471014}
   crossHair: {fileID: 719263522491789985}

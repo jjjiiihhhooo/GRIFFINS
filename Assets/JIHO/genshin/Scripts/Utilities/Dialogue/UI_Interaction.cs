@@ -20,7 +20,7 @@ public class UI_Interaction : MonoBehaviour
     public void SetInteractionUI(InteractableObject interactable)
     {
         interactionObject.SetActive(true);
-        targetObject = interactable.NamePosition;
+        //targetObject = interactable.NamePosition;
         textmesh.text = interactable.InteractorName;
     }
 

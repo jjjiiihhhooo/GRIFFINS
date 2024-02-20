@@ -18,10 +18,13 @@ public class InputData : MonoBehaviour
     public KeyCode ObjectGrapple = KeyCode.Alpha2;
     public KeyCode ObjectPull = KeyCode.Mouse0;
 
+    public KeyCode InteractionKey = KeyCode.F;
+
     public KeyCode WhiteKey = KeyCode.Z;
     public KeyCode GreenKey = KeyCode.X;
     public KeyCode BlueKey = KeyCode.C;
     public KeyCode RedKey = KeyCode.V;
+    
 
 
     public LayerMask aimColliderMask;
@@ -91,6 +94,10 @@ public class InputData : MonoBehaviour
             else if (Input.GetKeyDown(RedKey))
             {
                 player.ChangeCharacter(3);
+            }
+            else if(Input.GetKeyDown(InteractionKey))
+            {
+                player.currentCharacter.Interaction();
             }
 
             if (player.isGrapple)

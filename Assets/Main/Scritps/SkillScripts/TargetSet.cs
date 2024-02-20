@@ -7,12 +7,15 @@ using UnityEngine;
 public class TargetSet : MonoBehaviour
 {
     public float objectViewArea;
+    public float interactionViewArea;
     public float enemyViewArea;
 
     public LayerMask objectTargetMask;
+    public LayerMask interactionTargetMask;
     public LayerMask enemyTargetMask;
 
     public GameObject targetObject;
+    public InteractableObject targetInteraction;
     public EnemyController targetEnemy;
 
     public GameObject grappleTargetObject;
@@ -23,6 +26,7 @@ public class TargetSet : MonoBehaviour
         //ObjectGrappleTarget();
         ObjectTarget();
         EnemyTarget();
+        InteractionTarget();
     }
 
     public void ObjectTarget()
@@ -90,6 +94,41 @@ public class TargetSet : MonoBehaviour
         }
     }
 
+    public void InteractionTarget()
+    {
+        Collider[] InteractionColliders = Physics.OverlapSphere(transform.position, interactionViewArea, interactionTargetMask);
+
+        if (InteractionColliders.Length > 0)
+        {
+            float closestAngle = Mathf.Infinity;
+            InteractableObject closestInteraction = null;
+
+            foreach (Collider collider in InteractionColliders)
+            {
+                Vector3 direction = collider.transform.position - transform.position;
+                float angle = Vector3.Angle(Camera.main.transform.forward, direction);
+
+                if (angle < closestAngle)
+                {
+                    if (collider.tag == "interaction")
+                    {
+                        closestAngle = angle;
+                        closestInteraction = collider.GetComponent<InteractableObject>();
+                    }
+                }
+            }
+            if (targetInteraction != null) targetInteraction.transform.GetChild(0).gameObject.SetActive(false);
+            targetInteraction = closestInteraction;
+            if (targetInteraction != null) targetInteraction.transform.GetChild(0).gameObject.SetActive(true);
+        }
+        else
+        {
+            if (targetInteraction != null) targetInteraction.transform.GetChild(0).gameObject.SetActive(false);
+            targetInteraction = null;
+        }
+    }
+
+
     //public void ObjectGrappleTarget()
     //{
     //    if (Player.Instance.skillData.isGHand) return;
@@ -137,7 +176,7 @@ public class TargetSet : MonoBehaviour
     //            { 
     //                if(target.gameObject.tag == "useObject")
     //                    targetGameObject = target.gameObject;
-                    
+
     //            }
     //            else if (Vector3.Distance(transform.position, target.position) < Vector3.Distance(transform.position, targetGameObject.transform.position))
     //            {
@@ -166,5 +205,9 @@ public class TargetSet : MonoBehaviour
         Handles.DrawWireArc(transform.position, Vector3.up, transform.forward, 360, enemyViewArea);
         if (targetEnemy != null)
             Handles.DrawLine(transform.position, targetEnemy.transform.position);
+
+        Handles.DrawWireArc(transform.position, Vector3.up, transform.forward, 360, interactionViewArea);
+        if (targetInteraction != null)
+            Handles.DrawLine(transform.position, targetInteraction.transform.position);
     }
 }

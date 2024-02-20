@@ -259,6 +259,12 @@ public class PlayerCharacter
 
     }
 
+    public virtual void Interaction()
+    {
+        player.targetSet.targetInteraction.OnInteract();
+        Debug.Log("Interaction");
+    }
+
     public void ExitAttack()
     {
         if(player.currentCharacter.animator.GetCurrentAnimatorStateInfo(3).normalizedTime > 0.9f && player.currentCharacter.animator.GetCurrentAnimatorStateInfo(3).IsTag("Attack"))
@@ -354,6 +360,11 @@ public class WhiteCharacter : PlayerCharacter
         base.NormalAttack();
     }
 
+    public override void Interaction()
+    {
+        base.Interaction();
+    }
+
     public override Vector3 CalculateJumpVelocity(Vector3 startPoint, Vector3 endPoint, float trajectoryHeight)
     {
         return base.CalculateJumpVelocity(startPoint, endPoint, trajectoryHeight);
@@ -407,6 +418,11 @@ public class GreenCharacter : PlayerCharacter
         base.NormalAttack();
     }
 
+
+    public override void Interaction()
+    {
+        base.Interaction();
+    }
     public override Vector3 CalculateJumpVelocity(Vector3 startPoint, Vector3 endPoint, float trajectoryHeight)
     {
         return base.CalculateJumpVelocity(startPoint, endPoint, trajectoryHeight);
@@ -460,6 +476,11 @@ public class BlueCharacter : PlayerCharacter
         base.NormalAttack();
     }
 
+    public override void Interaction()
+    {
+        base.Interaction();
+    }
+
     public override Vector3 CalculateJumpVelocity(Vector3 startPoint, Vector3 endPoint, float trajectoryHeight)
     {
         return base.CalculateJumpVelocity(startPoint, endPoint, trajectoryHeight);
@@ -511,6 +532,11 @@ public class RedCharacter : PlayerCharacter
     public override void NormalAttack()
     {
         base.NormalAttack();
+    }
+
+    public override void Interaction()
+    {
+        base.Interaction();
     }
 
     public override Vector3 CalculateJumpVelocity(Vector3 startPoint, Vector3 endPoint, float trajectoryHeight)

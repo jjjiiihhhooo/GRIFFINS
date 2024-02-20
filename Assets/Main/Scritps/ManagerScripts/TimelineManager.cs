@@ -15,7 +15,6 @@ public class TimelineManager : SerializedMonoBehaviour
     public void Init()
     {
         playableDirecter = GetComponent<PlayableDirector>();
-        TimelineChange("test");
 
     }
 
