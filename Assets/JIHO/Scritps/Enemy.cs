@@ -111,7 +111,7 @@ public class Normal_Enemy : Enemy
 
     public override void Die()
     {
-        animator.Play("Dead");
+        //animator.Play("Dead");
         enemyController.DeadMessage();
     }
 }

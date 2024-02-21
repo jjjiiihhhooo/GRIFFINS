@@ -146,7 +146,7 @@ public class EnemyController : SerializedMonoBehaviour
 
     public void DeadMessage()
     {
-        
+        Dead();
     }
     public void TargetCheck(bool _bool)
     {

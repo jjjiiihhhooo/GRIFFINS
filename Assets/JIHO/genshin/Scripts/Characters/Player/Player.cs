@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 using UnityEngine.UI;
 
 using Sirenix.OdinInspector;
-
+using TMPro;
 
 [RequireComponent(typeof(PlayerInput))]
 [RequireComponent(typeof(PlayerResizableCapsuleCollider))]
@@ -18,6 +18,7 @@ public class Player : SerializedMonoBehaviour
     [field: SerializeField] public PlayerSO Data { get; private set; }
 
     [field: Header("Collisions")]
+    public AttackCol attackCol;
     [field: SerializeField] public PlayerLayerData LayerData { get; private set; }
     [field: Header("Camera")]
     [field: SerializeField] public PlayerCameraUtility CameraRecenteringUtility { get; private set; }
@@ -26,10 +27,7 @@ public class Player : SerializedMonoBehaviour
     [field: SerializeField] public PlayerAnimationData AnimationData { get; private set; }
 
 
-    public AttackCol attackCol;
-    public GameObject jumpEffect;
-    public GameObject dashEffect;
-    public GameObject landEffect;
+    
 
 
     public Rigidbody Rigidbody { get; private set; }
@@ -43,14 +41,27 @@ public class Player : SerializedMonoBehaviour
     public TargetSet targetSet;
     public SkillData skillData;
     public Swinging swinging;
-    public Canvas playerCanvas;
     public SpawnPoint spawn;
-    public UnityEngine.UI.Image staminaFill;
     public PlayerMovementStateMachine movementStateMachine;
 
-    public PlayerCharacter currentCharacter;
 
+    [Header("Effect")]
+    
+    public GameObject jumpEffect;
+    public GameObject dashEffect;
+    public GameObject landEffect;
+
+    [Header("UI")]
+    public Canvas playerCanvas;
+    public UnityEngine.UI.Image staminaFill;
+    public UnityEngine.UI.Image interactionImage;
+    public TextMeshProUGUI interactionText;
+
+    [Header("Character")]
+    public PlayerCharacter currentCharacter;
     public PlayerCharacter[] characters; 
+
+
     //1: white
     //2: green
     //3: blue
@@ -171,9 +182,10 @@ public class Player : SerializedMonoBehaviour
             swinging.StopSwing();
         }
 
-        if(collider.tag == "Laser")
+
+        if(collider.tag == "Spawn")
         {
-            PlayerDead();
+            collider.GetComponent<SpawnPoint>().SetSpawn();
         }
 
         movementStateMachine.OnTriggerEnter(collider);
@@ -201,6 +213,11 @@ public class Player : SerializedMonoBehaviour
     }
 
     public void PlayerDead()
+    {
+        
+    }
+
+    public void PlayerSpawn()
     {
         spawn.Spawn();
     }
@@ -269,6 +286,19 @@ public class Player : SerializedMonoBehaviour
         currentCharacter.weapon_obj.SetActive(false);
         currentCharacter.comboCounter = 0;
         currentCharacter.lastComboEnd = Time.time;
+    }
+
+    public void SetActiveInteraction(bool _bool, string text = "")
+    {
+        if(_bool)
+        {
+            interactionText.text = text;
+            interactionImage.gameObject.SetActive(true);
+        }
+        else
+        {
+            interactionImage.gameObject.SetActive(false);
+        }
     }
 
     public GameObject InstantiateEvent(GameObject obj, Vector3 transform, Quaternion quaternion)

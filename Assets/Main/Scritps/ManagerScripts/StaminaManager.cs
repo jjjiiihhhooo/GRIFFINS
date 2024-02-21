@@ -31,15 +31,27 @@ public class StaminaManager : MonoBehaviour
 
     private void UpdateStaminaImage()
     {
-        if (playerCanvas == null) playerCanvas = Player.Instance.playerCanvas;
-        if (staminaImage == null) staminaImage = Player.Instance.staminaFill;
+        if (playerCanvas == null)
+        {
+            if (Player.Instance == null) return;
+            playerCanvas = Player.Instance.playerCanvas;
+        }
+        if (staminaImage == null)
+        {
+            if (Player.Instance == null) return;
+            staminaImage = Player.Instance.staminaFill;
+        }
 
-        playerCanvas.transform.LookAt(playerCanvas.transform.position + Camera.main.transform.rotation * Vector3.forward, Camera.main.transform.rotation * Vector3.up);
-        staminaImage.fillAmount = curStamina / maxStamina;
+        if(playerCanvas != null)
+            playerCanvas.transform.LookAt(playerCanvas.transform.position + Camera.main.transform.rotation * Vector3.forward, Camera.main.transform.rotation * Vector3.up);
+        if(staminaImage != null)
+            staminaImage.fillAmount = curStamina / maxStamina;
     }
 
     private void ShowStamina()
     {
+        if (staminaImage == null) return;
+
         if (curStamina >= maxStamina)
         {
             if (staminaImage.transform.parent.gameObject.activeSelf) staminaImage.transform.parent.gameObject.SetActive(false);
@@ -54,6 +66,8 @@ public class StaminaManager : MonoBehaviour
 
     private void SprintMinusStamina()
     {
+        if (Player.Instance == null) return;
+
         if (!Player.Instance.skillData.isSprint) return;
         //ShowStaminaTrigger();
 

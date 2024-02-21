@@ -1,5 +1,6 @@
 
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SkillData : MonoBehaviour
 {
@@ -38,6 +39,7 @@ public class SkillData : MonoBehaviour
     public GameObject GhandObj;
     public Transform shoot_obj;
     public Transform Gshoot_obj;
+
 
     private void Start()
     {

@@ -1,8 +1,12 @@
+using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.UI;
 
-public class GameManager : MonoBehaviour
+public class GameManager : SerializedMonoBehaviour
 {
     public static GameManager Instance;
 
@@ -10,10 +14,17 @@ public class GameManager : MonoBehaviour
     public InputData inputData;
     public StaminaManager staminaManager;
     public TimelineManager timelineManager;
+    public TutorialManager tutorialManager;
+    public GuideManager guideManager;
+    
     public GameObject grappleImage;
     public GameObject normalImage;
     public GameObject crossHair;
 
+    public Image device_Image;
+    public Image skill_Image;
+
+    public Dictionary<string, UnityEvent> event_dictionary;
 
     private void Awake()
     {
@@ -31,11 +42,16 @@ public class GameManager : MonoBehaviour
 
     private void Init()
     {
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
         soundManager.Init();
         inputData.Init();
         staminaManager.Init();
         timelineManager.Init();
+        //MouseLocked();
+    }
+
+    public void MouseLocked()
+    {
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 }

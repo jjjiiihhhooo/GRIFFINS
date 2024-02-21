@@ -117,13 +117,16 @@ public class TargetSet : MonoBehaviour
                     }
                 }
             }
-            if (targetInteraction != null) targetInteraction.transform.GetChild(0).gameObject.SetActive(false);
             targetInteraction = closestInteraction;
-            if (targetInteraction != null) targetInteraction.transform.GetChild(0).gameObject.SetActive(true);
+            if (targetInteraction != null)
+            {
+                if(targetInteraction.GetReady())
+                    Player.Instance.SetActiveInteraction(true, targetInteraction.InteractorName);
+            }
         }
         else
         {
-            if (targetInteraction != null) targetInteraction.transform.GetChild(0).gameObject.SetActive(false);
+            if (targetInteraction != null) Player.Instance.SetActiveInteraction(false);
             targetInteraction = null;
         }
     }

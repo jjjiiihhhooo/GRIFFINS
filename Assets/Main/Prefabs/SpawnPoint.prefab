@@ -19541,9 +19541,10 @@ GameObject:
   m_Component:
   - component: {fileID: 8607239121527349076}
   - component: {fileID: 646683844929234190}
+  - component: {fileID: 1322417349395618047}
   m_Layer: 0
   m_Name: SpawnPoint
-  m_TagString: Untagged
+  m_TagString: Spawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -19576,3 +19577,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2926930669b41240b8fbb12088a7274, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isNotSceneChange: 0
+--- !u!135 &1322417349395618047
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4668846296346957325}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 3
+  m_Center: {x: 0, y: 0, z: 0}

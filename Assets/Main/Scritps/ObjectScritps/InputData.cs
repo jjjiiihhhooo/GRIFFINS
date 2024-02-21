@@ -56,85 +56,107 @@ public class InputData : MonoBehaviour
 
     private void KeyboardInput()
     {
-        if(Input.GetKeyDown(Attack) && !player.isGrapple && !player.isPsyche)
+        AttackInput();
+        PsycheInput();
+        GrapleInput();
+        ChangeInput();
+        if (Input.GetKeyDown(InteractionKey))
+        {
+            player.currentCharacter.Interaction();
+        }
+    }
+
+
+    private void AttackInput()
+    {
+        if (!GameManager.Instance.tutorialManager.attack) return;
+
+        if (Input.GetKeyDown(Attack) && !player.isGrapple && !player.isPsyche)
         {
             player.currentCharacter.NormalAttack();
         }
+    }
 
-        if(!player.isAttack)
+    private void PsycheInput()
+    {
+        if (!GameManager.Instance.tutorialManager.psyche) return;
+        if (player.isAttack) return;
+        if (player.isGrapple) return;
+        if (Input.GetKeyDown(Catch))
         {
-            if (Input.GetKeyDown(Change))
-            {
-                if (player.isGrapple)
-                {
-                    GameManager.Instance.normalImage.SetActive(true);
-                    GameManager.Instance.grappleImage.SetActive(false);
-                    player.currentCharacter.StopGrapple();
-                    player.swinging.StopSwing();
-                }
-                else
-                {
-                    GameManager.Instance.grappleImage.SetActive(true);
-                    GameManager.Instance.normalImage.SetActive(false);
-                }
-                player.isGrapple = !player.isGrapple;
-            }
-            else if (Input.GetKeyDown(WhiteKey))
-            {
-                player.ChangeCharacter(0);
-            }
-            else if (Input.GetKeyDown(GreenKey))
-            {
-                player.ChangeCharacter(1);
-            }
-            else if (Input.GetKeyDown(BlueKey))
-            {
-                player.ChangeCharacter(2);
-            }
-            else if (Input.GetKeyDown(RedKey))
-            {
-                player.ChangeCharacter(3);
-            }
-            else if(Input.GetKeyDown(InteractionKey))
-            {
-                player.currentCharacter.Interaction();
-            }
+            player.currentCharacter.Catch();
+        }
+        else if (Input.GetKeyDown(Throw) && player.isPsyche)
+        {
+            player.currentCharacter.Throw();
+        }
+        else if (Input.GetKeyDown(ObjectGrapple) && !player.skillData.isGHand)
+        {
+            player.currentCharacter.GCatch();
+        }
+        else if (Input.GetKeyDown(ObjectPull) && player.skillData.isGHand)
+        {
+            player.currentCharacter.GPull();
+        }
+    }
 
+    private void GrapleInput()
+    {
+        if (!GameManager.Instance.tutorialManager.graple) return;
+        if (player.isAttack) return;
+        if (!player.isGrapple) return;
+
+        if (Input.GetKeyDown(Grapple))
+        {
+            player.currentCharacter.StartGrapple();
+        }
+        else if (Input.GetKeyDown(GrappleCut) && !player.isGround)
+        {
+            player.currentCharacter.StopGrapple();
+            player.swinging.StopSwing();
+        }
+
+        if (Input.GetKeyDown(Swinging)) player.swinging.StartSwing();
+        if (Input.GetKeyUp(Swinging)) player.swinging.StopSwing();
+
+    }
+
+    private void ChangeInput()
+    {
+        if (Input.GetKeyDown(WhiteKey))
+        {
+            player.ChangeCharacter(0);
+        }
+        else if (Input.GetKeyDown(GreenKey))
+        {
+            player.ChangeCharacter(1);
+        }
+        else if (Input.GetKeyDown(BlueKey))
+        {
+            player.ChangeCharacter(2);
+        }
+        else if (Input.GetKeyDown(RedKey))
+        {
+            player.ChangeCharacter(3);
+        }
+
+        if (GameManager.Instance.tutorialManager.skillIndex <= 1) return;
+
+        if (Input.GetKeyDown(Change) && !player.isAttack)
+        {
             if (player.isGrapple)
             {
-                if (Input.GetKeyDown(Grapple))
-                {
-                    player.currentCharacter.StartGrapple();
-                }
-                else if (Input.GetKeyDown(GrappleCut) && !player.isGround)
-                {
-                    player.currentCharacter.StopGrapple();
-                    player.swinging.StopSwing();
-                }
-
-                if (Input.GetKeyDown(Swinging)) player.swinging.StartSwing();
-                if (Input.GetKeyUp(Swinging)) player.swinging.StopSwing();
+                GameManager.Instance.normalImage.SetActive(true);
+                GameManager.Instance.grappleImage.SetActive(false);
+                player.currentCharacter.StopGrapple();
+                player.swinging.StopSwing();
             }
             else
             {
-                if (Input.GetKeyDown(Catch))
-                {
-                    player.currentCharacter.Catch();
-                }
-                else if (Input.GetKeyDown(Throw) && player.isPsyche)
-                {
-                    player.currentCharacter.Throw();
-                }
-                else if(Input.GetKeyDown(ObjectGrapple) && !player.skillData.isGHand)
-                {
-                    player.currentCharacter.GCatch();
-                }
-                else if (Input.GetKeyDown(ObjectPull) && player.skillData.isGHand)
-                {
-                    player.currentCharacter.GPull();
-                }
+                GameManager.Instance.grappleImage.SetActive(true);
+                GameManager.Instance.normalImage.SetActive(false);
             }
+            player.isGrapple = !player.isGrapple;
         }
-
     }
 }
