@@ -8,11 +8,13 @@ public class ObjectTrigger : MonoBehaviour
     [SerializeField] private UnityEvent enter_event;
     [SerializeField] private UnityEvent exit_event;
     [SerializeField] private string physicsName;
+    [SerializeField] private string event_key = "";
 
     private void OnTriggerEnter(Collider collider)
     {
         if(collider.tag == physicsName)
         {
+            if(event_key != "") GameManager.Instance.event_dictionary[event_key].Invoke();
             enter_event.Invoke();
         }
     }
@@ -21,6 +23,7 @@ public class ObjectTrigger : MonoBehaviour
     {
         if (collider.tag == physicsName)
         {
+            if (event_key != "") GameManager.Instance.event_dictionary[event_key].Invoke();
             exit_event.Invoke();
         }
     }
@@ -29,6 +32,7 @@ public class ObjectTrigger : MonoBehaviour
     {
         if(collision.gameObject.tag == physicsName)
         {
+            if (event_key != "") GameManager.Instance.event_dictionary[event_key].Invoke();
             enter_event.Invoke();
         }
     }
@@ -37,6 +41,7 @@ public class ObjectTrigger : MonoBehaviour
     {
         if (collision.gameObject.tag == physicsName)
         {
+            if (event_key != "") GameManager.Instance.event_dictionary[event_key].Invoke();
             exit_event.Invoke();
         }
     }

@@ -58917,7 +58917,6 @@ GameObject:
   - component: {fileID: 4943424079398178706}
   - component: {fileID: 4943424079398178709}
   - component: {fileID: 4943424079398178708}
-  - component: {fileID: 4943424079398178711}
   - component: {fileID: 4943424079398178719}
   - component: {fileID: 4943424079398178718}
   - component: {fileID: 2098397367}
@@ -59300,7 +59299,7 @@ MonoBehaviour:
     fallParameterName: isFalling
   targetSet: {fileID: 4943424079398178719}
   skillData: {fileID: 4943424079398178718}
-  swinging: {fileID: 0}
+  swinging: {fileID: 2098397367}
   spawn: {fileID: 0}
   jumpEffect: {fileID: 4943424079477339818}
   dashEffect: {fileID: 4943424078659000371}
@@ -59349,22 +59348,6 @@ MonoBehaviour:
     <StepReachForce>k__BackingField: 25
   <TriggerColliderData>k__BackingField:
     <GroundCheckCollider>k__BackingField: {fileID: 4943424079665871973}
---- !u!114 &4943424079398178711
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4943424079398178710}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2bd179b1dc542bc4484fc3650e241afe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  interactionRange: 4
-  interactableLayermask:
-    serializedVersion: 2
-    m_Bits: 8192
 --- !u!114 &4943424079398178719
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -59432,7 +59415,6 @@ MonoBehaviour:
   GhandObj: {fileID: 0}
   shoot_obj: {fileID: 1370935670}
   Gshoot_obj: {fileID: 1287208878}
-  skill_Image: {fileID: 0}
 --- !u!114 &2098397367
 MonoBehaviour:
   m_ObjectHideFlags: 0

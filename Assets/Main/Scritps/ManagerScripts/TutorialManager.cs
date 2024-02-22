@@ -12,7 +12,7 @@ public class TutorialManager : MonoBehaviour
     public bool characterChange;
 
     [Header("µ•¿Ã≈Õ")]
-    [SerializeField] private Sprite[] skill_images;
+    public Sprite[] skill_images;
     public int skillIndex;
 
     public void AttackSetBool(bool _bool)
@@ -38,16 +38,4 @@ public class TutorialManager : MonoBehaviour
         characterChange = _bool;
     }
 
-    public void Tutorial_0_Event()
-    {
-        //GameManager.Instance.skill_Image.sprite = skill_images[0];
-        GameManager.Instance.device_Image.GetComponent<DOTweenAnimation>().DORestartById("GetDevice");
-    }
-
-    public void Tutorial_1_Event()
-    {
-        PsycheSetBool(true);
-        GameManager.Instance.skill_Image.sprite = skill_images[0];
-        GameManager.Instance.skill_Image.GetComponent<DOTweenAnimation>().DORestartById("GetSkill");
-    }
 }

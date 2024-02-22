@@ -16,7 +16,9 @@ public class GameManager : SerializedMonoBehaviour
     public TimelineManager timelineManager;
     public TutorialManager tutorialManager;
     public GuideManager guideManager;
-    
+    public QuestManager questManager;
+    public EventManager eventManager;
+
     public GameObject grappleImage;
     public GameObject normalImage;
     public GameObject crossHair;

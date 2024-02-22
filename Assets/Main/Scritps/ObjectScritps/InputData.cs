@@ -62,6 +62,7 @@ public class InputData : MonoBehaviour
         ChangeInput();
         if (Input.GetKeyDown(InteractionKey))
         {
+            Debug.Log("DownInteract");
             player.currentCharacter.Interaction();
         }
     }

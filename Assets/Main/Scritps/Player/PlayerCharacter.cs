@@ -261,8 +261,8 @@ public class PlayerCharacter
 
     public virtual void Interaction()
     {
-        player.targetSet.targetInteraction.OnInteract();
-        Debug.Log("Interaction");
+        if (player.targetSet.targetInteraction != null) player.targetSet.targetInteraction.OnInteract(); ;
+        
     }
 
     public void ExitAttack()

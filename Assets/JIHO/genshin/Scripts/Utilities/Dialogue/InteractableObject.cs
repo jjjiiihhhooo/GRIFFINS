@@ -21,7 +21,7 @@ public class InteractableObject : MonoBehaviour
 
     public void OnInteract()
     {
-        if (actionOnInteract == null) return;
+        Debug.Log("interact");
         actionOnInteract?.Invoke();
         
         for(int i = 0; i < eventNames.Length; i++)
