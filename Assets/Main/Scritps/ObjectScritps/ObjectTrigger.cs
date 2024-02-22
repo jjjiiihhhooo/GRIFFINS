@@ -7,8 +7,11 @@ public class ObjectTrigger : MonoBehaviour
 {
     [SerializeField] private UnityEvent enter_event;
     [SerializeField] private UnityEvent exit_event;
+    [SerializeField] private bool oneTime;
     [SerializeField] private string physicsName;
     [SerializeField] private string event_key = "";
+    [SerializeField] private string exit_event_key = "";
+    
 
     private void OnTriggerEnter(Collider collider)
     {
@@ -16,6 +19,8 @@ public class ObjectTrigger : MonoBehaviour
         {
             if(event_key != "") GameManager.Instance.event_dictionary[event_key].Invoke();
             enter_event.Invoke();
+
+            if(oneTime) GetComponent<Collider>().enabled = false;
         }
     }
 
@@ -23,8 +28,10 @@ public class ObjectTrigger : MonoBehaviour
     {
         if (collider.tag == physicsName)
         {
-            if (event_key != "") GameManager.Instance.event_dictionary[event_key].Invoke();
+            if (exit_event_key != "") GameManager.Instance.event_dictionary[exit_event_key].Invoke();
             exit_event.Invoke();
+
+            if (oneTime) GetComponent<Collider>().enabled = false;
         }
     }
 
@@ -34,6 +41,8 @@ public class ObjectTrigger : MonoBehaviour
         {
             if (event_key != "") GameManager.Instance.event_dictionary[event_key].Invoke();
             enter_event.Invoke();
+
+            if (oneTime) GetComponent<Collider>().enabled = false;
         }
     }
 
@@ -41,8 +50,10 @@ public class ObjectTrigger : MonoBehaviour
     {
         if (collision.gameObject.tag == physicsName)
         {
-            if (event_key != "") GameManager.Instance.event_dictionary[event_key].Invoke();
+            if (exit_event_key != "") GameManager.Instance.event_dictionary[exit_event_key].Invoke();
             exit_event.Invoke();
+
+            if (oneTime) GetComponent<Collider>().enabled = false;
         }
     }
 

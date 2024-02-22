@@ -16,7 +16,7 @@ public class EventManager : MonoBehaviour
 
     }
 
-    public void Tutorial_1_Event()
+    public void Tutorial_2_Event()
     {
         GameManager.Instance.tutorialManager.PsycheSetBool(true);
         GameManager.Instance.skill_Image.sprite = GameManager.Instance.tutorialManager.skill_images[0];
