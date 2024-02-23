@@ -157,7 +157,7 @@ public class Player : SerializedMonoBehaviour
     {
         Debug.DrawRay(testRay.origin, testRay.direction, Color.red);    
         Debug.DrawRay(testRay1.origin, testRay.direction, Color.red);    
-        Debug.DrawRay(testRay2.origin, testRay.direction, Color.red);
+        Debug.DrawRay(testRay2.origin, testRay.direction, Color.blue);
     }
 
     private void FixedUpdate()

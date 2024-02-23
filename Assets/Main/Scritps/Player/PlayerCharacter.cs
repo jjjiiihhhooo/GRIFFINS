@@ -38,6 +38,9 @@ public class PlayerCharacter
         if (player.currentCharacter.animator.GetCurrentAnimatorStateInfo(1).IsName("Idle") || player.currentCharacter.animator.GetCurrentAnimatorStateInfo(1).IsName("Throw")) return;
         GameManager.Instance.crossHair.SetActive(true);
 
+        GameManager.Instance.staminaManager.staminaImage.transform.parent.GetComponent<RectTransform>().anchoredPosition = new Vector3(140f, 35.4f, 0f);
+        //GameManager.Instance.staminaManager.staminaImage.rectTransform.anchoredPosition = new Vector3(140f, 35.4f, 0f);
+
         player.currentCharacter.animator.SetBool("isHand", true);
 
         player.skillData.handObj = player.targetSet.targetObject;
@@ -70,7 +73,8 @@ public class PlayerCharacter
     {
         if (!player.skillData.isHand || player.skillData.handObj == null) return;
         GameManager.Instance.crossHair.SetActive(false);
-
+        GameManager.Instance.staminaManager.staminaImage.transform.parent.GetComponent<RectTransform>().anchoredPosition = new Vector3(62f, 35.4f, 0f);
+        //GameManager.Instance.staminaManager.staminaImage.rectTransform.anchoredPosition = new Vector3(62f, 35.4f, 0f);
         Rigidbody rigid = player.skillData.handObj.GetComponent<Rigidbody>();
         CameraZoom camZoom = player.skillData.camZoom;
         Outline outLine = player.skillData.handObj.GetComponent<Outline>();
@@ -261,7 +265,7 @@ public class PlayerCharacter
 
     public virtual void Interaction()
     {
-        if (player.targetSet.targetInteraction != null) player.targetSet.targetInteraction.OnInteract(); ;
+        player.targetSet.targetInteraction?.OnInteract();
         
     }
 
@@ -293,7 +297,6 @@ public class PlayerCharacter
                 outLine.OutlineWidth += Time.deltaTime * oper * pitch;
                 yield return new WaitForEndOfFrame();
             }
-            outLine.tag = "useObject";
         }
     }
 

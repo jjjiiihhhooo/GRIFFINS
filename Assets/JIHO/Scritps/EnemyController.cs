@@ -66,18 +66,18 @@ public class EnemyController : SerializedMonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("usingObject"))
-        {
-            //float damage = other.GetComponent<AttackCol>().damage;
-            float damage = 1f;
+        //if(other.CompareTag("usingObject"))
+        //{
+        //    //float damage = other.GetComponent<AttackCol>().damage;
+        //    float damage = 1f;
 
-            Vector3 center1 = other.bounds.center;
-            Vector3 center2 = transform.GetComponent<BoxCollider>().bounds.center;
+        //    Vector3 center1 = other.bounds.center;
+        //    Vector3 center2 = transform.GetComponent<BoxCollider>().bounds.center;
 
-            Vector3 finalCenter = (center1 + center2) / 2f;
+        //    Vector3 finalCenter = (center1 + center2) / 2f;
 
-            DamageMessage(damage, finalCenter);
-        }
+        //    DamageMessage(damage, finalCenter);
+        //}
 
         if(other.CompareTag("AttackCol"))
         {
@@ -95,17 +95,17 @@ public class EnemyController : SerializedMonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.transform.CompareTag("usingObject"))
-        {
-            float damage = 1f;
+        //if(collision.transform.CompareTag("usingObject"))
+        //{
+        //    float damage = 1f;
 
-            Vector3 center1 = collision.collider.bounds.center;
-            Vector3 center2 = transform.GetComponent<BoxCollider>().bounds.center;
+        //    Vector3 center1 = collision.collider.bounds.center;
+        //    Vector3 center2 = transform.GetComponent<BoxCollider>().bounds.center;
 
-            Vector3 finalCenter = (center1 + center2) / 2f;
+        //    Vector3 finalCenter = (center1 + center2) / 2f;
 
-            DamageMessage(damage, finalCenter);
-        }
+        //    DamageMessage(damage, finalCenter);
+        //}
     }
 
     
@@ -133,6 +133,7 @@ public class EnemyController : SerializedMonoBehaviour
     private void Dead()
     {
         //QuestManager.instance.QuestMonsterCheck(enemy.name);
+        GameManager.Instance.questManager.EnemyQuestCheck(this.name);
         Destroy(this.gameObject);
     }
 
@@ -167,6 +168,15 @@ public class EnemyController : SerializedMonoBehaviour
         hitCool = maxHitCool;
 
         DamageEffect(damage, targetPos);
+        enemy.GetDamage(damage);
+    }
+
+    public void DamageMessage(float damage)
+    {
+        if (isHit) return;
+        isHit = true;
+        hitCool = maxHitCool;
+
         enemy.GetDamage(damage);
     }
 

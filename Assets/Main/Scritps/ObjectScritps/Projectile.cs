@@ -32,8 +32,16 @@ public class Projectile : MonoBehaviour
         if(!(other.tag == "useObject" || other.tag == "usingObject"))
         {
             if (isCol) return;
-
             isCol = true;
+
+            transform.GetChild(0).tag = "useObject";
+
+            if (other.tag == "Enemy")
+            {
+                other.GetComponent<EnemyController>().DamageMessage(Player.Instance.currentCharacter.normalAttackDamage);
+                
+            }
+
             if (Player.Instance.currentCharacter.index == 3)
             {
                 Rigidbody temp = this.transform.GetChild(0).GetComponent<Rigidbody>();
@@ -44,6 +52,7 @@ public class Projectile : MonoBehaviour
             }
             else
             {
+                
                 Rigidbody rigid = transform.GetChild(0).GetComponent<Rigidbody>();
                 transform.GetChild(0).transform.SetParent(null);
                 rigid.velocity = this.rigid.velocity;

@@ -1,3 +1,4 @@
+using DG.Tweening;
 using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
@@ -28,6 +29,7 @@ public class GameManager : SerializedMonoBehaviour
 
     public Dictionary<string, UnityEvent> event_dictionary;
 
+
     private void Awake()
     {
         if(Instance == null)
@@ -55,5 +57,10 @@ public class GameManager : SerializedMonoBehaviour
     {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    public void Scene_AssistAction(DOTweenAnimation dot)
+    {
+        dot.DOPlayById("Start");
     }
 }

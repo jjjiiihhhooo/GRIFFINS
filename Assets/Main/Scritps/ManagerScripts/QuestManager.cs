@@ -3,6 +3,7 @@ using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -59,19 +60,27 @@ public class QuestManager : SerializedMonoBehaviour
     public void QuestInput(string key)
     {
         curQuest = questDictionary[key];
+        QuestText();
+    }
 
-        for(int i = 0; i < curQuest.QuestDatas.Length; i++)
+    private void QuestText()
+    {
+        int count = 0;
+
+        while (curQuest != null && count < curQuest.QuestDatas.Length)
         {
-            int temp = i + 1;
-            if (curQuest.QuestDatas[i].type == QuestType.Chat || curQuest.QuestDatas[i].type == QuestType.Interaction || curQuest.QuestDatas[i].type == QuestType.Position)
-                questTexts[i].text = temp.ToString() + ". " + curQuest.QuestDatas[i].questString;
-            else if(curQuest.QuestDatas[i].type == QuestType.Enemy)
-                questTexts[i].text = temp.ToString() + ". " + curQuest.QuestDatas[i].questString + "(" + curQuest.QuestDatas[i].enemyCurCount.ToString() + " / " + curQuest.QuestDatas[i].enemyCompleteCount.ToString() + ")";
-            else if(curQuest.QuestDatas[i].type == QuestType.Item)
-                questTexts[i].text = temp.ToString() + ". " + curQuest.QuestDatas[i].questString + "(" + curQuest.QuestDatas[i].itemCurCount.ToString() + " / " + curQuest.QuestDatas[i].itemCompleteCount.ToString() + ")";
-            
-            questTexts[i].gameObject.SetActive(true);
+            int temp = count + 1;
+            if (curQuest.QuestDatas[count].type == QuestType.Chat || curQuest.QuestDatas[count].type == QuestType.Interaction || curQuest.QuestDatas[count].type == QuestType.Position)
+                questTexts[count].text = temp.ToString() + ". " + curQuest.QuestDatas[count].questString;
+            else if (curQuest.QuestDatas[count].type == QuestType.Enemy)
+                questTexts[count].text = temp.ToString() + ". " + curQuest.QuestDatas[count].questString + "(" + curQuest.QuestDatas[count].enemyCurCount.ToString() + " / " + curQuest.QuestDatas[count].enemyCompleteCount.ToString() + ")";
+            else if (curQuest.QuestDatas[count].type == QuestType.Item)
+                questTexts[count].text = temp.ToString() + ". " + curQuest.QuestDatas[count].questString + "(" + curQuest.QuestDatas[count].itemCurCount.ToString() + " / " + curQuest.QuestDatas[count].itemCompleteCount.ToString() + ")";
+
+            questTexts[count].gameObject.SetActive(true);
+            count++;
         }
+
     }
 
     public void ChatQuestCheck(string chatKey)
@@ -90,9 +99,25 @@ public class QuestManager : SerializedMonoBehaviour
         }
     }
     
-    public void ItemQuestcheck()
+    public void ItemQuestcheck(string name)
     {
+        if (curQuest == null) return;
 
+        for (int i = 0; i < curQuest.QuestDatas.Length; i++)
+        {
+            if (curQuest.QuestDatas[i].type == QuestType.Item)
+            {
+                if (!curQuest.QuestDatas[i].clear && name == curQuest.QuestDatas[i].itemName)
+                {
+                    curQuest.QuestDatas[i].itemCurCount++;
+
+                    if (curQuest.QuestDatas[i].itemCurCount >= curQuest.QuestDatas[i].itemCompleteCount)
+                    {
+                        QuestClear(curQuest.QuestDatas[i], i);
+                    }
+                }
+            }
+        }
     }
 
     public void InteractionQuestCheck(string name)
@@ -118,21 +143,27 @@ public class QuestManager : SerializedMonoBehaviour
     {
         if (curQuest == null) return;
 
-        for(int i = 0; i < curQuest.QuestDatas.Length; i++)
-        {
-            if (curQuest.QuestDatas[i].type == QuestType.Enemy)
-            {
-                if (!curQuest.QuestDatas[i].clear && name == curQuest.QuestDatas[i].enemyName)
-                {
-                    curQuest.QuestDatas[i].enemyCurCount++;
+        int count = 0;
 
-                    if (curQuest.QuestDatas[i].enemyCurCount >= curQuest.QuestDatas[i].enemyCompleteCount)
+        while (curQuest != null && count < curQuest.QuestDatas.Length)
+        {
+            if (curQuest.QuestDatas[count].type == QuestType.Enemy)
+            {
+                if (!curQuest.QuestDatas[count].clear && name == curQuest.QuestDatas[count].enemyName)
+                {
+                    curQuest.QuestDatas[count].enemyCurCount++;
+
+                    if (curQuest.QuestDatas[count].enemyCurCount >= curQuest.QuestDatas[count].enemyCompleteCount)
                     {
-                        QuestClear(curQuest.QuestDatas[i], i);
+                        QuestClear(curQuest.QuestDatas[count], count);
                     }
                 }
             }
+            QuestText();
+            count++;
         }
+
+        
     }
 
     public void PositionQuestCheck(string name)

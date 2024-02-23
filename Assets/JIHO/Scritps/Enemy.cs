@@ -35,11 +35,11 @@ public class Enemy
 
     public virtual void GetDamage(float damage)
     {
-        if (curHp <= 0) Die();
 
         
         if (animator != null) animator.SetTrigger("GetDamage");
         curHp -= damage;
+        if (curHp <= 0) Die();
         enemyController.Invoke("BackHpMessage", 0.5f);
         Debug.Log(curHp);
     }

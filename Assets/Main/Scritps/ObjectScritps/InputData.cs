@@ -19,13 +19,12 @@ public class InputData : MonoBehaviour
     public KeyCode ObjectPull = KeyCode.Mouse0;
 
     public KeyCode InteractionKey = KeyCode.F;
+    public KeyCode scene_assistKey = KeyCode.Tab;
 
     public KeyCode WhiteKey = KeyCode.Z;
     public KeyCode GreenKey = KeyCode.X;
     public KeyCode BlueKey = KeyCode.C;
     public KeyCode RedKey = KeyCode.V;
-    
-
 
     public LayerMask aimColliderMask;
     public Vector3 MouseWorldPosition = Vector3.zero;
@@ -60,14 +59,14 @@ public class InputData : MonoBehaviour
         PsycheInput();
         GrapleInput();
         ChangeInput();
-        if (Input.GetKeyDown(InteractionKey))
+        if (Input.GetKeyDown(KeyCode.F))
         {
             Debug.Log("DownInteract");
             player.currentCharacter.Interaction();
         }
     }
 
-
+    
     private void AttackInput()
     {
         if (!GameManager.Instance.tutorialManager.attack) return;

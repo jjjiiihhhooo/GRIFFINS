@@ -182,6 +182,7 @@ public class PlayerMovementState : IState
         Ray ray = new Ray(stateMachine.Player.transform.position + Vector3.up, targetRotationDirection);
         Ray ray_1 = new Ray(stateMachine.Player.transform.position + Vector3.up * 0.05f, targetRotationDirection);
         Ray ray_2 = new Ray(stateMachine.Player.transform.position + Vector3.up * 0.9f, targetRotationDirection);
+        Ray ray_3 = new Ray(stateMachine.Player.transform.position + Vector3.up * 1.3f, targetRotationDirection);
 
         stateMachine.Player.testRay = ray;
         stateMachine.Player.testRay1 = ray_1;
@@ -200,6 +201,20 @@ public class PlayerMovementState : IState
                 return;
             }
             if (Physics.Raycast(ray_1, 0.3f, stateMachine.Player.LayerData.GroundLayer, QueryTriggerInteraction.Ignore))
+            {
+                stateMachine.Player.Rigidbody.velocity = new Vector3(0f, stateMachine.Player.Rigidbody.velocity.y, 0f);
+                return;
+            }
+        }
+        else
+        {
+            if (Physics.Raycast(ray_3, 0.3f, stateMachine.Player.LayerData.GroundLayer, QueryTriggerInteraction.Ignore))
+            {
+                stateMachine.Player.Rigidbody.velocity = new Vector3(0f, stateMachine.Player.Rigidbody.velocity.y, 0f);
+                return;
+            }
+
+            if (Physics.Raycast(ray, 0.3f, stateMachine.Player.LayerData.GroundLayer, QueryTriggerInteraction.Ignore))
             {
                 stateMachine.Player.Rigidbody.velocity = new Vector3(0f, stateMachine.Player.Rigidbody.velocity.y, 0f);
                 return;

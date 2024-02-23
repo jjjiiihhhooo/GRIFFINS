@@ -46,7 +46,7 @@ public class ObjectEvent : MonoBehaviour
                 if (!colEffect.gameObject.activeSelf) colEffect.gameObject.SetActive(true);
                 colEffect.Play();
             }
-            _event.Invoke();
+            _event?.Invoke();
         }
     }
 }
