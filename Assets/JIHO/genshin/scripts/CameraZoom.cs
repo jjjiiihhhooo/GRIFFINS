@@ -3,54 +3,57 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace genshin
+
+
+public class CameraZoom : MonoBehaviour
 {
-    public class CameraZoom : MonoBehaviour
+    [SerializeField][Range(0f, 12f)] private float defaultDistance = 6f;
+    [SerializeField][Range(0f, 12f)] public float minimumDistance = 1f;
+    [SerializeField][Range(0f, 12f)] public float maximumDistance = 6f;
+
+    [SerializeField][Range(0f, 20f)] private float smoothing = 4f;
+    [SerializeField][Range(0f, 20f)] private float zoomSensitivity = 1f;
+
+    private CinemachineFramingTransposer framingTransposer;
+    private CinemachineInputProvider inputProvider;
+    public CinemachineVirtualCamera virtualCamera;
+
+
+    private float currentTargetDistance;
+
+    private void Awake()
     {
-        [SerializeField][Range(0f, 12f)] private float defaultDistance = 6f;
-        [SerializeField][Range(0f, 12f)] private float minimumDistance = 1f;
-        [SerializeField][Range(0f, 12f)] private float maximumDistance = 6f;
+        framingTransposer = GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineFramingTransposer>();
+        inputProvider = GetComponent<CinemachineInputProvider>();
 
-        [SerializeField][Range(0f, 20f)] private float smoothing = 4f;
-        [SerializeField][Range(0f, 20f)] private float zoomSensitivity = 1f;
+        currentTargetDistance = defaultDistance;
+    }
 
-        private CinemachineFramingTransposer framingTransposer;
-        private CinemachineInputProvider inputProvider;
+    private void Update()
+    {
+        Zoom();
+    }
 
-        private float currentTargetDistance;
 
-        private void Awake()
+    private void Zoom()
+    {
+        float zoomValue = inputProvider.GetAxisValue(2) * zoomSensitivity;
+
+        currentTargetDistance = Mathf.Clamp(currentTargetDistance + zoomValue, minimumDistance, maximumDistance);
+
+        float currentDistance = framingTransposer.m_CameraDistance;
+
+        if (currentDistance == currentTargetDistance)
         {
-            framingTransposer = GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineFramingTransposer>();
-            inputProvider = GetComponent<CinemachineInputProvider>();
-
-            currentTargetDistance = defaultDistance;
+            return;
         }
 
-        private void Update()
-        {
-            Zoom();
-        }
+        float lerpedZoomValue = Mathf.Lerp(currentDistance, currentTargetDistance, smoothing * Time.deltaTime);
 
-        private void Zoom()
-        {
-            float zoomValue = inputProvider.GetAxisValue(2) * zoomSensitivity;
-
-            currentTargetDistance = Mathf.Clamp(currentTargetDistance + zoomValue, minimumDistance, maximumDistance);
-
-            float currentDistance = framingTransposer.m_CameraDistance;
-
-            if (currentDistance == currentTargetDistance)
-            {
-                return;
-            }
-
-            float lerpedZoomValue = Mathf.Lerp(currentDistance, currentTargetDistance, smoothing * Time.deltaTime);
-
-            framingTransposer.m_CameraDistance = lerpedZoomValue;
-        }
+        framingTransposer.m_CameraDistance = lerpedZoomValue;
     }
 }
+
 
 
 

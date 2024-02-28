@@ -2,26 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace genshin
+
+
+public class PlayerMovingState : PlayerGroundedState
 {
-    public class PlayerMovingState : PlayerGroundedState
+    public PlayerMovingState(PlayerMovementStateMachine playerMovementStateMachine) : base(playerMovementStateMachine)
     {
-        public PlayerMovingState(PlayerMovementStateMachine playerMovementStateMachine) : base(playerMovementStateMachine)
-        {
-        }
+    }
 
-        public override void Enter()
-        {
-            base.Enter();
+    public override void Enter()
+    {
+        base.Enter();
 
-            StartAnimation(stateMachine.Player.AnimationData.MovingParameterHash);
-        }
+        StartAnimation(stateMachine.Player.AnimationData.MovingParameterHash);
+    }
 
-        public override void Exit()
-        {
-            base.Exit();
+    public override void Exit()
+    {
+        base.Exit();
 
-            StopAnimation(stateMachine.Player.AnimationData.MovingParameterHash);
-        }
+        StopAnimation(stateMachine.Player.AnimationData.MovingParameterHash);
     }
 }
+

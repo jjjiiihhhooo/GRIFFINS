@@ -138,8 +138,6 @@ public class White : Unit<PlayerController>
         animator.SetBool("isDashAir", true);
 
         
-
-        
         Vector3 dir = Camera.main.ScreenPointToRay(Input.mousePosition).direction;
         PlayerController.ray = new Ray(PlayerController.transform.position, dir);
 

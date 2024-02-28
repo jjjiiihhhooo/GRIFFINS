@@ -93,8 +93,8 @@ MonoBehaviour:
       <RotationData>k__BackingField:
         <TargetRotationReachTime>k__BackingField: {x: 0, y: 0.02, z: 0}
       <TimeToBeConsideredConsecutive>k__BackingField: 1
-      <ConsecutiveDashesLimitAmount>k__BackingField: 2
-      <DashLimitReachedCooldown>k__BackingField: 1.75
+      <ConsecutiveDashesLimitAmount>k__BackingField: 3
+      <DashLimitReachedCooldown>k__BackingField: 1.2
     <WalkData>k__BackingField:
       <SpeedModifier>k__BackingField: 0.225
       <BackwardsCameraRecenteringData>k__BackingField:
@@ -114,8 +114,6 @@ MonoBehaviour:
       <HardDecelerationForce>k__BackingField: 5
     <RollData>k__BackingField:
       <SpeedModifier>k__BackingField: 1
-    <AttackData>k__BackingField:
-      <AttackDamage>k__BackingField: 1
   <AirborneData>k__BackingField:
     <JumpData>k__BackingField:
       <JumpToGroundRayDistance>k__BackingField: 2
@@ -218,7 +216,7 @@ MonoBehaviour:
       <WeakForce>k__BackingField: {x: 0, y: 10, z: 0}
       <MediumForce>k__BackingField: {x: 0, y: 10, z: 0}
       <StrongForce>k__BackingField: {x: 0, y: 10, z: 0}
-      <DecelerationForce>k__BackingField: 1.5
+      <DecelerationForce>k__BackingField: 1
     <FallData>k__BackingField:
       <FallSpeedLimit>k__BackingField: 15
-      <MinimumDistanceToBeConsideredHardFall>k__BackingField: 3
+      <MinimumDistanceToBeConsideredHardFall>k__BackingField: 5

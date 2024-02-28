@@ -3,62 +3,62 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace genshin
+
+
+public class PlayerRollingState : PlayerLandingState
 {
-    public class PlayerRollingState : PlayerLandingState
+    public PlayerRollingState(PlayerMovementStateMachine playerMovementStateMachine) : base(playerMovementStateMachine)
     {
-        public PlayerRollingState(PlayerMovementStateMachine playerMovementStateMachine) : base(playerMovementStateMachine)
+    }
+
+    public override void Enter()
+    {
+        stateMachine.ReusableData.MovementSpeedModifier = groundedData.RollData.SpeedModifier;
+
+        base.Enter();
+
+        EffectActive(stateMachine.Player.landEffect, true);
+
+        StartAnimation(stateMachine.Player.AnimationData.RollParameterHash);
+
+        stateMachine.ReusableData.ShouldSprint = false;
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+
+        EffectActive(stateMachine.Player.landEffect, false);
+
+        StopAnimation(stateMachine.Player.AnimationData.RollParameterHash);
+    }
+
+    public override void PhysicsUpdate()
+    {
+        base.PhysicsUpdate();
+
+        if (stateMachine.ReusableData.MovementInput != Vector2.zero)
         {
+            return;
         }
 
-        public override void Enter()
+        RotateTowardsTargetRotation();
+    }
+
+    public override void OnAnimationTransitionEvent()
+    {
+        if (stateMachine.ReusableData.MovementInput == Vector2.zero)
         {
-            stateMachine.ReusableData.MovementSpeedModifier = groundedData.RollData.SpeedModifier;
+            stateMachine.ChangeState(stateMachine.MediumStoppingState);
 
-            base.Enter();
-
-            EffectActive(stateMachine.Player.landEffect, true);
-
-            StartAnimation(stateMachine.Player.AnimationData.RollParameterHash);
-
-            stateMachine.ReusableData.ShouldSprint = false;
+            return;
         }
 
-        public override void Exit()
-        {
-            base.Exit();
+        OnMove();
+    }
 
-            EffectActive(stateMachine.Player.landEffect, false);
-
-            StopAnimation(stateMachine.Player.AnimationData.RollParameterHash);
-        }
-
-        public override void PhysicsUpdate()
-        {
-            base.PhysicsUpdate();
-
-            if (stateMachine.ReusableData.MovementInput != Vector2.zero)
-            {
-                return;
-            }
-
-            RotateTowardsTargetRotation();
-        }
-
-        public override void OnAnimationTransitionEvent()
-        {
-            if (stateMachine.ReusableData.MovementInput == Vector2.zero)
-            {
-                stateMachine.ChangeState(stateMachine.MediumStoppingState);
-
-                return;
-            }
-
-            OnMove();
-        }
-
-        protected override void OnJumpStarted(InputAction.CallbackContext context)
-        {
-        }
+    protected override void OnJumpStarted(InputAction.CallbackContext context)
+    {
     }
 }
+

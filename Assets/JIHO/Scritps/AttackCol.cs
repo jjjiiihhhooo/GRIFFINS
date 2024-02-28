@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AttackCol : MonoBehaviour
 {
-    [SerializeField] private float time;
+    [SerializeField] public float time;
 
     private void OnEnable()
     {

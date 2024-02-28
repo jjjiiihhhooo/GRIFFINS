@@ -2,38 +2,37 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace genshin
+
+public class PlayerAirborneState : PlayerMovementState
 {
-    public class PlayerAirborneState : PlayerMovementState
+    public PlayerAirborneState(PlayerMovementStateMachine playerMovementStateMachine) : base(playerMovementStateMachine)
     {
-        public PlayerAirborneState(PlayerMovementStateMachine playerMovementStateMachine) : base(playerMovementStateMachine)
-        {
-        }
+    }
 
-        public override void Enter()
-        {
-            base.Enter();
+    public override void Enter()
+    {
+        base.Enter();
 
-            StartAnimation(stateMachine.Player.AnimationData.AirborneParameterHash);
+        StartAnimation(stateMachine.Player.AnimationData.AirborneParameterHash);
 
-            ResetSprintState();
-        }
+        ResetSprintState();
+    }
 
-        public override void Exit()
-        {
-            base.Exit();
+    public override void Exit()
+    {
+        base.Exit();
 
-            StopAnimation(stateMachine.Player.AnimationData.AirborneParameterHash);
-        }
+        StopAnimation(stateMachine.Player.AnimationData.AirborneParameterHash);
+    }
 
-        protected virtual void ResetSprintState()
-        {
-            stateMachine.ReusableData.ShouldSprint = false;
-        }
+    protected virtual void ResetSprintState()
+    {
+        stateMachine.ReusableData.ShouldSprint = false;
+    }
 
-        protected override void OnContactWithGround(Collider collider)
-        {
-            stateMachine.ChangeState(stateMachine.LightLandingState);
-        }
+    protected override void OnContactWithGround(Collider collider)
+    {
+        stateMachine.ChangeState(stateMachine.LightLandingState);
     }
 }
+
