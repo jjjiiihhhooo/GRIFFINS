@@ -56,7 +56,7 @@ public class PlayerJumpingState : PlayerAirborneState
         {
             return;
         }
-        if (stateMachine.Player.skillData.grappling) stateMachine.Player.currentCharacter.ExecuteGrapple(stateMachine.Player);
+        if (stateMachine.Player.skillData.grappling) stateMachine.Player.currentCharacter.ExecuteGrapple();
         else stateMachine.ChangeState(stateMachine.FallingState);
 
     }

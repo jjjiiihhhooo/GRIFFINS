@@ -16,6 +16,7 @@ public class Potal : MonoBehaviour
 
     private void DataSave()
     {
+        Player.Instance.spawn = null;
         //Player.Instance.targetSet.Targets.Clear(); 
         //타겟범위에 들어와있는 오브젝트들 삭제
     }

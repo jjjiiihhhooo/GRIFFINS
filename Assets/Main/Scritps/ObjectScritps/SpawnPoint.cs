@@ -9,16 +9,26 @@ public class SpawnPoint : MonoBehaviour
 
     void Start()
     {
-        if(!isNotSceneChange) Invoke("Spawn", 0.05f);
+        if(!isNotSceneChange)
+        {
+            Debug.Log("qqqq");
+            Invoke("SetSpawn", 0.05f);
+            Invoke("Spawn", 0.05f);
+        }
 
     }
 
+    public void SetSpawn()
+    {
+        if (Player.Instance.spawn != this)
+        {
+            Player.Instance.spawn = this;
+            GameManager.Instance.event_dictionary["SetSpawn"].Invoke();
+        }
+    }
 
     public void Spawn()
     {
-        FindObjectOfType<Player>().transform.position = transform.position;
-        Debug.Log("Spawn");
-        Debug.Log("Player : " + FindObjectOfType<Player>().transform.position);
-        Debug.Log("SpawnPoint : " + transform.position);
+        Player.Instance.transform.position = transform.position;
     }
 }

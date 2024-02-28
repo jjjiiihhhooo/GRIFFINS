@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 using UnityEngine.UI;
 
 using Sirenix.OdinInspector;
-
+using TMPro;
 
 [RequireComponent(typeof(PlayerInput))]
 [RequireComponent(typeof(PlayerResizableCapsuleCollider))]
@@ -18,6 +18,7 @@ public class Player : SerializedMonoBehaviour
     [field: SerializeField] public PlayerSO Data { get; private set; }
 
     [field: Header("Collisions")]
+    public AttackCol attackCol;
     [field: SerializeField] public PlayerLayerData LayerData { get; private set; }
     [field: Header("Camera")]
     [field: SerializeField] public PlayerCameraUtility CameraRecenteringUtility { get; private set; }
@@ -25,9 +26,8 @@ public class Player : SerializedMonoBehaviour
     [field: Header("Animations")]
     [field: SerializeField] public PlayerAnimationData AnimationData { get; private set; }
 
-    public GameObject jumpEffect;
-    public GameObject dashEffect;
-    public GameObject landEffect;
+
+    
 
 
     public Rigidbody Rigidbody { get; private set; }
@@ -41,21 +41,39 @@ public class Player : SerializedMonoBehaviour
     public TargetSet targetSet;
     public SkillData skillData;
     public Swinging swinging;
-    public Canvas playerCanvas;
     public SpawnPoint spawn;
-    public UnityEngine.UI.Image staminaFill;
     public PlayerMovementStateMachine movementStateMachine;
 
-    public PlayerCharacter currentCharacter;
-    public PlayerCharacter[] characters;
 
-    public Animator[] animators;
+    [Header("Effect")]
+    
+    public GameObject jumpEffect;
+    public GameObject dashEffect;
+    public GameObject landEffect;
+
+    [Header("UI")]
+    public Canvas playerCanvas;
+    public UnityEngine.UI.Image staminaFill;
+    public UnityEngine.UI.Image interactionImage;
+    public TextMeshProUGUI interactionText;
+
+    [Header("Character")]
+    public PlayerCharacter currentCharacter;
+    public PlayerCharacter[] characters; 
+
+
+    //1: white
+    //2: green
+    //3: blue
+    //4: red
+
 
     public Vector3 dir;
     public Ray ray;
     public Ray testRay;
     public Ray testRay1;
     public Ray testRay2;
+    public Ray camRay;
     
     public bool isGround; //땅에 있는 상태인지
 
@@ -71,15 +89,24 @@ public class Player : SerializedMonoBehaviour
     {
         if (Instance == null)
         {
+            movementStateMachine = new PlayerMovementStateMachine(this);
             if (playerCanvas.worldCamera == null) playerCanvas.worldCamera = Camera.main;
             Instance = this;
             CameraRecenteringUtility.Initialize();
             AnimationData.Initialize();
             swinging = GetComponent<Swinging>();
             Rigidbody = GetComponent<Rigidbody>();
+
+            for(int i = 0; i < characters.Length; i++)
+            {
+                characters[i].Init(this);
+            }
+
             currentCharacter = characters[0];
             currentCharacter.model.SetActive(true);
+
             Animator = currentCharacter.animator;
+
 
 
             Input = GetComponent<PlayerInput>();
@@ -87,7 +114,7 @@ public class Player : SerializedMonoBehaviour
 
             MainCameraTransform = Camera.main.transform;
 
-            movementStateMachine = new PlayerMovementStateMachine(this);
+            
 
             DontDestroyOnLoad(this.gameObject);
         }
@@ -105,8 +132,13 @@ public class Player : SerializedMonoBehaviour
 
     private void Update()
     {
+        currentCharacter.Update();
+
+
         dir = MainCameraTransform.forward;
         ray = new Ray(new Vector3(transform.position.x, transform.position.y + 2f, transform.position.z), dir);
+        camRay = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
+
         if (skillData.touch) return;
         if (swinging.swinging) return;
         if (currentCharacter.animator.GetCurrentAnimatorStateInfo(1).IsName("Idle") || currentCharacter.animator.GetCurrentAnimatorStateInfo(1).IsName("Throw"))
@@ -125,7 +157,7 @@ public class Player : SerializedMonoBehaviour
     {
         Debug.DrawRay(testRay.origin, testRay.direction, Color.red);    
         Debug.DrawRay(testRay1.origin, testRay.direction, Color.red);    
-        Debug.DrawRay(testRay2.origin, testRay.direction, Color.red);    
+        Debug.DrawRay(testRay2.origin, testRay.direction, Color.blue);
     }
 
     private void FixedUpdate()
@@ -140,7 +172,7 @@ public class Player : SerializedMonoBehaviour
         if (skillData.touch)
         {
             skillData.touch = false;
-            currentCharacter.StopGrapple(this);
+            currentCharacter.StopGrapple();
             //skillData.StopGrapple();
         }
 
@@ -150,9 +182,10 @@ public class Player : SerializedMonoBehaviour
             swinging.StopSwing();
         }
 
-        if(collider.tag == "Laser")
+
+        if(collider.tag == "Spawn")
         {
-            PlayerDead();
+            collider.GetComponent<SpawnPoint>().SetSpawn();
         }
 
         movementStateMachine.OnTriggerEnter(collider);
@@ -163,7 +196,7 @@ public class Player : SerializedMonoBehaviour
         if (skillData.touch)
         {
             skillData.touch = false;
-            currentCharacter.StopGrapple(this);
+            currentCharacter.StopGrapple();
         }
 
     }
@@ -180,6 +213,11 @@ public class Player : SerializedMonoBehaviour
     }
 
     public void PlayerDead()
+    {
+        
+    }
+
+    public void PlayerSpawn()
     {
         spawn.Spawn();
     }
@@ -240,6 +278,27 @@ public class Player : SerializedMonoBehaviour
     public void DestroyEvent(UnityEngine.Object obj, float delay = 0f)
     {
         Destroy(obj, delay);
+    }
+
+    public void EndCombo()
+    {
+        Debug.Log("EndCombo ");
+        currentCharacter.weapon_obj.SetActive(false);
+        currentCharacter.comboCounter = 0;
+        currentCharacter.lastComboEnd = Time.time;
+    }
+
+    public void SetActiveInteraction(bool _bool, string text = "")
+    {
+        if(_bool)
+        {
+            interactionText.text = text;
+            interactionImage.gameObject.SetActive(true);
+        }
+        else
+        {
+            interactionImage.gameObject.SetActive(false);
+        }
     }
 
     public GameObject InstantiateEvent(GameObject obj, Vector3 transform, Quaternion quaternion)

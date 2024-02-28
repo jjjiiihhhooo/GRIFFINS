@@ -7,13 +7,16 @@ using UnityEngine;
 public class TargetSet : MonoBehaviour
 {
     public float objectViewArea;
+    public float interactionViewArea;
     public float enemyViewArea;
 
     public LayerMask objectTargetMask;
+    public LayerMask interactionTargetMask;
     public LayerMask enemyTargetMask;
 
     public GameObject targetObject;
-    public GameObject targetEnemy;
+    public InteractableObject targetInteraction;
+    public EnemyController targetEnemy;
 
     public GameObject grappleTargetObject;
 
@@ -23,6 +26,7 @@ public class TargetSet : MonoBehaviour
         //ObjectGrappleTarget();
         ObjectTarget();
         EnemyTarget();
+        InteractionTarget();
     }
 
     public void ObjectTarget()
@@ -63,29 +67,70 @@ public class TargetSet : MonoBehaviour
         if (EnemyColliders.Length > 0)
         {
             float closestAngle = Mathf.Infinity;
-            GameObject closestEnemy = null;
+            EnemyController closestEnemy = null;
 
             foreach (Collider collider in EnemyColliders)
             {
                 Vector3 direction = collider.transform.position - transform.position;
                 float angle = Vector3.Angle(Camera.main.transform.forward, direction);
 
-                if (angle < closestAngle)
+                if (angle <= closestAngle)
                 {
                     if (collider.tag == "Enemy")
                     {
                         closestAngle = angle;
-                        closestEnemy = collider.gameObject;
+                        closestEnemy = collider.GetComponent<EnemyController>();
                     }
                 }
             }
+
+            if (targetEnemy != null) targetEnemy.TargetCheck(false);
             targetEnemy = closestEnemy;
+            if(targetEnemy != null) targetEnemy.TargetCheck(true);
         }
         else
         {
             targetEnemy = null;
         }
     }
+
+    public void InteractionTarget()
+    {
+        Collider[] InteractionColliders = Physics.OverlapSphere(transform.position, interactionViewArea, interactionTargetMask);
+
+        if (InteractionColliders.Length > 0)
+        {
+            float closestAngle = Mathf.Infinity;
+            InteractableObject closestInteraction = null;
+
+            foreach (Collider collider in InteractionColliders)
+            {
+                Vector3 direction = collider.transform.position - transform.position;
+                float angle = Vector3.Angle(Camera.main.transform.forward, direction);
+
+                if (angle < closestAngle)
+                {
+                    if (collider.tag == "interaction")
+                    {
+                        closestAngle = angle;
+                        closestInteraction = collider.GetComponent<InteractableObject>();
+                    }
+                }
+            }
+            targetInteraction = closestInteraction;
+            if (targetInteraction != null)
+            {
+                if(targetInteraction.GetReady())
+                    Player.Instance.SetActiveInteraction(true, targetInteraction.InteractorName);
+            }
+        }
+        else
+        {
+            if (targetInteraction != null) Player.Instance.SetActiveInteraction(false);
+            targetInteraction = null;
+        }
+    }
+
 
     //public void ObjectGrappleTarget()
     //{
@@ -134,7 +179,7 @@ public class TargetSet : MonoBehaviour
     //            { 
     //                if(target.gameObject.tag == "useObject")
     //                    targetGameObject = target.gameObject;
-                    
+
     //            }
     //            else if (Vector3.Distance(transform.position, target.position) < Vector3.Distance(transform.position, targetGameObject.transform.position))
     //            {
@@ -163,5 +208,9 @@ public class TargetSet : MonoBehaviour
         Handles.DrawWireArc(transform.position, Vector3.up, transform.forward, 360, enemyViewArea);
         if (targetEnemy != null)
             Handles.DrawLine(transform.position, targetEnemy.transform.position);
+
+        Handles.DrawWireArc(transform.position, Vector3.up, transform.forward, 360, interactionViewArea);
+        if (targetInteraction != null)
+            Handles.DrawLine(transform.position, targetInteraction.transform.position);
     }
 }

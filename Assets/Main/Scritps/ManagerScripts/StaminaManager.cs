@@ -16,6 +16,11 @@ public class StaminaManager : MonoBehaviour
     
     public Image staminaImage;
 
+    public void Init()
+    {
+
+    }
+
     private void Update()
     {
         DefaultPlusStamina();
@@ -26,15 +31,27 @@ public class StaminaManager : MonoBehaviour
 
     private void UpdateStaminaImage()
     {
-        if (playerCanvas == null) playerCanvas = Player.Instance.playerCanvas;
-        if (staminaImage == null) staminaImage = Player.Instance.staminaFill;
+        if (playerCanvas == null)
+        {
+            if (Player.Instance == null) return;
+            playerCanvas = Player.Instance.playerCanvas;
+        }
+        if (staminaImage == null)
+        {
+            if (Player.Instance == null) return;
+            staminaImage = Player.Instance.staminaFill;
+        }
 
-        playerCanvas.transform.LookAt(playerCanvas.transform.position + Camera.main.transform.rotation * Vector3.forward, Camera.main.transform.rotation * Vector3.up);
-        staminaImage.fillAmount = curStamina / maxStamina;
+        if(playerCanvas != null)
+            playerCanvas.transform.LookAt(playerCanvas.transform.position + Camera.main.transform.rotation * Vector3.forward, Camera.main.transform.rotation * Vector3.up);
+        if(staminaImage != null)
+            staminaImage.fillAmount = curStamina / maxStamina;
     }
 
     private void ShowStamina()
     {
+        if (staminaImage == null) return;
+
         if (curStamina >= maxStamina)
         {
             if (staminaImage.transform.parent.gameObject.activeSelf) staminaImage.transform.parent.gameObject.SetActive(false);
@@ -45,26 +62,12 @@ public class StaminaManager : MonoBehaviour
             if(!staminaImage.transform.parent.gameObject.activeSelf) staminaImage.transform.parent.gameObject.SetActive(true);
         }
     }
-    //private void ShowStamina()
-    //{
-    //    if (!isStaminaShow) return;
-        
-    //    if(staminaShowCurTime <= 0)
-    //    {
-    //        staminaShowCurTime = staminaShowMaxTime;
-    //        staminaImage.transform.parent.gameObject.SetActive(false);
-    //        isStaminaShow = false;
-    //        return;
-    //    }
-    //    else
-    //    {
-            
-    //        staminaShowCurTime -= Time.deltaTime;
-    //    }
-    //}
+
 
     private void SprintMinusStamina()
     {
+        if (Player.Instance == null) return;
+
         if (!Player.Instance.skillData.isSprint) return;
         //ShowStaminaTrigger();
 
@@ -95,20 +98,7 @@ public class StaminaManager : MonoBehaviour
         }
     }
 
-    //private void ShowStaminaTrigger()
-    //{
-    //    if(isStaminaShow)
-    //    {
-    //        staminaShowCurTime = staminaShowMaxTime;
-    //    }
-    //    else
-    //    {
-    //        if (!staminaImage.transform.parent.gameObject.activeSelf) staminaImage.transform.parent.gameObject.SetActive(true);
-    //        isStaminaShow = true;
-    //    }
-
-    //}
-
+   
     public void PlusStamina(float value, bool isCor = false)
     {
         //ShowStaminaTrigger();
