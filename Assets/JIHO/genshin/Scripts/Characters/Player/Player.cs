@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 using Sirenix.OdinInspector;
 using TMPro;
+using Unity.VisualScripting;
 
 [RequireComponent(typeof(PlayerInput))]
 [RequireComponent(typeof(PlayerResizableCapsuleCollider))]
@@ -132,8 +133,9 @@ public class Player : SerializedMonoBehaviour
 
     private void Update()
     {
+        if (GameManager.Instance.dialogueManager.IsChat) return;
+        
         currentCharacter.Update();
-
 
         dir = MainCameraTransform.forward;
         ray = new Ray(new Vector3(transform.position.x, transform.position.y + 2f, transform.position.z), dir);

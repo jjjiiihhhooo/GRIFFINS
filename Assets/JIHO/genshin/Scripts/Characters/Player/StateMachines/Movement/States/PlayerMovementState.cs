@@ -120,6 +120,7 @@ public class PlayerMovementState : IState
 
     protected virtual void AddInputActionsCallbacks()
     {
+        if (GameManager.Instance.dialogueManager.IsChat) return;
         stateMachine.Player.Input.PlayerActions.WalkToggle.started += OnWalkToggleStarted;
 
         stateMachine.Player.Input.PlayerActions.Look.started += OnMouseMovementStarted;
@@ -167,6 +168,7 @@ public class PlayerMovementState : IState
     private void Move()
     {
         if (stateMachine.Player.isAttack) return;
+        if (GameManager.Instance.dialogueManager.IsChat) return;
         if (stateMachine.ReusableData.MovementInput == Vector2.zero || stateMachine.ReusableData.MovementSpeedModifier == 0f)
         {
             stateMachine.Player.Rigidbody.velocity = new Vector3(0f, stateMachine.Player.Rigidbody.velocity.y, 0f);

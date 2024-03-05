@@ -102,7 +102,9 @@ public class PlayerGroundedState : PlayerMovementState
 
     protected override void AddInputActionsCallbacks()
     {
+        if (GameManager.Instance.dialogueManager.IsChat) return;
         base.AddInputActionsCallbacks();
+
 
         stateMachine.Player.Input.PlayerActions.Dash.started += OnDashStarted;
 

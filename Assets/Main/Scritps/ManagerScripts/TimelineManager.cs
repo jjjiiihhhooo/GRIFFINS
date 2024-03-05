@@ -33,6 +33,11 @@ public class TimelineManager : SerializedMonoBehaviour
         playableDirecter.gameObject.SetActive(false);
     }
 
+    public void TimelinePauseToStart()
+    {
+        playableDirecter.Play();
+    }
+
     public void TimelineChange(PlayableDirector timeline)
     {
         playableDirecter = timeline;

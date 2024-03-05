@@ -16,28 +16,18 @@ public class TimelineEvent : MonoBehaviour
 
     public void TimelineStart()
     {
+        SetTimeline();
         GameManager.Instance.timelineManager.TimelineStart();
+    }
+
+    public void PauseToStart()
+    {
+        GameManager.Instance.timelineManager.TimelinePauseToStart();
     }
 
     public void TimelineEnd()
     {
         Debug.Log("timelineEndSignal");
         GameManager.Instance.timelineManager.TimelineEnd();
-    }
-
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.I))
-        {
-            SetTimeline();
-        }
-        else if(Input.GetKeyDown(KeyCode.O))
-        {
-            TimelineStart();
-        }
-        else if (Input.GetKeyDown(KeyCode.P))
-        {
-            TimelineEnd();
-        }
     }
 }

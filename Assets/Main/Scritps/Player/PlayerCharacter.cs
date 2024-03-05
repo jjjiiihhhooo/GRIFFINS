@@ -29,91 +29,17 @@ public class PlayerCharacter
 
     public virtual void Update()
     {
-        ExitAttack();
-    }
-    public virtual void Catch()
-    {
-        if (!GameManager.Instance.staminaManager.ChechStamina(20f)) return;
-        if (player.targetSet.targetObject == null || player.skillData.isHand || player.skillData.handObj != null) return;
-        if (player.currentCharacter.animator.GetCurrentAnimatorStateInfo(1).IsName("Idle") || player.currentCharacter.animator.GetCurrentAnimatorStateInfo(1).IsName("Throw")) return;
-        GameManager.Instance.crossHair.SetActive(true);
-
-        GameManager.Instance.staminaManager.staminaImage.transform.parent.GetComponent<RectTransform>().anchoredPosition = new Vector3(140f, 35.4f, 0f);
-        //GameManager.Instance.staminaManager.staminaImage.rectTransform.anchoredPosition = new Vector3(140f, 35.4f, 0f);
-
-        player.currentCharacter.animator.SetBool("isHand", true);
-
-        player.skillData.handObj = player.targetSet.targetObject;
-
-        player.skillData.handObj.GetComponent<Collider>().isTrigger = true;
-
-
-        Rigidbody rigid = player.skillData.handObj.GetComponent<Rigidbody>();
-        CameraZoom camZoom = player.skillData.camZoom;
-        Outline outLine = player.skillData.handObj.GetComponent<Outline>();
-
-        player.isPsyche = true;
-        player.skillData.isHand = true;
-        player.skillData.handObj.tag = "usingObject";
-        rigid.useGravity = false;
-        rigid.isKinematic = true;
-        player.skillData.handObj.transform.DOKill(false);
-        player.skillData.handObj.transform.DOMove(player.skillData.catchTransform.position, 0.2f).SetEase(Ease.OutQuad).OnComplete(() => { player.skillData.handObj.transform.position = player.skillData.catchTransform.position; camZoom.maximumDistance = 2f; player.skillData.lookatTransform.localPosition = new Vector3(0.75f, 1.41f, 0f); player.skillData.handObj.transform.SetParent(player.transform); });
-        player.movementStateMachine.ReusableData.ShouldWalk = true;
-        player.movementStateMachine.ReusableData.ShouldSprint = false;
-        if (player.movementStateMachine.ReusableData.MovementInput != Vector2.zero) player.movementStateMachine.ChangeState(player.movementStateMachine.WalkingState);
-        else player.movementStateMachine.ChangeState(player.movementStateMachine.IdlingState);
-        outLine.DOKill(false);
-
-        //outLine.OutlineWidth = 10f;
-        player.CoroutineEvent(outLineCor(outLine, 10f, 1f, 10f));
+        
     }
 
-    public virtual void Throw()
+    public virtual void LeftAction()
     {
-        if (!player.skillData.isHand || player.skillData.handObj == null) return;
-        GameManager.Instance.crossHair.SetActive(false);
-        GameManager.Instance.staminaManager.staminaImage.transform.parent.GetComponent<RectTransform>().anchoredPosition = new Vector3(62f, 35.4f, 0f);
-        //GameManager.Instance.staminaManager.staminaImage.rectTransform.anchoredPosition = new Vector3(62f, 35.4f, 0f);
-        Rigidbody rigid = player.skillData.handObj.GetComponent<Rigidbody>();
-        CameraZoom camZoom = player.skillData.camZoom;
-        Outline outLine = player.skillData.handObj.GetComponent<Outline>();
 
-        player.isPsyche = false;
+    }
 
-        if (player.skillData.handObj.gameObject.name == "Stamina_obj")
-        {
-            player.currentCharacter.animator.SetBool("isHand", false);
-            GameManager.Instance.staminaManager.PlusStamina(30f);
-            player.DestroyEvent(player.skillData.handObj.gameObject);
-        }
-        else
-        {
-            player.currentCharacter.animator.SetTrigger("isThrow");
-            player.currentCharacter.animator.SetBool("isHand", false);
-            GameManager.Instance.staminaManager.MinusStamina(20f);
+    public virtual void RightAction()
+    {
 
-            rigid.isKinematic = false;
-            Vector3 aimDir = (GameManager.Instance.inputData.MouseWorldPosition - player.skillData.catchTransform.position).normalized;
-            GameObject temp = player.InstantiateEvent(GameManager.Instance.inputData.projectTile, player.skillData.catchTransform.position, Quaternion.LookRotation(aimDir, Vector3.up));
-            player.skillData.handObj.transform.SetParent(temp.transform);
-
-            player.CoroutineEvent(outLineCor(outLine, 0f, -1f, 10f));
-        }
-
-        player.skillData.handObj.GetComponent<BoxCollider>().isTrigger = false;
-
-        camZoom.minimumDistance = 6f;
-        camZoom.maximumDistance = 6f;
-        camZoom.transform.DOLocalMove(Vector3.zero, 0.3f).OnComplete(() => camZoom.minimumDistance = 1f);
-
-        player.skillData.lookatTransform.localPosition = new Vector3(0, 1.23f, 0f);
-        player.movementStateMachine.ReusableData.ShouldWalk = false;
-        if (player.movementStateMachine.ReusableData.MovementInput != Vector2.zero) player.movementStateMachine.ChangeState(player.movementStateMachine.RunningState);
-
-        player.skillData.isHand = false;
-        player.Rigidbody.velocity = Vector3.zero;
-        player.skillData.handObj = null;
     }
 
     public virtual void StartGrapple()
@@ -181,7 +107,160 @@ public class PlayerCharacter
         player.skillData.lr.enabled = false;
     }
 
-    public virtual void GCatch()
+    public virtual void Interaction()
+    {
+        player.targetSet.targetInteraction?.OnInteract();
+    }
+
+    public void ExitAttack()
+    {
+        if(player.currentCharacter.animator.GetCurrentAnimatorStateInfo(3).normalizedTime > 0.9f && player.currentCharacter.animator.GetCurrentAnimatorStateInfo(3).IsTag("Attack"))
+        {
+            player.isAttack = false;
+            player.Invoke("EndCombo", 0.5f);
+        }
+    }
+
+    public IEnumerator outLineCor(Outline outLine, float value, float oper, float pitch)
+    {
+        if (oper > 0f)
+        {
+            while (outLine.OutlineWidth < value)
+            {
+                outLine.OutlineWidth += Time.deltaTime * oper * pitch;
+                yield return new WaitForEndOfFrame();
+                if (!player.skillData.isHand) break;
+            }
+        }
+        else if (oper < 0f)
+        {
+            while (outLine.OutlineWidth > value)
+            {
+                outLine.OutlineWidth += Time.deltaTime * oper * pitch;
+                yield return new WaitForEndOfFrame();
+            }
+        }
+    }
+
+    public virtual Vector3 CalculateJumpVelocity(Vector3 startPoint, Vector3 endPoint, float trajectoryHeight) //목표 위치까지 포물선 trajectoryHeight 높이 추가
+    {
+        float gravity = Physics.gravity.y;
+        float displacementY = endPoint.y - startPoint.y;
+        Vector3 displacementXZ = new Vector3(endPoint.x - startPoint.x, 0f, endPoint.z - startPoint.z);
+
+        Vector3 velocityY = Vector3.up * Mathf.Sqrt(-2 * gravity * trajectoryHeight);
+        Vector3 velocityXZ = displacementXZ / (Mathf.Sqrt(-2 * trajectoryHeight / gravity)
+          + Mathf.Sqrt(2 * (displacementY - trajectoryHeight) / gravity));
+
+        return (velocityXZ + velocityY);
+    }
+}
+
+[System.Serializable]
+public class WhiteCharacter : PlayerCharacter
+{
+
+    public override void Update()
+    {
+        base.Update();
+    }
+
+    public override void LeftAction()
+    {
+        Throw();
+    }
+
+    public override void RightAction()
+    {
+        Catch();
+    }
+
+    private void Catch()
+    {
+        if (!GameManager.Instance.staminaManager.ChechStamina(20f)) return;
+        if (player.targetSet.targetObject == null || player.skillData.isHand || player.skillData.handObj != null) return;
+        if (player.currentCharacter.animator.GetCurrentAnimatorStateInfo(1).IsName("Idle") || player.currentCharacter.animator.GetCurrentAnimatorStateInfo(1).IsName("Throw")) return;
+        GameManager.Instance.crossHair.SetActive(true);
+
+        GameManager.Instance.staminaManager.staminaImage.transform.parent.GetComponent<RectTransform>().anchoredPosition = new Vector3(140f, 35.4f, 0f);
+        //GameManager.Instance.staminaManager.staminaImage.rectTransform.anchoredPosition = new Vector3(140f, 35.4f, 0f);
+
+        player.currentCharacter.animator.SetBool("isHand", true);
+
+        player.skillData.handObj = player.targetSet.targetObject;
+
+        player.skillData.handObj.GetComponent<Collider>().isTrigger = true;
+
+
+        Rigidbody rigid = player.skillData.handObj.GetComponent<Rigidbody>();
+        CameraZoom camZoom = player.skillData.camZoom;
+        Outline outLine = player.skillData.handObj.GetComponent<Outline>();
+
+        player.isPsyche = true;
+        player.skillData.isHand = true;
+        player.skillData.handObj.tag = "usingObject";
+        rigid.useGravity = false;
+        rigid.isKinematic = true;
+        player.skillData.handObj.transform.DOKill(false);
+        player.skillData.handObj.transform.DOMove(player.skillData.catchTransform.position, 0.2f).SetEase(Ease.OutQuad).OnComplete(() => { player.skillData.handObj.transform.position = player.skillData.catchTransform.position; camZoom.maximumDistance = 2f; player.skillData.lookatTransform.localPosition = new Vector3(0.75f, 1.41f, 0f); player.skillData.handObj.transform.SetParent(player.transform); });
+        player.movementStateMachine.ReusableData.ShouldWalk = true;
+        player.movementStateMachine.ReusableData.ShouldSprint = false;
+        if (player.movementStateMachine.ReusableData.MovementInput != Vector2.zero) player.movementStateMachine.ChangeState(player.movementStateMachine.WalkingState);
+        else player.movementStateMachine.ChangeState(player.movementStateMachine.IdlingState);
+        outLine.DOKill(false);
+
+        //outLine.OutlineWidth = 10f;
+        player.CoroutineEvent(outLineCor(outLine, 10f, 1f, 10f));
+    }
+
+    private void Throw()
+    {
+        if (!player.skillData.isHand || player.skillData.handObj == null) return;
+        GameManager.Instance.crossHair.SetActive(false);
+        GameManager.Instance.staminaManager.staminaImage.transform.parent.GetComponent<RectTransform>().anchoredPosition = new Vector3(62f, 35.4f, 0f);
+        //GameManager.Instance.staminaManager.staminaImage.rectTransform.anchoredPosition = new Vector3(62f, 35.4f, 0f);
+        Rigidbody rigid = player.skillData.handObj.GetComponent<Rigidbody>();
+        CameraZoom camZoom = player.skillData.camZoom;
+        Outline outLine = player.skillData.handObj.GetComponent<Outline>();
+
+        player.isPsyche = false;
+        player.movementStateMachine.ReusableData.ShouldWalk = false;
+        if (player.skillData.handObj.gameObject.name == "Stamina_obj")
+        {
+            player.currentCharacter.animator.SetBool("isHand", false);
+            GameManager.Instance.staminaManager.PlusStamina(30f);
+            player.DestroyEvent(player.skillData.handObj.gameObject);
+        }
+        else
+        {
+            player.currentCharacter.animator.SetTrigger("isThrow");
+            player.currentCharacter.animator.SetBool("isHand", false);
+            GameManager.Instance.staminaManager.MinusStamina(20f);
+
+            rigid.isKinematic = false;
+            Vector3 aimDir = (GameManager.Instance.inputData.MouseWorldPosition - player.skillData.catchTransform.position).normalized;
+            GameObject temp = player.InstantiateEvent(GameManager.Instance.inputData.projectTile, player.skillData.catchTransform.position, Quaternion.LookRotation(aimDir, Vector3.up));
+            player.skillData.handObj.transform.SetParent(temp.transform);
+
+            player.CoroutineEvent(outLineCor(outLine, 0f, -1f, 10f));
+        }
+
+        player.skillData.handObj.GetComponent<BoxCollider>().isTrigger = false;
+
+        camZoom.minimumDistance = 6f;
+        camZoom.maximumDistance = 6f;
+        camZoom.transform.DOLocalMove(Vector3.zero, 0.3f).OnComplete(() => camZoom.minimumDistance = 1f);
+
+        player.skillData.lookatTransform.localPosition = new Vector3(0, 1.23f, 0f);
+        
+        if (player.movementStateMachine.ReusableData.MovementInput != Vector2.zero) player.movementStateMachine.ChangeState(player.movementStateMachine.RunningState);
+
+        player.skillData.isHand = false;
+        player.Rigidbody.velocity = Vector3.zero;
+        player.skillData.handObj = null;
+    }
+
+    private void GCatch()
     {
         if (player.targetSet.grappleTargetObject == null || player.skillData.isGHand || player.skillData.GhandObj != null) return;
         if (player.skillData.grapplingCdTimer > 0) return;
@@ -212,7 +291,7 @@ public class PlayerCharacter
         player.skillData.Glr.enabled = true;
     }
 
-    public virtual void GPull()
+    private void GPull()
     {
         player.DestroyEvent(player.skillData.Gjoint);
 
@@ -231,9 +310,67 @@ public class PlayerCharacter
         player.skillData.GhandObj = null;
     }
 
-    public virtual void NormalAttack()
+}
+
+[System.Serializable]
+public class GreenCharacter : PlayerCharacter
+{
+    public override void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Space) && !player.isGround)
+        {
+            player.currentCharacter.StopGrapple();
+            player.swinging.StopSwing();
+        }
+    }
+
+    public override void LeftAction()
+    {
+        StartGrapple();
+    }
+
+    public override void RightAction()
+    {
+        base.RightAction();
+    }
+
+    public override void StartGrapple()
+    {
+        base.StartGrapple();
+    }
+
+    public override void ExecuteGrapple()
+    {
+        base.ExecuteGrapple();
+    }
+
+    public override void StopGrapple()
+    {
+        base.StopGrapple();
+    }
+
+}
+
+[System.Serializable]
+public class RedCharacter : PlayerCharacter
+{
+    public override void Update()
+    {
+        ExitAttack();
+    }
+
+    public override void LeftAction()
+    {
+        NormalAttack();
+    }
+
+    public override void RightAction()
+    {
+        base.RightAction();
+    }
+
+    private void NormalAttack()
+    {
         if (Time.time - lastComboEnd > 0.1f && comboCounter < attackAnim.Length)
         {
             player.CancelInvoke("EndCombo");
@@ -254,297 +391,12 @@ public class PlayerCharacter
 
         player.Rigidbody.velocity = Vector3.zero;
 
-        if(player.targetSet.targetEnemy != null)
+        if (player.targetSet.targetEnemy != null)
         {
             player.transform.forward = player.targetSet.targetEnemy.transform.position - player.transform.position;
-            player.transform.eulerAngles = new Vector3(0f, player.transform.eulerAngles.y, 0f); 
-        }
-
-
-    }
-
-    public virtual void Interaction()
-    {
-        player.targetSet.targetInteraction?.OnInteract();
-        
-    }
-
-    public void ExitAttack()
-    {
-        if(player.currentCharacter.animator.GetCurrentAnimatorStateInfo(3).normalizedTime > 0.9f && player.currentCharacter.animator.GetCurrentAnimatorStateInfo(3).IsTag("Attack"))
-        {
-            player.isAttack = false;
-            player.Invoke("EndCombo", 0.5f);
+            player.transform.eulerAngles = new Vector3(0f, player.transform.eulerAngles.y, 0f);
         }
     }
 
-
-    public IEnumerator outLineCor(Outline outLine, float value, float oper, float pitch)
-    {
-        if (oper > 0f)
-        {
-            while (outLine.OutlineWidth < value)
-            {
-                outLine.OutlineWidth += Time.deltaTime * oper * pitch;
-                yield return new WaitForEndOfFrame();
-                if (!player.skillData.isHand) break;
-            }
-        }
-        else if (oper < 0f)
-        {
-            while (outLine.OutlineWidth > value)
-            {
-                outLine.OutlineWidth += Time.deltaTime * oper * pitch;
-                yield return new WaitForEndOfFrame();
-            }
-        }
-    }
-
-    
-    public virtual Vector3 CalculateJumpVelocity(Vector3 startPoint, Vector3 endPoint, float trajectoryHeight) //목표 위치까지 포물선 trajectoryHeight 높이 추가
-    {
-        float gravity = Physics.gravity.y;
-        float displacementY = endPoint.y - startPoint.y;
-        Vector3 displacementXZ = new Vector3(endPoint.x - startPoint.x, 0f, endPoint.z - startPoint.z);
-
-        Vector3 velocityY = Vector3.up * Mathf.Sqrt(-2 * gravity * trajectoryHeight);
-        Vector3 velocityXZ = displacementXZ / (Mathf.Sqrt(-2 * trajectoryHeight / gravity)
-          + Mathf.Sqrt(2 * (displacementY - trajectoryHeight) / gravity));
-
-        return (velocityXZ + velocityY);
-    }
-}
-
-[System.Serializable]
-public class WhiteCharacter : PlayerCharacter
-{
-
-    public override void Update()
-    {
-        base.Update();
-    }
-    public override void Catch()
-    {
-        base.Catch();
-    }
-
-    public override void Throw()
-    {
-        base.Throw();
-    }
-
-    public override void StartGrapple()
-    {
-        base.StartGrapple();
-    }
-
-    public override void ExecuteGrapple()
-    {
-        base.ExecuteGrapple();
-    }
-
-    public override void StopGrapple()
-    {
-        base.StopGrapple();
-    }
-
-    public override void GCatch()
-    {
-        base.GCatch();
-    }
-
-    public override void GPull()
-    {
-        base.GPull();
-    }
-
-    public override void NormalAttack()
-    {
-        base.NormalAttack();
-    }
-
-    public override void Interaction()
-    {
-        base.Interaction();
-    }
-
-    public override Vector3 CalculateJumpVelocity(Vector3 startPoint, Vector3 endPoint, float trajectoryHeight)
-    {
-        return base.CalculateJumpVelocity(startPoint, endPoint, trajectoryHeight);
-    }
-}
-
-[System.Serializable]
-public class GreenCharacter : PlayerCharacter
-{
-    public override void Update()
-    {
-        base.Update();
-    }
-    public override void Catch()
-    {
-        base.Catch();
-    }
-
-    public override void Throw()
-    {
-        base.Throw();
-    }
-
-    public override void StartGrapple()
-    {
-        base.StartGrapple();
-    }
-
-    public override void ExecuteGrapple()
-    {
-        base.ExecuteGrapple();
-    }
-
-    public override void StopGrapple()
-    {
-        base.StopGrapple();
-    }
-
-    public override void GCatch()
-    {
-        base.GCatch();
-    }
-
-    public override void GPull()
-    {
-        base.GPull();
-    }
-
-    public override void NormalAttack()
-    {
-        base.NormalAttack();
-    }
-
-
-    public override void Interaction()
-    {
-        base.Interaction();
-    }
-    public override Vector3 CalculateJumpVelocity(Vector3 startPoint, Vector3 endPoint, float trajectoryHeight)
-    {
-        return base.CalculateJumpVelocity(startPoint, endPoint, trajectoryHeight);
-    }
-}
-
-[System.Serializable]
-public class BlueCharacter : PlayerCharacter
-{
-    public override void Update()
-    {
-        base.Update();
-    }
-    public override void Catch()
-    {
-        base.Catch();
-    }
-
-    public override void Throw()
-    {
-        base.Throw();
-    }
-
-    public override void StartGrapple()
-    {
-        base.StartGrapple();
-    }
-
-    public override void ExecuteGrapple()
-    {
-        base.ExecuteGrapple();
-    }
-
-    public override void StopGrapple()
-    {
-        base.StopGrapple();
-    }
-
-    public override void GCatch()
-    {
-        base.GCatch();
-    }
-
-    public override void GPull()
-    {
-        base.GPull();
-    }
-
-    public override void NormalAttack()
-    {
-        base.NormalAttack();
-    }
-
-    public override void Interaction()
-    {
-        base.Interaction();
-    }
-
-    public override Vector3 CalculateJumpVelocity(Vector3 startPoint, Vector3 endPoint, float trajectoryHeight)
-    {
-        return base.CalculateJumpVelocity(startPoint, endPoint, trajectoryHeight);
-    }
-}
-
-[System.Serializable]
-public class RedCharacter : PlayerCharacter
-{
-    public override void Update()
-    {
-        base.Update();
-    }
-    public override void Catch()
-    {
-        base.Catch();
-    }
-
-    public override void Throw()
-    {
-        base.Throw();
-    }
-
-    public override void StartGrapple()
-    {
-        base.StartGrapple();
-    }
-
-    public override void ExecuteGrapple()
-    {
-        base.ExecuteGrapple();
-    }
-
-    public override void StopGrapple()
-    {
-        base.StopGrapple();
-    }
-
-    public override void GCatch()
-    {
-        base.GCatch();
-    }
-
-    public override void GPull()
-    {
-        base.GPull();
-    }
-
-    public override void NormalAttack()
-    {
-        base.NormalAttack();
-    }
-
-    public override void Interaction()
-    {
-        base.Interaction();
-    }
-
-    public override Vector3 CalculateJumpVelocity(Vector3 startPoint, Vector3 endPoint, float trajectoryHeight)
-    {
-        return base.CalculateJumpVelocity(startPoint, endPoint, trajectoryHeight);
-    }
 }
 
