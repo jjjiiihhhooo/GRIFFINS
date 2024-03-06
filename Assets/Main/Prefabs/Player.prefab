@@ -53150,6 +53150,7 @@ MonoBehaviour:
     rolleParameterName: isRolling
     hardLandParameterName: isHardLanding
     fallParameterName: isFalling
+    airDashParameterName: isAirDashing
   targetSet: {fileID: 4943424079398178719}
   skillData: {fileID: 4943424079398178718}
   swinging: {fileID: 2098397367}
@@ -53157,14 +53158,15 @@ MonoBehaviour:
   jumpEffect: {fileID: 4943424079477339818}
   dashEffect: {fileID: 4943424078659000371}
   landEffect: {fileID: 4943424079945503237}
+  saveItem: {fileID: 0}
   playerCanvas: {fileID: 801795073}
   staminaFill: {fileID: 1882920195}
   interactionImage: {fileID: 1984551419}
   interactionText: {fileID: 1328491976}
   dir: {x: 0, y: 0, z: 0}
   isGround: 0
-  isGrapple: 0
   isAttack: 0
+  isItemSave: 0
   testHp: 0
 --- !u!114 &4943424079398178709
 MonoBehaviour:

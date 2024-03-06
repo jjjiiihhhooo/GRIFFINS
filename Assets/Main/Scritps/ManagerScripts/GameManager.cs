@@ -51,6 +51,7 @@ public class GameManager : SerializedMonoBehaviour
         inputData.Init();
         staminaManager.Init();
         timelineManager.Init();
+        dialogueManager.Init();
         //MouseLocked();
     }
 

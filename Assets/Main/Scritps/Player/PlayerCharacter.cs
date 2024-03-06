@@ -196,13 +196,18 @@ public class WhiteCharacter : PlayerCharacter
 
     private void Save()
     {
+        player.isItemSave = true;
         player.saveItem = GameObject.Instantiate(player.skillData.handObj);
+        player.saveItem.SetActive(false);
         PutDown(true);
     }
 
     private void Load()
     {
-
+        if (!player.isGround) return;
+        player.isItemSave = false;
+        Catch(true);
+        player.saveItem = null;
     }
 
     private void PutDown(bool save = false)
@@ -230,7 +235,7 @@ public class WhiteCharacter : PlayerCharacter
 
         player.skillData.lookatTransform.localPosition = new Vector3(0, 1.23f, 0f);
 
-        if (player.movementStateMachine.ReusableData.MovementInput != Vector2.zero) player.movementStateMachine.ChangeState(player.movementStateMachine.RunningState);
+        if (player.movementStateMachine.ReusableData.MovementInput != Vector2.zero && player.isGround) player.movementStateMachine.ChangeState(player.movementStateMachine.RunningState);
 
         player.skillData.isHand = false;
         player.Rigidbody.velocity = Vector3.zero;
@@ -243,10 +248,14 @@ public class WhiteCharacter : PlayerCharacter
         player.skillData.handObj = null;
     }
 
-    private void Catch()
+    private void Catch(bool load = false)
     {
-        if (!GameManager.Instance.staminaManager.ChechStamina(20f)) return;
-        if (player.targetSet.targetObject == null || player.skillData.isHand || player.skillData.handObj != null) return;
+        if(!load)
+        {
+            if (!GameManager.Instance.staminaManager.ChechStamina(20f)) return;
+            if (player.targetSet.targetObject == null || player.skillData.isHand || player.skillData.handObj != null || !player.isGround) return;
+        }
+        
         if (player.currentCharacter.animator.GetCurrentAnimatorStateInfo(1).IsName("Idle") || player.currentCharacter.animator.GetCurrentAnimatorStateInfo(1).IsName("Throw")) return;
         GameManager.Instance.crossHair.SetActive(true);
 
@@ -255,7 +264,15 @@ public class WhiteCharacter : PlayerCharacter
 
         player.currentCharacter.animator.SetBool("isHand", true);
 
-        player.skillData.handObj = player.targetSet.targetObject;
+        if(!load)
+        {
+            player.skillData.handObj = player.targetSet.targetObject;
+        }
+        else
+        {
+            player.skillData.handObj = player.saveItem;
+            player.skillData.handObj.SetActive(true);
+        }
 
         player.skillData.handObj.GetComponent<Collider>().isTrigger = true;
 
@@ -268,9 +285,15 @@ public class WhiteCharacter : PlayerCharacter
         rigid.useGravity = false;
         rigid.isKinematic = true;
         player.skillData.handObj.transform.DOKill(false);
-        player.skillData.handObj.transform.DOMove(player.skillData.catchTransform.position, 0.2f).SetEase(Ease.OutQuad).OnComplete(() => { player.skillData.handObj.transform.position = player.skillData.catchTransform.position; camZoom.maximumDistance = 2f; player.skillData.lookatTransform.localPosition = new Vector3(0.75f, 1.41f, 0f); player.skillData.handObj.transform.SetParent(player.transform); });
+        
+        if(!load)
+            player.skillData.handObj.transform.DOMove(player.skillData.catchTransform.position, 0.2f).SetEase(Ease.OutQuad).OnComplete(() => { player.skillData.handObj.transform.position = player.skillData.catchTransform.position; camZoom.maximumDistance = 2f; player.skillData.lookatTransform.localPosition = new Vector3(0.75f, 1.41f, 0f); player.skillData.handObj.transform.SetParent(player.transform); });
+        else
+            player.skillData.handObj.transform.DOMove(player.skillData.catchTransform.position, 0.01f).SetEase(Ease.OutQuad).OnComplete(() => { player.skillData.handObj.transform.position = player.skillData.catchTransform.position; camZoom.maximumDistance = 2f; player.skillData.lookatTransform.localPosition = new Vector3(0.75f, 1.41f, 0f); player.skillData.handObj.transform.SetParent(player.transform); });
+        
         player.movementStateMachine.ReusableData.ShouldWalk = true;
         player.movementStateMachine.ReusableData.ShouldSprint = false;
+
         if (player.movementStateMachine.ReusableData.MovementInput != Vector2.zero) player.movementStateMachine.ChangeState(player.movementStateMachine.WalkingState);
         else player.movementStateMachine.ChangeState(player.movementStateMachine.IdlingState);
         outLine.DOKill(false);
@@ -438,6 +461,7 @@ public class RedCharacter : PlayerCharacter
 
     public override void LeftAction()
     {
+        if (player.Animator.GetBool("isDashing")) return;
         NormalAttack();
     }
 

@@ -131,6 +131,7 @@ public class PlayerGroundedState : PlayerMovementState
 
     protected virtual void OnJumpStarted(InputAction.CallbackContext context)
     {
+        if (stateMachine.CurStateName() == "PlayerDashingState") return;
         stateMachine.ChangeState(stateMachine.JumpingState);
     }
 

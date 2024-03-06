@@ -24,6 +24,11 @@ public class DialogueManager : MonoBehaviour
     public bool IsChat { get => isChat; }
     public Dialogue[] CurDialogues { get => curDialogues; }
 
+    public void Init()
+    {
+        curDialogues = null;
+    }
+
     public void ChangeDialogue(Dialogue[] logs, string name)
     {
         Debug.Log("ChangeDialogue");

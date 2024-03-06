@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-
+using UnityEngine.Rendering.Universal;
 
 public class PlayerMovementState : IState
 {
@@ -48,6 +48,7 @@ public class PlayerMovementState : IState
     public virtual void PhysicsUpdate()
     {
         Move();
+        Debug.Log(stateMachine.CurStateName());
     }
 
     public virtual void OnTriggerEnter(Collider collider)
@@ -165,74 +166,96 @@ public class PlayerMovementState : IState
         stateMachine.ReusableData.MovementInput = stateMachine.Player.Input.PlayerActions.Movement.ReadValue<Vector2>();
     }
 
+    //private void Move()
+    //{
+    //    if (stateMachine.Player.isAttack) return;
+    //    if (GameManager.Instance.dialogueManager.IsChat) return;
+    //    if (stateMachine.ReusableData.MovementInput == Vector2.zero || stateMachine.ReusableData.MovementSpeedModifier == 0f)
+    //    {
+    //        //stateMachine.Player.Rigidbody.velocity = new Vector3(0f, stateMachine.Player.Rigidbody.velocity.y, 0f);
+    //        return;
+    //    }
+    //    Vector3 movementDirection = GetMovementInputDirection();
+
+    //    float targetRotationYAngle = Rotate(movementDirection);
+        
+
+    //    //Ray ray = new Ray(stateMachine.Player.transform.position + Vector3.up, targetRotationDirection);
+    //    //Ray ray_1 = new Ray(stateMachine.Player.transform.position + Vector3.up * 0.05f, targetRotationDirection);
+    //    //Ray ray_2 = new Ray(stateMachine.Player.transform.position + Vector3.up * 0.9f, targetRotationDirection);
+    //    //Ray ray_3 = new Ray(stateMachine.Player.transform.position + Vector3.up * 1.3f, targetRotationDirection);
+
+    //    //stateMachine.Player.testRay = ray;
+    //    //stateMachine.Player.testRay1 = ray_1;
+    //    //stateMachine.Player.testRay2 = ray_2;
+
+    //    //if (!stateMachine.Player.isGround)
+    //    //{
+    //    //    if (Physics.Raycast(ray_2, 0.3f, stateMachine.Player.LayerData.GroundLayer, QueryTriggerInteraction.Ignore))
+    //    //    {
+    //    //        stateMachine.Player.Rigidbody.velocity = new Vector3(0f, stateMachine.Player.Rigidbody.velocity.y, 0f);
+    //    //        return;
+    //    //    }
+    //    //    if (Physics.Raycast(ray, 0.3f, stateMachine.Player.LayerData.GroundLayer, QueryTriggerInteraction.Ignore))
+    //    //    {
+    //    //        stateMachine.Player.Rigidbody.velocity = new Vector3(0f, stateMachine.Player.Rigidbody.velocity.y, 0f);
+    //    //        return;
+    //    //    }
+    //    //    if (Physics.Raycast(ray_1, 0.3f, stateMachine.Player.LayerData.GroundLayer, QueryTriggerInteraction.Ignore))
+    //    //    {
+    //    //        stateMachine.Player.Rigidbody.velocity = new Vector3(0f, stateMachine.Player.Rigidbody.velocity.y, 0f);
+    //    //        return;
+    //    //    }
+    //    //}
+    //    //else
+    //    //{
+    //    //    if (Physics.Raycast(ray_3, 0.3f, stateMachine.Player.LayerData.GroundLayer, QueryTriggerInteraction.Ignore))
+    //    //    {
+    //    //        stateMachine.Player.Rigidbody.velocity = new Vector3(0f, stateMachine.Player.Rigidbody.velocity.y, 0f);
+    //    //        return;
+    //    //    }
+
+    //    //    if (Physics.Raycast(ray, 0.3f, stateMachine.Player.LayerData.GroundLayer, QueryTriggerInteraction.Ignore))
+    //    //    {
+    //    //        stateMachine.Player.Rigidbody.velocity = new Vector3(0f, stateMachine.Player.Rigidbody.velocity.y, 0f);
+    //    //        return;
+    //    //    }
+    //    //}
+
+    //    Vector3 targetRotationDirection = GetTargetRotationDirection(targetRotationYAngle);
+
+    //    float movementSpeed = GetMovementSpeed();
+
+    //    Vector3 currentPlayerHorizontalVelocity = GetPlayerHorizontalVelocity();
+
+
+    //    stateMachine.Player.Rigidbody.AddForce(targetRotationDirection * movementSpeed - currentPlayerHorizontalVelocity, ForceMode.VelocityChange);
+
+    //}
+
     private void Move()
     {
         if (stateMachine.Player.isAttack) return;
         if (GameManager.Instance.dialogueManager.IsChat) return;
+
         if (stateMachine.ReusableData.MovementInput == Vector2.zero || stateMachine.ReusableData.MovementSpeedModifier == 0f)
         {
-            stateMachine.Player.Rigidbody.velocity = new Vector3(0f, stateMachine.Player.Rigidbody.velocity.y, 0f);
             return;
         }
+
         Vector3 movementDirection = GetMovementInputDirection();
 
         float targetRotationYAngle = Rotate(movementDirection);
+
         Vector3 targetRotationDirection = GetTargetRotationDirection(targetRotationYAngle);
-
-       
-
-        Ray ray = new Ray(stateMachine.Player.transform.position + Vector3.up, targetRotationDirection);
-        Ray ray_1 = new Ray(stateMachine.Player.transform.position + Vector3.up * 0.05f, targetRotationDirection);
-        Ray ray_2 = new Ray(stateMachine.Player.transform.position + Vector3.up * 0.9f, targetRotationDirection);
-        Ray ray_3 = new Ray(stateMachine.Player.transform.position + Vector3.up * 1.3f, targetRotationDirection);
-
-        stateMachine.Player.testRay = ray;
-        stateMachine.Player.testRay1 = ray_1;
-        stateMachine.Player.testRay2 = ray_2;
-
-        if (!stateMachine.Player.isGround)
-        {
-            if (Physics.Raycast(ray_2, 0.3f, stateMachine.Player.LayerData.GroundLayer, QueryTriggerInteraction.Ignore))
-            {
-                stateMachine.Player.Rigidbody.velocity = new Vector3(0f, stateMachine.Player.Rigidbody.velocity.y, 0f);
-                return;
-            }
-            if (Physics.Raycast(ray, 0.3f, stateMachine.Player.LayerData.GroundLayer, QueryTriggerInteraction.Ignore))
-            {
-                stateMachine.Player.Rigidbody.velocity = new Vector3(0f, stateMachine.Player.Rigidbody.velocity.y, 0f);
-                return;
-            }
-            if (Physics.Raycast(ray_1, 0.3f, stateMachine.Player.LayerData.GroundLayer, QueryTriggerInteraction.Ignore))
-            {
-                stateMachine.Player.Rigidbody.velocity = new Vector3(0f, stateMachine.Player.Rigidbody.velocity.y, 0f);
-                return;
-            }
-        }
-        else
-        {
-            if (Physics.Raycast(ray_3, 0.3f, stateMachine.Player.LayerData.GroundLayer, QueryTriggerInteraction.Ignore))
-            {
-                stateMachine.Player.Rigidbody.velocity = new Vector3(0f, stateMachine.Player.Rigidbody.velocity.y, 0f);
-                return;
-            }
-
-            if (Physics.Raycast(ray, 0.3f, stateMachine.Player.LayerData.GroundLayer, QueryTriggerInteraction.Ignore))
-            {
-                stateMachine.Player.Rigidbody.velocity = new Vector3(0f, stateMachine.Player.Rigidbody.velocity.y, 0f);
-                return;
-            }
-        }
-
-        //Vector3 targetRotationDirection = GetTargetRotationDirection(targetRotationYAngle);
 
         float movementSpeed = GetMovementSpeed();
 
         Vector3 currentPlayerHorizontalVelocity = GetPlayerHorizontalVelocity();
 
-
         stateMachine.Player.Rigidbody.AddForce(targetRotationDirection * movementSpeed - currentPlayerHorizontalVelocity, ForceMode.VelocityChange);
-
     }
+
 
     protected Vector3 GetMovementInputDirection()
     {

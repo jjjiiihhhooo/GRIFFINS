@@ -9,6 +9,7 @@ using Sirenix.OdinInspector;
 using TMPro;
 using Unity.VisualScripting;
 using System.Transactions;
+using UnityEngine.Rendering.Universal;
 
 [RequireComponent(typeof(PlayerInput))]
 [RequireComponent(typeof(PlayerResizableCapsuleCollider))]
@@ -144,7 +145,6 @@ public class Player : SerializedMonoBehaviour
         if (swinging.swinging) return;
         if (currentCharacter.animator.GetCurrentAnimatorStateInfo(1).IsName("Idle") || currentCharacter.animator.GetCurrentAnimatorStateInfo(1).IsName("Throw"))
         {
-            Debug.Log("anim");
             transform.rotation = CameraRecenteringUtility.VirtualCamera.transform.rotation;
             transform.rotation = new Quaternion(0f, CameraRecenteringUtility.VirtualCamera.transform.rotation.y, 0f, transform.rotation.w);
         }

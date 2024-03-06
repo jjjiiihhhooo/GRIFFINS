@@ -75,6 +75,11 @@ public class InputData : MonoBehaviour
         {
             player.swinging.StopSwing();
         }
+
+        if(Input.GetKeyDown(itemSaveKey))
+        {
+            player.currentCharacter.ItemSave();
+        }
     }
 
     private void InteractInput()
