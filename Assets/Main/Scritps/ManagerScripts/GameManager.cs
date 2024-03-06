@@ -19,6 +19,7 @@ public class GameManager : SerializedMonoBehaviour
     public GuideManager guideManager;
     public QuestManager questManager;
     public EventManager eventManager;
+    public DialogueManager dialogueManager;
 
     public GameObject grappleImage;
     public GameObject normalImage;
@@ -50,6 +51,7 @@ public class GameManager : SerializedMonoBehaviour
         inputData.Init();
         staminaManager.Init();
         timelineManager.Init();
+        dialogueManager.Init();
         //MouseLocked();
     }
 

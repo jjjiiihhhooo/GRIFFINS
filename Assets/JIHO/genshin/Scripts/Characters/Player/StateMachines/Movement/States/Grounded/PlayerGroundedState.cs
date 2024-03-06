@@ -102,7 +102,9 @@ public class PlayerGroundedState : PlayerMovementState
 
     protected override void AddInputActionsCallbacks()
     {
+        if (GameManager.Instance.dialogueManager.IsChat) return;
         base.AddInputActionsCallbacks();
+
 
         stateMachine.Player.Input.PlayerActions.Dash.started += OnDashStarted;
 
@@ -129,6 +131,7 @@ public class PlayerGroundedState : PlayerMovementState
 
     protected virtual void OnJumpStarted(InputAction.CallbackContext context)
     {
+        if (stateMachine.CurStateName() == "PlayerDashingState") return;
         stateMachine.ChangeState(stateMachine.JumpingState);
     }
 

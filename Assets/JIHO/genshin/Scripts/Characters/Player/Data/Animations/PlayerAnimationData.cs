@@ -28,6 +28,7 @@ public class PlayerAnimationData
 
     [Header("Airborne Parameter Names")]
     [SerializeField] private string fallParameterName = "isFalling";
+    [SerializeField] private string airDashParameterName = "isAirDashing";
 
     public int GroundedParameterHash { get; private set; }
     public int MovingParameterHash { get; private set; }
@@ -46,6 +47,7 @@ public class PlayerAnimationData
     public int HardLandParameterHash { get; private set; }
 
     public int FallParameterHash { get; private set; }
+    public int AirDashParameterHash { get; private set; }
 
     public void Initialize()
     {
@@ -65,5 +67,6 @@ public class PlayerAnimationData
         RollParameterHash = Animator.StringToHash(rolleParameterName);
         HardLandParameterHash = Animator.StringToHash(hardLandParameterName);
         FallParameterHash = Animator.StringToHash(fallParameterName);
+        AirDashParameterHash = Animator.StringToHash(airDashParameterName);
     }
 }

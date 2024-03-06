@@ -17,8 +17,8 @@ public class PlayerFallingState : PlayerAirborneState
         base.Enter();
 
         StartAnimation(stateMachine.Player.AnimationData.FallParameterHash);
-
-        stateMachine.ReusableData.MovementSpeedModifier = 1.5f;
+        if (stateMachine.Player.skillData.isHand) stateMachine.Player.currentCharacter.CharacterChange();
+        stateMachine.ReusableData.MovementSpeedModifier = 0f;
 
         playerPositionOnEnter = stateMachine.Player.transform.position;
 
@@ -48,7 +48,7 @@ public class PlayerFallingState : PlayerAirborneState
             return;
         }
 
-        Vector3 limitedVelocityForce = new Vector3(stateMachine.Player.Rigidbody.velocity.x, -airborneData.FallData.FallSpeedLimit - playerVerticalVelocity.y, stateMachine.Player.Rigidbody.velocity.z);
+        Vector3 limitedVelocityForce = new Vector3(0f, -airborneData.FallData.FallSpeedLimit - playerVerticalVelocity.y, 0f);
 
         stateMachine.Player.Rigidbody.AddForce(limitedVelocityForce, ForceMode.VelocityChange);
     }
