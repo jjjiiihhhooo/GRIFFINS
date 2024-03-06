@@ -1109,22 +1109,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c52946a1359e944081dde13d14f3eba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Catch: 324
-  Throw: 323
-  Grapple: 323
-  Swinging: 324
-  Change: 49
-  Attack: 323
   GrappleCut: 32
   LeftAction: 323
   RightAction: 324
-  ObjectGrapple: 50
-  ObjectPull: 323
   InteractionKey: 102
   scene_assistKey: 9
-  WhiteKey: 122
-  GreenKey: 120
-  RedKey: 118
+  WhiteKey: 49
+  GreenKey: 50
+  RedKey: 51
   aimColliderMask:
     serializedVersion: 2
     m_Bits: 2048
@@ -5911,7 +5903,7 @@ MonoBehaviour:
   attack: 0
   psyche: 0
   graple: 0
-  characterChange: 0
+  characterChange: 1
   skill_images:
   - {fileID: 21300000, guid: b07bf450ef57929499749770b7e3b087, type: 3}
   - {fileID: 21300000, guid: f88a73fbec2f3074ababbc66686fc0eb, type: 3}

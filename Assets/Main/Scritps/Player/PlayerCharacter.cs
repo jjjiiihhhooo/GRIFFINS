@@ -5,15 +5,13 @@ using DG.Tweening;
 public class PlayerCharacter
 {
     public Animator animator;
-    public AnimationClip[] attackAnim;
-
+    
     public Player player;
 
     public GameObject model;
-    public GameObject weapon_obj;
 
-    public int noOfClicks = 0;
     public int index;
+
     public int comboCounter;
 
     public float normalAttackDamage;
@@ -21,10 +19,15 @@ public class PlayerCharacter
     public float lastClickedTime;
     public float lastComboEnd;
 
-    public void Init(Player playerController)
+    public virtual void Init(Player playerController)
     {
         player = playerController;
-        weapon_obj.SetActive(false);
+        //weapon_obj.SetActive(false);
+    }
+
+    public virtual void CharacterChange()
+    {
+
     }
 
     public virtual void Update()
@@ -112,6 +115,11 @@ public class PlayerCharacter
         player.targetSet.targetInteraction?.OnInteract();
     }
 
+    public virtual void ItemSave()
+    {
+
+    }
+
     public void ExitAttack()
     {
         if(player.currentCharacter.animator.GetCurrentAnimatorStateInfo(3).normalizedTime > 0.9f && player.currentCharacter.animator.GetCurrentAnimatorStateInfo(3).IsTag("Attack"))
@@ -159,6 +167,10 @@ public class PlayerCharacter
 [System.Serializable]
 public class WhiteCharacter : PlayerCharacter
 {
+    public override void CharacterChange()
+    {
+        PutDown();
+    }
 
     public override void Update()
     {
@@ -172,7 +184,63 @@ public class WhiteCharacter : PlayerCharacter
 
     public override void RightAction()
     {
-        Catch();
+        if (player.skillData.isHand) PutDown();
+        else Catch();
+    }
+
+    public override void ItemSave()
+    {
+        if (player.skillData.isHand && !player.isItemSave) Save();
+        else if (!player.skillData.isHand && player.isItemSave) Load();
+    }
+
+    private void Save()
+    {
+        player.saveItem = GameObject.Instantiate(player.skillData.handObj);
+        PutDown(true);
+    }
+
+    private void Load()
+    {
+
+    }
+
+    private void PutDown(bool save = false)
+    {
+        if (!player.skillData.isHand || player.skillData.handObj == null) return;
+        GameManager.Instance.crossHair.SetActive(false);
+        GameManager.Instance.staminaManager.staminaImage.transform.parent.GetComponent<RectTransform>().anchoredPosition = new Vector3(62f, 35.4f, 0f);
+        Rigidbody rigid = player.skillData.handObj.GetComponent<Rigidbody>();
+        CameraZoom camZoom = player.skillData.camZoom;
+        Outline outLine = player.skillData.handObj.GetComponent<Outline>();
+
+        player.movementStateMachine.ReusableData.ShouldWalk = false;
+
+        player.currentCharacter.animator.SetBool("isHand", false);
+        rigid.isKinematic = false;
+        rigid.useGravity = true;
+        player.skillData.handObj.transform.SetParent(null);
+
+        player.CoroutineEvent(outLineCor(outLine, 0f, -1f, 10f));
+        player.skillData.handObj.GetComponent<BoxCollider>().isTrigger = false;
+
+        camZoom.minimumDistance = 6f;
+        camZoom.maximumDistance = 6f;
+        camZoom.transform.DOLocalMove(Vector3.zero, 0.3f).OnComplete(() => camZoom.minimumDistance = 1f);
+
+        player.skillData.lookatTransform.localPosition = new Vector3(0, 1.23f, 0f);
+
+        if (player.movementStateMachine.ReusableData.MovementInput != Vector2.zero) player.movementStateMachine.ChangeState(player.movementStateMachine.RunningState);
+
+        player.skillData.isHand = false;
+        player.Rigidbody.velocity = Vector3.zero;
+        
+        if(save)
+        {
+            GameObject.Destroy(player.skillData.handObj);
+        }
+
+        player.skillData.handObj = null;
     }
 
     private void Catch()
@@ -196,9 +264,7 @@ public class WhiteCharacter : PlayerCharacter
         CameraZoom camZoom = player.skillData.camZoom;
         Outline outLine = player.skillData.handObj.GetComponent<Outline>();
 
-        player.isPsyche = true;
         player.skillData.isHand = true;
-        player.skillData.handObj.tag = "usingObject";
         rigid.useGravity = false;
         rigid.isKinematic = true;
         player.skillData.handObj.transform.DOKill(false);
@@ -218,12 +284,10 @@ public class WhiteCharacter : PlayerCharacter
         if (!player.skillData.isHand || player.skillData.handObj == null) return;
         GameManager.Instance.crossHair.SetActive(false);
         GameManager.Instance.staminaManager.staminaImage.transform.parent.GetComponent<RectTransform>().anchoredPosition = new Vector3(62f, 35.4f, 0f);
-        //GameManager.Instance.staminaManager.staminaImage.rectTransform.anchoredPosition = new Vector3(62f, 35.4f, 0f);
         Rigidbody rigid = player.skillData.handObj.GetComponent<Rigidbody>();
         CameraZoom camZoom = player.skillData.camZoom;
         Outline outLine = player.skillData.handObj.GetComponent<Outline>();
 
-        player.isPsyche = false;
         player.movementStateMachine.ReusableData.ShouldWalk = false;
         if (player.skillData.handObj.gameObject.name == "Stamina_obj")
         {
@@ -315,6 +379,11 @@ public class WhiteCharacter : PlayerCharacter
 [System.Serializable]
 public class GreenCharacter : PlayerCharacter
 {
+    public override void CharacterChange()
+    {
+
+    }
+
     public override void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space) && !player.isGround)
@@ -354,6 +423,14 @@ public class GreenCharacter : PlayerCharacter
 [System.Serializable]
 public class RedCharacter : PlayerCharacter
 {
+    public AnimationClip[] attackAnim;
+
+
+    public override void CharacterChange()
+    {
+
+    }
+
     public override void Update()
     {
         ExitAttack();
@@ -376,7 +453,6 @@ public class RedCharacter : PlayerCharacter
             player.CancelInvoke("EndCombo");
             if (Time.time - lastClickedTime >= 0.4f)
             {
-                weapon_obj.SetActive(true);
                 player.isAttack = true;
                 player.currentCharacter.animator.Play(attackAnim[comboCounter].name, 3, 0f);
                 comboCounter++;
