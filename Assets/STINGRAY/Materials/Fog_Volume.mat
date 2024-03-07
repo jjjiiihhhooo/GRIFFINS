@@ -1,0 +1,87 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Fog_Volume
+  m_Shader: {fileID: 4800000, guid: 68701dc6c73529c47ad9cf46c145a57d, type: 3}
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 1
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - Texture2D_07d756c3d78544f29bf30fe090d8a422:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NoiseTexture:
+        m_Texture: {fileID: 11700000, guid: a06426f0092d04e45a0072127281b71d, type: 2}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - Boolean_61ac8d3d7d464da4b30e4b5509d05f04: 0
+    - Boolean_74dda9349b9f4a7296903fe471a5c567: 0
+    - Vector1_04d3c5726c7547169c180f80593d5c30: 60000
+    - Vector1_1: 1
+    - Vector1_2: 0.6
+    - Vector1_2a0ea2ae30be490bae5cd11afe00bebe: 1
+    - Vector1_387fa757382c4bf5a03a4708019735af: 5
+    - Vector1_5e59d25e75e74b5c90f8cbf8f47b3c59: 0.2
+    - Vector1_a0cd5cb8e5b445f99b29deda38f82eaf: 1
+    - Vector1_b15f301594804d8e86c92afedfc58359: 50
+    - Vector1_b15f301594804d8e86c92afedfc58359_1: 0.2
+    - Vector1_b15f301594804d8e86c92afedfc58359_2: 50
+    - Vector1_b33976b5d6ef4caab9f443f1fdd0cc54: 0.05
+    - Vector1_c618d65a903f45c2a025f5afb104096f: 1
+    - _QueueControl: 0
+    - _QueueOffset: 0
+    - density: 0
+    - densityOffset: 0
+    - godRayStrength: 1.1
+    - jitter: 0.89
+    - lightScattering: 1
+    - lightSteps: 3
+    - minDarkness: 0.11
+    - scale: 0
+    - shadows: 1
+    - speed: 0.2
+    - stepSize: 2
+    - steps: 100
+    - thickness: 0.5
+    - twirl: 0
+    m_Colors:
+    - Albedo: {r: 1, g: 1, b: 1, a: 1}
+    - Color_e270c0d26bce4c9cafe620ed5450db46: {r: 0.2291741, g: 0.3182642, b: 0.4716981, a: 1}
+    - Vector3_1: {r: 1, g: 1, b: 1, a: 0}
+    - Vector3_2c8db1da24bd4984a54112adbfa0abe9: {r: 0, g: 0, b: 0, a: 0}
+    - Vector3_b0e684ad8e3d4df9845bf92ec83c5c77: {r: 0, g: -59000, b: 0, a: 0}
+    - bounds: {r: 100000, g: 200, b: 100000, a: 0}
+    - pos: {r: 0, g: 90, b: 0, a: 0}
+  m_BuildTextureStacks: []
