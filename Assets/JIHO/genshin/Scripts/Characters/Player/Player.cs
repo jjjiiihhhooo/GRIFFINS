@@ -131,7 +131,7 @@ public class Player : SerializedMonoBehaviour
     private void Update()
     {
         if (GameManager.Instance.dialogueManager.IsChat) return;
-        
+
         currentCharacter.Update();
 
         dir = MainCameraTransform.forward;
@@ -167,14 +167,14 @@ public class Player : SerializedMonoBehaviour
             //skillData.StopGrapple();
         }
 
-        if(swinging.swinging)
+        if (swinging.swinging)
         {
             swinging.swinging = false;
             swinging.StopSwing();
         }
 
 
-        if(collider.tag == "Spawn")
+        if (collider.tag == "Spawn")
         {
             collider.GetComponent<SpawnPoint>().SetSpawn();
         }
@@ -182,26 +182,26 @@ public class Player : SerializedMonoBehaviour
         movementStateMachine.OnTriggerEnter(collider);
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (skillData.touch)
-        {
-            skillData.touch = false;
-            currentCharacter.StopGrapple();
-        }
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    if (skillData.touch)
+    //    {
+    //        skillData.touch = false;
+    //        currentCharacter.StopGrapple();
+    //    }
 
-    }
+    //}
 
-    private void OnTriggerStay(Collider collider)
-    {
-        if (!isGround) isGround = true;
-    }
+    //private void OnTriggerStay(Collider collider)
+    //{
+    //    if (!isGround) isGround = true;
+    //}
 
-    private void OnTriggerExit(Collider collider)
-    {
-        if (isGround) isGround = false;
-        movementStateMachine.OnTriggerExit(collider);
-    }
+    //private void OnTriggerExit(Collider collider)
+    //{
+    //    if (isGround) isGround = false;
+    //    movementStateMachine.OnTriggerExit(collider);
+    //}
 
     public void PlayerDead()
     {

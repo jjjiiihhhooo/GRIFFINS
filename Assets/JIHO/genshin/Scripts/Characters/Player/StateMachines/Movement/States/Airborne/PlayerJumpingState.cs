@@ -124,6 +124,11 @@ public class PlayerJumpingState : PlayerAirborneState
         return jumpForce;
     }
 
+    protected override void OnContactWithGround(Collider collider)
+    {
+       
+    }
+
     protected override void ResetSprintState()
     {
     }

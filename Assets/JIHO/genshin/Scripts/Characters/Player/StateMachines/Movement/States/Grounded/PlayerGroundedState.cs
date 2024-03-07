@@ -102,9 +102,7 @@ public class PlayerGroundedState : PlayerMovementState
 
     protected override void AddInputActionsCallbacks()
     {
-        if (GameManager.Instance.dialogueManager.IsChat) return;
         base.AddInputActionsCallbacks();
-
 
         stateMachine.Player.Input.PlayerActions.Dash.started += OnDashStarted;
 
@@ -126,6 +124,7 @@ public class PlayerGroundedState : PlayerMovementState
         if (!GameManager.Instance.staminaManager.ChechStamina(20f)) return;
 
         GameManager.Instance.staminaManager.MinusStamina(20f);
+
         stateMachine.ChangeState(stateMachine.DashingState);
     }
 
@@ -194,4 +193,3 @@ public class PlayerGroundedState : PlayerMovementState
         UpdateTargetRotation(GetMovementInputDirection());
     }
 }
-
