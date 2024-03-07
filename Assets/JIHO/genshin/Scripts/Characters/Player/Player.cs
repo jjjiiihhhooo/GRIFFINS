@@ -73,9 +73,6 @@ public class Player : SerializedMonoBehaviour
 
     public Vector3 dir;
     public Ray ray;
-    public Ray testRay;
-    public Ray testRay1;
-    public Ray testRay2;
     public Ray camRay;
     
     public bool isGround; //땅에 있는 상태인지
@@ -152,13 +149,6 @@ public class Player : SerializedMonoBehaviour
         movementStateMachine.HandleInput();
 
         movementStateMachine.Update();
-    }
-
-    private void OnDrawGizmos()
-    {
-        Debug.DrawRay(testRay.origin, testRay.direction, Color.red);    
-        Debug.DrawRay(testRay1.origin, testRay.direction, Color.red);    
-        Debug.DrawRay(testRay2.origin, testRay.direction, Color.blue);
     }
 
     private void FixedUpdate()
