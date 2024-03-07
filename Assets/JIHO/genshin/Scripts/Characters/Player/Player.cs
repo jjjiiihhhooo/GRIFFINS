@@ -1,188 +1,313 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Windows;
+using UnityEngine.UIElements;
+using UnityEngine.UI;
 
-namespace genshin
+using Sirenix.OdinInspector;
+using TMPro;
+using Unity.VisualScripting;
+using System.Transactions;
+using UnityEngine.Rendering.Universal;
+
+[RequireComponent(typeof(PlayerInput))]
+[RequireComponent(typeof(PlayerResizableCapsuleCollider))]
+public class Player : SerializedMonoBehaviour
 {
-    [RequireComponent(typeof(PlayerInput))]
-    [RequireComponent(typeof(PlayerResizableCapsuleCollider))]
-    public class Player : MonoBehaviour
+    public static Player Instance;
+
+    [field: Header("References")]
+    [field: SerializeField] public PlayerSO Data { get; private set; }
+
+    [field: Header("Collisions")]
+    public AttackCol attackCol;
+    [field: SerializeField] public PlayerLayerData LayerData { get; private set; }
+    [field: Header("Camera")]
+    [field: SerializeField] public PlayerCameraUtility CameraRecenteringUtility { get; private set; }
+
+    [field: Header("Animations")]
+    [field: SerializeField] public PlayerAnimationData AnimationData { get; private set; }
+
+
+    
+
+
+    public Rigidbody Rigidbody { get; private set; }
+    public Animator Animator { get; private set; }
+
+    public PlayerInput Input { get; private set; }
+    public PlayerResizableCapsuleCollider ResizableCapsuleCollider { get; private set; }
+
+    public Transform MainCameraTransform { get; private set; }
+
+    public TargetSet targetSet;
+    public SkillData skillData;
+    public Swinging swinging;
+    public SpawnPoint spawn;
+    public PlayerMovementStateMachine movementStateMachine;
+
+    
+    [Header("GameObject")]
+    public GameObject jumpEffect;
+    public GameObject dashEffect;
+    public GameObject landEffect;
+    public GameObject saveItem;
+
+    [Header("UI")]
+    public Canvas playerCanvas;
+    public UnityEngine.UI.Image staminaFill;
+    public UnityEngine.UI.Image interactionImage;
+    public TextMeshProUGUI interactionText;
+
+    [Header("Character")]
+    public PlayerCharacter currentCharacter;
+    public PlayerCharacter[] characters; 
+
+
+    //1: white
+    //2: green
+    //3: blue
+    //4: red
+
+
+    public Vector3 dir;
+    public Ray ray;
+    public Ray testRay;
+    public Ray testRay1;
+    public Ray testRay2;
+    public Ray camRay;
+    
+    public bool isGround; //땅에 있는 상태인지
+
+    public bool isAttack; //공격 상태인지
+
+    public bool isItemSave;
+
+    public float testHp;
+
+    private void Awake()
     {
-
-        public float moveSpeed;
-        public float rotateSpeed;
-        public float dashSpeed;
-        public float jumpSpeed;
-
-        [field: Header("References")]
-        [field: SerializeField] public PlayerSO Data { get; private set; }
-
-        [field: Header("Collisions")]
-        [field: SerializeField] public PlayerLayerData LayerData { get; private set; }
-
-        [field: Header("Camera")]
-        [field: SerializeField] public PlayerCameraUtility CameraRecenteringUtility { get; private set; }
-
-        [field: Header("Animations")]
-        [field: SerializeField] public PlayerAnimationData AnimationData { get; private set; }
-
-        public GameObject jumpEffect;
-        public GameObject dashEffect;
-        public GameObject landEffect;
-
-
-        public Rigidbody Rigidbody { get; private set; }
-        public Animator Animator { get; private set; }
-
-        public PlayerInput Input { get; private set; }
-        public PlayerResizableCapsuleCollider ResizableCapsuleCollider { get; private set; }
-
-        public Transform MainCameraTransform { get; private set; }
-        public PlayerInteraction PlayerInteraction;
-
-        public PlayerMovementStateMachine movementStateMachine;
-
-
-        public GameObject tornadoSkillObject;
-        public AttackCol attackCol;
-        public AttackCol dashCol;
-        public bool isInteraction;
-        public bool isGround;
-        public bool isSkill;
-        public float damage;
-        public float groundTime;
-        public float groundMaxTime;
-        public PhysicMaterial pm;
-
-        public Animator whiteAnimator;
-        public Animator greenAnimator;
-        public Animator redAnimator;
-        public Animator blueAnimator;
-
-        public Ray ray;
-        public Vector3 dir;
-        public Ray testRay;
-        public Ray testRay1;
-        public Ray testRay2;
-        
-        private void Awake()
+        if (Instance == null)
         {
+            movementStateMachine = new PlayerMovementStateMachine(this);
+            if (playerCanvas.worldCamera == null) playerCanvas.worldCamera = Camera.main;
+            Instance = this;
             CameraRecenteringUtility.Initialize();
             AnimationData.Initialize();
-            PlayerInteraction = GetComponent<PlayerInteraction>();
-
+            swinging = GetComponent<Swinging>();
             Rigidbody = GetComponent<Rigidbody>();
-            Animator = whiteAnimator;
+
+            for(int i = 0; i < characters.Length; i++)
+            {
+                characters[i].Init(this);
+            }
+
+            currentCharacter = characters[0];
+            currentCharacter.model.SetActive(true);
+
+            Animator = currentCharacter.animator;
+
+
 
             Input = GetComponent<PlayerInput>();
             ResizableCapsuleCollider = GetComponent<PlayerResizableCapsuleCollider>();
 
             MainCameraTransform = Camera.main.transform;
 
-            movementStateMachine = new PlayerMovementStateMachine(this);
+            
 
-            isInteraction = false;
+            DontDestroyOnLoad(this.gameObject);
+        }
+        else
+        {
+            Destroy(this.gameObject);
         }
 
-        private void OnDrawGizmos()
+    }
+
+    private void Start()
+    {
+        movementStateMachine.ChangeState(movementStateMachine.IdlingState);
+    }
+
+    private void Update()
+    {
+        if (GameManager.Instance.dialogueManager.IsChat) return;
+        
+        currentCharacter.Update();
+
+        dir = MainCameraTransform.forward;
+        ray = new Ray(new Vector3(transform.position.x, transform.position.y + 2f, transform.position.z), dir);
+        camRay = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
+
+        if (skillData.touch) return;
+        if (swinging.swinging) return;
+        if (currentCharacter.animator.GetCurrentAnimatorStateInfo(1).IsName("Idle") || currentCharacter.animator.GetCurrentAnimatorStateInfo(1).IsName("Throw"))
         {
-            Gizmos.DrawRay(ray);
+            transform.rotation = CameraRecenteringUtility.VirtualCamera.transform.rotation;
+            transform.rotation = new Quaternion(0f, CameraRecenteringUtility.VirtualCamera.transform.rotation.y, 0f, transform.rotation.w);
         }
 
-        private void Start()
+        movementStateMachine.HandleInput();
+
+        movementStateMachine.Update();
+    }
+
+    private void OnDrawGizmos()
+    {
+        Debug.DrawRay(testRay.origin, testRay.direction, Color.red);    
+        Debug.DrawRay(testRay1.origin, testRay.direction, Color.red);    
+        Debug.DrawRay(testRay2.origin, testRay.direction, Color.blue);
+    }
+
+    private void FixedUpdate()
+    {
+        if (skillData.touch) return;
+        if (swinging.swinging) return;
+        movementStateMachine.PhysicsUpdate();
+    }
+
+    private void OnTriggerEnter(Collider collider)
+    {
+        if (skillData.touch)
         {
-            movementStateMachine.ChangeState(movementStateMachine.IdlingState);
+            skillData.touch = false;
+            currentCharacter.StopGrapple();
+            //skillData.StopGrapple();
         }
 
-        private void Update()
+        if(swinging.swinging)
         {
-            dir = MainCameraTransform.forward;
-            ray = new Ray(new Vector3(transform.position.x, transform.position.y + 2f, transform.position.z), dir);
+            swinging.swinging = false;
+            swinging.StopSwing();
+        }
 
-            movementStateMachine.HandleInput();
 
-            movementStateMachine.Update();
+        if(collider.tag == "Spawn")
+        {
+            collider.GetComponent<SpawnPoint>().SetSpawn();
+        }
 
-            if(UnityEngine.Input.GetKeyDown(KeyCode.LeftAlt))
+        movementStateMachine.OnTriggerEnter(collider);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (skillData.touch)
+        {
+            skillData.touch = false;
+            currentCharacter.StopGrapple();
+        }
+
+    }
+
+    private void OnTriggerStay(Collider collider)
+    {
+        if (!isGround) isGround = true;
+    }
+
+    private void OnTriggerExit(Collider collider)
+    {
+        if (isGround) isGround = false;
+        movementStateMachine.OnTriggerExit(collider);
+    }
+
+    public void PlayerDead()
+    {
+        
+    }
+
+    public void PlayerSpawn()
+    {
+        spawn.Spawn();
+    }
+
+    public void OnMovementStateAnimationEnterEvent()
+    {
+        movementStateMachine.OnAnimationEnterEvent();
+    }
+
+    public void OnMovementStateAnimationExitEvent()
+    {
+        movementStateMachine.OnAnimationExitEvent();
+    }
+
+    public void OnMovementStateAnimationTransitionEvent()
+    {
+        movementStateMachine.OnAnimationTransitionEvent();
+    }
+
+    public void ChangeCharacter(int index)
+    {
+        if (index == currentCharacter.index) return;
+
+        currentCharacter.CharacterChange();
+
+        characters[index].model.SetActive(true);
+        foreach (AnimatorControllerParameter paramA in currentCharacter.animator.parameters)
+        {
+            switch (paramA.type)
             {
-                Cursor.lockState = CursorLockMode.Locked;
-                Cursor.visible = false;
+                case AnimatorControllerParameterType.Bool:
+                    characters[index].animator.SetBool(paramA.name, currentCharacter.animator.GetBool(paramA.name));
+                    break;
+                case AnimatorControllerParameterType.Float:
+                    characters[index].animator.SetFloat(paramA.name, currentCharacter.animator.GetFloat(paramA.name));
+                    break;
+                case AnimatorControllerParameterType.Int:
+                    characters[index].animator.SetInteger(paramA.name, currentCharacter.animator.GetInteger(paramA.name));
+                    break;
+                case AnimatorControllerParameterType.Trigger:
+                    if (currentCharacter.animator.GetBool(paramA.name))
+                    {
+                        characters[index].animator.SetTrigger(paramA.name);
+                    }
+                    break;
             }
         }
+        currentCharacter.model.SetActive(false);
+        currentCharacter = characters[index];
+        Animator = currentCharacter.animator;
 
-        private void FixedUpdate()
+    }
+
+    public void CoroutineEvent(IEnumerator enumerator)
+    {
+        StopCoroutine(enumerator);
+        StartCoroutine(enumerator);
+    }
+
+    public void DestroyEvent(UnityEngine.Object obj, float delay = 0f)
+    {
+        Destroy(obj, delay);
+    }
+
+    public void EndCombo()
+    {
+        currentCharacter.comboCounter = 0;
+        currentCharacter.lastComboEnd = Time.time;
+    }
+
+    public void SetActiveInteraction(bool _bool, string text = "")
+    {
+        if(_bool)
         {
-            movementStateMachine.PhysicsUpdate();
-
-            PlayerInteraction.PhysicsUpdate();
+            interactionText.text = text;
+            interactionImage.gameObject.SetActive(true);
         }
-
-        private void OnTriggerEnter(Collider collider)
+        else
         {
-            movementStateMachine.OnTriggerEnter(collider);
-        }
-
-        private void OnTriggerStay(Collider collider)
-        {
-            movementStateMachine.OnTriggerStay(collider);
-        }
-
-        private void OnTriggerExit(Collider collider)
-        {
-            movementStateMachine.OnTriggerExit(collider);
-        }
-
-        public void OnMovementStateAnimationEnterEvent()
-        {
-            movementStateMachine.OnAnimationEnterEvent();
-        }
-
-        public void OnMovementStateAnimationExitEvent()
-        {
-            movementStateMachine.OnAnimationExitEvent();
-        }
-
-        public void OnMovementStateAnimationTransitionEvent()
-        {
-            movementStateMachine.OnAnimationTransitionEvent();
-        }
-
-        public void StartCor(IEnumerator coroutine)
-        {
-            StartCoroutine(coroutine);
-        }
-
-        public void StopCor(IEnumerator coroutine)
-        {
-            StopCoroutine(coroutine);
-        }
-
-        public void AttackColActive(float time = 0.2f)
-        {
-            attackCol.gameObject.SetActive(false);
-            attackCol.damage = damage;
-            attackCol.time = time;
-            attackCol.gameObject.SetActive(true);
-        }
-
-        public void DashColActive(float time = 0f)
-        {
-            dashCol.gameObject.SetActive(false);
-            dashCol.damage = damage;
-            dashCol.time = time;
-            dashCol.gameObject.SetActive(true);
-        }
-
-        public void InvokeMessage(float time)
-        {
-            Invoke("DashToFall", time);
-        }
-        private void DashToFall()
-        {
-            movementStateMachine.ChangeState(movementStateMachine.FallingState);
+            interactionImage.gameObject.SetActive(false);
         }
     }
+
+    public GameObject InstantiateEvent(GameObject obj, Vector3 transform, Quaternion quaternion)
+    {
+       return Instantiate(obj, transform, quaternion);
+    }
+
 }
+
 
 

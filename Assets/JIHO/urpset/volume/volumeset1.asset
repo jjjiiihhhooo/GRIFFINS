@@ -15,13 +15,13 @@ MonoBehaviour:
   active: 0
   mode:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 2
   gaussianStart:
     m_OverrideState: 1
-    m_Value: 22.56
+    m_Value: 0
   gaussianEnd:
     m_OverrideState: 1
-    m_Value: 30
+    m_Value: 143
   gaussianMaxRadius:
     m_OverrideState: 1
     m_Value: 0.5
@@ -30,21 +30,21 @@ MonoBehaviour:
     m_Value: 0
   focusDistance:
     m_OverrideState: 1
-    m_Value: 10
+    m_Value: 1.13
   aperture:
-    m_OverrideState: 0
-    m_Value: 5.6
+    m_OverrideState: 1
+    m_Value: 9.7
   focalLength:
-    m_OverrideState: 0
-    m_Value: 50
+    m_OverrideState: 1
+    m_Value: 48
   bladeCount:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 5
   bladeCurvature:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 1
   bladeRotation:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 0
 --- !u!114 &-8053134324859646894
 MonoBehaviour:
@@ -58,7 +58,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97c23e3b12dc18c42a140437e53d3951, type: 3}
   m_Name: Tonemapping
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   mode:
     m_OverrideState: 1
     m_Value: 1
@@ -74,7 +74,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e021b4c809a781e468c2988c016ebbea, type: 3}
   m_Name: ColorLookup
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   texture:
     m_OverrideState: 1
     m_Value: {fileID: 2800000, guid: f85ce338eaa4dbe43973f2afb1a99d62, type: 3}
@@ -97,10 +97,17 @@ MonoBehaviour:
   active: 1
   threshold:
     m_OverrideState: 1
+<<<<<<< HEAD
     m_Value: 0.35
   intensity:
     m_OverrideState: 1
     m_Value: 0.44
+=======
+    m_Value: 0.3
+  intensity:
+    m_OverrideState: 1
+    m_Value: 0.15
+>>>>>>> SEO
   scatter:
     m_OverrideState: 0
     m_Value: 0.7
@@ -109,7 +116,7 @@ MonoBehaviour:
     m_Value: 65472
   tint:
     m_OverrideState: 1
-    m_Value: {r: 1, g: 0.6933962, b: 0.6933962, a: 1}
+    m_Value: {r: 1, g: 1, b: 1, a: 1}
   highQualityFiltering:
     m_OverrideState: 0
     m_Value: 0
@@ -135,7 +142,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 558a8e2b6826cf840aae193990ba9f2e, type: 3}
   m_Name: ShadowsMidtonesHighlights
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   shadows:
     m_OverrideState: 1
     m_Value: {x: 0.86220825, y: 0.84513533, z: 1, w: 0.107959196}
@@ -144,7 +151,7 @@ MonoBehaviour:
     m_Value: {x: 0.9083601, y: 0.91297823, z: 1, w: 0.093457945}
   highlights:
     m_OverrideState: 1
-    m_Value: {x: 0.99567235, y: 1, z: 0.83841956, w: -0.18691589}
+    m_Value: {x: 0.99567235, y: 1, z: 0.83841956, w: 0.010267211}
   shadowsStart:
     m_OverrideState: 1
     m_Value: 0
@@ -206,7 +213,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 899c54efeace73346a0a16faa3afe726, type: 3}
   m_Name: Vignette
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   color:
     m_OverrideState: 1
     m_Value: {r: 0.022828398, g: 0.37231264, b: 0.5377358, a: 1}

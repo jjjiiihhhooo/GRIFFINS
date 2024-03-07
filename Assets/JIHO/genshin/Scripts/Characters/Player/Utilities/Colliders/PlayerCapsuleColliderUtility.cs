@@ -3,19 +3,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace genshin
+
+
+[Serializable]
+public class PlayerCapsuleColliderUtility : CapsuleColliderUtility
 {
-    [Serializable]
-    public class PlayerCapsuleColliderUtility : CapsuleColliderUtility
+    [field: SerializeField] public PlayerTriggerColliderData TriggerColliderData { get; private set; }
+
+    protected override void OnInitialize()
     {
-        [field:SerializeField] public PlayerTriggerColliderData TriggerColliderData { get; private set; }
+        base.OnInitialize();
 
-        protected override void OnInitialize()
-        {
-            base.OnInitialize();
-
-            TriggerColliderData.Initialize();
-        }
-
+        TriggerColliderData.Initialize();
     }
+
 }
+

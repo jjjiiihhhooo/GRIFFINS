@@ -3,43 +3,43 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace genshin
+
+
+public class PlayerInput : MonoBehaviour
 {
-    public class PlayerInput : MonoBehaviour
+    public PlayerInputActions InputActions { get; private set; }
+    public PlayerInputActions.PlayerActions PlayerActions { get; private set; }
+
+    private void Awake()
     {
-        public PlayerInputActions InputActions { get; private set; }
-        public PlayerInputActions.PlayerActions PlayerActions { get; private set; }
+        InputActions = new PlayerInputActions();
 
-        private void Awake()
-        {
-            InputActions = new PlayerInputActions();
+        PlayerActions = InputActions.Player;
+    }
 
-            PlayerActions = InputActions.Player;
-        }
+    private void OnEnable()
+    {
+        InputActions.Enable();
+    }
 
-        private void OnEnable()
-        {
-            InputActions.Enable();
-        }
+    private void OnDisable()
+    {
+        InputActions.Disable();
+    }
 
-        private void OnDisable()
-        {
-            InputActions.Disable();
-        }
+    public void DisableActionFor(InputAction action, float seconds)
+    {
+        StartCoroutine(DisableAction(action, seconds));
+    }
 
-        public void DisableActionFor(InputAction action, float seconds)
-        {
-            StartCoroutine(DisableAction(action, seconds));
-        }
+    private IEnumerator DisableAction(InputAction action, float seconds)
+    {
+        action.Disable();
 
-        private IEnumerator DisableAction(InputAction action, float seconds)
-        {
-            action.Disable();
+        yield return new WaitForSeconds(seconds);
 
-            yield return new WaitForSeconds(seconds);
-
-            action.Enable();
-        }
+        action.Enable();
     }
 }
+
 
