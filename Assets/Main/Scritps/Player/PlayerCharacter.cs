@@ -61,9 +61,10 @@ public class PlayerCharacter
             player.skillData.grapplePoint = Camera.main.transform.position + Camera.main.transform.forward * player.skillData.maxGrappleDistance;
             player.CoroutineEvent(DelayCor(player.skillData.grappleDelayTime, 1));
         }
-
+        player.skillData.lr.gameObject.SetActive(true);
         player.skillData.lr.enabled = true;
         player.skillData.lr.SetPosition(1, player.skillData.grapplePoint);
+        if (!player.isGround) ExecuteGrapple();
     }
 
     public IEnumerator DelayCor(float delay, int index)
@@ -81,6 +82,7 @@ public class PlayerCharacter
         GameManager.Instance.staminaManager.MinusStamina(20f);
 
 
+        player.movementStateMachine.ChangeState(player.movementStateMachine.FallingState);
         player.currentCharacter.animator.SetBool("isGrappling", true);
         player.transform.rotation = player.CameraRecenteringUtility.VirtualCamera.transform.rotation;
         player.transform.rotation = new Quaternion(0f, player.CameraRecenteringUtility.VirtualCamera.transform.rotation.y, 0f, player.transform.rotation.w);
@@ -97,6 +99,7 @@ public class PlayerCharacter
         player.skillData.velocity = CalculateJumpVelocity(player.transform.position, player.skillData.grapplePoint, highestPointOnArc);
         player.ResizableCapsuleCollider.SlopeData.StepHeightPercentage = 0f;
         player.skillData.touch = true;
+        player.skillData.lr.gameObject.SetActive(false);
         player.GetComponent<Rigidbody>().velocity = player.skillData.velocity;
     }
 
@@ -106,7 +109,7 @@ public class PlayerCharacter
         player.ResizableCapsuleCollider.SlopeData.StepHeightPercentage = 0.25f;
         player.skillData.grappling = false;
         player.skillData.grapplingCdTimer = player.skillData.grapplingCd;
-
+        
         player.skillData.lr.enabled = false;
     }
 
@@ -413,6 +416,11 @@ public class GreenCharacter : PlayerCharacter
         {
             player.currentCharacter.StopGrapple();
             player.swinging.StopSwing();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space) && player.isGround && player.skillData.grappling)
+        {
+            ExecuteGrapple();
         }
     }
 

@@ -34,11 +34,6 @@ public class Projectile : MonoBehaviour
             if (isCol) return;
             isCol = true;
 
-            if (other.tag == "Enemy")
-            {
-                other.GetComponent<EnemyController>().DamageMessage(Player.Instance.currentCharacter.normalAttackDamage);
-                
-            }
 
             if (Player.Instance.currentCharacter.index == 3)
             {

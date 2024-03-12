@@ -2,9 +2,17 @@ using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EventManager : MonoBehaviour
 {
+    public DOTweenAnimation playerHpDot;
+    public Slider playerHp;
+    public Slider playerBackHp;
+    public Slider bossBackHp;
+    public DOTweenAnimation bossHpDot;
+    public Slider bossHp;
+    public Slider bossTiming;
 
 
     public void Tutorial_0_Event()
@@ -43,4 +51,5 @@ public class EventManager : MonoBehaviour
     {
         GameObject.Find("Floor").GetComponent<ObjectAction>().AnimationAction("Tutorial_3_Floor");
     }
+
 }

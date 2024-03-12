@@ -10,6 +10,7 @@ using TMPro;
 using Unity.VisualScripting;
 using System.Transactions;
 using UnityEngine.Rendering.Universal;
+using static UnityEngine.EventSystems.EventTrigger;
 
 [RequireComponent(typeof(PlayerInput))]
 [RequireComponent(typeof(PlayerResizableCapsuleCollider))]
@@ -62,7 +63,10 @@ public class Player : SerializedMonoBehaviour
 
     [Header("Character")]
     public PlayerCharacter currentCharacter;
-    public PlayerCharacter[] characters; 
+    public PlayerCharacter[] characters;
+
+    public float maxHp;
+    public float curHp;
 
 
     //1: white
@@ -81,7 +85,10 @@ public class Player : SerializedMonoBehaviour
 
     public bool isItemSave;
 
+    public bool backHpHit;
+
     public float testHp;
+
 
     private void Awake()
     {
@@ -94,7 +101,7 @@ public class Player : SerializedMonoBehaviour
             AnimationData.Initialize();
             swinging = GetComponent<Swinging>();
             Rigidbody = GetComponent<Rigidbody>();
-
+            curHp = maxHp;
             for(int i = 0; i < characters.Length; i++)
             {
                 characters[i].Init(this);
@@ -133,7 +140,7 @@ public class Player : SerializedMonoBehaviour
         if (GameManager.Instance.dialogueManager.IsChat) return;
 
         currentCharacter.Update();
-
+        UIUpdate();
         dir = MainCameraTransform.forward;
         ray = new Ray(new Vector3(transform.position.x, transform.position.y + 2f, transform.position.z), dir);
         camRay = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
@@ -150,6 +157,22 @@ public class Player : SerializedMonoBehaviour
 
         movementStateMachine.Update();
     }
+
+    private void UIUpdate()
+    {
+        GameManager.Instance.eventManager.playerHp.value = Mathf.Lerp(GameManager.Instance.eventManager.playerHp.value, curHp / maxHp, Time.deltaTime * 5f);
+
+        if (backHpHit)
+        {
+            GameManager.Instance.eventManager.playerBackHp.value = Mathf.Lerp(GameManager.Instance.eventManager.playerBackHp.value, GameManager.Instance.eventManager.playerHp.value, Time.deltaTime * 6f);
+            if (GameManager.Instance.eventManager.playerHp.value >= GameManager.Instance.eventManager.playerBackHp.value - 0.001f)
+            {
+                backHpHit = false;
+                GameManager.Instance.eventManager.bossBackHp.value = GameManager.Instance.eventManager.playerHp.value;
+            }
+        }
+    }
+
 
     private void FixedUpdate()
     {
@@ -174,6 +197,12 @@ public class Player : SerializedMonoBehaviour
         }
 
 
+        if(collider.tag == "EnemyAttackCol")
+        {
+            if (movementStateMachine.CurStateName() == "PlayerDashingState") return;
+            GetDamage(collider.GetComponent<AttackCol>().damage);
+        }
+
         if (collider.tag == "Spawn")
         {
             collider.GetComponent<SpawnPoint>().SetSpawn();
@@ -192,16 +221,16 @@ public class Player : SerializedMonoBehaviour
 
     //}
 
-    //private void OnTriggerStay(Collider collider)
-    //{
-    //    if (!isGround) isGround = true;
-    //}
+    private void OnTriggerStay(Collider collider)
+    {
+        if (!isGround) isGround = true;
+    }
 
-    //private void OnTriggerExit(Collider collider)
-    //{
-    //    if (isGround) isGround = false;
-    //    movementStateMachine.OnTriggerExit(collider);
-    //}
+    private void OnTriggerExit(Collider collider)
+    {
+        if (isGround) isGround = false;
+        movementStateMachine.OnTriggerExit(collider);
+    }
 
     public void PlayerDead()
     {
@@ -211,6 +240,19 @@ public class Player : SerializedMonoBehaviour
     public void PlayerSpawn()
     {
         spawn.Spawn();
+    }
+
+    public void GetDamage(float damage)
+    {
+        curHp -= damage;
+        backHpHit = false;
+        if (curHp <= 0) PlayerDead();
+        Invoke("BackHpMessage", 0.3f);
+    }
+
+    private void BackHpMessage()
+    {
+        backHpHit = true;
     }
 
     public void OnMovementStateAnimationEnterEvent()

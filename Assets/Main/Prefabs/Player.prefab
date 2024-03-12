@@ -52939,7 +52939,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4943424079398178710}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 93009206aadf8ae4d9b95d11c529682e, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.2
@@ -53024,7 +53024,7 @@ MonoBehaviour:
       Data: 0
     - Name: normalAttackDamage
       Entry: 4
-      Data: 3
+      Data: 10
     - Name: lastClickedTime
       Entry: 4
       Data: 0
@@ -53163,10 +53163,13 @@ MonoBehaviour:
   staminaFill: {fileID: 1882920195}
   interactionImage: {fileID: 1984551419}
   interactionText: {fileID: 1328491976}
+  maxHp: 100
+  curHp: 0
   dir: {x: 0, y: 0, z: 0}
   isGround: 0
   isAttack: 0
   isItemSave: 0
+  backHpHit: 0
   testHp: 0
 --- !u!114 &4943424079398178709
 MonoBehaviour:
@@ -53260,8 +53263,8 @@ MonoBehaviour:
   grappleMask:
     serializedVersion: 2
     m_Bits: 2048
-  lr: {fileID: 293956261}
-  Glr: {fileID: 54967470}
+  lr: {fileID: 3833528727552054377}
+  Glr: {fileID: 4905171350695039301}
   grapplePoint: {x: 0, y: 0, z: 0}
   velocity: {x: 0, y: 0, z: 0}
   Gvelocity: {x: 0, y: 0, z: 0}
@@ -69393,6 +69396,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   time: 0.1
+  damage: 0
 --- !u!1 &4943424079766542678
 GameObject:
   m_ObjectHideFlags: 0
@@ -86137,6 +86141,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   time: 0.2
+  damage: 0
 --- !u!1 &4943424080209013599
 GameObject:
   m_ObjectHideFlags: 0
