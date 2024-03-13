@@ -21,6 +21,7 @@ public class EventManager : MonoBehaviour
         GameManager.Instance.questManager.QuestInput("Tutorial_0_1");
         GameManager.Instance.device_Image.GetComponent<DOTweenAnimation>().DORestartById("GetDevice");
         GameManager.Instance.questManager.questImage.GetComponent<DOTweenAnimation>().DORestartById("GetQuestBoard");
+        playerHpDot.DORestartById("GetHp");
 
     }
 

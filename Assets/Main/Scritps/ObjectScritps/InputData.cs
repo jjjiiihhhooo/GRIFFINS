@@ -39,6 +39,7 @@ public class InputData : MonoBehaviour
 
     private void MouseInput()
     {
+        if (player == null) return;
         Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
         if (Physics.Raycast(ray, out RaycastHit raycastHit, 999f, aimColliderMask))
         {
@@ -49,6 +50,7 @@ public class InputData : MonoBehaviour
 
     private void KeyboardInput()
     {
+        if (player == null) return;
         ActionInput();
         ChangeInput();
         InteractInput();
