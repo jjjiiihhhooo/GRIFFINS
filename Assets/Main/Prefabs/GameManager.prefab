@@ -1823,8 +1823,9 @@ RectTransform:
   - {fileID: 6313926535726760494}
   - {fileID: 11713302}
   - {fileID: 1265290725}
+  - {fileID: 5223057188328536566}
   m_Father: {fileID: 6394712287444513183}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2811,13 +2812,98 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0a381422aa50a94b83b65d13b21cd50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerHpDot: {fileID: 1265290726}
+--- !u!1 &70097277299684002
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8832912455488340990}
+  - component: {fileID: 2949477343668243044}
+  m_Layer: 0
+  m_Name: UIManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8832912455488340990
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 70097277299684002}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6394712287444513183}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2949477343668243044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 70097277299684002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ee05cdc20586e54780882f5eb908c48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grappleImage: {fileID: 1527270982}
+  normalImage: {fileID: 1386471014}
+  crossHair: {fileID: 719263522491789985}
+  device_Image: {fileID: 2484461707345961034}
+  skill_Image: {fileID: 944362900}
   playerHp: {fileID: 496374754}
   playerBackHp: {fileID: 959383829}
   bossBackHp: {fileID: 473325574}
-  bossHpDot: {fileID: 11713301}
   bossHp: {fileID: 1946139085}
   bossTiming: {fileID: 1063795140}
+  playerHpDot: {fileID: 1265290726}
+  bossHpDot: {fileID: 11713301}
+--- !u!1 &494683122217297620
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5077785617811429420}
+  m_Layer: 0
+  m_Name: Main
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &5077785617811429420
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 494683122217297620}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5223057188328536566}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &617318704466824836
 GameObject:
   m_ObjectHideFlags: 0
@@ -2866,6 +2952,42 @@ MonoBehaviour:
   nameText: {fileID: 1095645961252294353}
   dialogueText: {fileID: 8961689909739124795}
   dialogueDot: {fileID: 1027176018}
+--- !u!1 &1013721262618143446
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 346298987103486868}
+  m_Layer: 0
+  m_Name: Small
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &346298987103486868
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1013721262618143446}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5223057188328536566}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1610057790285330168
 GameObject:
   m_ObjectHideFlags: 0
@@ -3595,6 +3717,44 @@ MonoBehaviour:
     SerializationNodes: []
   playableAsset: {fileID: 0}
   playableDirecter: {fileID: 0}
+--- !u!1 &4629785310717664385
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5223057188328536566}
+  m_Layer: 0
+  m_Name: TapTitle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &5223057188328536566
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4629785310717664385}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 5077785617811429420}
+  - {fileID: 346298987103486868}
+  m_Father: {fileID: 1184086350}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &5124367168978651334
 GameObject:
   m_ObjectHideFlags: 0
@@ -4428,6 +4588,7 @@ Transform:
   - {fileID: 8256290841826170406}
   - {fileID: 7269451396510771949}
   - {fileID: 4803207606840369552}
+  - {fileID: 8832912455488340990}
   - {fileID: 1184086350}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -5711,11 +5872,7 @@ MonoBehaviour:
   questManager: {fileID: 6119297899538156956}
   eventManager: {fileID: 9071516988424318600}
   dialogueManager: {fileID: 3204368384099518019}
-  grappleImage: {fileID: 1527270982}
-  normalImage: {fileID: 1386471014}
-  crossHair: {fileID: 719263522491789985}
-  device_Image: {fileID: 2484461707345961034}
-  skill_Image: {fileID: 944362900}
+  uiManager: {fileID: 2949477343668243044}
 --- !u!1 &6588980921340142553
 GameObject:
   m_ObjectHideFlags: 0

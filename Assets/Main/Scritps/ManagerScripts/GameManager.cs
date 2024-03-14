@@ -20,13 +20,8 @@ public class GameManager : SerializedMonoBehaviour
     public QuestManager questManager;
     public EventManager eventManager;
     public DialogueManager dialogueManager;
+    public UIManager uiManager;
 
-    public GameObject grappleImage;
-    public GameObject normalImage;
-    public GameObject crossHair;
-
-    public Image device_Image;
-    public Image skill_Image;
 
     public Dictionary<string, UnityEvent> event_dictionary;
 
@@ -52,6 +47,7 @@ public class GameManager : SerializedMonoBehaviour
         staminaManager.Init();
         timelineManager.Init();
         dialogueManager.Init();
+        uiManager.Init();
         //MouseLocked();
     }
 

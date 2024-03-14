@@ -193,7 +193,7 @@ public class Boss_Enemy : Enemy
     public override void BossStart()
     {
         if (isBossStart) return;
-        if (enemyController.anim_dot == null) enemyController.anim_dot = GameManager.Instance.eventManager.bossHpDot;
+        if (enemyController.anim_dot == null) enemyController.anim_dot = GameManager.Instance.uiManager.bossHpDot;
         isBossStart = true;
         isDefense = false;
         isRangeAttack = false;
@@ -291,7 +291,7 @@ public class Boss_Enemy : Enemy
         {
             bool test = false;
             time -= Time.deltaTime;
-            GameManager.Instance.eventManager.bossTiming.value = time / 10;
+            GameManager.Instance.uiManager.bossTiming.value = time / 10;
             curHp += Time.deltaTime * 2f;
             for(int i = 0; i < defenseObjects.Length; i++)
             {
@@ -308,7 +308,7 @@ public class Boss_Enemy : Enemy
         }
 
         superArmor = false;
-        GameManager.Instance.eventManager.bossTiming.value = 0;
+        GameManager.Instance.uiManager.bossTiming.value = 0;
         isAction = false;
         isDefense = true;
     }
@@ -349,11 +349,11 @@ public class Boss_Enemy : Enemy
         while (time > 0)
         {
             time -= Time.deltaTime;
-            GameManager.Instance.eventManager.bossTiming.value = time / 5;
+            GameManager.Instance.uiManager.bossTiming.value = time / 5;
             yield return new WaitForEndOfFrame();
         }
 
-        GameManager.Instance.eventManager.bossTiming.value = 0;
+        GameManager.Instance.uiManager.bossTiming.value = 0;
         superArmor = false;
         isAction = false;
         isRangeAttack = true;

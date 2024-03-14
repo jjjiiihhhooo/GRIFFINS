@@ -160,15 +160,15 @@ public class Player : SerializedMonoBehaviour
 
     private void UIUpdate()
     {
-        GameManager.Instance.eventManager.playerHp.value = Mathf.Lerp(GameManager.Instance.eventManager.playerHp.value, curHp / maxHp, Time.deltaTime * 5f);
+        GameManager.Instance.uiManager.playerHp.value = Mathf.Lerp(GameManager.Instance.uiManager.playerHp.value, curHp / maxHp, Time.deltaTime * 5f);
 
         if (backHpHit)
         {
-            GameManager.Instance.eventManager.playerBackHp.value = Mathf.Lerp(GameManager.Instance.eventManager.playerBackHp.value, GameManager.Instance.eventManager.playerHp.value, Time.deltaTime * 6f);
-            if (GameManager.Instance.eventManager.playerHp.value >= GameManager.Instance.eventManager.playerBackHp.value - 0.001f)
+            GameManager.Instance.uiManager.playerBackHp.value = Mathf.Lerp(GameManager.Instance.uiManager.playerBackHp.value, GameManager.Instance.uiManager.playerHp.value, Time.deltaTime * 6f);
+            if (GameManager.Instance.uiManager.playerHp.value >= GameManager.Instance.uiManager.playerBackHp.value - 0.001f)
             {
                 backHpHit = false;
-                GameManager.Instance.eventManager.bossBackHp.value = GameManager.Instance.eventManager.playerHp.value;
+                GameManager.Instance.uiManager.bossBackHp.value = GameManager.Instance.uiManager.playerHp.value;
             }
         }
     }

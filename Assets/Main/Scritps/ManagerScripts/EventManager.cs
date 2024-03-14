@@ -6,30 +6,24 @@ using UnityEngine.UI;
 
 public class EventManager : MonoBehaviour
 {
-    public DOTweenAnimation playerHpDot;
-    public Slider playerHp;
-    public Slider playerBackHp;
-    public Slider bossBackHp;
-    public DOTweenAnimation bossHpDot;
-    public Slider bossHp;
-    public Slider bossTiming;
+   
 
 
     public void Tutorial_0_Event()
     {
         //GameManager.Instance.skill_Image.sprite = skill_images[0];
         GameManager.Instance.questManager.QuestInput("Tutorial_0_1");
-        GameManager.Instance.device_Image.GetComponent<DOTweenAnimation>().DORestartById("GetDevice");
+        GameManager.Instance.uiManager.device_Image.GetComponent<DOTweenAnimation>().DORestartById("GetDevice");
         GameManager.Instance.questManager.questImage.GetComponent<DOTweenAnimation>().DORestartById("GetQuestBoard");
-        playerHpDot.DORestartById("GetHp");
+        GameManager.Instance.uiManager.playerHpDot.DORestartById("GetHp");
 
     }
 
     public void Tutorial_2_Event()
     {
         GameManager.Instance.tutorialManager.PsycheSetBool(true);
-        GameManager.Instance.skill_Image.sprite = GameManager.Instance.tutorialManager.skill_images[0];
-        GameManager.Instance.skill_Image.GetComponent<DOTweenAnimation>().DORestartById("GetSkill");
+        GameManager.Instance.uiManager.skill_Image.sprite = GameManager.Instance.tutorialManager.skill_images[0];
+        GameManager.Instance.uiManager.skill_Image.GetComponent<DOTweenAnimation>().DORestartById("GetSkill");
     }
 
 

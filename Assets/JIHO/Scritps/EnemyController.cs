@@ -55,8 +55,8 @@ public class EnemyController : SerializedMonoBehaviour
 
     private void UIUpdate()
     {
-        if (hpSlider == null) hpSlider = GameManager.Instance.eventManager.bossHp;
-        if (backHpSlider == null) backHpSlider = GameManager.Instance.eventManager.bossBackHp;
+        if (hpSlider == null) hpSlider = GameManager.Instance.uiManager.bossHp;
+        if (backHpSlider == null) backHpSlider = GameManager.Instance.uiManager.bossBackHp;
         
 
         hpSlider.value = Mathf.Lerp(hpSlider.value, enemy.curHp / enemy.maxHp, Time.deltaTime * 5f);
