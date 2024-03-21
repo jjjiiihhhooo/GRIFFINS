@@ -48,13 +48,21 @@ public class GameManager : SerializedMonoBehaviour
         timelineManager.Init();
         dialogueManager.Init();
         uiManager.Init();
-        //MouseLocked();
+        MouseLocked();
     }
 
-    public void MouseLocked()
+    public void MouseLocked(bool _bool = false)
     {
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
+        if(!_bool)
+        {
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+        else
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
     }
 
     public void Scene_AssistAction(DOTweenAnimation dot)

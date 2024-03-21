@@ -10,6 +10,9 @@ public class UIManager : MonoBehaviour
     public GameObject grappleImage;
     public GameObject normalImage;
     public GameObject crossHair;
+    public GameObject tapTitle_obj;
+    public GameObject tapMain_obj;
+    public GameObject tapSmall_obj;
 
     public Image device_Image;
     public Image skill_Image;
@@ -22,6 +25,8 @@ public class UIManager : MonoBehaviour
 
     public DOTweenAnimation playerHpDot;
     public DOTweenAnimation bossHpDot;
+
+
 
     public void Init()
     {
