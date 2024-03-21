@@ -199,7 +199,7 @@ public class Player : SerializedMonoBehaviour
 
         if(collider.tag == "EnemyAttackCol")
         {
-            if (movementStateMachine.CurStateName() == "PlayerDashingState") return;
+            //if (movementStateMachine.CurStateName() == "PlayerDashingState") return;
             GetDamage(collider.GetComponent<AttackCol>().damage);
         }
 
