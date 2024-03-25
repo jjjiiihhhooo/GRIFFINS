@@ -67,8 +67,7 @@ public class InputData : MonoBehaviour
         {
             player.currentCharacter.RightAction();
         }
-        
-        if(Input.GetKeyDown(RightAction) && player.currentCharacter.GetType() == typeof(GreenCharacter))
+        else if(Input.GetKeyDown(RightAction) && player.currentCharacter.GetType() == typeof(GreenCharacter))
         {
             player.swinging.StartSwing();
         }
@@ -88,8 +87,10 @@ public class InputData : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (GameManager.Instance.dialogueManager.CurDialogues == null) return;
-            GameManager.Instance.dialogueManager.StartDialogue();
+            if (GameManager.Instance.dialogueManager.CurDialogues != null)
+            {
+                GameManager.Instance.dialogueManager.StartDialogue();
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.F))
@@ -101,7 +102,7 @@ public class InputData : MonoBehaviour
 
     private void ChangeInput()
     {
-        
+        if (!GameManager.Instance.tutorialManager.characterChange) return;
 
         if (Input.GetKeyDown(WhiteKey))
         {

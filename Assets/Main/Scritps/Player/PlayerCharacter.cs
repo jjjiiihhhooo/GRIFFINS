@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.SceneManagement;
 
 public class PlayerCharacter
 {
@@ -47,19 +48,24 @@ public class PlayerCharacter
 
     public virtual void StartGrapple()
     {
+        if (!GameManager.Instance.staminaManager.ChechStamina(20f)) return;
         if (player.skillData.grapplingCdTimer > 0) return;
+        GameManager.Instance.staminaManager.MinusStamina(20f);
         player.skillData.grappling = true;
+        player.freeze = true;
+        player.Rigidbody.constraints = RigidbodyConstraints.FreezePosition;
         RaycastHit hit;
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, player.skillData.maxGrappleDistance, player.skillData.grappleMask))
         {
             player.skillData.grapplePoint = hit.point;
-            if (!player.isGround) player.CoroutineEvent(DelayCor(player.skillData.grappleDelayTime, 0));
-
+            //player.CoroutineEvent(DelayCor(player.skillData.grappleDelayTime, 0));
+            player.StartCoroutine(DelayCor(player.skillData.grappleDelayTime, 0));
         }
         else
         {
             player.skillData.grapplePoint = Camera.main.transform.position + Camera.main.transform.forward * player.skillData.maxGrappleDistance;
-            player.CoroutineEvent(DelayCor(player.skillData.grappleDelayTime, 1));
+            //player.CoroutineEvent(DelayCor(player.skillData.grappleDelayTime, 1));
+            player.StartCoroutine(DelayCor(player.skillData.grappleDelayTime, 1));
         }
         player.skillData.lr.gameObject.SetActive(true);
         player.skillData.lr.enabled = true;
@@ -78,10 +84,9 @@ public class PlayerCharacter
 
     public virtual void ExecuteGrapple()
     {
-        if (!GameManager.Instance.staminaManager.ChechStamina(20f)) return;
-        GameManager.Instance.staminaManager.MinusStamina(20f);
-
-
+        
+        player.freeze = false;
+        player.Rigidbody.constraints = ~RigidbodyConstraints.FreezePosition;
         player.movementStateMachine.ChangeState(player.movementStateMachine.FallingState);
         player.currentCharacter.animator.SetBool("isGrappling", true);
         player.transform.rotation = player.CameraRecenteringUtility.VirtualCamera.transform.rotation;
@@ -105,6 +110,8 @@ public class PlayerCharacter
 
     public virtual void StopGrapple()
     {
+        player.freeze = false;
+        player.Rigidbody.constraints = ~RigidbodyConstraints.FreezePosition;
         player.currentCharacter.animator.SetBool("isGrappling", false);
         player.ResizableCapsuleCollider.SlopeData.StepHeightPercentage = 0.25f;
         player.skillData.grappling = false;
@@ -407,7 +414,7 @@ public class GreenCharacter : PlayerCharacter
 {
     public override void CharacterChange()
     {
-
+        GameManager.Instance.predictionHitTransform.gameObject.SetActive(false);
     }
 
     public override void Update()

@@ -47,4 +47,13 @@ public class EventManager : MonoBehaviour
         GameObject.Find("Floor").GetComponent<ObjectAction>().AnimationAction("Tutorial_3_Floor");
     }
 
+    public void Tutorial_4_0_Event()
+    {
+        GameManager.Instance.questManager.QuestInput("Tutorial_4_0");
+    }
+
+    public void Tutorial_4_Event()
+    {
+        LoadingSceneManager.LoadScene("Tutorial_5");
+    }
 }

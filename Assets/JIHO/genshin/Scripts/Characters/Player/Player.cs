@@ -87,6 +87,8 @@ public class Player : SerializedMonoBehaviour
 
     public bool backHpHit;
 
+    public bool freeze;
+
     public float testHp;
 
 

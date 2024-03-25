@@ -12113,6 +12113,42 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a0ab6f22f18eff74ebb4cc7ea6057202, type: 3}
+--- !u!1 &902051061 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5443296247653575383, guid: a0ab6f22f18eff74ebb4cc7ea6057202, type: 3}
+  m_PrefabInstance: {fileID: 902051060}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &902051062 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5443296247165657231, guid: a0ab6f22f18eff74ebb4cc7ea6057202, type: 3}
+  m_PrefabInstance: {fileID: 902051060}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &902051063
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 902051061}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 4.7100077, y: 0.0000014305098, z: 5.999994}
+  m_Center: {x: -2.3550005, y: 23.895006, z: 7.9384804}
+--- !u!65 &902051064
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 902051062}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 4.7100077, y: 0.0000014305098, z: 5.999994}
+  m_Center: {x: 2.35501, y: 23.895006, z: 7.9384804}
 --- !u!1 &903648567
 GameObject:
   m_ObjectHideFlags: 0
@@ -24534,16 +24570,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &2127093625 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5725701668723139026, guid: c88bd6aa48cd9f9458e2144aa4fee5f3, type: 3}
-  m_PrefabInstance: {fileID: 4943424080251979606}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &2127093628 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 2168867586551217076, guid: c88bd6aa48cd9f9458e2144aa4fee5f3, type: 3}
-  m_PrefabInstance: {fileID: 4943424080251979606}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2146053559
 GameObject:
   m_ObjectHideFlags: 0
@@ -29099,11 +29125,11 @@ PrefabInstance:
     - target: {fileID: 4943424079398178706, guid: c88bd6aa48cd9f9458e2144aa4fee5f3, type: 3}
       propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.data[4]
       value: 
-      objectReference: {fileID: 2127093628}
+      objectReference: {fileID: 0}
     - target: {fileID: 4943424079398178706, guid: c88bd6aa48cd9f9458e2144aa4fee5f3, type: 3}
       propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.data[5]
       value: 
-      objectReference: {fileID: 2127093625}
+      objectReference: {fileID: 0}
     - target: {fileID: 4943424079398178710, guid: c88bd6aa48cd9f9458e2144aa4fee5f3, type: 3}
       propertyPath: m_Name
       value: Player

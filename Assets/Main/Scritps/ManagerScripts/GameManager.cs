@@ -21,7 +21,7 @@ public class GameManager : SerializedMonoBehaviour
     public EventManager eventManager;
     public DialogueManager dialogueManager;
     public UIManager uiManager;
-
+    public Transform predictionHitTransform;
 
     public Dictionary<string, UnityEvent> event_dictionary;
 
@@ -48,7 +48,7 @@ public class GameManager : SerializedMonoBehaviour
         timelineManager.Init();
         dialogueManager.Init();
         uiManager.Init();
-        MouseLocked();
+        //MouseLocked();
     }
 
     public void MouseLocked(bool _bool = false)

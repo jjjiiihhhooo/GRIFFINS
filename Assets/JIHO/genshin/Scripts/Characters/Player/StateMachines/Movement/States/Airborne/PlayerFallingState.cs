@@ -1,8 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-
+using UnityEngine.InputSystem;
 
 public class PlayerFallingState : PlayerAirborneState
 {
@@ -52,6 +51,7 @@ public class PlayerFallingState : PlayerAirborneState
 
         stateMachine.Player.Rigidbody.AddForce(limitedVelocityForce, ForceMode.VelocityChange);
     }
+
 
     protected override void ResetSprintState()
     {

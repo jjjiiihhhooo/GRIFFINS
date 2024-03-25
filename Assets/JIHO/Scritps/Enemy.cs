@@ -284,15 +284,13 @@ public class Boss_Enemy : Enemy
             defenseObjects[i].transform.position = defenseTransforms[i].position;
         }
 
-        
-
-
         while (time > 0)
         {
             bool test = false;
             time -= Time.deltaTime;
             GameManager.Instance.uiManager.bossTiming.value = time / 10;
             curHp += Time.deltaTime * 2f;
+            enemyController.backHpSlider.value = enemyController.hpSlider.value;
             for(int i = 0; i < defenseObjects.Length; i++)
             {
                 if (defenseObjects[i].activeSelf) test = true;
