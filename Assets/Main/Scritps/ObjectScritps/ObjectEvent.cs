@@ -38,7 +38,7 @@ public class ObjectEvent : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        if (other.transform.tag == "useObject")
+        if (other.transform.tag == "useObject" || other.transform.tag == "usingObject")
         {
             if (colEffect != null)
             {

@@ -55,7 +55,7 @@ public class PlayerAnimationEventTrigger : MonoBehaviour
 
     public void NormalAttackExit()
     {
-        //player.isAttack = false;
+        player.isAttack = false;
         player.attackCol.gameObject.SetActive(true);
         //player.currentCharacter.animator.SetBool(name, false);
     }

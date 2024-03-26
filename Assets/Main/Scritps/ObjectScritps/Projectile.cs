@@ -29,10 +29,12 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(!(other.tag == "useObject"))
+        if(!(other.tag == "useObject" || other.tag == "usingObject"))
         {
             if (isCol) return;
             isCol = true;
+
+            transform.GetChild(0).tag = "useObject";
 
             if (other.tag == "Enemy")
             {

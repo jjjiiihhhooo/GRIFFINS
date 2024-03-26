@@ -87,20 +87,16 @@ public class QuestManager : SerializedMonoBehaviour
     {
         if (curQuest == null) return;
 
-        int count = 0;
-
-        while(curQuest != null && count < curQuest.QuestDatas.Length)
+        for(int i = 0; i < curQuest.QuestDatas.Length; i++)
         {
-            if (curQuest.QuestDatas[count].type == QuestType.Chat)
+            if (curQuest.QuestDatas[i].type == QuestType.Chat)
             {
-                if (!curQuest.QuestDatas[count].clear && chatKey == curQuest.QuestDatas[count].chatKey)
+                if (!curQuest.QuestDatas[i].clear && chatKey == curQuest.QuestDatas[i].chatKey)
                 {
-                    QuestClear(curQuest.QuestDatas[count], count);
+                    QuestClear(curQuest.QuestDatas[i], i);
                 }
             }
-            count++;
         }
-
     }
     
     public void ItemQuestcheck(string name)

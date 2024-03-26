@@ -7,9 +7,6 @@ using UnityEngine.UI;
 
 using Sirenix.OdinInspector;
 using TMPro;
-using Unity.VisualScripting;
-using System.Transactions;
-using UnityEngine.Rendering.Universal;
 
 [RequireComponent(typeof(PlayerInput))]
 [RequireComponent(typeof(PlayerResizableCapsuleCollider))]
@@ -47,12 +44,12 @@ public class Player : SerializedMonoBehaviour
     public SpawnPoint spawn;
     public PlayerMovementStateMachine movementStateMachine;
 
+
+    [Header("Effect")]
     
-    [Header("GameObject")]
     public GameObject jumpEffect;
     public GameObject dashEffect;
     public GameObject landEffect;
-    public GameObject saveItem;
 
     [Header("UI")]
     public Canvas playerCanvas;
@@ -80,9 +77,11 @@ public class Player : SerializedMonoBehaviour
     
     public bool isGround; //땅에 있는 상태인지
 
+    public bool isGrapple; //그래플링 상태인지
+
     public bool isAttack; //공격 상태인지
 
-    public bool isItemSave;
+    public bool isPsyche; //염력 상태인지
 
     public float testHp;
 
@@ -133,9 +132,8 @@ public class Player : SerializedMonoBehaviour
 
     private void Update()
     {
-        if (GameManager.Instance.dialogueManager.IsChat) return;
-        
         currentCharacter.Update();
+
 
         dir = MainCameraTransform.forward;
         ray = new Ray(new Vector3(transform.position.x, transform.position.y + 2f, transform.position.z), dir);
@@ -145,6 +143,7 @@ public class Player : SerializedMonoBehaviour
         if (swinging.swinging) return;
         if (currentCharacter.animator.GetCurrentAnimatorStateInfo(1).IsName("Idle") || currentCharacter.animator.GetCurrentAnimatorStateInfo(1).IsName("Throw"))
         {
+            Debug.Log("anim");
             transform.rotation = CameraRecenteringUtility.VirtualCamera.transform.rotation;
             transform.rotation = new Quaternion(0f, CameraRecenteringUtility.VirtualCamera.transform.rotation.y, 0f, transform.rotation.w);
         }
@@ -242,8 +241,6 @@ public class Player : SerializedMonoBehaviour
     {
         if (index == currentCharacter.index) return;
 
-        currentCharacter.CharacterChange();
-
         characters[index].model.SetActive(true);
         foreach (AnimatorControllerParameter paramA in currentCharacter.animator.parameters)
         {
@@ -285,6 +282,8 @@ public class Player : SerializedMonoBehaviour
 
     public void EndCombo()
     {
+        Debug.Log("EndCombo ");
+        currentCharacter.weapon_obj.SetActive(false);
         currentCharacter.comboCounter = 0;
         currentCharacter.lastComboEnd = Time.time;
     }

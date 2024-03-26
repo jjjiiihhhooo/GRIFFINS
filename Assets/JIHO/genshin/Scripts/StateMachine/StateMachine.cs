@@ -18,11 +18,6 @@ public abstract class StateMachine
         currentState.Enter();
     }
 
-    public string CurStateName()
-    {
-        return currentState.ToString();
-    }
-
 
     public void HandleInput()
     {

@@ -14,7 +14,7 @@ public class EnemyObjectController : SerializedMonoBehaviour
             collision.transform.GetComponent<Player>().testHp--;
         }
 
-        if(!collision.transform.CompareTag(this.transform.tag))
+        if(!collision.transform.CompareTag(this.transform.tag) && !this.transform.CompareTag("usingObject"))
         {
             Destroy(this.gameObject);
         }
