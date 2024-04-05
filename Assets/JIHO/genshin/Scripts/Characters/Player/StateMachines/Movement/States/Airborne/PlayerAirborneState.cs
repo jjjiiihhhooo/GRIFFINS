@@ -37,6 +37,8 @@ public class PlayerAirborneState : PlayerMovementState
         stateMachine.Player.Input.PlayerActions.Dash.started -= OnDashStarted;
     }
 
+    
+
     protected virtual void OnDashStarted(InputAction.CallbackContext context)
     {
         if (Player.Instance.skillData.isHand) return;

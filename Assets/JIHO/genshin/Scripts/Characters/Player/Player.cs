@@ -69,6 +69,7 @@ public class Player : SerializedMonoBehaviour
     public float curHp;
 
 
+
     //1: white
     //2: green
     //3: blue
@@ -188,6 +189,7 @@ public class Player : SerializedMonoBehaviour
         if (skillData.touch)
         {
             skillData.touch = false;
+
             currentCharacter.StopGrapple();
             //skillData.StopGrapple();
         }

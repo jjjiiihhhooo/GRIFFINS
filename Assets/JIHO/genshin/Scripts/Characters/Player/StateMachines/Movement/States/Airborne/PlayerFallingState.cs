@@ -17,12 +17,14 @@ public class PlayerFallingState : PlayerAirborneState
 
         StartAnimation(stateMachine.Player.AnimationData.FallParameterHash);
         if (stateMachine.Player.skillData.isHand) stateMachine.Player.currentCharacter.CharacterChange();
-        stateMachine.ReusableData.MovementSpeedModifier = 0f;
+        //stateMachine.ReusableData.MovementSpeedModifier = 0f;
 
         playerPositionOnEnter = stateMachine.Player.transform.position;
 
         ResetVerticalVelocity();
     }
+
+   
 
     public override void Exit()
     {

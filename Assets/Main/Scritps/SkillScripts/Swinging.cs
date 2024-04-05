@@ -39,8 +39,9 @@ public class Swinging : MonoBehaviour
 
     private void Update()
     {
-    //    if (Input.GetKeyDown(swingKey)) StartSwing();
-    //    if (Input.GetKeyUp(swingKey)) StopSwing();
+        //    if (Input.GetKeyDown(swingKey)) StartSwing();
+        //    if (Input.GetKeyUp(swingKey)) StopSwing();
+        if (Player.Instance.currentCharacter.isGrappleReady) return;
 
         CheckForSwingPoints();
 
@@ -99,6 +100,7 @@ public class Swinging : MonoBehaviour
     public void StartSwing()
     {
         Player playerController = transform.GetComponent<Player>();
+        
         if (playerController.isGround) return;
         // return if predictionHit not found
         if (predictionHit.point == Vector3.zero) return;
@@ -124,7 +126,7 @@ public class Swinging : MonoBehaviour
         joint = player.gameObject.AddComponent<SpringJoint>();
         joint.autoConfigureConnectedAnchor = false;
         joint.connectedAnchor = swingPoint;
-
+        playerController.GetComponent<Rigidbody>().velocity = Vector3.zero;
         float distanceFromPoint = Vector3.Distance(player.position, swingPoint);
 
         // the distance grapple will try to keep from grapple point. 
