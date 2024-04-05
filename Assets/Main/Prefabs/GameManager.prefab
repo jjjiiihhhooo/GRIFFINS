@@ -3262,6 +3262,435 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1 &2359630053712978273
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2063808024120694913}
+  - component: {fileID: 8831519924212913229}
+  - component: {fileID: 6455102178178055705}
+  - component: {fileID: 8883409730555824525}
+  - component: {fileID: 1795574260802653108}
+  - component: {fileID: 7257681504868831451}
+  m_Layer: 0
+  m_Name: WarningMessage
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2063808024120694913
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2359630053712978273}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children:
+  - {fileID: 6791667986913111767}
+  - {fileID: 6177660944556436666}
+  m_Father: {fileID: 3787432051152931332}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 1534, y: 324}
+  m_SizeDelta: {x: 800, y: 300}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &8831519924212913229
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2359630053712978273}
+  m_CullTransparentMesh: 1
+--- !u!114 &6455102178178055705
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2359630053712978273}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: fe6590826783f5643b4c71bc3aeea332, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!114 &8883409730555824525
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2359630053712978273}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d0390bd8b8ffd640b34fe25065ff1df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  updateType: 0
+  isSpeedBased: 0
+  hasOnStart: 0
+  hasOnPlay: 0
+  hasOnUpdate: 0
+  hasOnStepComplete: 0
+  hasOnComplete: 1
+  hasOnTweenCreated: 0
+  hasOnRewind: 0
+  onStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  onUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  onStepComplete:
+    m_PersistentCalls:
+      m_Calls: []
+  onComplete:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8883409730555824525}
+        m_TargetAssemblyTypeName: DG.Tweening.DOTweenAnimation, Assembly-CSharp-firstpass
+        m_MethodName: DORestartById
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Stop
+          m_BoolArgument: 0
+        m_CallState: 2
+  onTweenCreated:
+    m_PersistentCalls:
+      m_Calls: []
+  onRewind:
+    m_PersistentCalls:
+      m_Calls: []
+  targetIsSelf: 1
+  targetGO: {fileID: 0}
+  tweenTargetIsTargetGO: 1
+  delay: 0
+  duration: 0.5
+  easeType: 12
+  easeCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  loopType: 0
+  loops: 1
+  id: Start
+  isRelative: 0
+  isFrom: 0
+  isIndependentUpdate: 0
+  autoKill: 0
+  autoGenerate: 1
+  isActive: 1
+  isValid: 1
+  target: {fileID: 2063808024120694913}
+  animationType: 1
+  targetType: 5
+  forcedTargetType: 0
+  autoPlay: 0
+  useTargetAsV3: 0
+  endValueFloat: 0
+  endValueV3: {x: 0, y: 324, z: 0}
+  endValueV2: {x: 0, y: 0}
+  endValueColor: {r: 1, g: 1, b: 1, a: 1}
+  endValueString: 
+  endValueRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 0
+    height: 0
+  endValueTransform: {fileID: 0}
+  optionalBool0: 0
+  optionalBool1: 0
+  optionalFloat0: 1
+  optionalInt0: 10
+  optionalRotationMode: 0
+  optionalScrambleMode: 0
+  optionalShakeRandomnessMode: 0
+  optionalString: 
+--- !u!114 &1795574260802653108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2359630053712978273}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d0390bd8b8ffd640b34fe25065ff1df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  updateType: 0
+  isSpeedBased: 0
+  hasOnStart: 0
+  hasOnPlay: 0
+  hasOnUpdate: 0
+  hasOnStepComplete: 0
+  hasOnComplete: 1
+  hasOnTweenCreated: 0
+  hasOnRewind: 0
+  onStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  onUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  onStepComplete:
+    m_PersistentCalls:
+      m_Calls: []
+  onComplete:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1795574260802653108}
+        m_TargetAssemblyTypeName: DG.Tweening.DOTweenAnimation, Assembly-CSharp-firstpass
+        m_MethodName: DORestartById
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: End
+          m_BoolArgument: 0
+        m_CallState: 2
+  onTweenCreated:
+    m_PersistentCalls:
+      m_Calls: []
+  onRewind:
+    m_PersistentCalls:
+      m_Calls: []
+  targetIsSelf: 1
+  targetGO: {fileID: 0}
+  tweenTargetIsTargetGO: 1
+  delay: 0
+  duration: 1
+  easeType: 17
+  easeCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  loopType: 0
+  loops: 1
+  id: Stop
+  isRelative: 0
+  isFrom: 0
+  isIndependentUpdate: 0
+  autoKill: 0
+  autoGenerate: 1
+  isActive: 1
+  isValid: 1
+  target: {fileID: 2063808024120694913}
+  animationType: 11
+  targetType: 11
+  forcedTargetType: 0
+  autoPlay: 0
+  useTargetAsV3: 0
+  endValueFloat: 0
+  endValueV3: {x: 0.1, y: 0.1, z: 0.1}
+  endValueV2: {x: 0, y: 0}
+  endValueColor: {r: 1, g: 1, b: 1, a: 1}
+  endValueString: 
+  endValueRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 0
+    height: 0
+  endValueTransform: {fileID: 0}
+  optionalBool0: 0
+  optionalBool1: 0
+  optionalFloat0: 0.528
+  optionalInt0: 6
+  optionalRotationMode: 0
+  optionalScrambleMode: 0
+  optionalShakeRandomnessMode: 0
+  optionalString: 
+--- !u!114 &7257681504868831451
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2359630053712978273}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d0390bd8b8ffd640b34fe25065ff1df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  updateType: 0
+  isSpeedBased: 0
+  hasOnStart: 0
+  hasOnPlay: 0
+  hasOnUpdate: 0
+  hasOnStepComplete: 0
+  hasOnComplete: 0
+  hasOnTweenCreated: 0
+  hasOnRewind: 0
+  onStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  onUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  onStepComplete:
+    m_PersistentCalls:
+      m_Calls: []
+  onComplete:
+    m_PersistentCalls:
+      m_Calls: []
+  onTweenCreated:
+    m_PersistentCalls:
+      m_Calls: []
+  onRewind:
+    m_PersistentCalls:
+      m_Calls: []
+  targetIsSelf: 1
+  targetGO: {fileID: 0}
+  tweenTargetIsTargetGO: 1
+  delay: 0
+  duration: 0.5
+  easeType: 6
+  easeCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  loopType: 0
+  loops: 1
+  id: End
+  isRelative: 0
+  isFrom: 0
+  isIndependentUpdate: 0
+  autoKill: 0
+  autoGenerate: 1
+  isActive: 1
+  isValid: 1
+  target: {fileID: 2063808024120694913}
+  animationType: 1
+  targetType: 5
+  forcedTargetType: 0
+  autoPlay: 0
+  useTargetAsV3: 0
+  endValueFloat: 0
+  endValueV3: {x: 1534, y: 324, z: 0}
+  endValueV2: {x: 0, y: 0}
+  endValueColor: {r: 1, g: 1, b: 1, a: 1}
+  endValueString: 
+  endValueRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 0
+    height: 0
+  endValueTransform: {fileID: 0}
+  optionalBool0: 0
+  optionalBool1: 0
+  optionalFloat0: 1
+  optionalInt0: 10
+  optionalRotationMode: 0
+  optionalScrambleMode: 0
+  optionalShakeRandomnessMode: 0
+  optionalString: 
 --- !u!1 &2566658877729364381
 GameObject:
   m_ObjectHideFlags: 0
@@ -3902,7 +4331,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   guideImage: {fileID: 4525069243910185100}
   dotAnim: {fileID: 432700321320192656}
+  warningAnim: {fileID: 8883409730555824525}
   guideText: {fileID: 686377827032660190}
+  warningText: {fileID: 6871458880978212575}
 --- !u!1 &5167742625099336442
 GameObject:
   m_ObjectHideFlags: 0
@@ -4067,6 +4498,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4873505509797654378}
+  - {fileID: 2063808024120694913}
   m_Father: {fileID: 1184086350}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4075,6 +4507,141 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &5519712533201145520
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6177660944556436666}
+  - component: {fileID: 8982321190618403042}
+  - component: {fileID: 6871458880978212575}
+  m_Layer: 0
+  m_Name: MessageText
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &6177660944556436666
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5519712533201145520}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2063808024120694913}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -23, y: 0}
+  m_SizeDelta: {x: 200, y: 50}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &8982321190618403042
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5519712533201145520}
+  m_CullTransparentMesh: 1
+--- !u!114 &6871458880978212575
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5519712533201145520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: "\uACBD\uBE44\uBCD1 \uCD9C\uD604"
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: a19ba7abdd000024caabb8e9cf684815, type: 2}
+  m_sharedMaterial: {fileID: -4282919978893563182, guid: a19ba7abdd000024caabb8e9cf684815, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 80
+  m_fontSizeBase: 80
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_enableWordWrapping: 0
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 1
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &5986944258058057635
 GameObject:
   m_ObjectHideFlags: 0
@@ -4734,6 +5301,9 @@ MonoBehaviour:
     - {fileID: 794910029088164304}
     - {fileID: 0}
     - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -4752,7 +5322,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 16
+      Data: 19
     - Name: 
       Entry: 7
       Data: 
@@ -6103,7 +6673,266 @@ MonoBehaviour:
       Entry: 1
       Data: 
     - Name: $v
-      Entry: 6
+      Entry: 7
+      Data: 82|UnityEngine.Events.UnityEvent, UnityEngine.CoreModule
+    - Name: m_PersistentCalls
+      Entry: 7
+      Data: 83|UnityEngine.Events.PersistentCallGroup, UnityEngine.CoreModule
+    - Name: m_Calls
+      Entry: 7
+      Data: 84|System.Collections.Generic.List`1[[UnityEngine.Events.PersistentCall,
+        UnityEngine.CoreModule]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: stage1_wave1
+    - Name: $v
+      Entry: 7
+      Data: 85|UnityEngine.Events.UnityEvent, UnityEngine.CoreModule
+    - Name: m_PersistentCalls
+      Entry: 7
+      Data: 86|UnityEngine.Events.PersistentCallGroup, UnityEngine.CoreModule
+    - Name: m_Calls
+      Entry: 7
+      Data: 87|System.Collections.Generic.List`1[[UnityEngine.Events.PersistentCall,
+        UnityEngine.CoreModule]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 88|UnityEngine.Events.PersistentCall, UnityEngine.CoreModule
+    - Name: m_Target
+      Entry: 10
+      Data: 6
+    - Name: m_TargetAssemblyTypeName
+      Entry: 1
+      Data: QuestManager, Assembly-CSharp
+    - Name: m_MethodName
+      Entry: 1
+      Data: QuestInput
+    - Name: m_Mode
+      Entry: 3
+      Data: 5
+    - Name: m_Arguments
+      Entry: 7
+      Data: 89|UnityEngine.Events.ArgumentCache, UnityEngine.CoreModule
+    - Name: m_ObjectArgument
+      Entry: 10
+      Data: 23
+    - Name: m_ObjectArgumentAssemblyTypeName
+      Entry: 1
+      Data: UnityEngine.Object, UnityEngine
+    - Name: m_IntArgument
+      Entry: 3
+      Data: 0
+    - Name: m_FloatArgument
+      Entry: 4
+      Data: 0
+    - Name: m_StringArgument
+      Entry: 1
+      Data: Stage_1_wave1
+    - Name: m_BoolArgument
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: m_CallState
+      Entry: 3
+      Data: 2
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: stage1_wave2
+    - Name: $v
+      Entry: 7
+      Data: 90|UnityEngine.Events.UnityEvent, UnityEngine.CoreModule
+    - Name: m_PersistentCalls
+      Entry: 7
+      Data: 91|UnityEngine.Events.PersistentCallGroup, UnityEngine.CoreModule
+    - Name: m_Calls
+      Entry: 7
+      Data: 92|System.Collections.Generic.List`1[[UnityEngine.Events.PersistentCall,
+        UnityEngine.CoreModule]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 93|UnityEngine.Events.PersistentCall, UnityEngine.CoreModule
+    - Name: m_Target
+      Entry: 10
+      Data: 6
+    - Name: m_TargetAssemblyTypeName
+      Entry: 1
+      Data: QuestManager, Assembly-CSharp
+    - Name: m_MethodName
+      Entry: 1
+      Data: QuestInput
+    - Name: m_Mode
+      Entry: 3
+      Data: 5
+    - Name: m_Arguments
+      Entry: 7
+      Data: 94|UnityEngine.Events.ArgumentCache, UnityEngine.CoreModule
+    - Name: m_ObjectArgument
+      Entry: 10
+      Data: 24
+    - Name: m_ObjectArgumentAssemblyTypeName
+      Entry: 1
+      Data: UnityEngine.Object, UnityEngine
+    - Name: m_IntArgument
+      Entry: 3
+      Data: 0
+    - Name: m_FloatArgument
+      Entry: 4
+      Data: 0
+    - Name: m_StringArgument
+      Entry: 1
+      Data: Stage_1_wave2
+    - Name: m_BoolArgument
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: m_CallState
+      Entry: 3
+      Data: 2
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Tutorial_5_Boss
+    - Name: $v
+      Entry: 7
+      Data: 95|UnityEngine.Events.UnityEvent, UnityEngine.CoreModule
+    - Name: m_PersistentCalls
+      Entry: 7
+      Data: 96|UnityEngine.Events.PersistentCallGroup, UnityEngine.CoreModule
+    - Name: m_Calls
+      Entry: 7
+      Data: 97|System.Collections.Generic.List`1[[UnityEngine.Events.PersistentCall,
+        UnityEngine.CoreModule]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 98|UnityEngine.Events.PersistentCall, UnityEngine.CoreModule
+    - Name: m_Target
+      Entry: 10
+      Data: 6
+    - Name: m_TargetAssemblyTypeName
+      Entry: 1
+      Data: QuestManager, Assembly-CSharp
+    - Name: m_MethodName
+      Entry: 1
+      Data: QuestInput
+    - Name: m_Mode
+      Entry: 3
+      Data: 5
+    - Name: m_Arguments
+      Entry: 7
+      Data: 99|UnityEngine.Events.ArgumentCache, UnityEngine.CoreModule
+    - Name: m_ObjectArgument
+      Entry: 10
+      Data: 25
+    - Name: m_ObjectArgumentAssemblyTypeName
+      Entry: 1
+      Data: UnityEngine.Object, UnityEngine
+    - Name: m_IntArgument
+      Entry: 3
+      Data: 0
+    - Name: m_FloatArgument
+      Entry: 4
+      Data: 0
+    - Name: m_StringArgument
+      Entry: 1
+      Data: Tutorial_5_Boss
+    - Name: m_BoolArgument
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: m_CallState
+      Entry: 3
+      Data: 2
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
       Data: 
     - Name: 
       Entry: 8
@@ -6729,7 +7558,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 6
+      Data: 9
     - Name: 
       Entry: 7
       Data: 
@@ -7872,6 +8701,430 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Stage_1_wave1
+    - Name: $v
+      Entry: 7
+      Data: 72|QuestBox, Assembly-CSharp
+    - Name: QuestDatas
+      Entry: 7
+      Data: 73|QuestData[], Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 74|QuestData, Assembly-CSharp
+    - Name: type
+      Entry: 3
+      Data: 3
+    - Name: chatKey
+      Entry: 6
+      Data: 
+    - Name: itemName
+      Entry: 6
+      Data: 
+    - Name: itemCompleteCount
+      Entry: 3
+      Data: 0
+    - Name: itemCurCount
+      Entry: 3
+      Data: 0
+    - Name: posName
+      Entry: 6
+      Data: 
+    - Name: enemyName
+      Entry: 1
+      Data: wave1_enemy
+    - Name: enemyCompleteCount
+      Entry: 3
+      Data: 6
+    - Name: enemyCurCount
+      Entry: 3
+      Data: 0
+    - Name: interactionName
+      Entry: 6
+      Data: 
+    - Name: questString
+      Entry: 1
+      Data: "\uACBD\uBE44\uBCD1\uC744 \uC7A1\uC544\uB77C"
+    - Name: clear
+      Entry: 5
+      Data: false
+    - Name: clear_event
+      Entry: 7
+      Data: 75|UnityEngine.Events.UnityEvent, UnityEngine.CoreModule
+    - Name: m_PersistentCalls
+      Entry: 7
+      Data: 76|UnityEngine.Events.PersistentCallGroup, UnityEngine.CoreModule
+    - Name: m_Calls
+      Entry: 7
+      Data: 77|System.Collections.Generic.List`1[[UnityEngine.Events.PersistentCall,
+        UnityEngine.CoreModule]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: clear_event
+      Entry: 7
+      Data: 78|UnityEngine.Events.UnityEvent, UnityEngine.CoreModule
+    - Name: m_PersistentCalls
+      Entry: 7
+      Data: 79|UnityEngine.Events.PersistentCallGroup, UnityEngine.CoreModule
+    - Name: m_Calls
+      Entry: 7
+      Data: 80|System.Collections.Generic.List`1[[UnityEngine.Events.PersistentCall,
+        UnityEngine.CoreModule]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Stage_1_wave2
+    - Name: $v
+      Entry: 7
+      Data: 81|QuestBox, Assembly-CSharp
+    - Name: QuestDatas
+      Entry: 7
+      Data: 82|QuestData[], Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 83|QuestData, Assembly-CSharp
+    - Name: type
+      Entry: 3
+      Data: 3
+    - Name: chatKey
+      Entry: 6
+      Data: 
+    - Name: itemName
+      Entry: 6
+      Data: 
+    - Name: itemCompleteCount
+      Entry: 3
+      Data: 0
+    - Name: itemCurCount
+      Entry: 3
+      Data: 0
+    - Name: posName
+      Entry: 6
+      Data: 
+    - Name: enemyName
+      Entry: 1
+      Data: wave_2_enemy
+    - Name: enemyCompleteCount
+      Entry: 3
+      Data: 6
+    - Name: enemyCurCount
+      Entry: 3
+      Data: 0
+    - Name: interactionName
+      Entry: 6
+      Data: 
+    - Name: questString
+      Entry: 1
+      Data: "\uACBD\uBE44\uBCD1\uC744 \uC7A1\uC544\uB77C"
+    - Name: clear
+      Entry: 5
+      Data: false
+    - Name: clear_event
+      Entry: 7
+      Data: 84|UnityEngine.Events.UnityEvent, UnityEngine.CoreModule
+    - Name: m_PersistentCalls
+      Entry: 7
+      Data: 85|UnityEngine.Events.PersistentCallGroup, UnityEngine.CoreModule
+    - Name: m_Calls
+      Entry: 7
+      Data: 86|System.Collections.Generic.List`1[[UnityEngine.Events.PersistentCall,
+        UnityEngine.CoreModule]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 87|QuestData, Assembly-CSharp
+    - Name: type
+      Entry: 3
+      Data: 3
+    - Name: chatKey
+      Entry: 6
+      Data: 
+    - Name: itemName
+      Entry: 6
+      Data: 
+    - Name: itemCompleteCount
+      Entry: 3
+      Data: 0
+    - Name: itemCurCount
+      Entry: 3
+      Data: 0
+    - Name: posName
+      Entry: 6
+      Data: 
+    - Name: enemyName
+      Entry: 1
+      Data: wave_2_epicEnemy
+    - Name: enemyCompleteCount
+      Entry: 3
+      Data: 1
+    - Name: enemyCurCount
+      Entry: 3
+      Data: 0
+    - Name: interactionName
+      Entry: 6
+      Data: 
+    - Name: questString
+      Entry: 1
+      Data: "\uD2B9\uAE09\uACBD\uBE44\uBCD1\uC744 \uC7A1\uC544\uB77C"
+    - Name: clear
+      Entry: 5
+      Data: false
+    - Name: clear_event
+      Entry: 7
+      Data: 88|UnityEngine.Events.UnityEvent, UnityEngine.CoreModule
+    - Name: m_PersistentCalls
+      Entry: 7
+      Data: 89|UnityEngine.Events.PersistentCallGroup, UnityEngine.CoreModule
+    - Name: m_Calls
+      Entry: 7
+      Data: 90|System.Collections.Generic.List`1[[UnityEngine.Events.PersistentCall,
+        UnityEngine.CoreModule]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: clear_event
+      Entry: 7
+      Data: 91|UnityEngine.Events.UnityEvent, UnityEngine.CoreModule
+    - Name: m_PersistentCalls
+      Entry: 7
+      Data: 92|UnityEngine.Events.PersistentCallGroup, UnityEngine.CoreModule
+    - Name: m_Calls
+      Entry: 7
+      Data: 93|System.Collections.Generic.List`1[[UnityEngine.Events.PersistentCall,
+        UnityEngine.CoreModule]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Tutorial_5_Boss
+    - Name: $v
+      Entry: 7
+      Data: 94|QuestBox, Assembly-CSharp
+    - Name: QuestDatas
+      Entry: 7
+      Data: 95|QuestData[], Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 96|QuestData, Assembly-CSharp
+    - Name: type
+      Entry: 3
+      Data: 3
+    - Name: chatKey
+      Entry: 6
+      Data: 
+    - Name: itemName
+      Entry: 6
+      Data: 
+    - Name: itemCompleteCount
+      Entry: 3
+      Data: 0
+    - Name: itemCurCount
+      Entry: 3
+      Data: 0
+    - Name: posName
+      Entry: 6
+      Data: 
+    - Name: enemyName
+      Entry: 1
+      Data: Tutorial_Boss
+    - Name: enemyCompleteCount
+      Entry: 3
+      Data: 1
+    - Name: enemyCurCount
+      Entry: 3
+      Data: 0
+    - Name: interactionName
+      Entry: 6
+      Data: 
+    - Name: questString
+      Entry: 1
+      Data: "\uBCF4\uC2A4 \uD074\uB9AC\uC5B4"
+    - Name: clear
+      Entry: 5
+      Data: false
+    - Name: clear_event
+      Entry: 7
+      Data: 97|UnityEngine.Events.UnityEvent, UnityEngine.CoreModule
+    - Name: m_PersistentCalls
+      Entry: 7
+      Data: 98|UnityEngine.Events.PersistentCallGroup, UnityEngine.CoreModule
+    - Name: m_Calls
+      Entry: 7
+      Data: 99|System.Collections.Generic.List`1[[UnityEngine.Events.PersistentCall,
+        UnityEngine.CoreModule]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: clear_event
+      Entry: 7
+      Data: 100|UnityEngine.Events.UnityEvent, UnityEngine.CoreModule
+    - Name: m_PersistentCalls
+      Entry: 7
+      Data: 101|UnityEngine.Events.PersistentCallGroup, UnityEngine.CoreModule
+    - Name: m_Calls
+      Entry: 7
+      Data: 102|System.Collections.Generic.List`1[[UnityEngine.Events.PersistentCall,
+        UnityEngine.CoreModule]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
       Entry: 13
       Data: 
     - Name: 
@@ -8137,7 +9390,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4873505509797654378
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8147,7 +9400,7 @@ RectTransform:
   m_GameObject: {fileID: 7352434944451233774}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1874805083904099376}
@@ -8616,6 +9869,82 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &8593341224665525415
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6791667986913111767}
+  - component: {fileID: 1878053420240283091}
+  - component: {fileID: 9144870966850989357}
+  m_Layer: 0
+  m_Name: MessageInground
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &6791667986913111767
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8593341224665525415}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2063808024120694913}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 800, y: 300}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &1878053420240283091
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8593341224665525415}
+  m_CullTransparentMesh: 1
+--- !u!114 &9144870966850989357
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8593341224665525415}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 399b578ac1e51db4399df2137a634670, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &8963453999168843311
 GameObject:
   m_ObjectHideFlags: 0
@@ -8663,7 +9992,7 @@ MonoBehaviour:
   attack: 0
   psyche: 0
   graple: 0
-  characterChange: 0
+  characterChange: 1
   skill_images:
   - {fileID: 21300000, guid: b07bf450ef57929499749770b7e3b087, type: 3}
   - {fileID: 21300000, guid: f88a73fbec2f3074ababbc66686fc0eb, type: 3}

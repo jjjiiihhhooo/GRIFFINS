@@ -143,8 +143,7 @@ public class EnemyController : SerializedMonoBehaviour
     private void Dead()
     {
         //QuestManager.instance.QuestMonsterCheck(enemy.name);
-        if(!this.enemy.isBossStart)
-            GameManager.Instance.questManager.EnemyQuestCheck(this.name);
+        GameManager.Instance.questManager.EnemyQuestCheck(this.name);
         Destroy(this.gameObject);
     }
 

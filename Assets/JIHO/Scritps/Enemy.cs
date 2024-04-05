@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net.NetworkInformation;
@@ -84,6 +85,12 @@ public class Enemy
 [System.Serializable]
 public class Normal_Enemy : Enemy
 {
+
+    public float coolTime = 2f;
+    public float curTime = 2f;
+
+    private Transform target;
+
     public override void Init(EnemyController controller)
     {
         base.Init(controller);
@@ -91,20 +98,53 @@ public class Normal_Enemy : Enemy
 
     public override void EnemyUpdate()
     {
-        if(attackCurCool > 0)
-        {
-            attackCurCool -= Time.deltaTime;
-        }
-        else
-        {
-            attackCurCool = attackMaxCool;
-            Action();
-        }
+        Action();
+        AttackDelay();
     }
+
+    private void AttackDelay()
+    {
+        if (curTime > 0) curTime -= Time.deltaTime;
+    }
+
 
     public override void Action()
     {
-        base.Action();
+        if (target == null) target = Player.Instance.transform;
+
+        if (Vector3.Distance(target.transform.position, enemyController.transform.position) > 3f && curTime <= 0 && !isAction) Move();
+        else if (Vector3.Distance(target.transform.position, enemyController.transform.position) <= 3f && curTime <= 0 && !isAction) Attack();
+    }
+
+    private void NormalAttack()
+    {
+        Debug.Log("NormalAttack");
+        isAction = true;
+        animator.Play("Attack_Boss", 0, 0f);
+        curTime = coolTime;
+    }
+
+    private void Attack()
+    {
+        Vector3 forward = target.transform.position - enemyController.transform.position;
+        float x = enemyController.transform.eulerAngles.x;
+        float z = enemyController.transform.eulerAngles.z;
+
+        enemyController.transform.forward = forward;
+        enemyController.transform.eulerAngles = new Vector3(x, enemyController.transform.eulerAngles.y, z);
+         NormalAttack();
+    }
+
+    private void Move()
+    {
+        Debug.Log(animator.GetCurrentAnimatorStateInfo(0));
+        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Walking_Boss")) animator.Play("Walking_Boss", 0, 0f);
+
+
+        enemyController.transform.LookAt(target.transform);
+        enemyController.transform.eulerAngles = new Vector3(0f, enemyController.transform.eulerAngles.y, 0f);
+
+        enemyController.transform.position = enemyController.transform.position + enemyController.transform.forward.normalized * moveSpeed * Time.deltaTime;
     }
 
     public override void GetDamage(float damage)
@@ -116,9 +156,9 @@ public class Normal_Enemy : Enemy
         Vector3 KnockbackDir = enemyController.transform.position - playerPos;
 
 
-        enemyController.rigid.AddForce(KnockbackDir * 2f, ForceMode.Impulse);
+        //enemyController.rigid.AddForce(KnockbackDir * 2f, ForceMode.Impulse);
 
-        if (animator != null) animator.Play("GetDamage", 0, 0);
+        //if (animator != null) animator.Play("GetDamage", 0, 0);
         curHp -= damage;
         backHpHit = false;
         enemyController.Invoke("BackHpFunMessage", 0.3f);
@@ -155,6 +195,66 @@ public class Epic_Enemy : Enemy
         base.GetDamage(damage);
     }
 }
+
+[System.Serializable]
+public class Epic_1_Enemy : Epic_Enemy
+{
+    public float coolTime = 3f;
+    public float curTime = 3f;
+
+    public Transform target;
+
+    public override void Init(EnemyController controller)
+    {
+        base.Init(controller);
+    }
+
+    public override void EnemyUpdate()
+    {
+        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Idle_Boss")) animator.Play("Idle_Boss", 0, 0f);
+        
+        AttackDelay();
+    }
+
+    private void AttackDelay()
+    {
+        if (curTime > 0) curTime -= Time.deltaTime;
+        else Action();
+    }   
+
+    public override void Action()
+    {
+        if (target == null) target = Player.Instance.transform;
+
+        Shoot();
+    }
+
+    private void Shoot()
+    {
+        curTime = coolTime;
+        enemyController.transform.LookAt(target.transform);
+        enemyController.transform.eulerAngles = new Vector3(0f, enemyController.transform.eulerAngles.y, 0f);
+        GameObject temp = GameObject.Instantiate(obj, fireTransform.position, Quaternion.identity);
+        temp.GetComponent<EnemyBullet>().dir = target.position - temp.transform.position;
+        temp.SetActive(true);
+    }
+
+    public override void Die()
+    {
+        enemyController.DeadMessage();
+    }
+
+    public override void GetDamage(float damage)
+    {
+        if (curHp <= 0) Die();
+
+        curHp -= damage;
+        backHpHit = false;
+        enemyController.Invoke("BackHpFunMessage", 0.3f);
+    }
+
+}
+
 
 [System.Serializable]
 public class Boss_Enemy : Enemy
@@ -207,6 +307,8 @@ public class Boss_Enemy : Enemy
     {
         if (curTime > 0) curTime -= Time.deltaTime;
     }
+
+
 
     private void Move()
     {
