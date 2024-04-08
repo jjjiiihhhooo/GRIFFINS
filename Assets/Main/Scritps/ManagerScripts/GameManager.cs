@@ -25,6 +25,7 @@ public class GameManager : SerializedMonoBehaviour
 
     public Dictionary<string, UnityEvent> event_dictionary;
 
+    public bool isMouseLock;
 
     private void Awake()
     {
@@ -48,7 +49,7 @@ public class GameManager : SerializedMonoBehaviour
         timelineManager.Init();
         dialogueManager.Init();
         uiManager.Init();
-        MouseLocked();
+        MouseLocked(isMouseLock);
     }
 
     public void MouseLocked(bool _bool = false)

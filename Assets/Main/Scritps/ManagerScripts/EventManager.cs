@@ -13,7 +13,6 @@ public class EventManager : MonoBehaviour
     {
         //GameManager.Instance.skill_Image.sprite = skill_images[0];
         GameManager.Instance.questManager.QuestInput("Tutorial_0_1");
-        GameManager.Instance.uiManager.device_Image.GetComponent<DOTweenAnimation>().DORestartById("GetDevice");
         GameManager.Instance.questManager.questImage.GetComponent<DOTweenAnimation>().DORestartById("GetQuestBoard");
         GameManager.Instance.uiManager.playerHpDot.DORestartById("GetHp");
 
@@ -22,8 +21,7 @@ public class EventManager : MonoBehaviour
     public void Tutorial_2_Event()
     {
         GameManager.Instance.tutorialManager.PsycheSetBool(true);
-        GameManager.Instance.uiManager.skill_Image.sprite = GameManager.Instance.tutorialManager.skill_images[0];
-        GameManager.Instance.uiManager.skill_Image.GetComponent<DOTweenAnimation>().DORestartById("GetSkill");
+        GameManager.Instance.uiManager.skillTitle_dot.GetComponent<DOTweenAnimation>().DORestartById("GetSkill");
     }
 
 
@@ -54,6 +52,7 @@ public class EventManager : MonoBehaviour
 
     public void Tutorial_4_Event()
     {
+        GameManager.Instance.uiManager.AddCharacterUI();
         LoadingSceneManager.LoadScene("Tutorial_5");
     }
 }

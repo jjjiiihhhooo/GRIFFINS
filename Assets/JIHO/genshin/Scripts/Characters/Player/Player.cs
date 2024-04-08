@@ -280,6 +280,8 @@ public class Player : SerializedMonoBehaviour
 
         currentCharacter.CharacterChange();
 
+        GameManager.Instance.uiManager.ChangeCharacterUI(index);
+
         characters[index].model.SetActive(true);
         foreach (AnimatorControllerParameter paramA in currentCharacter.animator.parameters)
         {

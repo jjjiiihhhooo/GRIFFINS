@@ -793,7 +793,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Tutorial_0_TimeLine
+          m_StringArgument: Tutorial_0
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1055015303
@@ -1082,9 +1082,13 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 6119297899538156956, guid: 54f585b81b650c249a28b22ce73c7885, type: 3}
     - target: {fileID: 6394712287444513176, guid: 54f585b81b650c249a28b22ce73c7885, type: 3}
+      propertyPath: isMouseLock
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6394712287444513176, guid: 54f585b81b650c249a28b22ce73c7885, type: 3}
       propertyPath: serializationData.Prefab
       value: 
-      objectReference: {fileID: 6394712287444513176, guid: 54f585b81b650c249a28b22ce73c7885, type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 6394712287444513176, guid: 54f585b81b650c249a28b22ce73c7885, type: 3}
       propertyPath: serializationData.PrefabModifications.Array.size
       value: 32
