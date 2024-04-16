@@ -5,7 +5,7 @@ using UnityEngine;
 public class AttackCol : MonoBehaviour
 {
     [SerializeField] public float time;
-
+    public ParticleSystem effect;
     public float damage;
 
     private void OnEnable()
@@ -24,5 +24,19 @@ public class AttackCol : MonoBehaviour
         }
 
         this.gameObject.SetActive(false);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Enemy"))
+        {
+            
+            Vector3 center1 = other.bounds.center;
+            Vector3 center2 = transform.GetComponent<Collider>().bounds.center;
+
+            Vector3 finalCenter = (center1 + center2) / 2f;
+
+            other.GetComponent<EnemyController>().DamageMessage(damage, finalCenter, effect);
+        }
     }
 }

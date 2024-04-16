@@ -22,7 +22,8 @@ public class Player : SerializedMonoBehaviour
     [field: SerializeField] public PlayerSO Data { get; private set; }
 
     [field: Header("Collisions")]
-    public AttackCol attackCol;
+    public AttackCol normalAttackCol;
+    public AttackCol normalAttackCol_2;
     [field: SerializeField] public PlayerLayerData LayerData { get; private set; }
     [field: Header("Camera")]
     [field: SerializeField] public PlayerCameraUtility CameraRecenteringUtility { get; private set; }

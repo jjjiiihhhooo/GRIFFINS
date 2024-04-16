@@ -12,6 +12,10 @@ public class InputData : MonoBehaviour
     public KeyCode LeftAction = KeyCode.Mouse0;
     public KeyCode RightAction = KeyCode.Mouse1;
 
+    public KeyCode Q = KeyCode.Q;
+    public KeyCode E = KeyCode.E;
+    public KeyCode R = KeyCode.R;
+
     public KeyCode InteractionKey = KeyCode.F;
     public KeyCode itemSaveKey = KeyCode.Alpha5;
     public KeyCode scene_assistKey = KeyCode.Tab;
@@ -81,6 +85,21 @@ public class InputData : MonoBehaviour
         if(Input.GetKeyDown(itemSaveKey))
         {
             player.currentCharacter.ItemSave();
+        }
+
+        if(Input.GetKeyDown(Q))
+        {
+            player.currentCharacter.Q_Action();
+        }
+
+        if (Input.GetKeyDown(E))
+        {
+            player.currentCharacter.Q_Action();
+        }
+
+        if (Input.GetKeyDown(R))
+        {
+            player.currentCharacter.Q_Action();
         }
     }
 

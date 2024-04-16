@@ -56,8 +56,14 @@ public class PlayerAnimationEventTrigger : MonoBehaviour
     public void NormalAttackExit()
     {
         //player.isAttack = false;
-        player.attackCol.gameObject.SetActive(true);
+        //player.normalAttackCol.effect = player.currentCharacter.normalAttackEffect;
+        player.currentCharacter.normalAttackCol.gameObject.SetActive(true);
         //player.currentCharacter.animator.SetBool(name, false);
+    }
+
+    public void NormalAttackExit_2()
+    {
+        player.currentCharacter.normalAttackCol_2.gameObject.SetActive(true);
     }
 
     public void GrappleReady()
