@@ -13,13 +13,14 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI nameText;
     [SerializeField] private TextMeshProUGUI dialogueText;
     [SerializeField] private DOTweenAnimation dialogueDot;
+    [SerializeField] private string eventName;
 
     private Dialogue[] curDialogues;
 
     private bool isDialogue;
     private bool isChat;
-    private int tempIndex;
-    private string eventName;
+    private int tempIndex = 0;
+    private string questChatKey;
 
     public bool IsChat { get => isChat; }
     public Dialogue[] CurDialogues { get => curDialogues; }
@@ -29,11 +30,12 @@ public class DialogueManager : MonoBehaviour
         curDialogues = null;
     }
 
-    public void ChangeDialogue(Dialogue[] logs, string name)
+    public void ChangeDialogue(Dialogue[] logs, string name, string chatKey)
     {
         Debug.Log("ChangeDialogue");
         curDialogues = null;
         eventName = name;
+        questChatKey = chatKey;
         curDialogues = logs;
     }
 
@@ -70,7 +72,12 @@ public class DialogueManager : MonoBehaviour
         isChat = false;
         tempIndex = 0;
         curDialogues = null;
-        GameManager.Instance.event_dictionary[eventName].Invoke();
+        GameManager.Instance.questManager.ChatQuestCheck(questChatKey);
+        if (!string.IsNullOrEmpty(eventName))
+        {
+            // eventName이 비어있지 않은 경우에만 이벤트 호출
+            GameManager.Instance.event_dictionary[eventName]?.Invoke();
+        }
         dialogueDot.DORestartById("End");
     }
 

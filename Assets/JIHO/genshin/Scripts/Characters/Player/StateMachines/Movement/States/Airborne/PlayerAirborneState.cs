@@ -25,26 +25,28 @@ public class PlayerAirborneState : PlayerMovementState
     //    StopAnimation(stateMachine.Player.AnimationData.AirborneParameterHash);
     //}
 
-    //protected override void AddInputActionsCallbacks()
-    //{
-    //    if (GameManager.Instance.dialogueManager.IsChat) return;
+    protected override void AddInputActionsCallbacks()
+    {
+        if (GameManager.Instance.dialogueManager.IsChat) return;
 
-    //    stateMachine.Player.Input.PlayerActions.Dash.started += OnDashStarted;
-    //}
+        stateMachine.Player.Input.PlayerActions.Dash.started += OnDashStarted;
+    }
 
-    //protected override void RemoveInputActionsCallbacks()
-    //{
-    //    stateMachine.Player.Input.PlayerActions.Dash.started -= OnDashStarted;
-    //}
+    protected override void RemoveInputActionsCallbacks()
+    {
+        stateMachine.Player.Input.PlayerActions.Dash.started -= OnDashStarted;
+    }
 
-    //protected virtual void OnDashStarted(InputAction.CallbackContext context)
-    //{
-    //    if (Player.Instance.skillData.isHand) return;
-    //    if (!GameManager.Instance.staminaManager.ChechStamina(20f)) return;
+    
 
-    //    GameManager.Instance.staminaManager.MinusStamina(20f);
-    //    stateMachine.ChangeState(stateMachine.AirDashingState);
-    //}
+    protected virtual void OnDashStarted(InputAction.CallbackContext context)
+    {
+        if (Player.Instance.skillData.isHand) return;
+        if (!GameManager.Instance.staminaManager.ChechStamina(20f)) return;
+
+        GameManager.Instance.staminaManager.MinusStamina(20f);
+        stateMachine.ChangeState(stateMachine.AirDashingState);
+    }
 
     //protected virtual void ResetSprintState()
     //{
@@ -55,6 +57,8 @@ public class PlayerAirborneState : PlayerMovementState
     //{
     //    stateMachine.ChangeState(stateMachine.LightLandingState);
     //}
+
+
     public override void Enter()
     {
         base.Enter();

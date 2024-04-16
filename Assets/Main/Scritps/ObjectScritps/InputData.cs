@@ -39,6 +39,7 @@ public class InputData : MonoBehaviour
 
     private void MouseInput()
     {
+        if (player == null) return;
         Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
         if (Physics.Raycast(ray, out RaycastHit raycastHit, 999f, aimColliderMask))
         {
@@ -49,6 +50,7 @@ public class InputData : MonoBehaviour
 
     private void KeyboardInput()
     {
+        if (player == null) return;
         ActionInput();
         ChangeInput();
         InteractInput();
@@ -56,7 +58,8 @@ public class InputData : MonoBehaviour
 
     private void ActionInput()
     {
-        if(Input.GetKeyDown(LeftAction))
+        if (Player.Instance.currentCharacter.isGrappleReady) return;
+        if (Input.GetKeyDown(LeftAction))
         {
             player.currentCharacter.LeftAction();
         }
@@ -65,8 +68,7 @@ public class InputData : MonoBehaviour
         {
             player.currentCharacter.RightAction();
         }
-        
-        if(Input.GetKeyDown(RightAction) && player.currentCharacter.GetType() == typeof(GreenCharacter))
+        else if(Input.GetKeyDown(RightAction) && player.currentCharacter.GetType() == typeof(GreenCharacter))
         {
             player.swinging.StartSwing();
         }
@@ -86,8 +88,10 @@ public class InputData : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (GameManager.Instance.dialogueManager.CurDialogues == null) return;
-            GameManager.Instance.dialogueManager.StartDialogue();
+            if (GameManager.Instance.dialogueManager.CurDialogues != null)
+            {
+                GameManager.Instance.dialogueManager.StartDialogue();
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.F))
@@ -99,7 +103,8 @@ public class InputData : MonoBehaviour
 
     private void ChangeInput()
     {
-        
+        if (!GameManager.Instance.tutorialManager.characterChange) return;
+        if (Player.Instance.currentCharacter.isGrappleReady) return;
 
         if (Input.GetKeyDown(WhiteKey))
         {

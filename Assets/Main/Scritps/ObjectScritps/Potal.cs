@@ -14,6 +14,11 @@ public class Potal : MonoBehaviour
         LoadingSceneManager.LoadScene(sceneName);
     }
 
+    public void SceneLoadEvent()
+    {
+        LoadingSceneManager.LoadScene(sceneName);
+    }
+
     private void DataSave()
     {
         Player.Instance.spawn = null;

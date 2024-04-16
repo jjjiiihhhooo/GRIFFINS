@@ -30,7 +30,9 @@ public class PlayerAirDashingState : PlayerAirborneState
 
         stateMachine.ReusableData.RotationData = groundedData.DashData.RotationData;
 
+        stateMachine.Player.Rigidbody.velocity = Vector3.zero;
         stateMachine.Player.Rigidbody.useGravity = false;
+        
         Dash();
 
         shouldKeepRotating = stateMachine.ReusableData.MovementInput != Vector2.zero;

@@ -1,4 +1,5 @@
 
+using DG.Tweening;
 using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
@@ -17,7 +18,10 @@ public class EnemyController : SerializedMonoBehaviour
     public Slider hpSlider;
     public Slider backHpSlider;
 
+    public AttackCol attackCol;
     public GameObject targetUI_obj;
+
+    public DOTweenAnimation anim_dot;
 
     public bool isHit;
 
@@ -32,6 +36,8 @@ public class EnemyController : SerializedMonoBehaviour
         rigid = GetComponent<Rigidbody>();
         animator = GetComponentInChildren<Animator>();
         enemy.Init(this);
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     private void Update()
@@ -49,6 +55,10 @@ public class EnemyController : SerializedMonoBehaviour
 
     private void UIUpdate()
     {
+        if (hpSlider == null) hpSlider = GameManager.Instance.uiManager.bossHp;
+        if (backHpSlider == null) backHpSlider = GameManager.Instance.uiManager.bossBackHp;
+        
+
         hpSlider.value = Mathf.Lerp(hpSlider.value, enemy.curHp / enemy.maxHp, Time.deltaTime * 5f);
 
         if(enemy.backHpHit)
@@ -60,8 +70,8 @@ public class EnemyController : SerializedMonoBehaviour
                 backHpSlider.value = hpSlider.value;
             }
         }
-
-        canvas.transform.LookAt(canvas.transform.position + Camera.main.transform.rotation * Vector3.forward, Camera.main.transform.rotation * Vector3.up);
+        if(enemy.GetType().Name != "Boss_Enemy")
+            canvas.transform.LookAt(canvas.transform.position + Camera.main.transform.rotation * Vector3.forward, Camera.main.transform.rotation * Vector3.up);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -151,6 +161,7 @@ public class EnemyController : SerializedMonoBehaviour
     }
     public void TargetCheck(bool _bool)
     {
+        if (enemy.ToString() == "Boss_Enemy") return;
         if(_bool)
         {
             targetUI_obj.SetActive(true);
@@ -185,5 +196,20 @@ public class EnemyController : SerializedMonoBehaviour
         enemy.backHpHit = true;
     }
         
-    
+    public void BossNormalAttackAnim()
+    {
+        enemy.isAction = false;
+        attackCol.gameObject.SetActive(true);
+    }
+
+    public void CorEvent(IEnumerator cor)
+    {
+        StopCoroutine(cor);
+        StartCoroutine(cor);
+    }
+
+    public void BossStart()
+    {
+        enemy.BossStart();
+    }
 }

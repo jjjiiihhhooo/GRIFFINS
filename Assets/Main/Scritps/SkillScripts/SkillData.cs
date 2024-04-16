@@ -21,6 +21,7 @@ public class SkillData : MonoBehaviour
 
     public float grapplingCd;
     public float grapplingCdTimer;
+    public float grappleSpeed;
 
     public bool grappling;
     public bool touch;

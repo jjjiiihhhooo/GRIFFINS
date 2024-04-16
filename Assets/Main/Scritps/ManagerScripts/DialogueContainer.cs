@@ -19,12 +19,12 @@ public class DialogueContainer : MonoBehaviour
     public void SetDialogue()
     {
         Debug.Log("SetDialogue");
-        GameManager.Instance.dialogueManager.ChangeDialogue(dialogues, eventName);
+        GameManager.Instance.dialogueManager.ChangeDialogue(dialogues, eventName, chatKey);
     }
 
     public void StartEvent()
     {
-        GameManager.Instance.questManager.ChatQuestCheck(chatKey);
+        
         SetDialogue();
         GameManager.Instance.dialogueManager.StartDialogue();
     }

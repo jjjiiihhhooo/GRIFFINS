@@ -26,7 +26,7 @@ public class InteractableObject : MonoBehaviour
         
         for(int i = 0; i < eventNames.Length; i++)
         {
-            GameManager.Instance.event_dictionary[eventNames[i]].Invoke();
+            GameManager.Instance.event_dictionary[eventNames[i]]?.Invoke();
         }
 
         if (oneTime)

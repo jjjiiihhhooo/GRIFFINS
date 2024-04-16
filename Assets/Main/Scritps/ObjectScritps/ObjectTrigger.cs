@@ -17,7 +17,7 @@ public class ObjectTrigger : MonoBehaviour
     {
         if(collider.transform.name == physicsName)
         {
-            if(event_key != "") GameManager.Instance.event_dictionary[event_key].Invoke();
+            if(event_key != "") GameManager.Instance.event_dictionary[event_key]?.Invoke();
             enter_event?.Invoke();
 
             if(oneTime) GetComponent<Collider>().enabled = false;
@@ -28,7 +28,7 @@ public class ObjectTrigger : MonoBehaviour
     {
         if (collider.transform.name == physicsName)
         {
-            if (exit_event_key != "") GameManager.Instance.event_dictionary[exit_event_key].Invoke();
+            if (exit_event_key != "") GameManager.Instance.event_dictionary[exit_event_key]?.Invoke();
             exit_event?.Invoke();
 
             if (oneTime) GetComponent<Collider>().enabled = false;
@@ -39,7 +39,7 @@ public class ObjectTrigger : MonoBehaviour
     {
         if(collision.transform.name == physicsName)
         {
-            if (event_key != "") GameManager.Instance.event_dictionary[event_key].Invoke();
+            if (event_key != "") GameManager.Instance.event_dictionary[event_key]?.Invoke();
             enter_event?.Invoke();
 
             if (oneTime) GetComponent<Collider>().enabled = false;
@@ -50,7 +50,7 @@ public class ObjectTrigger : MonoBehaviour
     {
         if (collision.transform.name == physicsName)
         {
-            if (exit_event_key != "") GameManager.Instance.event_dictionary[exit_event_key].Invoke();
+            if (exit_event_key != "") GameManager.Instance.event_dictionary[exit_event_key]?.Invoke();
             exit_event?.Invoke();
 
             if (oneTime) GetComponent<Collider>().enabled = false;
@@ -60,5 +60,10 @@ public class ObjectTrigger : MonoBehaviour
     public void PlayerSpawn()
     {
         Player.Instance.PlayerSpawn();
+    }
+
+    public void WarningMessage(string name)
+    {
+        GameManager.Instance.guideManager.WarningSetMessage(name);
     }
 }

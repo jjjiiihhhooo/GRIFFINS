@@ -59,5 +59,16 @@ public class PlayerAnimationEventTrigger : MonoBehaviour
         player.attackCol.gameObject.SetActive(true);
         //player.currentCharacter.animator.SetBool(name, false);
     }
+
+    public void GrappleReady()
+    {
+        player.currentCharacter.isGrappleReady = false;
+        player.currentCharacter.StartGrapple();
+    }
+
+    public void GrappleExit()
+    {
+        player.currentCharacter.StopGrapple();
+    }
 }
 

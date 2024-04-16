@@ -1,8 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-
+using UnityEngine.InputSystem;
 
 public class PlayerFallingState : PlayerAirborneState
 {
@@ -15,15 +14,16 @@ public class PlayerFallingState : PlayerAirborneState
     public override void Enter()
     {
         base.Enter();
-
         StartAnimation(stateMachine.Player.AnimationData.FallParameterHash);
         if (stateMachine.Player.skillData.isHand) stateMachine.Player.currentCharacter.CharacterChange();
-        stateMachine.ReusableData.MovementSpeedModifier = 0f;
+        //stateMachine.ReusableData.MovementSpeedModifier = 1.5f;
 
         playerPositionOnEnter = stateMachine.Player.transform.position;
 
         ResetVerticalVelocity();
     }
+
+   
 
     public override void Exit()
     {
@@ -52,6 +52,7 @@ public class PlayerFallingState : PlayerAirborneState
 
         stateMachine.Player.Rigidbody.AddForce(limitedVelocityForce, ForceMode.VelocityChange);
     }
+
 
     protected override void ResetSprintState()
     {

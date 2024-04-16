@@ -102,9 +102,7 @@ public class PlayerGroundedState : PlayerMovementState
 
     protected override void AddInputActionsCallbacks()
     {
-        if (GameManager.Instance.dialogueManager.IsChat) return;
         base.AddInputActionsCallbacks();
-
 
         stateMachine.Player.Input.PlayerActions.Dash.started += OnDashStarted;
 
@@ -124,14 +122,22 @@ public class PlayerGroundedState : PlayerMovementState
     {
         if (Player.Instance.skillData.isHand) return;
         if (!GameManager.Instance.staminaManager.ChechStamina(20f)) return;
+        if (GameManager.Instance.dialogueManager.IsChat) return;
+        if (stateMachine.Player.skillData.grappling) return;
+        if (stateMachine.Player.swinging.swinging) return;
 
         GameManager.Instance.staminaManager.MinusStamina(20f);
+
         stateMachine.ChangeState(stateMachine.DashingState);
     }
 
     protected virtual void OnJumpStarted(InputAction.CallbackContext context)
     {
         if (stateMachine.CurStateName() == "PlayerDashingState") return;
+
+        if (stateMachine.Player.skillData.grappling) return;
+        if (GameManager.Instance.dialogueManager.IsChat) return;
+        if (stateMachine.Player.swinging.swinging) return;
         stateMachine.ChangeState(stateMachine.JumpingState);
     }
 
@@ -194,4 +200,3 @@ public class PlayerGroundedState : PlayerMovementState
         UpdateTargetRotation(GetMovementInputDirection());
     }
 }
-

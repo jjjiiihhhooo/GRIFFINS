@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.SceneManagement;
 
 public class PlayerCharacter
 {
@@ -10,6 +11,7 @@ public class PlayerCharacter
 
     public GameObject model;
 
+    public bool isGrappleReady;
     public int index;
 
     public int comboCounter;
@@ -19,6 +21,9 @@ public class PlayerCharacter
     public float lastClickedTime;
     public float lastComboEnd;
 
+    protected Vector3 grappleVec;
+    
+
     public virtual void Init(Player playerController)
     {
         player = playerController;
@@ -27,7 +32,6 @@ public class PlayerCharacter
 
     public virtual void CharacterChange()
     {
-
     }
 
     public virtual void Update()
@@ -47,23 +51,29 @@ public class PlayerCharacter
 
     public virtual void StartGrapple()
     {
-        if (player.skillData.grapplingCdTimer > 0) return;
+        
         player.skillData.grappling = true;
-        RaycastHit hit;
-        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, player.skillData.maxGrappleDistance, player.skillData.grappleMask))
-        {
-            player.skillData.grapplePoint = hit.point;
-            if (!player.isGround) player.CoroutineEvent(DelayCor(player.skillData.grappleDelayTime, 0));
+        player.freeze = true;
+        player.Rigidbody.useGravity = true;
+        player.Rigidbody.constraints = RigidbodyConstraints.FreezePosition;
+        //player.skillData.lr.enabled = true;
+        //player.skillData.lr.SetPosition(0, model.transform.position);
+        //player.skillData.lr.SetPosition(1, player.skillData.grapplePoint);
+        //RaycastHit hit;
+        //if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, player.skillData.maxGrappleDistance, player.skillData.grappleMask))
+        //{
+        //    player.skillData.grapplePoint = hit.point;
+        //    //player.CoroutineEvent(DelayCor(player.skillData.grappleDelayTime, 0));
+        //    player.StartCoroutine(DelayCor(player.skillData.grappleDelayTime, 0));
+        //}
+        //else
+        //{
+        //    //player.CoroutineEvent(DelayCor(player.skillData.grappleDelayTime, 1));
+        //    player.StartCoroutine(DelayCor(player.skillData.grappleDelayTime, 1));
+        //}
+        //player.skillData.lr.gameObject.SetActive(true);
 
-        }
-        else
-        {
-            player.skillData.grapplePoint = Camera.main.transform.position + Camera.main.transform.forward * player.skillData.maxGrappleDistance;
-            player.CoroutineEvent(DelayCor(player.skillData.grappleDelayTime, 1));
-        }
-
-        player.skillData.lr.enabled = true;
-        player.skillData.lr.SetPosition(1, player.skillData.grapplePoint);
+        ExecuteGrapple();
     }
 
     public IEnumerator DelayCor(float delay, int index)
@@ -77,14 +87,12 @@ public class PlayerCharacter
 
     public virtual void ExecuteGrapple()
     {
-        if (!GameManager.Instance.staminaManager.ChechStamina(20f)) return;
-        GameManager.Instance.staminaManager.MinusStamina(20f);
-
-
-        player.currentCharacter.animator.SetBool("isGrappling", true);
-        player.transform.rotation = player.CameraRecenteringUtility.VirtualCamera.transform.rotation;
-        player.transform.rotation = new Quaternion(0f, player.CameraRecenteringUtility.VirtualCamera.transform.rotation.y, 0f, player.transform.rotation.w);
-
+        
+        player.freeze = false;
+        player.Rigidbody.constraints = ~RigidbodyConstraints.FreezePosition;
+        
+        player.currentCharacter.animator.Play("chardash", 2, 0f);
+        //player.skillData.grapplingCdTimer = player.skillData.grapplingCd;
         Vector3 lowestPoint = new Vector3(player.transform.position.x, player.transform.position.y - 1f, player.transform.position.z);
 
 
@@ -97,16 +105,21 @@ public class PlayerCharacter
         player.skillData.velocity = CalculateJumpVelocity(player.transform.position, player.skillData.grapplePoint, highestPointOnArc);
         player.ResizableCapsuleCollider.SlopeData.StepHeightPercentage = 0f;
         player.skillData.touch = true;
-        player.GetComponent<Rigidbody>().velocity = player.skillData.velocity;
+       // player.skillData.lr.gameObject.SetActive(false);
+        //player.GetComponent<Rigidbody>().velocity = player.skillData.velocity;
+        
+        player.Rigidbody.AddForce(grappleVec * player.skillData.grappleSpeed, ForceMode.Impulse);
     }
 
     public virtual void StopGrapple()
     {
-        player.currentCharacter.animator.SetBool("isGrappling", false);
+        player.freeze = false;
+        player.Rigidbody.constraints = ~RigidbodyConstraints.FreezePosition;
+        
         player.ResizableCapsuleCollider.SlopeData.StepHeightPercentage = 0.25f;
         player.skillData.grappling = false;
-        player.skillData.grapplingCdTimer = player.skillData.grapplingCd;
-
+        //player.skillData.grapplingCdTimer = player.skillData.grapplingCd;
+        
         player.skillData.lr.enabled = false;
     }
 
@@ -213,7 +226,7 @@ public class WhiteCharacter : PlayerCharacter
     private void PutDown(bool save = false)
     {
         if (!player.skillData.isHand || player.skillData.handObj == null) return;
-        GameManager.Instance.crossHair.SetActive(false);
+        GameManager.Instance.uiManager.crossHair.SetActive(false);
         GameManager.Instance.staminaManager.staminaImage.transform.parent.GetComponent<RectTransform>().anchoredPosition = new Vector3(62f, 35.4f, 0f);
         Rigidbody rigid = player.skillData.handObj.GetComponent<Rigidbody>();
         CameraZoom camZoom = player.skillData.camZoom;
@@ -257,7 +270,7 @@ public class WhiteCharacter : PlayerCharacter
         }
         
         if (player.currentCharacter.animator.GetCurrentAnimatorStateInfo(1).IsName("Idle") || player.currentCharacter.animator.GetCurrentAnimatorStateInfo(1).IsName("Throw")) return;
-        GameManager.Instance.crossHair.SetActive(true);
+        GameManager.Instance.uiManager.crossHair.SetActive(true);
 
         GameManager.Instance.staminaManager.staminaImage.transform.parent.GetComponent<RectTransform>().anchoredPosition = new Vector3(140f, 35.4f, 0f);
         //GameManager.Instance.staminaManager.staminaImage.rectTransform.anchoredPosition = new Vector3(140f, 35.4f, 0f);
@@ -305,7 +318,7 @@ public class WhiteCharacter : PlayerCharacter
     private void Throw()
     {
         if (!player.skillData.isHand || player.skillData.handObj == null) return;
-        GameManager.Instance.crossHair.SetActive(false);
+        GameManager.Instance.uiManager.crossHair.SetActive(false);
         GameManager.Instance.staminaManager.staminaImage.transform.parent.GetComponent<RectTransform>().anchoredPosition = new Vector3(62f, 35.4f, 0f);
         Rigidbody rigid = player.skillData.handObj.GetComponent<Rigidbody>();
         CameraZoom camZoom = player.skillData.camZoom;
@@ -404,7 +417,7 @@ public class GreenCharacter : PlayerCharacter
 {
     public override void CharacterChange()
     {
-
+        GameManager.Instance.predictionHitTransform.gameObject.SetActive(false);
     }
 
     public override void Update()
@@ -414,11 +427,36 @@ public class GreenCharacter : PlayerCharacter
             player.currentCharacter.StopGrapple();
             player.swinging.StopSwing();
         }
+
+        if (Input.GetKeyDown(KeyCode.Space) && player.isGround && player.skillData.grappling)
+        {
+            ExecuteGrapple();
+        }
     }
 
     public override void LeftAction()
     {
-        StartGrapple();
+        if (!player.isGround) StartGrappleAnim();
+    }
+
+    private void StartGrappleAnim()
+    {
+        if (isGrappleReady) return;
+        if (player.skillData.grapplingCdTimer > 0) return;
+        if (!GameManager.Instance.staminaManager.ChechStamina(20f)) return;
+        GameManager.Instance.staminaManager.MinusStamina(20f);
+        player.skillData.grapplingCdTimer = player.skillData.grapplingCd;
+        player.Rigidbody.velocity = Vector3.zero;
+        isGrappleReady = true;
+        player.movementStateMachine.ChangeState(player.movementStateMachine.FallingState);
+        player.Rigidbody.useGravity = false;
+        player.transform.rotation = player.CameraRecenteringUtility.VirtualCamera.transform.rotation;
+        player.transform.rotation = new Quaternion(0f, player.CameraRecenteringUtility.VirtualCamera.transform.rotation.y, 0f, player.transform.rotation.w);
+        grappleVec = Camera.main.transform.forward;
+
+        player.skillData.grapplePoint = model.transform.position + grappleVec * player.skillData.maxGrappleDistance;
+        //player.skillData.lr.enabled = false;
+        player.currentCharacter.animator.Play("GrappleReady", 2, 0f);
     }
 
     public override void RightAction()

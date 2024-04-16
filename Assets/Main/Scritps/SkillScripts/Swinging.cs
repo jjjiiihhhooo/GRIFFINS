@@ -39,8 +39,9 @@ public class Swinging : MonoBehaviour
 
     private void Update()
     {
-    //    if (Input.GetKeyDown(swingKey)) StartSwing();
-    //    if (Input.GetKeyUp(swingKey)) StopSwing();
+        //    if (Input.GetKeyDown(swingKey)) StartSwing();
+        //    if (Input.GetKeyUp(swingKey)) StopSwing();
+        if (Player.Instance.currentCharacter.isGrappleReady) return;
 
         CheckForSwingPoints();
 
@@ -55,7 +56,7 @@ public class Swinging : MonoBehaviour
     private void CheckForSwingPoints()
     {
         if (joint != null) return;
-
+        if (Player.Instance.currentCharacter.GetType() != typeof(GreenCharacter)) return;
         RaycastHit sphereCastHit;
         Physics.SphereCast(Camera.main.transform.position, predictionSphereCastRadius, Camera.main.transform.forward,
                             out sphereCastHit, maxSwingDistance, whatIsGrappleable);
@@ -78,17 +79,19 @@ public class Swinging : MonoBehaviour
         else
             realHitPoint = Vector3.zero;
 
+        if (predictionPoint == null) predictionPoint = GameManager.Instance.predictionHitTransform;
+
         // realHitPoint found
-        //if (realHitPoint != Vector3.zero)
-        //{
-        //    predictionPoint.gameObject.SetActive(true);
-        //    predictionPoint.position = realHitPoint;
-        //}
+        if (realHitPoint != Vector3.zero)
+        {
+            predictionPoint.gameObject.SetActive(true);
+            predictionPoint.position = realHitPoint;
+        }
         //// realHitPoint not found
-        //else
-        //{
-        //    predictionPoint.gameObject.SetActive(false);
-        //}
+        else
+        {
+            predictionPoint.gameObject.SetActive(false);
+        }
 
         predictionHit = raycastHit.point == Vector3.zero ? sphereCastHit : raycastHit;
     }
@@ -96,13 +99,20 @@ public class Swinging : MonoBehaviour
 
     public void StartSwing()
     {
+        Player playerController = transform.GetComponent<Player>();
+        
+        if (playerController.isGround) return;
         // return if predictionHit not found
         if (predictionHit.point == Vector3.zero) return;
 
         if (!GameManager.Instance.staminaManager.ChechStamina(20f)) return;
         GameManager.Instance.staminaManager.MinusStamina(20f);
 
-
+        if (playerController.movementStateMachine.CurStateName() != "PlayerFallingState")
+        {
+            playerController.movementStateMachine.ChangeState(playerController.movementStateMachine.FallingState);
+        }
+        lr.gameObject.SetActive(true);
         Player.Instance.currentCharacter.StopGrapple(); 
 
         // deactivate active grapple
@@ -116,7 +126,7 @@ public class Swinging : MonoBehaviour
         joint = player.gameObject.AddComponent<SpringJoint>();
         joint.autoConfigureConnectedAnchor = false;
         joint.connectedAnchor = swingPoint;
-
+        playerController.GetComponent<Rigidbody>().velocity = Vector3.zero;
         float distanceFromPoint = Vector3.Distance(player.position, swingPoint);
 
         // the distance grapple will try to keep from grapple point. 
@@ -137,7 +147,7 @@ public class Swinging : MonoBehaviour
         //pm.swinging = false;
         swinging = false;
         lr.positionCount = 0;
-
+        lr.gameObject.SetActive(false);
         Destroy(joint);
     }
 
@@ -180,11 +190,11 @@ public class Swinging : MonoBehaviour
         if (!joint) return;
 
 
-        //transform.rotation = Player.Instance.CameraRecenteringUtility.VirtualCamera.transform.rotation;
-        //transform.rotation = new Quaternion(0f, Player.Instance.CameraRecenteringUtility.VirtualCamera.transform.rotation.y, 0f, transform.rotation.w);
+        transform.rotation = Player.Instance.CameraRecenteringUtility.VirtualCamera.transform.rotation;
+        transform.rotation = new Quaternion(0f, Player.Instance.CameraRecenteringUtility.VirtualCamera.transform.rotation.y, 0f, transform.rotation.w);
 
         currentGrapplePosition =
-            Vector3.Lerp(currentGrapplePosition, swingPoint, Time.deltaTime * 8f);
+            Vector3.Lerp(currentGrapplePosition, swingPoint, Time.deltaTime * 20f);
 
         lr.SetPosition(0, gunTip.position);
         lr.SetPosition(1, currentGrapplePosition);

@@ -20,16 +20,12 @@ public class GameManager : SerializedMonoBehaviour
     public QuestManager questManager;
     public EventManager eventManager;
     public DialogueManager dialogueManager;
-
-    public GameObject grappleImage;
-    public GameObject normalImage;
-    public GameObject crossHair;
-
-    public Image device_Image;
-    public Image skill_Image;
+    public UIManager uiManager;
+    public Transform predictionHitTransform;
 
     public Dictionary<string, UnityEvent> event_dictionary;
 
+    public bool isMouseLock;
 
     private void Awake()
     {
@@ -52,13 +48,22 @@ public class GameManager : SerializedMonoBehaviour
         staminaManager.Init();
         timelineManager.Init();
         dialogueManager.Init();
-        //MouseLocked();
+        uiManager.Init();
+        MouseLocked(isMouseLock);
     }
 
-    public void MouseLocked()
+    public void MouseLocked(bool _bool = false)
     {
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
+        if(!_bool)
+        {
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+        else
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
     }
 
     public void Scene_AssistAction(DOTweenAnimation dot)
