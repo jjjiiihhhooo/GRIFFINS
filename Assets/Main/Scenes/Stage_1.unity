@@ -366,7 +366,7 @@ MonoBehaviour:
   rigid: {fileID: 0}
   hpSlider: {fileID: 669478167}
   backHpSlider: {fileID: 1629303961}
-  attackCol: {fileID: 2004112099}
+  attackCol: {fileID: 0}
   targetUI_obj: {fileID: 339372930}
   anim_dot: {fileID: 0}
   isHit: 0
@@ -1289,7 +1289,7 @@ MonoBehaviour:
     SerializationNodes:
     - Name: enemy
       Entry: 7
-      Data: 0|Epic_1_Enemy, Assembly-CSharp
+      Data: 0|Enemy, Assembly-CSharp
     - Name: damageEffect
       Entry: 6
       Data: 
@@ -1344,15 +1344,6 @@ MonoBehaviour:
     - Name: isBossStart
       Entry: 5
       Data: false
-    - Name: coolTime
-      Entry: 4
-      Data: 3
-    - Name: curTime
-      Entry: 4
-      Data: 3
-    - Name: target
-      Entry: 6
-      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -7028,7 +7019,7 @@ MonoBehaviour:
   rigid: {fileID: 0}
   hpSlider: {fileID: 507871312}
   backHpSlider: {fileID: 894896831}
-  attackCol: {fileID: 996835460}
+  attackCol: {fileID: 0}
   targetUI_obj: {fileID: 721035008}
   anim_dot: {fileID: 0}
   isHit: 0
@@ -7064,17 +7055,6 @@ Transform:
   m_Father: {fileID: 1334423803}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &231885040 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2498017058599107179, guid: c88bd6aa48cd9f9458e2144aa4fee5f3, type: 3}
-  m_PrefabInstance: {fileID: 4943424080251979606}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a3cfc397da3fd1048843198b5fc40ded, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &232266729
 GameObject:
   m_ObjectHideFlags: 0
@@ -7682,7 +7662,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   time: 0.2
   effect: {fileID: 0}
-  damage: 1
+  damage: 0
 --- !u!64 &257532517
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -13223,7 +13203,7 @@ MonoBehaviour:
   rigid: {fileID: 0}
   hpSlider: {fileID: 292315691}
   backHpSlider: {fileID: 1561410179}
-  attackCol: {fileID: 1790069284}
+  attackCol: {fileID: 0}
   targetUI_obj: {fileID: 1517290483}
   anim_dot: {fileID: 0}
   isHit: 0
@@ -22199,7 +22179,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   time: 0.2
   effect: {fileID: 0}
-  damage: 5
+  damage: 0
 --- !u!65 &745708329
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -25368,7 +25348,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   time: 0.2
   effect: {fileID: 0}
-  damage: 1
+  damage: 0
 --- !u!1 &838523004
 GameObject:
   m_ObjectHideFlags: 0
@@ -25952,17 +25932,6 @@ Transform:
   m_Father: {fileID: 1485682727}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &860645662 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7953770746103701267, guid: c88bd6aa48cd9f9458e2144aa4fee5f3, type: 3}
-  m_PrefabInstance: {fileID: 4943424080251979606}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a3cfc397da3fd1048843198b5fc40ded, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &862452420
 GameObject:
   m_ObjectHideFlags: 0
@@ -28501,7 +28470,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   time: 0.2
   effect: {fileID: 0}
-  damage: 1
+  damage: 0
 --- !u!1 &957289939
 GameObject:
   m_ObjectHideFlags: 0
@@ -29728,7 +29697,7 @@ MonoBehaviour:
   rigid: {fileID: 0}
   hpSlider: {fileID: 2074182521}
   backHpSlider: {fileID: 594043393}
-  attackCol: {fileID: 1766541419}
+  attackCol: {fileID: 0}
   targetUI_obj: {fileID: 684477087}
   anim_dot: {fileID: 0}
   isHit: 0
@@ -30065,7 +30034,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   time: 0.2
   effect: {fileID: 0}
-  damage: 1
+  damage: 0
 --- !u!64 &996850309
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -30754,7 +30723,7 @@ MonoBehaviour:
   rigid: {fileID: 0}
   hpSlider: {fileID: 527166259}
   backHpSlider: {fileID: 1508063792}
-  attackCol: {fileID: 953074016}
+  attackCol: {fileID: 0}
   targetUI_obj: {fileID: 951325900}
   anim_dot: {fileID: 0}
   isHit: 0
@@ -32279,17 +32248,6 @@ Transform:
   m_Father: {fileID: 213162791}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1058357011 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2228946302037379760, guid: c88bd6aa48cd9f9458e2144aa4fee5f3, type: 3}
-  m_PrefabInstance: {fileID: 4943424080251979606}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a3cfc397da3fd1048843198b5fc40ded, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!64 &1061171851
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -34443,10 +34401,6 @@ MonoBehaviour:
     SerializedBytes: 
     ReferencedUnityObjects:
     - {fileID: 646289785}
-    - {fileID: 1831861901}
-    - {fileID: 1430060208}
-    - {fileID: 1849151109}
-    - {fileID: 905954252}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -34511,57 +34465,15 @@ MonoBehaviour:
       Data: false
     - Name: coolTime
       Entry: 4
-      Data: 5
+      Data: 0
     - Name: curTime
       Entry: 4
       Data: 0
     - Name: defenseObjects
-      Entry: 7
-      Data: 1|UnityEngine.GameObject[], UnityEngine.CoreModule
-    - Name: 
-      Entry: 12
-      Data: 4
-    - Name: 
       Entry: 6
-      Data: 
-    - Name: 
-      Entry: 6
-      Data: 
-    - Name: 
-      Entry: 6
-      Data: 
-    - Name: 
-      Entry: 6
-      Data: 
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
       Data: 
     - Name: defenseTransforms
-      Entry: 7
-      Data: 2|UnityEngine.Transform[], UnityEngine.CoreModule
-    - Name: 
-      Entry: 12
-      Data: 4
-    - Name: 
-      Entry: 10
-      Data: 1
-    - Name: 
-      Entry: 10
-      Data: 2
-    - Name: 
-      Entry: 10
-      Data: 3
-    - Name: 
-      Entry: 10
-      Data: 4
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
+      Entry: 6
       Data: 
     - Name: rangeAttack
       Entry: 6
@@ -34581,7 +34493,7 @@ MonoBehaviour:
   rigid: {fileID: 0}
   hpSlider: {fileID: 0}
   backHpSlider: {fileID: 0}
-  attackCol: {fileID: 745708328}
+  attackCol: {fileID: 0}
   targetUI_obj: {fileID: 0}
   anim_dot: {fileID: 0}
   isHit: 0
@@ -35879,16 +35791,6 @@ Transform:
   m_Father: {fileID: 1452533812}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1173056322 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6264600523930781875, guid: c88bd6aa48cd9f9458e2144aa4fee5f3, type: 3}
-  m_PrefabInstance: {fileID: 4943424080251979606}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &1173056325 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 818433042846795891, guid: c88bd6aa48cd9f9458e2144aa4fee5f3, type: 3}
-  m_PrefabInstance: {fileID: 4943424080251979606}
-  m_PrefabAsset: {fileID: 0}
 --- !u!64 &1173752269
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -36703,7 +36605,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   time: 0.2
   effect: {fileID: 0}
-  damage: 1
+  damage: 0
 --- !u!1 &1200947875
 GameObject:
   m_ObjectHideFlags: 0
@@ -37119,7 +37021,7 @@ MonoBehaviour:
   rigid: {fileID: 0}
   hpSlider: {fileID: 87522674}
   backHpSlider: {fileID: 960908509}
-  attackCol: {fileID: 1891854245}
+  attackCol: {fileID: 0}
   targetUI_obj: {fileID: 769028213}
   anim_dot: {fileID: 0}
   isHit: 0
@@ -41522,7 +41424,7 @@ MonoBehaviour:
   rigid: {fileID: 0}
   hpSlider: {fileID: 1448521968}
   backHpSlider: {fileID: 305635013}
-  attackCol: {fileID: 838423679}
+  attackCol: {fileID: 0}
   targetUI_obj: {fileID: 175131222}
   anim_dot: {fileID: 0}
   isHit: 0
@@ -53989,7 +53891,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   time: 0.2
   effect: {fileID: 0}
-  damage: 1
+  damage: 0
 --- !u!64 &1557439994
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -57461,7 +57363,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87ad950594cac644eb3ff0b6ccdae585, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dot: {fileID: 1663286150}
+  dot: {fileID: 0}
 --- !u!114 &1663286150
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -57896,7 +57798,7 @@ MonoBehaviour:
   rigid: {fileID: 0}
   hpSlider: {fileID: 641324777}
   backHpSlider: {fileID: 1627556489}
-  attackCol: {fileID: 256503513}
+  attackCol: {fileID: 0}
   targetUI_obj: {fileID: 1828934340}
   anim_dot: {fileID: 0}
   isHit: 0
@@ -59452,16 +59354,6 @@ Transform:
   m_Father: {fileID: 311575693}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1719715540 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7486277031741469041, guid: c88bd6aa48cd9f9458e2144aa4fee5f3, type: 3}
-  m_PrefabInstance: {fileID: 4943424080251979606}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &1719715543 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 4201688250312569265, guid: c88bd6aa48cd9f9458e2144aa4fee5f3, type: 3}
-  m_PrefabInstance: {fileID: 4943424080251979606}
-  m_PrefabAsset: {fileID: 0}
 --- !u!64 &1720524815
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -60710,7 +60602,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   time: 0.2
   effect: {fileID: 0}
-  damage: 1
+  damage: 0
 --- !u!1 &1766648343
 GameObject:
   m_ObjectHideFlags: 0
@@ -61239,7 +61131,7 @@ MonoBehaviour:
   rigid: {fileID: 0}
   hpSlider: {fileID: 1140938299}
   backHpSlider: {fileID: 719300784}
-  attackCol: {fileID: 1875889641}
+  attackCol: {fileID: 0}
   targetUI_obj: {fileID: 1166319028}
   anim_dot: {fileID: 0}
   isHit: 0
@@ -61419,7 +61311,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   time: 0.2
   effect: {fileID: 0}
-  damage: 1
+  damage: 0
 --- !u!1 &1792508244
 GameObject:
   m_ObjectHideFlags: 0
@@ -62401,7 +62293,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   time: 0.2
   effect: {fileID: 0}
-  damage: 1
+  damage: 0
 --- !u!1 &1825411699
 GameObject:
   m_ObjectHideFlags: 0
@@ -62738,7 +62630,7 @@ MonoBehaviour:
   rigid: {fileID: 0}
   hpSlider: {fileID: 569433181}
   backHpSlider: {fileID: 634568234}
-  attackCol: {fileID: 1824280356}
+  attackCol: {fileID: 0}
   targetUI_obj: {fileID: 280365475}
   anim_dot: {fileID: 0}
   isHit: 0
@@ -63942,7 +63834,7 @@ MonoBehaviour:
   rigid: {fileID: 0}
   hpSlider: {fileID: 977991856}
   backHpSlider: {fileID: 1386391380}
-  attackCol: {fileID: 1200629699}
+  attackCol: {fileID: 0}
   targetUI_obj: {fileID: 1557043954}
   anim_dot: {fileID: 0}
   isHit: 0
@@ -64111,7 +64003,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   time: 0.2
   effect: {fileID: 0}
-  damage: 1
+  damage: 0
 --- !u!1 &1876811657
 GameObject:
   m_ObjectHideFlags: 0
@@ -64511,7 +64403,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   time: 0.2
   effect: {fileID: 0}
-  damage: 1
+  damage: 0
 --- !u!64 &1894255047
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -67401,7 +67293,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   time: 0.2
   effect: {fileID: 0}
-  damage: 1
+  damage: 0
 --- !u!64 &2004586536
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -68192,16 +68084,6 @@ Transform:
   m_Father: {fileID: 602418796}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2030293409 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2413448958402477795, guid: c88bd6aa48cd9f9458e2144aa4fee5f3, type: 3}
-  m_PrefabInstance: {fileID: 4943424080251979606}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &2030293412 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 8995297532989947427, guid: c88bd6aa48cd9f9458e2144aa4fee5f3, type: 3}
-  m_PrefabInstance: {fileID: 4943424080251979606}
-  m_PrefabAsset: {fileID: 0}
 --- !u!64 &2033304612
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -73625,7 +73507,7 @@ MonoBehaviour:
   rigid: {fileID: 0}
   hpSlider: {fileID: 8515133226215607779}
   backHpSlider: {fileID: 4539055204570480515}
-  attackCol: {fileID: 1557086817}
+  attackCol: {fileID: 0}
   targetUI_obj: {fileID: 8515133225439224868}
   anim_dot: {fileID: 0}
   isHit: 0
@@ -74547,35 +74429,35 @@ PrefabInstance:
     - target: {fileID: 4943424079398178706, guid: c88bd6aa48cd9f9458e2144aa4fee5f3, type: 3}
       propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.data[0]
       value: 
-      objectReference: {fileID: 1173056325}
+      objectReference: {fileID: 0}
     - target: {fileID: 4943424079398178706, guid: c88bd6aa48cd9f9458e2144aa4fee5f3, type: 3}
       propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.data[1]
       value: 
-      objectReference: {fileID: 1173056322}
+      objectReference: {fileID: 0}
     - target: {fileID: 4943424079398178706, guid: c88bd6aa48cd9f9458e2144aa4fee5f3, type: 3}
       propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.data[2]
       value: 
-      objectReference: {fileID: 1719715543}
+      objectReference: {fileID: 0}
     - target: {fileID: 4943424079398178706, guid: c88bd6aa48cd9f9458e2144aa4fee5f3, type: 3}
       propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.data[3]
       value: 
-      objectReference: {fileID: 1719715540}
+      objectReference: {fileID: 0}
     - target: {fileID: 4943424079398178706, guid: c88bd6aa48cd9f9458e2144aa4fee5f3, type: 3}
       propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.data[4]
       value: 
-      objectReference: {fileID: 860645662}
+      objectReference: {fileID: 0}
     - target: {fileID: 4943424079398178706, guid: c88bd6aa48cd9f9458e2144aa4fee5f3, type: 3}
       propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.data[5]
       value: 
-      objectReference: {fileID: 1058357011}
+      objectReference: {fileID: 0}
     - target: {fileID: 4943424079398178706, guid: c88bd6aa48cd9f9458e2144aa4fee5f3, type: 3}
       propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.data[6]
       value: 
-      objectReference: {fileID: 2030293412}
+      objectReference: {fileID: 0}
     - target: {fileID: 4943424079398178706, guid: c88bd6aa48cd9f9458e2144aa4fee5f3, type: 3}
       propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.data[7]
       value: 
-      objectReference: {fileID: 2030293409}
+      objectReference: {fileID: 0}
     - target: {fileID: 4943424079398178706, guid: c88bd6aa48cd9f9458e2144aa4fee5f3, type: 3}
       propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.data[8]
       value: 
@@ -74583,7 +74465,7 @@ PrefabInstance:
     - target: {fileID: 4943424079398178706, guid: c88bd6aa48cd9f9458e2144aa4fee5f3, type: 3}
       propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.data[9]
       value: 
-      objectReference: {fileID: 231885040}
+      objectReference: {fileID: 0}
     - target: {fileID: 4943424079398178710, guid: c88bd6aa48cd9f9458e2144aa4fee5f3, type: 3}
       propertyPath: m_Name
       value: Player
