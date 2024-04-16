@@ -21,6 +21,15 @@ public class PlayerCharacter
     public float lastClickedTime;
     public float lastComboEnd;
 
+    [Header("Collider")]
+    public AttackCol normalAttackCol;
+    public AttackCol normalAttackCol_2;
+
+    //[Header("Effect")]
+    //public ParticleSystem normalAttackEffect;
+    //public ParticleSystem normalAttackEffect_2;
+
+
     protected Vector3 grappleVec;
     
 
@@ -45,6 +54,21 @@ public class PlayerCharacter
     }
 
     public virtual void RightAction()
+    {
+
+    }
+
+    public virtual void Q_Action()
+    {
+
+    }
+    
+    public virtual void E_Action()
+    {
+
+    }
+
+    public virtual void R_Action()
     {
 
     }
@@ -192,14 +216,30 @@ public class WhiteCharacter : PlayerCharacter
 
     public override void LeftAction()
     {
-        Throw();
+        
     }
 
     public override void RightAction()
     {
-        if (player.skillData.isHand) PutDown();
+        if (player.skillData.isHand) Throw();
         else Catch();
     }
+
+    public override void Q_Action()
+    {
+
+    }
+
+    public override void E_Action()
+    {
+        
+    }
+
+    public override void R_Action()
+    {
+
+    }
+
 
     public override void ItemSave()
     {
@@ -469,6 +509,21 @@ public class GreenCharacter : PlayerCharacter
         base.StartGrapple();
     }
 
+    public override void Q_Action()
+    {
+
+    }
+
+    public override void E_Action()
+    {
+
+    }
+
+    public override void R_Action()
+    {
+
+    }
+
     public override void ExecuteGrapple()
     {
         base.ExecuteGrapple();
@@ -506,6 +561,21 @@ public class RedCharacter : PlayerCharacter
     public override void RightAction()
     {
         base.RightAction();
+    }
+
+    public override void Q_Action()
+    {
+
+    }
+
+    public override void E_Action()
+    {
+
+    }
+
+    public override void R_Action()
+    {
+
     }
 
     private void NormalAttack()

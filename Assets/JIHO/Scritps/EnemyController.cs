@@ -89,18 +89,18 @@ public class EnemyController : SerializedMonoBehaviour
         //    DamageMessage(damage, finalCenter);
         //}
 
-        if(other.CompareTag("AttackCol"))
-        {
-            float damage = Player.Instance.currentCharacter.normalAttackDamage;
+        //if(other.CompareTag("AttackCol"))
+        //{
+        //    float damage = Player.Instance.currentCharacter.normalAttackDamage;
 
-            Vector3 center1 = other.bounds.center;
-            Vector3 center2 = transform.GetComponent<Collider>().bounds.center;
+        //    Vector3 center1 = other.bounds.center;
+        //    Vector3 center2 = transform.GetComponent<Collider>().bounds.center;
 
-            Vector3 finalCenter = (center1 + center2) / 2f;
+        //    Vector3 finalCenter = (center1 + center2) / 2f;
 
 
-            DamageMessage(damage, finalCenter);
-        }
+        //    DamageMessage(damage, finalCenter);
+        //}
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -120,10 +120,10 @@ public class EnemyController : SerializedMonoBehaviour
 
     
 
-    private void DamageEffect(float damage, Vector3 targetPos)
+    private void DamageEffect(float damage, Vector3 targetPos, ParticleSystem particle)
     {
         //DamageHitTxt(damage, targetPos);
-        DamageHitEffect(targetPos);
+        DamageHitEffect(targetPos, particle);
     }
 
     private void DamageHitTxt(float damage, Vector3 targetPos)
@@ -147,11 +147,13 @@ public class EnemyController : SerializedMonoBehaviour
         Destroy(this.gameObject);
     }
 
-    private void DamageHitEffect(Vector3 targetPos)
+    private void DamageHitEffect(Vector3 targetPos, ParticleSystem particle)
     {
-        if (enemy.damageEffect == null) return;
+        if (particle == null) return;
+        enemy.damageEffect = Instantiate(particle);
         enemy.damageEffect.transform.position = targetPos;
         enemy.damageEffect.Play();
+        enemy.damageEffect = null;
     }
 
 
@@ -172,13 +174,13 @@ public class EnemyController : SerializedMonoBehaviour
         }
     }
 
-    public void DamageMessage(float damage, Vector3 targetPos)
+    public void DamageMessage(float damage, Vector3 targetPos, ParticleSystem particle = null)
     {
         if (isHit) return;
         isHit = true;
         hitCool = maxHitCool;
 
-        DamageEffect(damage, targetPos);
+        DamageEffect(damage, targetPos, particle);
         enemy.GetDamage(damage);
     }
 

@@ -40,16 +40,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70afe9e12c7a7ed47911bb608a23a8ff, type: 3}
   m_Name: SplitToning
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   shadows:
     m_OverrideState: 1
-    m_Value: {r: 0.15886435, g: 0.23942807, b: 0.3207547, a: 1}
+    m_Value: {r: 0.7244571, g: 0.8312567, b: 0.9433962, a: 1}
   highlights:
     m_OverrideState: 0
     m_Value: {r: 1, g: 0.25943398, b: 0.25943398, a: 1}
   balance:
     m_OverrideState: 1
-    m_Value: 35.2
+    m_Value: 94
 --- !u!114 &-6012148550204986412
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -90,7 +90,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 221518ef91623a7438a71fef23660601, type: 3}
   m_Name: WhiteBalance
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   temperature:
     m_OverrideState: 1
     m_Value: -10
@@ -109,15 +109,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 558a8e2b6826cf840aae193990ba9f2e, type: 3}
   m_Name: ShadowsMidtonesHighlights
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   shadows:
     m_OverrideState: 1
-    m_Value: {x: 0.86991644, y: 0.91369903, z: 1, w: 0}
+    m_Value: {x: 0.86991644, y: 0.91369903, z: 1, w: -0.38873237}
   midtones:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: {x: 1, y: 1, z: 1, w: 0}
   highlights:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: {x: 0.9992313, y: 1, z: 0.91199297, w: 0}
   shadowsStart:
     m_OverrideState: 0
@@ -209,7 +209,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 899c54efeace73346a0a16faa3afe726, type: 3}
   m_Name: Vignette
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   color:
     m_OverrideState: 1
     m_Value: {r: 0, g: 0, b: 0, a: 1}
@@ -322,7 +322,7 @@ MonoBehaviour:
     m_Value: 2
   baseColor:
     m_OverrideState: 1
-    m_Value: {r: 0.6603774, g: 0.48905307, b: 0.48905307, a: 1}
+    m_Value: {r: 0.33962262, g: 0.21594872, b: 0.21594872, a: 1}
   temporalFilterEnabled:
     m_OverrideState: 0
     m_Value: 0
@@ -397,13 +397,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b2db86121404754db890f4c8dfe81b2, type: 3}
   m_Name: Bloom
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   threshold:
     m_OverrideState: 1
     m_Value: 0.62
   intensity:
     m_OverrideState: 1
-    m_Value: 0.09
+    m_Value: 0.63
   scatter:
     m_OverrideState: 1
     m_Value: 0.7
@@ -438,10 +438,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c01700fd266d6914ababb731e09af2eb, type: 3}
   m_Name: DepthOfField
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   mode:
-    m_OverrideState: 0
-    m_Value: 0
+    m_OverrideState: 1
+    m_Value: 1
   gaussianStart:
     m_OverrideState: 0
     m_Value: 10
