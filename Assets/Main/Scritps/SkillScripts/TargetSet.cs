@@ -9,6 +9,7 @@ public class TargetSet : MonoBehaviour
     public float objectViewArea;
     public float interactionViewArea;
     public float enemyViewArea;
+    public float enemyViewArea_2;
 
     public LayerMask objectTargetMask;
     public LayerMask interactionTargetMask;
@@ -17,15 +18,24 @@ public class TargetSet : MonoBehaviour
     public GameObject targetObject;
     public InteractableObject targetInteraction;
     public EnemyController targetEnemy;
+    public EnemyController attackEnemy;
 
     public GameObject grappleTargetObject;
+
+    public Player player;
+
+    private void Awake()
+    {
+        player = GetComponent<Player>();
+    }
 
     void Update()
     {
         //GetTarget();
         //ObjectGrappleTarget();
         ObjectTarget();
-        EnemyTarget();
+        EnemyTarget(player.currentCharacter.targetArea);
+        AttackTarget(player.currentCharacter.attackArea);
         InteractionTarget();
     }
 
@@ -60,9 +70,9 @@ public class TargetSet : MonoBehaviour
         }
     }
 
-    public void EnemyTarget()
+    public void EnemyTarget(float targetArea)
     {
-        Collider[] EnemyColliders = Physics.OverlapSphere(transform.position, enemyViewArea, enemyTargetMask);
+        Collider[] EnemyColliders = Physics.OverlapSphere(transform.position, targetArea, enemyTargetMask);
 
         if (EnemyColliders.Length > 0)
         {
@@ -84,13 +94,47 @@ public class TargetSet : MonoBehaviour
                 }
             }
 
-            if (targetEnemy != null) targetEnemy.TargetCheck(false);
+            //if (targetEnemy != null) targetEnemy.TargetCheck(false);
             targetEnemy = closestEnemy;
-            if(targetEnemy != null) targetEnemy.TargetCheck(true);
+            //if(targetEnemy != null) targetEnemy.TargetCheck(true);
         }
         else
         {
             targetEnemy = null;
+        }
+    }
+
+    public void AttackTarget(float attackArea)
+    {
+        Collider[] EnemyColliders = Physics.OverlapSphere(transform.position, attackArea, enemyTargetMask);
+
+        if (EnemyColliders.Length > 0)
+        {
+            float closestAngle = Mathf.Infinity;
+            EnemyController closestEnemy = null;
+
+            foreach (Collider collider in EnemyColliders)
+            {
+                Vector3 direction = collider.transform.position - transform.position;
+                float angle = Vector3.Angle(Camera.main.transform.forward, direction);
+
+                if (angle <= closestAngle)
+                {
+                    if (collider.tag == "Enemy")
+                    {
+                        closestAngle = angle;
+                        closestEnemy = collider.GetComponent<EnemyController>();
+                    }
+                }
+            }
+
+            if (attackEnemy != null) attackEnemy.TargetCheck(false);
+            attackEnemy = closestEnemy;
+            if (attackEnemy != null) attackEnemy.TargetCheck(true);
+        }
+        else
+        {
+            attackEnemy = null;
         }
     }
 
@@ -200,17 +244,21 @@ public class TargetSet : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Handles.DrawWireArc(transform.position, Vector3.up, transform.forward, 360, objectViewArea);
-        if(targetObject != null)
-            Handles.DrawLine(transform.position, targetObject.transform.position);
+        //Handles.DrawWireArc(transform.position, Vector3.up, transform.forward, 360, objectViewArea);
+        //if(targetObject != null)
+        //    Handles.DrawLine(transform.position, targetObject.transform.position);
 
 
         Handles.DrawWireArc(transform.position, Vector3.up, transform.forward, 360, enemyViewArea);
         if (targetEnemy != null)
             Handles.DrawLine(transform.position, targetEnemy.transform.position);
 
-        Handles.DrawWireArc(transform.position, Vector3.up, transform.forward, 360, interactionViewArea);
-        if (targetInteraction != null)
-            Handles.DrawLine(transform.position, targetInteraction.transform.position);
+        Handles.DrawWireArc(transform.position, Vector3.up, transform.forward, 360, enemyViewArea_2);
+        if (attackEnemy != null)
+            Handles.DrawLine(transform.position, attackEnemy.transform.position);
+
+        //Handles.DrawWireArc(transform.position, Vector3.up, transform.forward, 360, interactionViewArea);
+        //if (targetInteraction != null)
+        //    Handles.DrawLine(transform.position, targetInteraction.transform.position);
     }
 }

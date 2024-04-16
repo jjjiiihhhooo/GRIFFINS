@@ -25,6 +25,10 @@ public class PlayerCharacter
     public AttackCol normalAttackCol;
     public AttackCol normalAttackCol_2;
 
+    [Header("AttackArea")]
+    public float targetArea;
+    public float attackArea;
+
     //[Header("Effect")]
     //public ParticleSystem normalAttackEffect;
     //public ParticleSystem normalAttackEffect_2;

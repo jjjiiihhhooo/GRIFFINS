@@ -48312,6 +48312,12 @@ MonoBehaviour:
     - Name: normalAttackCol_2
       Entry: 6
       Data: 
+    - Name: targetArea
+      Entry: 4
+      Data: 10
+    - Name: attackArea
+      Entry: 4
+      Data: 10
     - Name: 
       Entry: 8
       Data: 
@@ -48350,6 +48356,12 @@ MonoBehaviour:
       Data: 4
     - Name: normalAttackCol_2
       Entry: 10
+      Data: 5
+    - Name: targetArea
+      Entry: 4
+      Data: 5
+    - Name: attackArea
+      Entry: 4
       Data: 5
     - Name: 
       Entry: 8
@@ -48390,6 +48402,12 @@ MonoBehaviour:
     - Name: normalAttackCol_2
       Entry: 10
       Data: 9
+    - Name: targetArea
+      Entry: 4
+      Data: 7
+    - Name: attackArea
+      Entry: 4
+      Data: 3
     - Name: attackAnim
       Entry: 7
       Data: 4|UnityEngine.AnimationClip[], UnityEngine.AnimationModule
@@ -48520,7 +48538,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectViewArea: 5
   interactionViewArea: 2
-  enemyViewArea: 4
+  enemyViewArea: 7
+  enemyViewArea_2: 3
   objectTargetMask:
     serializedVersion: 2
     m_Bits: 16384
@@ -48533,7 +48552,9 @@ MonoBehaviour:
   targetObject: {fileID: 0}
   targetInteraction: {fileID: 0}
   targetEnemy: {fileID: 0}
+  attackEnemy: {fileID: 0}
   grappleTargetObject: {fileID: 0}
+  player: {fileID: 4943424079398178706}
 --- !u!114 &4943424079398178718
 MonoBehaviour:
   m_ObjectHideFlags: 0

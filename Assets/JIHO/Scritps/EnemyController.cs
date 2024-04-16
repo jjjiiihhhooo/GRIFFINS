@@ -42,7 +42,7 @@ public class EnemyController : SerializedMonoBehaviour
 
     private void Update()
     {
-        enemy.EnemyUpdate();
+        //enemy.EnemyUpdate();
 
         UIUpdate();
 
