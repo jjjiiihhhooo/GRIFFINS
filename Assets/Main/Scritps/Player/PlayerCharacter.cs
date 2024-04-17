@@ -2,32 +2,44 @@ using System.Collections;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
+using Unity.VisualScripting;
 
 public class PlayerCharacter
 {
     public Animator animator;
     
     public Player player;
+    public EnemyController target;
 
     public GameObject model;
 
     public bool isGrappleReady;
-    public int index;
+    public bool followEnemy;
+    protected bool vectorReset;
 
+    public int index;
     public int comboCounter;
 
     public float normalAttackDamage;
-
     public float lastClickedTime;
     public float lastComboEnd;
+
 
     [Header("Collider")]
     public AttackCol normalAttackCol;
     public AttackCol normalAttackCol_2;
 
-    //[Header("Effect")]
-    //public ParticleSystem normalAttackEffect;
-    //public ParticleSystem normalAttackEffect_2;
+    [Header("AttackArea")]
+    public float targetArea;
+    public float attackArea;
+    public float followSpeed;
+    public float[] knockbacks;
+    public float curKnockback;
+
+
+    [Header("Effect")]
+    public ParticleSystem curParticle;
+    public ParticleSystem[] normalAttackEffects;
 
 
     protected Vector3 grappleVec;
@@ -157,12 +169,25 @@ public class PlayerCharacter
 
     }
 
+    public virtual void FollowExit()
+    {
+
+    }
+
     public void ExitAttack()
     {
         if(player.currentCharacter.animator.GetCurrentAnimatorStateInfo(3).normalizedTime > 0.9f && player.currentCharacter.animator.GetCurrentAnimatorStateInfo(3).IsTag("Attack"))
         {
             player.isAttack = false;
             player.Invoke("EndCombo", 0.5f);
+        }
+    }
+
+    public virtual void Sound(string name)
+    {
+        if(name == "jump")
+        {
+
         }
     }
 
@@ -550,6 +575,7 @@ public class RedCharacter : PlayerCharacter
     public override void Update()
     {
         ExitAttack();
+        FollowEnemy();
     }
 
     public override void LeftAction()
@@ -578,7 +604,43 @@ public class RedCharacter : PlayerCharacter
 
     }
 
-    private void NormalAttack()
+    private void FollowEnemy()
+    {
+        if (!followEnemy) return;
+
+        if (target == null) { followEnemy = false; return; };
+
+        
+        if (Vector3.Distance(target.transform.position, player.transform.position) > attackArea)
+        {
+            player.transform.forward = target.transform.position - player.transform.position;
+            player.transform.eulerAngles = new Vector3(0f, player.transform.eulerAngles.y, 0f);
+
+            RaycastHit hit;
+
+            if (Physics.Raycast(player.transform.position, player.transform.forward, out hit, Vector3.Distance(target.transform.position, player.transform.position), player.skillData.grappleMask))
+            {
+                FollowExit();
+                return;
+            }
+
+            player.Rigidbody.velocity = Vector3.zero;
+            player.Rigidbody.AddForce(player.transform.forward * followSpeed, ForceMode.VelocityChange);
+        }
+        else
+        {
+            FollowExit();
+        }
+    }
+
+    public override void FollowExit()
+    {
+        followEnemy = false;
+        //target = null;
+        AttackMotion();
+    }
+
+    private void AttackMotion()
     {
         if (Time.time - lastComboEnd > 0.1f && comboCounter < attackAnim.Length)
         {
@@ -587,6 +649,8 @@ public class RedCharacter : PlayerCharacter
             {
                 player.isAttack = true;
                 player.currentCharacter.animator.Play(attackAnim[comboCounter].name, 3, 0f);
+                curParticle = normalAttackEffects[comboCounter];
+                curKnockback = knockbacks[comboCounter];
                 comboCounter++;
                 lastClickedTime = Time.time;
 
@@ -594,15 +658,44 @@ public class RedCharacter : PlayerCharacter
                 {
                     comboCounter = 0;
                 }
+
+                player.Rigidbody.velocity = Vector3.zero;
+
+                if (target != null)
+                {
+                    player.transform.forward = target.transform.position - player.transform.position;
+                    player.transform.eulerAngles = new Vector3(0f, player.transform.eulerAngles.y, 0f);
+                }
+
+                //player.Rigidbody.AddForce(player.transform.forward * 10f, ForceMode.VelocityChange);
             }
+
+            
         }
 
-        player.Rigidbody.velocity = Vector3.zero;
+        
+    }
 
-        if (player.targetSet.targetEnemy != null)
+    public override void Sound(string name)
+    {
+        if(name == "jump")
         {
-            player.transform.forward = player.targetSet.targetEnemy.transform.position - player.transform.position;
-            player.transform.eulerAngles = new Vector3(0f, player.transform.eulerAngles.y, 0f);
+            GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["red_jump"], false);
+        }
+    }
+
+    private void NormalAttack()
+    {
+        if (followEnemy) return;
+
+        if(/*player.targetSet.attackEnemy == null && */player.targetSet.targetEnemy != null)
+        {
+            target = player.targetSet.targetEnemy;
+            followEnemy = true;
+        }
+        else
+        {
+            AttackMotion();
         }
     }
 

@@ -26,7 +26,7 @@ public class SoundManager : MonoBehaviour
         audioDictionary = new Dictionary<string, AudioClip>();
         for (int i = 0; i < audioDatas.Length; i++) audioDictionary.Add(audioDatas[i].audioName, audioDatas[i].audio);
 
-        //Play(audioDictionary["MainBGM"], true);
+        Play(audioDictionary["Stage_1"], true);
     }
 
     public void Play(AudioClip audioClip, bool _isBgm, float pitch = 1.0f)

@@ -174,13 +174,16 @@ public class EnemyController : SerializedMonoBehaviour
         }
     }
 
-    public void DamageMessage(float damage, Vector3 targetPos, ParticleSystem particle = null)
+    public void DamageMessage(float _knockback, float damage, Vector3 targetPos, ParticleSystem particle = null)
     {
         if (isHit) return;
+
         isHit = true;
         hitCool = maxHitCool;
+        enemy.modelShakeTime = 0.1f;
 
         DamageEffect(damage, targetPos, particle);
+        enemy.knockback = _knockback;
         enemy.GetDamage(damage);
     }
 

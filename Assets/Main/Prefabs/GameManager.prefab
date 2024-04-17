@@ -5548,6 +5548,9 @@ MonoBehaviour:
   GrappleCut: 32
   LeftAction: 323
   RightAction: 324
+  Q: 113
+  E: 101
+  R: 114
   InteractionKey: 102
   itemSaveKey: 53
   scene_assistKey: 9
@@ -6850,7 +6853,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.356
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -6980,7 +6983,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f0c4084d943ab64e8e3d8b7a9732d1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioDatas: []
+  audioDatas:
+  - audio: {fileID: 8300000, guid: 20c9a6f62ccb0ad4095a9ff0d9f8f30d, type: 3}
+    audioName: red_jump
+  - audio: {fileID: 8300000, guid: 7e7f8871c594b36448b22d0a60a09473, type: 3}
+    audioName: red_normalAttack1
+  - audio: {fileID: 8300000, guid: 28aef58e9fe61e542914808833b89305, type: 3}
+    audioName: red_normalAttack2
+  - audio: {fileID: 8300000, guid: d0d48d02c2a5ce54585c48f795596411, type: 3}
+    audioName: enemyHit
+  - audio: {fileID: 8300000, guid: 7a8854018b7405c4da12a40e3f58be46, type: 3}
+    audioName: Stage_1
   audioSources:
   - {fileID: 6394712286293591809}
   - {fileID: 6394712287059439450}
