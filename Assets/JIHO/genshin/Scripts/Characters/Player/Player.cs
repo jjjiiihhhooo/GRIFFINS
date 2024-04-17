@@ -201,7 +201,6 @@ public class Player : SerializedMonoBehaviour
             swinging.StopSwing();
         }
 
-
         if(collider.tag == "EnemyAttackCol")
         {
             //if (movementStateMachine.CurStateName() == "PlayerDashingState") return;

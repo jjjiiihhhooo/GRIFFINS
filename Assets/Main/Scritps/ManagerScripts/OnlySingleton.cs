@@ -6,6 +6,8 @@ public class OnlySingleton : MonoBehaviour
 {
     public static OnlySingleton Instance;
 
+    public CinemachineShake camShake;
+
     private void Awake()
     {
         if(Instance == null)
