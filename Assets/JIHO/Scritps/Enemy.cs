@@ -27,10 +27,16 @@ public class Enemy
     public float attackMaxCool;
     public float rangeX;
     public float rangeZ;
+    public float hitDelay;
+    public float knockback;
+
+    public float modelShakeTime;
 
     public bool backHpHit;
 
     public bool isAction;
+    public bool isHit;
+    
 
     public bool isBossStart;
 
@@ -45,7 +51,6 @@ public class Enemy
     public virtual void GetDamage(float damage)
     {
 
-        
         if (animator != null) animator.SetTrigger("GetDamage");
         curHp -= damage;
         if (curHp <= 0) Die();
@@ -76,6 +81,11 @@ public class Enemy
         animator.SetTrigger("Die");
     }
 
+    public virtual void ModelShake()
+    {
+
+    }
+
     public virtual void BossStart()
     {
 
@@ -100,6 +110,7 @@ public class Normal_Enemy : Enemy
     {
         Action();
         AttackDelay();
+        ModelShake();
     }
 
     private void AttackDelay()
@@ -108,12 +119,45 @@ public class Normal_Enemy : Enemy
     }
 
 
+    public override void ModelShake()
+    {
+        if(modelShakeTime > 0f)
+        {
+            modelShakeTime -= Time.deltaTime;
+            animator.transform.localPosition = Random.insideUnitSphere * 0.3f + Vector3.zero;
+            if (modelShakeTime <= 0f) animator.transform.localPosition = Vector3.zero;
+        }
+    }
+
     public override void Action()
     {
         if (target == null) target = Player.Instance.transform;
 
+        //if(isHit)
+        //{
+            
+        //    hitDelay -= Time.deltaTime;
+        //    Vector3 playerPos = new Vector3(target.transform.position.x, enemyController.transform.position.y, target.transform.position.z);
+
+        //    Vector3 KnockbackDir = playerPos - enemyController.transform.position;
+
+        //    enemyController.rigid.velocity = Vector3.zero;
+        //    enemyController.rigid.AddForce(-KnockbackDir.normalized * knockback, ForceMode.VelocityChange);
+
+        //    if (hitDelay < 0)
+        //    {
+        //        isHit = false;
+        //    }
+
+        //}
+        //else
+        //{
+
+        //}
+
         if (Vector3.Distance(target.transform.position, enemyController.transform.position) > 3f && curTime <= 0 && !isAction) Move();
         else if (Vector3.Distance(target.transform.position, enemyController.transform.position) <= 3f && curTime <= 0 && !isAction) Attack();
+
     }
 
     private void NormalAttack()
@@ -151,16 +195,13 @@ public class Normal_Enemy : Enemy
     {
         if (curHp <= 0) Die();
 
-        Vector3 playerPos = new Vector3(Player.Instance.transform.position.x, enemyController.transform.position.y, Player.Instance.transform.position.z);
-
-        Vector3 KnockbackDir = enemyController.transform.position - playerPos;
-
-
-        //enemyController.rigid.AddForce(KnockbackDir * 2f, ForceMode.Impulse);
+        hitDelay = 0.1f;
+        isHit = true;
 
         //if (animator != null) animator.Play("GetDamage", 0, 0);
         curHp -= damage;
         backHpHit = false;
+        GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["enemyHit"], false);
         enemyController.Invoke("BackHpFunMessage", 0.3f);
         Debug.Log(curHp);
     }

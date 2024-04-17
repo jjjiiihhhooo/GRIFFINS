@@ -70,4 +70,23 @@ public class GameManager : SerializedMonoBehaviour
     {
         dot.DOPlayById("Start");
     }
+
+    public void Pause(float time, float scale = 0f)
+    {
+        Time.timeScale = scale;
+        StartCoroutine(PauseCor(time));
+    }
+
+
+    public void PauseT(float time)
+    {
+        Time.timeScale = 0.3f;
+        StartCoroutine(PauseCor(time));
+    }
+    private IEnumerator PauseCor(float time)
+    {
+        yield return new WaitForSecondsRealtime(time);
+        Time.timeScale = 1f;
+    }
+
 }

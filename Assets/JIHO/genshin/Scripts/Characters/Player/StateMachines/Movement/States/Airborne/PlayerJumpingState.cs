@@ -20,6 +20,8 @@ public class PlayerJumpingState : PlayerAirborneState
     {
         base.Enter();
 
+        stateMachine.Player.currentCharacter.Sound("jump");
+
         stateMachine.ReusableData.MovementSpeedModifier = 0f;
 
         stateMachine.ReusableData.MovementDecelerationForce = airborneData.JumpData.DecelerationForce;

@@ -163,6 +163,7 @@ public class PlayerMovementState : IState
 
     private void ReadMovementInput()
     {
+        if (stateMachine.Player.currentCharacter.followEnemy) { stateMachine.ReusableData.MovementInput = Vector2.zero; return; }
         stateMachine.ReusableData.MovementInput = stateMachine.Player.Input.PlayerActions.Movement.ReadValue<Vector2>();
     }
 
@@ -170,6 +171,7 @@ public class PlayerMovementState : IState
     {
         if (stateMachine.Player.isAttack) return;
         if (GameManager.Instance.dialogueManager.IsChat) return;
+        
 
         if (stateMachine.ReusableData.MovementInput == Vector2.zero || stateMachine.ReusableData.MovementSpeedModifier == 0f)
         {
@@ -186,7 +188,10 @@ public class PlayerMovementState : IState
 
         Vector3 currentPlayerHorizontalVelocity = GetPlayerHorizontalVelocity();
 
-        stateMachine.Player.Rigidbody.AddForce(targetRotationDirection * movementSpeed - currentPlayerHorizontalVelocity, ForceMode.VelocityChange);
+        if (!stateMachine.Player.currentCharacter.followEnemy)
+        {
+            stateMachine.Player.Rigidbody.AddForce(targetRotationDirection * movementSpeed - currentPlayerHorizontalVelocity, ForceMode.VelocityChange);
+        }
     }
 
     protected Vector3 GetMovementInputDirection()
