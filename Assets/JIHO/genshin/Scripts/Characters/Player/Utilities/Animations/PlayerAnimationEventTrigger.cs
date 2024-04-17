@@ -58,6 +58,7 @@ public class PlayerAnimationEventTrigger : MonoBehaviour
     {
         //player.isAttack = false;
         //player.normalAttackCol.effect = player.currentCharacter.normalAttackEffect;
+        GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["red_normalAttack1"], false);
         player.currentCharacter.normalAttackCol.gameObject.SetActive(true);
         //player.currentCharacter.animator.SetBool(name, false);
     }
@@ -75,6 +76,7 @@ public class PlayerAnimationEventTrigger : MonoBehaviour
     public void NormalAttackExit_2()
     {
         OnlySingleton.Instance.camShake.ShakeCamera(7f, 0.1f);
+        GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["red_normalAttack2"], false);
         player.currentCharacter.normalAttackCol_2.gameObject.SetActive(true);
     }
 

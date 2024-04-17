@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
+using Unity.VisualScripting;
 
 public class PlayerCharacter
 {
@@ -23,6 +24,7 @@ public class PlayerCharacter
     public float lastClickedTime;
     public float lastComboEnd;
 
+
     [Header("Collider")]
     public AttackCol normalAttackCol;
     public AttackCol normalAttackCol_2;
@@ -31,6 +33,9 @@ public class PlayerCharacter
     public float targetArea;
     public float attackArea;
     public float followSpeed;
+    public float[] knockbacks;
+    public float curKnockback;
+
 
     [Header("Effect")]
     public ParticleSystem curParticle;
@@ -175,6 +180,14 @@ public class PlayerCharacter
         {
             player.isAttack = false;
             player.Invoke("EndCombo", 0.5f);
+        }
+    }
+
+    public virtual void Sound(string name)
+    {
+        if(name == "jump")
+        {
+
         }
     }
 
@@ -637,6 +650,7 @@ public class RedCharacter : PlayerCharacter
                 player.isAttack = true;
                 player.currentCharacter.animator.Play(attackAnim[comboCounter].name, 3, 0f);
                 curParticle = normalAttackEffects[comboCounter];
+                curKnockback = knockbacks[comboCounter];
                 comboCounter++;
                 lastClickedTime = Time.time;
 
@@ -660,6 +674,14 @@ public class RedCharacter : PlayerCharacter
         }
 
         
+    }
+
+    public override void Sound(string name)
+    {
+        if(name == "jump")
+        {
+            GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["red_jump"], false);
+        }
     }
 
     private void NormalAttack()

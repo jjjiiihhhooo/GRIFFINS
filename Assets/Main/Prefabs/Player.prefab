@@ -3336,7 +3336,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   time: 0.1
-  effect: {fileID: 198678818312688868, guid: 5f6d6d77f4d0d074a8033eac55e37e4b, type: 3}
   damage: 80
 --- !u!1 &1245260642323992288
 GameObject:
@@ -48256,6 +48255,9 @@ MonoBehaviour:
     - {fileID: 2413448958402477795}
     - {fileID: 4943424079763285554}
     - {fileID: 2498017058599107179}
+    - {fileID: 198285461679219400, guid: a270d4b31a4d11a4b8302acf069f853a, type: 3}
+    - {fileID: 198406564588387756, guid: 89f21bbcc5cb3ea418e1be51775f9548, type: 3}
+    - {fileID: 198178008105517744, guid: 306e7743e5cc81f4b9e82b22a0e8bf62, type: 3}
     - {fileID: 7400000, guid: 0ce8c00efc6b87148a60256c9a5271c0, type: 2}
     - {fileID: 7400000, guid: 42907c535412b5b4f8a8546b1213e07e, type: 2}
     - {fileID: 7400000, guid: 4a3faac237fe87d48978d2e1420b72bb, type: 2}
@@ -48326,7 +48328,19 @@ MonoBehaviour:
       Data: 10
     - Name: followSpeed
       Entry: 4
-      Data: 10
+      Data: 15
+    - Name: knockbacks
+      Entry: 6
+      Data: 
+    - Name: curKnockback
+      Entry: 4
+      Data: 0
+    - Name: curParticle
+      Entry: 6
+      Data: 
+    - Name: normalAttackEffects
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -48380,7 +48394,19 @@ MonoBehaviour:
       Data: 5
     - Name: followSpeed
       Entry: 4
-      Data: 10
+      Data: 15
+    - Name: knockbacks
+      Entry: 6
+      Data: 
+    - Name: curKnockback
+      Entry: 4
+      Data: 0
+    - Name: curParticle
+      Entry: 6
+      Data: 
+    - Name: normalAttackEffects
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -48434,10 +48460,37 @@ MonoBehaviour:
       Data: 3
     - Name: followSpeed
       Entry: 4
-      Data: 10
-    - Name: attackAnim
+      Data: 15
+    - Name: knockbacks
       Entry: 7
-      Data: 4|UnityEngine.AnimationClip[], UnityEngine.AnimationModule
+      Data: 4|System.Single[], mscorlib
+    - Name: 
+      Entry: 14
+      Data: 3
+    - Name: 
+      Entry: 4
+      Data: 0.5
+    - Name: 
+      Entry: 4
+      Data: 0.5
+    - Name: 
+      Entry: 4
+      Data: 0.5
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: curKnockback
+      Entry: 4
+      Data: 0
+    - Name: curParticle
+      Entry: 6
+      Data: 
+    - Name: normalAttackEffects
+      Entry: 7
+      Data: 5|UnityEngine.ParticleSystem[], UnityEngine.ParticleSystemModule
     - Name: 
       Entry: 12
       Data: 3
@@ -48450,6 +48503,27 @@ MonoBehaviour:
     - Name: 
       Entry: 10
       Data: 12
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: attackAnim
+      Entry: 7
+      Data: 6|UnityEngine.AnimationClip[], UnityEngine.AnimationModule
+    - Name: 
+      Entry: 12
+      Data: 3
+    - Name: 
+      Entry: 10
+      Data: 13
+    - Name: 
+      Entry: 10
+      Data: 14
+    - Name: 
+      Entry: 10
+      Data: 15
     - Name: 
       Entry: 13
       Data: 
@@ -48565,7 +48639,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectViewArea: 5
   interactionViewArea: 2
-  enemyViewArea: 7
+  enemyViewArea: 15
   enemyViewArea_2: 3
   objectTargetMask:
     serializedVersion: 2
@@ -63284,7 +63358,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   time: 0.1
-  effect: {fileID: 198870072475148922, guid: 6fb67c529e0173c47857b2a860bde40c, type: 3}
   damage: 75
 --- !u!1 &4943424079945503237
 GameObject:
@@ -77713,7 +77786,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   time: 0.2
-  effect: {fileID: 0}
   damage: 0
 --- !u!1 &4954489473098782278
 GameObject:
@@ -80542,7 +80614,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   time: 0.1
-  effect: {fileID: 198071127191036932, guid: cb8a83b63e008134da9393db9af8915f, type: 3}
   damage: 0
 --- !u!1 &6614772009263715492
 GameObject:
@@ -81177,7 +81248,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   time: 0.1
-  effect: {fileID: 198930719547079570, guid: 6c7761bc9a843da409235177477c7db3, type: 3}
   damage: 0
 --- !u!1 &6992534773472056786
 GameObject:

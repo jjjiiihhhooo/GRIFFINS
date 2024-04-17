@@ -418,6 +418,12 @@ MonoBehaviour:
     - Name: rangeZ
       Entry: 4
       Data: 20
+    - Name: hitDelay
+      Entry: 4
+      Data: 0
+    - Name: knockback
+      Entry: 4
+      Data: 0
     - Name: modelShakeTime
       Entry: 4
       Data: 0
@@ -425,6 +431,9 @@ MonoBehaviour:
       Entry: 5
       Data: false
     - Name: isAction
+      Entry: 5
+      Data: false
+    - Name: isHit
       Entry: 5
       Data: false
     - Name: isBossStart
@@ -1382,6 +1391,12 @@ MonoBehaviour:
     - Name: rangeZ
       Entry: 4
       Data: 0
+    - Name: hitDelay
+      Entry: 4
+      Data: 0
+    - Name: knockback
+      Entry: 4
+      Data: 0
     - Name: modelShakeTime
       Entry: 4
       Data: 0
@@ -1389,6 +1404,9 @@ MonoBehaviour:
       Entry: 5
       Data: false
     - Name: isAction
+      Entry: 5
+      Data: false
+    - Name: isHit
       Entry: 5
       Data: false
     - Name: isBossStart
@@ -6896,7 +6914,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 126
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!114 &225243049
 MonoBehaviour:
@@ -6990,6 +7008,12 @@ MonoBehaviour:
     - Name: rangeZ
       Entry: 4
       Data: 20
+    - Name: hitDelay
+      Entry: 4
+      Data: 0
+    - Name: knockback
+      Entry: 4
+      Data: 0
     - Name: modelShakeTime
       Entry: 4
       Data: 0
@@ -6997,6 +7021,9 @@ MonoBehaviour:
       Entry: 5
       Data: false
     - Name: isAction
+      Entry: 5
+      Data: false
+    - Name: isHit
       Entry: 5
       Data: false
     - Name: isBossStart
@@ -8916,6 +8943,12 @@ MonoBehaviour:
     - Name: rangeZ
       Entry: 4
       Data: 20
+    - Name: hitDelay
+      Entry: 4
+      Data: 0
+    - Name: knockback
+      Entry: 4
+      Data: 0
     - Name: modelShakeTime
       Entry: 4
       Data: 0
@@ -8923,6 +8956,9 @@ MonoBehaviour:
       Entry: 5
       Data: false
     - Name: isAction
+      Entry: 5
+      Data: false
+    - Name: isHit
       Entry: 5
       Data: false
     - Name: isBossStart
@@ -13772,6 +13808,12 @@ MonoBehaviour:
     - Name: rangeZ
       Entry: 4
       Data: 20
+    - Name: hitDelay
+      Entry: 4
+      Data: 0
+    - Name: knockback
+      Entry: 4
+      Data: 0
     - Name: modelShakeTime
       Entry: 4
       Data: 0
@@ -13779,6 +13821,9 @@ MonoBehaviour:
       Entry: 5
       Data: false
     - Name: isAction
+      Entry: 5
+      Data: false
+    - Name: isHit
       Entry: 5
       Data: false
     - Name: isBossStart
@@ -30361,6 +30406,12 @@ MonoBehaviour:
     - Name: rangeZ
       Entry: 4
       Data: 20
+    - Name: hitDelay
+      Entry: 4
+      Data: 0
+    - Name: knockback
+      Entry: 4
+      Data: 0
     - Name: modelShakeTime
       Entry: 4
       Data: 0
@@ -30368,6 +30419,9 @@ MonoBehaviour:
       Entry: 5
       Data: false
     - Name: isAction
+      Entry: 5
+      Data: false
+    - Name: isHit
       Entry: 5
       Data: false
     - Name: isBossStart
@@ -31389,6 +31443,12 @@ MonoBehaviour:
     - Name: rangeZ
       Entry: 4
       Data: 20
+    - Name: hitDelay
+      Entry: 4
+      Data: 0
+    - Name: knockback
+      Entry: 4
+      Data: 0
     - Name: modelShakeTime
       Entry: 4
       Data: 0
@@ -31396,6 +31456,9 @@ MonoBehaviour:
       Entry: 5
       Data: false
     - Name: isAction
+      Entry: 5
+      Data: false
+    - Name: isHit
       Entry: 5
       Data: false
     - Name: isBossStart
@@ -37168,7 +37231,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 126
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!114 &1206761237
 MonoBehaviour:
@@ -37262,6 +37325,12 @@ MonoBehaviour:
     - Name: rangeZ
       Entry: 4
       Data: 20
+    - Name: hitDelay
+      Entry: 4
+      Data: 0
+    - Name: knockback
+      Entry: 4
+      Data: 0
     - Name: modelShakeTime
       Entry: 4
       Data: 0
@@ -37269,6 +37338,9 @@ MonoBehaviour:
       Entry: 5
       Data: false
     - Name: isAction
+      Entry: 5
+      Data: false
+    - Name: isHit
       Entry: 5
       Data: false
     - Name: isBossStart
@@ -41744,7 +41816,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 126
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!114 &1371215841
 MonoBehaviour:
@@ -41838,6 +41910,12 @@ MonoBehaviour:
     - Name: rangeZ
       Entry: 4
       Data: 20
+    - Name: hitDelay
+      Entry: 4
+      Data: 0
+    - Name: knockback
+      Entry: 4
+      Data: 0
     - Name: modelShakeTime
       Entry: 4
       Data: 0
@@ -41845,6 +41923,9 @@ MonoBehaviour:
       Entry: 5
       Data: false
     - Name: isAction
+      Entry: 5
+      Data: false
+    - Name: isHit
       Entry: 5
       Data: false
     - Name: isBossStart
@@ -58324,6 +58405,12 @@ MonoBehaviour:
     - Name: rangeZ
       Entry: 4
       Data: 20
+    - Name: hitDelay
+      Entry: 4
+      Data: 0
+    - Name: knockback
+      Entry: 4
+      Data: 0
     - Name: modelShakeTime
       Entry: 4
       Data: 0
@@ -58331,6 +58418,9 @@ MonoBehaviour:
       Entry: 5
       Data: false
     - Name: isAction
+      Entry: 5
+      Data: false
+    - Name: isHit
       Entry: 5
       Data: false
     - Name: isBossStart
@@ -61659,6 +61749,12 @@ MonoBehaviour:
     - Name: rangeZ
       Entry: 4
       Data: 20
+    - Name: hitDelay
+      Entry: 4
+      Data: 0
+    - Name: knockback
+      Entry: 4
+      Data: 0
     - Name: modelShakeTime
       Entry: 4
       Data: 0
@@ -61666,6 +61762,9 @@ MonoBehaviour:
       Entry: 5
       Data: false
     - Name: isAction
+      Entry: 5
+      Data: false
+    - Name: isHit
       Entry: 5
       Data: false
     - Name: isBossStart
@@ -63054,7 +63153,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 126
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!114 &1829974731
 MonoBehaviour:
@@ -63148,6 +63247,12 @@ MonoBehaviour:
     - Name: rangeZ
       Entry: 4
       Data: 20
+    - Name: hitDelay
+      Entry: 4
+      Data: 0
+    - Name: knockback
+      Entry: 4
+      Data: 0
     - Name: modelShakeTime
       Entry: 4
       Data: 0
@@ -63155,6 +63260,9 @@ MonoBehaviour:
       Entry: 5
       Data: false
     - Name: isAction
+      Entry: 5
+      Data: false
+    - Name: isHit
       Entry: 5
       Data: false
     - Name: isBossStart
@@ -64236,7 +64344,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 126
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!114 &1865085854
 MonoBehaviour:
@@ -64330,6 +64438,12 @@ MonoBehaviour:
     - Name: rangeZ
       Entry: 4
       Data: 20
+    - Name: hitDelay
+      Entry: 4
+      Data: 0
+    - Name: knockback
+      Entry: 4
+      Data: 0
     - Name: modelShakeTime
       Entry: 4
       Data: 0
@@ -64337,6 +64451,9 @@ MonoBehaviour:
       Entry: 5
       Data: false
     - Name: isAction
+      Entry: 5
+      Data: false
+    - Name: isHit
       Entry: 5
       Data: false
     - Name: isBossStart
@@ -74045,7 +74162,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 126
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!114 &3882574449273942901
 MonoBehaviour:
@@ -74139,6 +74256,12 @@ MonoBehaviour:
     - Name: rangeZ
       Entry: 4
       Data: 20
+    - Name: hitDelay
+      Entry: 4
+      Data: 0
+    - Name: knockback
+      Entry: 4
+      Data: 0
     - Name: modelShakeTime
       Entry: 4
       Data: 0
@@ -74146,6 +74269,9 @@ MonoBehaviour:
       Entry: 5
       Data: false
     - Name: isAction
+      Entry: 5
+      Data: false
+    - Name: isHit
       Entry: 5
       Data: false
     - Name: isBossStart
@@ -74995,7 +75121,7 @@ PrefabInstance:
       objectReference: {fileID: 4943424079398178706, guid: c88bd6aa48cd9f9458e2144aa4fee5f3, type: 3}
     - target: {fileID: 4943424079398178706, guid: c88bd6aa48cd9f9458e2144aa4fee5f3, type: 3}
       propertyPath: serializationData.PrefabModifications.Array.size
-      value: 17
+      value: 24
       objectReference: {fileID: 0}
     - target: {fileID: 4943424079398178706, guid: c88bd6aa48cd9f9458e2144aa4fee5f3, type: 3}
       propertyPath: serializationData.PrefabModifications.Array.data[0]
@@ -75037,41 +75163,73 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4943424079398178706, guid: c88bd6aa48cd9f9458e2144aa4fee5f3, type: 3}
       propertyPath: serializationData.PrefabModifications.Array.data[9]
+      value: '"path":"characters.[2].attackAnim.[0]","value":$eref:7'
+      objectReference: {fileID: 0}
+    - target: {fileID: 4943424079398178706, guid: c88bd6aa48cd9f9458e2144aa4fee5f3, type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[10]
+      value: '"path":"characters.[2].attackAnim.[1]","value":$eref:8'
+      objectReference: {fileID: 0}
+    - target: {fileID: 4943424079398178706, guid: c88bd6aa48cd9f9458e2144aa4fee5f3, type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[11]
+      value: '"path":"characters.[2].attackAnim.[2]","value":$eref:9'
+      objectReference: {fileID: 0}
+    - target: {fileID: 4943424079398178706, guid: c88bd6aa48cd9f9458e2144aa4fee5f3, type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[12]
       value: '"path":"characters.[2].followSpeed","value":{"$id":0,"$type":"System.Single,
         mscorlib",15}'
       objectReference: {fileID: 0}
     - target: {fileID: 4943424079398178706, guid: c88bd6aa48cd9f9458e2144aa4fee5f3, type: 3}
-      propertyPath: serializationData.PrefabModifications.Array.data[10]
-      value: '"path":"characters.[2].model","value":$eref:7'
-      objectReference: {fileID: 0}
-    - target: {fileID: 4943424079398178706, guid: c88bd6aa48cd9f9458e2144aa4fee5f3, type: 3}
-      propertyPath: serializationData.PrefabModifications.Array.data[11]
-      value: '"path":"characters.[2].normalAttackCol","value":$eref:8'
-      objectReference: {fileID: 0}
-    - target: {fileID: 4943424079398178706, guid: c88bd6aa48cd9f9458e2144aa4fee5f3, type: 3}
-      propertyPath: serializationData.PrefabModifications.Array.data[12]
-      value: '"path":"characters.[2].normalAttackCol_2","value":$eref:9'
-      objectReference: {fileID: 0}
-    - target: {fileID: 4943424079398178706, guid: c88bd6aa48cd9f9458e2144aa4fee5f3, type: 3}
       propertyPath: serializationData.PrefabModifications.Array.data[13]
-      value: '"path":"characters.[2].normalAttackEffects","value":{"$id":0,"$type":"UnityEngine.ParticleSystem[],
-        UnityEngine.ParticleSystemModule","$rlength":3,"$rcontent":[$eref:10,$eref:11,$eref:12]}'
+      value: '"path":"characters.[2].knockbacks","value":{"$id":0,"$type":"System.Single[],
+        mscorlib","$plength":3,"$pcontent":[0.5,0.5,0.5]}'
       objectReference: {fileID: 0}
     - target: {fileID: 4943424079398178706, guid: c88bd6aa48cd9f9458e2144aa4fee5f3, type: 3}
       propertyPath: serializationData.PrefabModifications.Array.data[14]
-      value: '"path":"characters.[2].normalAttackEffects.[0]","value":$eref:10'
+      value: '"path":"characters.[2].knockbacks.[0]","value":{"$id":0,"$type":"System.Single,
+        mscorlib",0.5}'
       objectReference: {fileID: 0}
     - target: {fileID: 4943424079398178706, guid: c88bd6aa48cd9f9458e2144aa4fee5f3, type: 3}
       propertyPath: serializationData.PrefabModifications.Array.data[15]
-      value: '"path":"characters.[2].normalAttackEffects.[1]","value":$eref:11'
+      value: '"path":"characters.[2].knockbacks.[1]","value":{"$id":0,"$type":"System.Single,
+        mscorlib",0.5}'
       objectReference: {fileID: 0}
     - target: {fileID: 4943424079398178706, guid: c88bd6aa48cd9f9458e2144aa4fee5f3, type: 3}
       propertyPath: serializationData.PrefabModifications.Array.data[16]
-      value: '"path":"characters.[2].normalAttackEffects.[2]","value":$eref:12'
+      value: '"path":"characters.[2].knockbacks.[2]","value":{"$id":0,"$type":"System.Single,
+        mscorlib",0.5}'
+      objectReference: {fileID: 0}
+    - target: {fileID: 4943424079398178706, guid: c88bd6aa48cd9f9458e2144aa4fee5f3, type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[17]
+      value: '"path":"characters.[2].model","value":$eref:10'
+      objectReference: {fileID: 0}
+    - target: {fileID: 4943424079398178706, guid: c88bd6aa48cd9f9458e2144aa4fee5f3, type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[18]
+      value: '"path":"characters.[2].normalAttackCol","value":$eref:11'
+      objectReference: {fileID: 0}
+    - target: {fileID: 4943424079398178706, guid: c88bd6aa48cd9f9458e2144aa4fee5f3, type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[19]
+      value: '"path":"characters.[2].normalAttackCol_2","value":$eref:12'
+      objectReference: {fileID: 0}
+    - target: {fileID: 4943424079398178706, guid: c88bd6aa48cd9f9458e2144aa4fee5f3, type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[20]
+      value: '"path":"characters.[2].normalAttackEffects","value":{"$id":0,"$type":"UnityEngine.ParticleSystem[],
+        UnityEngine.ParticleSystemModule","$rlength":3,"$rcontent":[$eref:13,$eref:14,$eref:15]}'
+      objectReference: {fileID: 0}
+    - target: {fileID: 4943424079398178706, guid: c88bd6aa48cd9f9458e2144aa4fee5f3, type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[21]
+      value: '"path":"characters.[2].normalAttackEffects.[0]","value":$eref:13'
+      objectReference: {fileID: 0}
+    - target: {fileID: 4943424079398178706, guid: c88bd6aa48cd9f9458e2144aa4fee5f3, type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[22]
+      value: '"path":"characters.[2].normalAttackEffects.[1]","value":$eref:14'
+      objectReference: {fileID: 0}
+    - target: {fileID: 4943424079398178706, guid: c88bd6aa48cd9f9458e2144aa4fee5f3, type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[23]
+      value: '"path":"characters.[2].normalAttackEffects.[2]","value":$eref:15'
       objectReference: {fileID: 0}
     - target: {fileID: 4943424079398178706, guid: c88bd6aa48cd9f9458e2144aa4fee5f3, type: 3}
       propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.size
-      value: 13
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 4943424079398178706, guid: c88bd6aa48cd9f9458e2144aa4fee5f3, type: 3}
       propertyPath: <CameraRecenteringUtility>k__BackingField.<VirtualCamera>k__BackingField
@@ -75108,38 +75266,42 @@ PrefabInstance:
     - target: {fileID: 4943424079398178706, guid: c88bd6aa48cd9f9458e2144aa4fee5f3, type: 3}
       propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.data[7]
       value: 
-      objectReference: {fileID: 767604464}
+      objectReference: {fileID: 7400000, guid: 0ce8c00efc6b87148a60256c9a5271c0, type: 2}
     - target: {fileID: 4943424079398178706, guid: c88bd6aa48cd9f9458e2144aa4fee5f3, type: 3}
       propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.data[8]
       value: 
-      objectReference: {fileID: 674258472}
+      objectReference: {fileID: 7400000, guid: 42907c535412b5b4f8a8546b1213e07e, type: 2}
     - target: {fileID: 4943424079398178706, guid: c88bd6aa48cd9f9458e2144aa4fee5f3, type: 3}
       propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.data[9]
       value: 
-      objectReference: {fileID: 1897799230}
+      objectReference: {fileID: 7400000, guid: 4a3faac237fe87d48978d2e1420b72bb, type: 2}
     - target: {fileID: 4943424079398178706, guid: c88bd6aa48cd9f9458e2144aa4fee5f3, type: 3}
       propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.data[10]
       value: 
-      objectReference: {fileID: 198285461679219400, guid: a270d4b31a4d11a4b8302acf069f853a, type: 3}
+      objectReference: {fileID: 767604464}
     - target: {fileID: 4943424079398178706, guid: c88bd6aa48cd9f9458e2144aa4fee5f3, type: 3}
       propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.data[11]
       value: 
-      objectReference: {fileID: 198406564588387756, guid: 89f21bbcc5cb3ea418e1be51775f9548, type: 3}
+      objectReference: {fileID: 674258472}
     - target: {fileID: 4943424079398178706, guid: c88bd6aa48cd9f9458e2144aa4fee5f3, type: 3}
       propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.data[12]
+      value: 
+      objectReference: {fileID: 1897799230}
+    - target: {fileID: 4943424079398178706, guid: c88bd6aa48cd9f9458e2144aa4fee5f3, type: 3}
+      propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.data[13]
+      value: 
+      objectReference: {fileID: 198285461679219400, guid: a270d4b31a4d11a4b8302acf069f853a, type: 3}
+    - target: {fileID: 4943424079398178706, guid: c88bd6aa48cd9f9458e2144aa4fee5f3, type: 3}
+      propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.data[14]
+      value: 
+      objectReference: {fileID: 198406564588387756, guid: 89f21bbcc5cb3ea418e1be51775f9548, type: 3}
+    - target: {fileID: 4943424079398178706, guid: c88bd6aa48cd9f9458e2144aa4fee5f3, type: 3}
+      propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.data[15]
       value: 
       objectReference: {fileID: 198178008105517744, guid: 306e7743e5cc81f4b9e82b22a0e8bf62, type: 3}
     - target: {fileID: 4943424079398178710, guid: c88bd6aa48cd9f9458e2144aa4fee5f3, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 4943424079398178719, guid: c88bd6aa48cd9f9458e2144aa4fee5f3, type: 3}
-      propertyPath: enemyViewArea
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 8995297532989947427, guid: c88bd6aa48cd9f9458e2144aa4fee5f3, type: 3}
-      propertyPath: m_UpdateMode
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c88bd6aa48cd9f9458e2144aa4fee5f3, type: 3}
