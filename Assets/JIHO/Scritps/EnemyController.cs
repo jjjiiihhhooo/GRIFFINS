@@ -1,4 +1,5 @@
 
+using DG.Tweening;
 using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
@@ -17,7 +18,10 @@ public class EnemyController : SerializedMonoBehaviour
     public Slider hpSlider;
     public Slider backHpSlider;
 
+    public AttackCol attackCol;
     public GameObject targetUI_obj;
+
+    public DOTweenAnimation anim_dot;
 
     public bool isHit;
 
@@ -32,6 +36,8 @@ public class EnemyController : SerializedMonoBehaviour
         rigid = GetComponent<Rigidbody>();
         animator = GetComponentInChildren<Animator>();
         enemy.Init(this);
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     private void Update()
@@ -49,6 +55,10 @@ public class EnemyController : SerializedMonoBehaviour
 
     private void UIUpdate()
     {
+        if (hpSlider == null) hpSlider = GameManager.Instance.uiManager.bossHp;
+        if (backHpSlider == null) backHpSlider = GameManager.Instance.uiManager.bossBackHp;
+        
+
         hpSlider.value = Mathf.Lerp(hpSlider.value, enemy.curHp / enemy.maxHp, Time.deltaTime * 5f);
 
         if(enemy.backHpHit)
@@ -60,8 +70,8 @@ public class EnemyController : SerializedMonoBehaviour
                 backHpSlider.value = hpSlider.value;
             }
         }
-
-        canvas.transform.LookAt(canvas.transform.position + Camera.main.transform.rotation * Vector3.forward, Camera.main.transform.rotation * Vector3.up);
+        if(enemy.GetType().Name != "Boss_Enemy")
+            canvas.transform.LookAt(canvas.transform.position + Camera.main.transform.rotation * Vector3.forward, Camera.main.transform.rotation * Vector3.up);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -79,18 +89,18 @@ public class EnemyController : SerializedMonoBehaviour
         //    DamageMessage(damage, finalCenter);
         //}
 
-        if(other.CompareTag("AttackCol"))
-        {
-            float damage = Player.Instance.currentCharacter.normalAttackDamage;
+        //if(other.CompareTag("AttackCol"))
+        //{
+        //    float damage = Player.Instance.currentCharacter.normalAttackDamage;
 
-            Vector3 center1 = other.bounds.center;
-            Vector3 center2 = transform.GetComponent<Collider>().bounds.center;
+        //    Vector3 center1 = other.bounds.center;
+        //    Vector3 center2 = transform.GetComponent<Collider>().bounds.center;
 
-            Vector3 finalCenter = (center1 + center2) / 2f;
+        //    Vector3 finalCenter = (center1 + center2) / 2f;
 
 
-            DamageMessage(damage, finalCenter);
-        }
+        //    DamageMessage(damage, finalCenter);
+        //}
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -110,10 +120,10 @@ public class EnemyController : SerializedMonoBehaviour
 
     
 
-    private void DamageEffect(float damage, Vector3 targetPos)
+    private void DamageEffect(float damage, Vector3 targetPos, ParticleSystem particle)
     {
         //DamageHitTxt(damage, targetPos);
-        DamageHitEffect(targetPos);
+        DamageHitEffect(targetPos, particle);
     }
 
     private void DamageHitTxt(float damage, Vector3 targetPos)
@@ -137,11 +147,13 @@ public class EnemyController : SerializedMonoBehaviour
         Destroy(this.gameObject);
     }
 
-    private void DamageHitEffect(Vector3 targetPos)
+    private void DamageHitEffect(Vector3 targetPos, ParticleSystem particle)
     {
-        if (enemy.damageEffect == null) return;
+        if (particle == null) return;
+        enemy.damageEffect = Instantiate(particle);
         enemy.damageEffect.transform.position = targetPos;
         enemy.damageEffect.Play();
+        enemy.damageEffect = null;
     }
 
 
@@ -151,6 +163,7 @@ public class EnemyController : SerializedMonoBehaviour
     }
     public void TargetCheck(bool _bool)
     {
+        if (enemy.ToString() == "Boss_Enemy") return;
         if(_bool)
         {
             targetUI_obj.SetActive(true);
@@ -161,13 +174,16 @@ public class EnemyController : SerializedMonoBehaviour
         }
     }
 
-    public void DamageMessage(float damage, Vector3 targetPos)
+    public void DamageMessage(float _knockback, float damage, Vector3 targetPos, ParticleSystem particle = null)
     {
         if (isHit) return;
+
         isHit = true;
         hitCool = maxHitCool;
+        enemy.modelShakeTime = 0.1f;
 
-        DamageEffect(damage, targetPos);
+        DamageEffect(damage, targetPos, particle);
+        enemy.knockback = _knockback;
         enemy.GetDamage(damage);
     }
 
@@ -185,5 +201,20 @@ public class EnemyController : SerializedMonoBehaviour
         enemy.backHpHit = true;
     }
         
-    
+    public void BossNormalAttackAnim()
+    {
+        enemy.isAction = false;
+        attackCol.gameObject.SetActive(true);
+    }
+
+    public void CorEvent(IEnumerator cor)
+    {
+        StopCoroutine(cor);
+        StartCoroutine(cor);
+    }
+
+    public void BossStart()
+    {
+        enemy.BossStart();
+    }
 }

@@ -14,29 +14,28 @@ public class PlayerJumpingState : PlayerAirborneState
     public PlayerJumpingState(PlayerMovementStateMachine playerMovementStateMachine) : base(playerMovementStateMachine)
     {
     }
+    
 
     public override void Enter()
     {
         base.Enter();
 
-        EffectActive(stateMachine.Player.jumpEffect, true);
+        stateMachine.Player.currentCharacter.Sound("jump");
 
-        stateMachine.ReusableData.MovementSpeedModifier = 1.5f;
+        stateMachine.ReusableData.MovementSpeedModifier = 0f;
 
         stateMachine.ReusableData.MovementDecelerationForce = airborneData.JumpData.DecelerationForce;
 
         stateMachine.ReusableData.RotationData = airborneData.JumpData.RotationData;
 
         shouldKeepRotating = stateMachine.ReusableData.MovementInput != Vector2.zero;
-        //stateMachine.Player.Rigidbody.velocity = Vector3.zero;
+
         Jump();
     }
 
     public override void Exit()
     {
         base.Exit();
-
-        EffectActive(stateMachine.Player.jumpEffect, false);
 
         SetBaseRotationData();
 
@@ -56,9 +55,8 @@ public class PlayerJumpingState : PlayerAirborneState
         {
             return;
         }
-        if (stateMachine.Player.skillData.grappling) stateMachine.Player.currentCharacter.ExecuteGrapple();
-        else stateMachine.ChangeState(stateMachine.FallingState);
 
+        stateMachine.ChangeState(stateMachine.FallingState);
     }
 
     public override void PhysicsUpdate()
@@ -67,9 +65,9 @@ public class PlayerJumpingState : PlayerAirborneState
 
         if (shouldKeepRotating)
         {
-            
+            RotateTowardsTargetRotation();
         }
-        RotateTowardsTargetRotation();
+
         if (IsMovingUp())
         {
             DecelerateVertically();
@@ -93,8 +91,6 @@ public class PlayerJumpingState : PlayerAirborneState
         jumpForce.z *= jumpDirection.z;
 
         jumpForce = GetJumpForceOnSlope(jumpForce);
-        jumpForce.x = 0f;
-        jumpForce.z = 0f;
 
         ResetVelocity();
 
@@ -128,6 +124,11 @@ public class PlayerJumpingState : PlayerAirborneState
         }
 
         return jumpForce;
+    }
+
+    protected override void OnContactWithGround(Collider collider)
+    {
+       
     }
 
     protected override void ResetSprintState()
