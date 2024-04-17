@@ -5,7 +5,6 @@ using UnityEngine;
 public class AttackCol : MonoBehaviour
 {
     [SerializeField] public float time;
-    public ParticleSystem effect;
     public float damage;
 
     private void OnEnable()
@@ -36,7 +35,7 @@ public class AttackCol : MonoBehaviour
 
             Vector3 finalCenter = (center1 + center2) / 2f;
 
-            other.GetComponent<EnemyController>().DamageMessage(damage, finalCenter, effect);
+            other.GetComponent<EnemyController>().DamageMessage(damage, finalCenter, Player.Instance.currentCharacter.curParticle);
             //OnlySingleton.Instance.camShake.ShakeCamera(5f, 0.1f);
         }
     }

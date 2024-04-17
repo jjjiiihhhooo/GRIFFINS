@@ -32,9 +32,9 @@ public class PlayerCharacter
     public float attackArea;
     public float followSpeed;
 
-    //[Header("Effect")]
-    //public ParticleSystem normalAttackEffect;
-    //public ParticleSystem normalAttackEffect_2;
+    [Header("Effect")]
+    public ParticleSystem curParticle;
+    public ParticleSystem[] normalAttackEffects;
 
 
     protected Vector3 grappleVec;
@@ -636,6 +636,7 @@ public class RedCharacter : PlayerCharacter
             {
                 player.isAttack = true;
                 player.currentCharacter.animator.Play(attackAnim[comboCounter].name, 3, 0f);
+                curParticle = normalAttackEffects[comboCounter];
                 comboCounter++;
                 lastClickedTime = Time.time;
 

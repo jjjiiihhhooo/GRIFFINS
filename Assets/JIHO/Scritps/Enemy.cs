@@ -122,7 +122,7 @@ public class Normal_Enemy : Enemy
         if(modelShakeTime > 0f)
         {
             modelShakeTime -= Time.deltaTime;
-            animator.transform.localPosition = Random.insideUnitSphere * 0.5f + Vector3.zero;
+            animator.transform.localPosition = Random.insideUnitSphere * 0.3f + Vector3.zero;
             if (modelShakeTime <= 0f) animator.transform.localPosition = Vector3.zero;
         }
     }
