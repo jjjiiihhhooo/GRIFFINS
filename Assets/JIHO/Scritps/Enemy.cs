@@ -133,29 +133,31 @@ public class Normal_Enemy : Enemy
     {
         if (target == null) target = Player.Instance.transform;
 
-        if(isHit)
-        {
+        //if(isHit)
+        //{
             
-            hitDelay -= Time.deltaTime;
-            Vector3 playerPos = new Vector3(target.transform.position.x, enemyController.transform.position.y, target.transform.position.z);
+        //    hitDelay -= Time.deltaTime;
+        //    Vector3 playerPos = new Vector3(target.transform.position.x, enemyController.transform.position.y, target.transform.position.z);
 
-            Vector3 KnockbackDir = playerPos - enemyController.transform.position;
+        //    Vector3 KnockbackDir = playerPos - enemyController.transform.position;
 
-            enemyController.rigid.velocity = Vector3.zero;
-            enemyController.rigid.AddForce(-KnockbackDir.normalized * knockback, ForceMode.VelocityChange);
+        //    enemyController.rigid.velocity = Vector3.zero;
+        //    enemyController.rigid.AddForce(-KnockbackDir.normalized * knockback, ForceMode.VelocityChange);
 
-            if (hitDelay < 0)
-            {
-                isHit = false;
-            }
+        //    if (hitDelay < 0)
+        //    {
+        //        isHit = false;
+        //    }
 
-        }
-        else
-        {
-            if (Vector3.Distance(target.transform.position, enemyController.transform.position) > 3f && curTime <= 0 && !isAction) Move();
-            else if (Vector3.Distance(target.transform.position, enemyController.transform.position) <= 3f && curTime <= 0 && !isAction) Attack();
-        }
-        
+        //}
+        //else
+        //{
+
+        //}
+
+        if (Vector3.Distance(target.transform.position, enemyController.transform.position) > 3f && curTime <= 0 && !isAction) Move();
+        else if (Vector3.Distance(target.transform.position, enemyController.transform.position) <= 3f && curTime <= 0 && !isAction) Attack();
+
     }
 
     private void NormalAttack()

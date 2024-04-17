@@ -6,6 +6,7 @@ public class AttackCol : MonoBehaviour
 {
     [SerializeField] public float time;
     public float damage;
+    public string otherTag;
 
     private void OnEnable()
     {
@@ -27,15 +28,15 @@ public class AttackCol : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Enemy"))
+        if (other.CompareTag(otherTag))
         {
             
             Vector3 center1 = other.bounds.center;
             Vector3 center2 = transform.GetComponent<Collider>().bounds.center;
 
             Vector3 finalCenter = (center1 + center2) / 2f;
-
-            other.GetComponent<EnemyController>().DamageMessage(Player.Instance.currentCharacter.curKnockback, damage, finalCenter, Player.Instance.currentCharacter.curParticle);
+            if(otherTag == "Enemy")
+                other.GetComponent<EnemyController>().DamageMessage(Player.Instance.currentCharacter.curKnockback, damage, finalCenter, Player.Instance.currentCharacter.curParticle);
             //OnlySingleton.Instance.camShake.ShakeCamera(5f, 0.1f);
         }
     }
