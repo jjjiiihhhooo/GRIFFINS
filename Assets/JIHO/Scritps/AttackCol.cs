@@ -37,6 +37,7 @@ public class AttackCol : MonoBehaviour
             Vector3 finalCenter = (center1 + center2) / 2f;
 
             other.GetComponent<EnemyController>().DamageMessage(damage, finalCenter, effect);
+            //OnlySingleton.Instance.camShake.ShakeCamera(5f, 0.1f);
         }
     }
 }

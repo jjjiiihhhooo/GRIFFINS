@@ -94,13 +94,28 @@ public class TargetSet : MonoBehaviour
                 }
             }
 
-            //if (targetEnemy != null) targetEnemy.TargetCheck(false);
-            targetEnemy = closestEnemy;
-            //if(targetEnemy != null) targetEnemy.TargetCheck(true);
+            if(player.currentCharacter.target == null)
+            {
+                if (targetEnemy != null) targetEnemy.TargetCheck(false);
+                targetEnemy = closestEnemy;
+                if (targetEnemy != null) targetEnemy.TargetCheck(true);
+            }
+            
         }
         else
         {
-            targetEnemy = null;
+            if(player.currentCharacter.target != null)
+            {
+                player.currentCharacter.target.TargetCheck(false);
+                player.currentCharacter.target = null;
+
+            }
+
+            if(targetEnemy != null)
+            {
+                targetEnemy.TargetCheck(false);
+                targetEnemy = null;
+            }
         }
     }
 
@@ -118,7 +133,7 @@ public class TargetSet : MonoBehaviour
                 Vector3 direction = collider.transform.position - transform.position;
                 float angle = Vector3.Angle(Camera.main.transform.forward, direction);
 
-                if (angle <= closestAngle)
+                if (angle < closestAngle)
                 {
                     if (collider.tag == "Enemy")
                     {
@@ -128,9 +143,9 @@ public class TargetSet : MonoBehaviour
                 }
             }
 
-            if (attackEnemy != null) attackEnemy.TargetCheck(false);
+            //if (attackEnemy != null) attackEnemy.TargetCheck(false);
             attackEnemy = closestEnemy;
-            if (attackEnemy != null) attackEnemy.TargetCheck(true);
+            //if (attackEnemy != null) attackEnemy.TargetCheck(true);
         }
         else
         {

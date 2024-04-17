@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -61,8 +62,19 @@ public class PlayerAnimationEventTrigger : MonoBehaviour
         //player.currentCharacter.animator.SetBool(name, false);
     }
 
+    public void PauseCorEvent(float time)
+    {
+        GameManager.Instance.Pause(time);
+    }
+
+    public void PauseCorEventT(float time)
+    {
+        GameManager.Instance.PauseT(time);
+    }
+
     public void NormalAttackExit_2()
     {
+        OnlySingleton.Instance.camShake.ShakeCamera(7f, 0.1f);
         player.currentCharacter.normalAttackCol_2.gameObject.SetActive(true);
     }
 

@@ -8,16 +8,18 @@ public class PlayerCharacter
     public Animator animator;
     
     public Player player;
+    public EnemyController target;
 
     public GameObject model;
 
     public bool isGrappleReady;
-    public int index;
+    public bool followEnemy;
+    protected bool vectorReset;
 
+    public int index;
     public int comboCounter;
 
     public float normalAttackDamage;
-
     public float lastClickedTime;
     public float lastComboEnd;
 
@@ -28,6 +30,7 @@ public class PlayerCharacter
     [Header("AttackArea")]
     public float targetArea;
     public float attackArea;
+    public float followSpeed;
 
     //[Header("Effect")]
     //public ParticleSystem normalAttackEffect;
@@ -157,6 +160,11 @@ public class PlayerCharacter
     }
 
     public virtual void ItemSave()
+    {
+
+    }
+
+    public virtual void FollowExit()
     {
 
     }
@@ -554,6 +562,7 @@ public class RedCharacter : PlayerCharacter
     public override void Update()
     {
         ExitAttack();
+        FollowEnemy();
     }
 
     public override void LeftAction()
@@ -582,7 +591,43 @@ public class RedCharacter : PlayerCharacter
 
     }
 
-    private void NormalAttack()
+    private void FollowEnemy()
+    {
+        if (!followEnemy) return;
+
+        if (target == null) { followEnemy = false; return; };
+
+        
+        if (Vector3.Distance(target.transform.position, player.transform.position) > attackArea)
+        {
+            player.transform.forward = target.transform.position - player.transform.position;
+            player.transform.eulerAngles = new Vector3(0f, player.transform.eulerAngles.y, 0f);
+
+            RaycastHit hit;
+
+            if (Physics.Raycast(player.transform.position, player.transform.forward, out hit, Vector3.Distance(target.transform.position, player.transform.position), player.skillData.grappleMask))
+            {
+                FollowExit();
+                return;
+            }
+
+            player.Rigidbody.velocity = Vector3.zero;
+            player.Rigidbody.AddForce(player.transform.forward * followSpeed, ForceMode.VelocityChange);
+        }
+        else
+        {
+            FollowExit();
+        }
+    }
+
+    public override void FollowExit()
+    {
+        followEnemy = false;
+        //target = null;
+        AttackMotion();
+    }
+
+    private void AttackMotion()
     {
         if (Time.time - lastComboEnd > 0.1f && comboCounter < attackAnim.Length)
         {
@@ -598,15 +643,36 @@ public class RedCharacter : PlayerCharacter
                 {
                     comboCounter = 0;
                 }
+
+                player.Rigidbody.velocity = Vector3.zero;
+
+                if (target != null)
+                {
+                    player.transform.forward = target.transform.position - player.transform.position;
+                    player.transform.eulerAngles = new Vector3(0f, player.transform.eulerAngles.y, 0f);
+                }
+
+                //player.Rigidbody.AddForce(player.transform.forward * 10f, ForceMode.VelocityChange);
             }
+
+            
         }
 
-        player.Rigidbody.velocity = Vector3.zero;
+        
+    }
 
-        if (player.targetSet.targetEnemy != null)
+    private void NormalAttack()
+    {
+        if (followEnemy) return;
+
+        if(/*player.targetSet.attackEnemy == null && */player.targetSet.targetEnemy != null)
         {
-            player.transform.forward = player.targetSet.targetEnemy.transform.position - player.transform.position;
-            player.transform.eulerAngles = new Vector3(0f, player.transform.eulerAngles.y, 0f);
+            target = player.targetSet.targetEnemy;
+            followEnemy = true;
+        }
+        else
+        {
+            AttackMotion();
         }
     }
 

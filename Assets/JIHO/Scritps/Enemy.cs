@@ -28,6 +28,9 @@ public class Enemy
     public float rangeX;
     public float rangeZ;
 
+
+    public float modelShakeTime;
+
     public bool backHpHit;
 
     public bool isAction;
@@ -76,6 +79,11 @@ public class Enemy
         animator.SetTrigger("Die");
     }
 
+    public virtual void ModelShake()
+    {
+
+    }
+
     public virtual void BossStart()
     {
 
@@ -100,6 +108,7 @@ public class Normal_Enemy : Enemy
     {
         Action();
         AttackDelay();
+        ModelShake();
     }
 
     private void AttackDelay()
@@ -107,6 +116,16 @@ public class Normal_Enemy : Enemy
         if (curTime > 0) curTime -= Time.deltaTime;
     }
 
+
+    public override void ModelShake()
+    {
+        if(modelShakeTime > 0f)
+        {
+            modelShakeTime -= Time.deltaTime;
+            animator.transform.localPosition = Random.insideUnitSphere * 0.5f + Vector3.zero;
+            if (modelShakeTime <= 0f) animator.transform.localPosition = Vector3.zero;
+        }
+    }
 
     public override void Action()
     {

@@ -48285,10 +48285,16 @@ MonoBehaviour:
     - Name: player
       Entry: 6
       Data: 
+    - Name: target
+      Entry: 6
+      Data: 
     - Name: model
       Entry: 10
       Data: 1
     - Name: isGrappleReady
+      Entry: 5
+      Data: false
+    - Name: followEnemy
       Entry: 5
       Data: false
     - Name: index
@@ -48318,6 +48324,9 @@ MonoBehaviour:
     - Name: attackArea
       Entry: 4
       Data: 10
+    - Name: followSpeed
+      Entry: 4
+      Data: 10
     - Name: 
       Entry: 8
       Data: 
@@ -48330,10 +48339,16 @@ MonoBehaviour:
     - Name: player
       Entry: 6
       Data: 
+    - Name: target
+      Entry: 6
+      Data: 
     - Name: model
       Entry: 10
       Data: 3
     - Name: isGrappleReady
+      Entry: 5
+      Data: false
+    - Name: followEnemy
       Entry: 5
       Data: false
     - Name: index
@@ -48344,10 +48359,10 @@ MonoBehaviour:
       Data: 0
     - Name: normalAttackDamage
       Entry: 4
-      Data: 3
+      Data: 5
     - Name: lastClickedTime
       Entry: 4
-      Data: 0
+      Data: 5
     - Name: lastComboEnd
       Entry: 4
       Data: 0
@@ -48363,6 +48378,9 @@ MonoBehaviour:
     - Name: attackArea
       Entry: 4
       Data: 5
+    - Name: followSpeed
+      Entry: 4
+      Data: 10
     - Name: 
       Entry: 8
       Data: 
@@ -48375,15 +48393,21 @@ MonoBehaviour:
     - Name: player
       Entry: 6
       Data: 
+    - Name: target
+      Entry: 6
+      Data: 
     - Name: model
       Entry: 10
       Data: 7
     - Name: isGrappleReady
       Entry: 5
       Data: false
+    - Name: followEnemy
+      Entry: 5
+      Data: false
     - Name: index
       Entry: 3
-      Data: 2
+      Data: 3
     - Name: comboCounter
       Entry: 3
       Data: 0
@@ -48404,10 +48428,13 @@ MonoBehaviour:
       Data: 9
     - Name: targetArea
       Entry: 4
-      Data: 7
+      Data: 15
     - Name: attackArea
       Entry: 4
       Data: 3
+    - Name: followSpeed
+      Entry: 4
+      Data: 10
     - Name: attackAnim
       Entry: 7
       Data: 4|UnityEngine.AnimationClip[], UnityEngine.AnimationModule

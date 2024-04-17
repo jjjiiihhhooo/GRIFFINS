@@ -42,7 +42,7 @@ public class EnemyController : SerializedMonoBehaviour
 
     private void Update()
     {
-        //enemy.EnemyUpdate();
+        enemy.EnemyUpdate();
 
         UIUpdate();
 
@@ -177,8 +177,10 @@ public class EnemyController : SerializedMonoBehaviour
     public void DamageMessage(float damage, Vector3 targetPos, ParticleSystem particle = null)
     {
         if (isHit) return;
+
         isHit = true;
         hitCool = maxHitCool;
+        enemy.modelShakeTime = 0.1f;
 
         DamageEffect(damage, targetPos, particle);
         enemy.GetDamage(damage);
