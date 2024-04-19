@@ -94,12 +94,12 @@ public class InputData : MonoBehaviour
 
         if (Input.GetKeyDown(E))
         {
-            player.currentCharacter.Q_Action();
+            player.currentCharacter.E_Action();
         }
 
         if (Input.GetKeyDown(R))
         {
-            player.currentCharacter.Q_Action();
+            player.currentCharacter.R_Action();
         }
     }
 

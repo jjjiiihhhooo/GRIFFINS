@@ -144,7 +144,7 @@ public class Player : SerializedMonoBehaviour
         if (GameManager.Instance.dialogueManager.IsChat) return;
 
         currentCharacter.Update();
-        UIUpdate();
+        //UIUpdate();
         dir = MainCameraTransform.forward;
         ray = new Ray(new Vector3(transform.position.x, transform.position.y + 2f, transform.position.z), dir);
         camRay = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
@@ -160,21 +160,6 @@ public class Player : SerializedMonoBehaviour
         movementStateMachine.HandleInput();
 
         movementStateMachine.Update();
-    }
-
-    private void UIUpdate()
-    {
-        GameManager.Instance.uiManager.playerHp.value = Mathf.Lerp(GameManager.Instance.uiManager.playerHp.value, curHp / maxHp, Time.deltaTime * 5f);
-
-        if (backHpHit)
-        {
-            GameManager.Instance.uiManager.playerBackHp.value = Mathf.Lerp(GameManager.Instance.uiManager.playerBackHp.value, GameManager.Instance.uiManager.playerHp.value, Time.deltaTime * 6f);
-            if (GameManager.Instance.uiManager.playerHp.value >= GameManager.Instance.uiManager.playerBackHp.value - 0.001f)
-            {
-                backHpHit = false;
-                GameManager.Instance.uiManager.bossBackHp.value = GameManager.Instance.uiManager.playerHp.value;
-            }
-        }
     }
 
 
@@ -249,9 +234,10 @@ public class Player : SerializedMonoBehaviour
     public void GetDamage(float damage)
     {
         curHp -= damage;
+        GameManager.Instance.uiManager.PlayerHitUI();
         backHpHit = false;
         if (curHp <= 0) PlayerDead();
-        Invoke("BackHpMessage", 0.3f);
+        Invoke("BackHpMessage", 0.6f);
     }
 
     private void BackHpMessage()
@@ -277,10 +263,14 @@ public class Player : SerializedMonoBehaviour
     public void ChangeCharacter(int index)
     {
         if (index == currentCharacter.index) return;
+        if (!GameManager.Instance.coolTimeManager.CoolCheck("CharacterChange")) return;
 
+        GameManager.Instance.coolTimeManager.GetCoolTime("CharacterChange");
+
+        GameManager.Instance.uiManager.CharacterCharacter(index);
         currentCharacter.CharacterChange();
 
-        GameManager.Instance.uiManager.ChangeCharacterUI(index);
+        //GameManager.Instance.uiManager.ChangeCharacterUI(index);
 
         characters[index].model.SetActive(true);
         foreach (AnimatorControllerParameter paramA in currentCharacter.animator.parameters)
@@ -325,6 +315,8 @@ public class Player : SerializedMonoBehaviour
     {
         currentCharacter.comboCounter = 0;
         currentCharacter.lastComboEnd = Time.time;
+
+
     }
 
     public void SetActiveInteraction(bool _bool, string text = "")

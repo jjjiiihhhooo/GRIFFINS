@@ -106,6 +106,8 @@ public class PlayerGroundedState : PlayerMovementState
 
         stateMachine.Player.Input.PlayerActions.Dash.started += OnDashStarted;
 
+        if (stateMachine.Player.currentCharacter.animator.GetCurrentAnimatorStateInfo(3).IsTag("Attack")) return;
+
         stateMachine.Player.Input.PlayerActions.Jump.started += OnJumpStarted;
     }
 
@@ -114,6 +116,8 @@ public class PlayerGroundedState : PlayerMovementState
         base.RemoveInputActionsCallbacks();
 
         stateMachine.Player.Input.PlayerActions.Dash.started -= OnDashStarted;
+
+        if (stateMachine.Player.currentCharacter.animator.GetCurrentAnimatorStateInfo(3).IsTag("Attack")) return;
 
         stateMachine.Player.Input.PlayerActions.Jump.started -= OnJumpStarted;
     }

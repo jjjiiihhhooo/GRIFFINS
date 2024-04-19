@@ -37,6 +37,11 @@ public class AttackCol : MonoBehaviour
             Vector3 finalCenter = (center1 + center2) / 2f;
             if(otherTag == "Enemy")
                 other.GetComponent<EnemyController>().DamageMessage(Player.Instance.currentCharacter.curKnockback, damage, finalCenter, Player.Instance.currentCharacter.curParticle);
+            
+            if(otherTag == "Player")
+            {
+                other.GetComponent<Player>().GetDamage(damage);
+            }
             //OnlySingleton.Instance.camShake.ShakeCamera(5f, 0.1f);
         }
     }

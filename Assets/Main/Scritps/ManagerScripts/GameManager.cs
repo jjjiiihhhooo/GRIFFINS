@@ -21,10 +21,12 @@ public class GameManager : SerializedMonoBehaviour
     public EventManager eventManager;
     public DialogueManager dialogueManager;
     public UIManager uiManager;
+    public CoolTimeManager coolTimeManager;
     public Transform predictionHitTransform;
 
     public Dictionary<string, UnityEvent> event_dictionary;
 
+    public bool gameStart;
     public bool isMouseLock;
 
     private void Awake()
@@ -49,6 +51,7 @@ public class GameManager : SerializedMonoBehaviour
         timelineManager.Init();
         dialogueManager.Init();
         uiManager.Init();
+        coolTimeManager.Init();
         MouseLocked(isMouseLock);
     }
 

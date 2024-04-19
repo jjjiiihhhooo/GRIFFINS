@@ -1,104 +1,110 @@
 using DG.Tweening;
+using MoreMountains.Tools;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class UIManager : MonoBehaviour
 {
 
-    public GameObject grappleImage;
-    public GameObject normalImage;
     public GameObject crossHair;
-    public GameObject tapTitle_obj;
-    public GameObject tapMain_obj;
-    public GameObject tapSmall_obj;
 
+    [Header("Player")]
+    public Image playerHp;
+    public Image playerBackHp;
 
-    public DOTweenAnimation skillTitle_dot;
-
-    public Image leftImage;
-    public Image leftImageCool;
-    public Image rightImage;
-    public Image rightImageCool;
-
-    public Image curCharacterImage;
-
-    public Image[] characterImages;
-    public Sprite[] leftImages;
-    public Sprite[] rightImages;
-
-    public Image redFaceImage;
-    public Sprite redFaceSprite;
-    public Image greenFaceImage;
-    public Sprite greenFaceSprite;
-
-    public Slider playerHp;
-    public Slider playerBackHp;
+    [Header("Boss")]
     public Slider bossBackHp;
     public Slider bossHp;
     public Slider bossTiming;
 
-    public DOTweenAnimation playerHpDot;
+
+    [Header("DotweenAnimation")]
+    public DOTweenAnimation playerHpDotween;
     public DOTweenAnimation bossHpDot;
+
+    [Header("Image")]
+    public Image[] characterFaces;
+    public Image[] characterCools;
+    public Image[] skillCools;
+    public Image mainImage;
+
+    [Header("Sprite")]
+    public Sprite[] nonColorCharacters;
+    public Sprite[] colorCharacters;
+    public Sprite[] mainSprites;
+
+    private Player player;
 
     
 
     private void Update()
     {
-        CoolCheck();
+        if (!GameManager.Instance.gameStart) return;
+        PlayerHPUpdate();
+        CharacterCoolUpdate();
+        SkillCoolUpdate();
+        //CoolCheck();
+    }
+    private void PlayerHPUpdate()
+    {
+        if (player == null) player = Player.Instance;
+        playerHp.fillAmount = Mathf.Lerp(playerHp.fillAmount, player.curHp / player.maxHp, 0.5f);
+        //if (player.backHpHit)
+        //{
+        //    playerBackHp.fillAmount = Mathf.Lerp(playerBackHp.fillAmount, playerHp.fillAmount, Time.deltaTime * 6f);
+
+        //    if (playerHp.fillAmount >= playerBackHp.fillAmount - 0.001f)
+        //    {
+        //        player.backHpHit = false;
+        //        playerBackHp.fillAmount = playerHp.fillAmount;
+        //    }
+        //}
+    }
+
+    private void CharacterCoolUpdate()
+    {
+        characterCools[player.currentCharacter.index].fillAmount = 0;
+
+        if (player.currentCharacter.index != 0) characterCools[0].fillAmount = player.currentCharacter.Change_Cool();
+        if (player.currentCharacter.index != 1) characterCools[1].fillAmount = player.currentCharacter.Change_Cool();
+        if (player.currentCharacter.index != 2) characterCools[2].fillAmount = player.currentCharacter.Change_Cool();
+    }
+
+    private void SkillCoolUpdate()
+    {
+        skillCools[0].fillAmount = player.currentCharacter.Right_Cool();
+        skillCools[1].fillAmount = player.currentCharacter.Q_Cool();
+        skillCools[2].fillAmount = player.currentCharacter.E_Cool();
+        skillCools[3].fillAmount = player.currentCharacter.R_Cool();
+    }
+
+    public void PlayerHitUI()
+    {
+        playerHpDotween.DORestartById("Hit");
+    }
+
+    public void CharacterCharacter(int index)
+    {
+        for(int i = 0; i < 3; i++)
+        {
+            //characterFaces[i].sprite = nonColorCharacters[i];
+
+            if(i != index) characterCools[i].fillAmount = 1;
+        }
+
+        //characterFaces[index].sprite = colorCharacters[index];
+        characterCools[index].fillAmount = 0;
+        mainImage.sprite = mainSprites[index];
     }
 
     public void Init()
     {
-        ChangeCharacterUI(0);
+        //ChangeCharacterUI(0);
     }
 
-    public void ChangeCharacterUI(int index)
-    {
-        Color b = Color.black;
-        Color y = Color.yellow;
-        for(int i = 0; i < 3; i++)
-        {
-            characterImages[i].color = b;
-        }
-
-        characterImages[index].color = y;
-
-        SkillChangeUI(index);
-    }
-
-    private void CoolCheck()
-    {
-        if (Player.Instance == null) return;
-
-        if(Player.Instance.currentCharacter.GetType() == typeof(GreenCharacter))
-        {
-            leftImageCool.fillAmount = Player.Instance.skillData.grapplingCdTimer / Player.Instance.skillData.grapplingCd;
-        }
-        else if(Player.Instance.currentCharacter.GetType() == typeof(WhiteCharacter))
-        {
-            leftImageCool.fillAmount = 0;
-            rightImageCool.fillAmount = 0;
-        }
-        else if(Player.Instance.currentCharacter.GetType() == typeof(RedCharacter))
-        {
-            leftImageCool.fillAmount = 0;
-            rightImageCool.fillAmount = 0;
-        }
-    }
-
-    public void SkillChangeUI(int index)
-    {
-        leftImage.sprite = leftImages[index];
-        rightImage.sprite = rightImages[index];
-    }
-
-
-    public void AddCharacterUI()
-    {
-        greenFaceImage.sprite = greenFaceSprite;
-        redFaceImage.sprite = redFaceSprite;
-    }
+    
 }

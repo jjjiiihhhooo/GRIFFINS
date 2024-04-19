@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class CoolTimeManager : MonoBehaviour
 {
-    public static CoolTimeManager instance;
-
     public class CoolData
     {
         public CoolData(int max, int cur)
@@ -21,27 +19,24 @@ public class CoolTimeManager : MonoBehaviour
 
     public Dictionary<string, CoolData> coolDic;
 
-    private void Awake()
-    {
-        if(instance == null)
-        {
-            instance = this;
-            Init();
-            DontDestroyOnLoad(this.gameObject);
-        }
-        else
-        {
-            Destroy(this.gameObject);
-        }
-    }
-
-    private void Init()
+    
+    public void Init()
     {
         coolDic = new Dictionary<string, CoolData>();
-        coolDic.Add("Dash", new CoolData(2, 0));
-        coolDic.Add("DownStream", new CoolData(2, 0));
-        coolDic.Add("CharacterChange", new CoolData(1, 0));
-        coolDic.Add("Tornado", new CoolData(5, 0));
+        coolDic.Add("CharacterChange", new CoolData(2, 0));
+        coolDic.Add("White_Right", new CoolData(5, 0));
+        coolDic.Add("White_Q", new CoolData(5, 0));
+        coolDic.Add("White_E", new CoolData(5, 0));
+        coolDic.Add("White_R", new CoolData(5, 0));
+        coolDic.Add("Green_Right", new CoolData(5, 0));
+        coolDic.Add("Green_Q", new CoolData(5, 0));
+        coolDic.Add("Green_E", new CoolData(5, 0));
+        coolDic.Add("Green_R", new CoolData(5, 0));
+        coolDic.Add("Red_Right", new CoolData(5, 0));
+        coolDic.Add("Red_Q", new CoolData(5, 0));
+        coolDic.Add("Red_E", new CoolData(5, 0));
+        coolDic.Add("Red_R", new CoolData(5, 0));
+        
     }
 
     private IEnumerator CoolDownCor(string name)

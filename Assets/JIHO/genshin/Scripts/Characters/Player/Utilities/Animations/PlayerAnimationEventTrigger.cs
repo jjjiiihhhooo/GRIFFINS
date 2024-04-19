@@ -56,11 +56,7 @@ public class PlayerAnimationEventTrigger : MonoBehaviour
 
     public void NormalAttackExit()
     {
-        //player.isAttack = false;
-        //player.normalAttackCol.effect = player.currentCharacter.normalAttackEffect;
-        GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["red_normalAttack1"], false);
-        player.currentCharacter.normalAttackCol.gameObject.SetActive(true);
-        //player.currentCharacter.animator.SetBool(name, false);
+        player.currentCharacter.NormalAttackExit();
     }
 
     public void PauseCorEvent(float time)
@@ -75,9 +71,23 @@ public class PlayerAnimationEventTrigger : MonoBehaviour
 
     public void NormalAttackExit_2()
     {
-        OnlySingleton.Instance.camShake.ShakeCamera(7f, 0.1f);
-        GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["red_normalAttack2"], false);
-        player.currentCharacter.normalAttackCol_2.gameObject.SetActive(true);
+        player.currentCharacter.StrongAttackExit();
+        
+    }
+
+    public void Q_AttackExit()
+    {
+        player.currentCharacter.Q_AnimExit();
+    }
+
+    public void E_AttackExit()
+    {
+        player.currentCharacter.E_AnimExit();
+    }
+
+    public void R_AttackExit()
+    {
+        player.currentCharacter.R_AnimExit();
     }
 
     public void GrappleReady()
@@ -90,5 +100,7 @@ public class PlayerAnimationEventTrigger : MonoBehaviour
     {
         player.currentCharacter.StopGrapple();
     }
+
+    
 }
 

@@ -81,14 +81,23 @@ public class TargetSet : MonoBehaviour
 
             foreach (Collider collider in EnemyColliders)
             {
-                Vector3 direction = collider.transform.position - transform.position;
-                float angle = Vector3.Angle(Camera.main.transform.forward, direction);
+                //Vector3 direction = collider.transform.position - transform.position;
+                //float angle = Vector3.Angle(Camera.main.transform.forward, direction);
 
-                if (angle <= closestAngle)
+                //if (angle <= closestAngle)
+                //{
+                //    if (collider.tag == "Enemy")
+                //    {
+                //        closestAngle = angle;
+                //        closestEnemy = collider.GetComponent<EnemyController>();
+                //    }
+                //}
+
+                if (closestEnemy == null) closestEnemy = collider.GetComponent<EnemyController>();
+                else
                 {
-                    if (collider.tag == "Enemy")
+                    if(Vector3.Distance(collider.transform.position, player.transform.position) < Vector3.Distance(closestEnemy.transform.position, player.transform.position))
                     {
-                        closestAngle = angle;
                         closestEnemy = collider.GetComponent<EnemyController>();
                     }
                 }
