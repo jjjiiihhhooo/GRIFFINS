@@ -269,6 +269,35 @@ public class PlayerCharacter
         return GameManager.Instance.coolTimeManager.coolDic["CharacterChange"].curCoolTime / GameManager.Instance.coolTimeManager.coolDic["CharacterChange"].maxCoolTime;
     }
 
+    public void RotationZero()
+    {
+        float x = model.transform.localEulerAngles.x;
+        float y = model.transform.localEulerAngles.y;
+        float z = model.transform.localEulerAngles.z;
+
+        if(x != 0 || y != 0 || z != 0)
+            model.transform.localEulerAngles = Vector3.zero;
+    }
+
+    public void AnimTransform()
+    {
+        if (animator.GetCurrentAnimatorStateInfo(3).IsTag("Attack"))
+        {
+            //Debug.LogError(model.transform.localPosition);
+
+            RaycastHit hit;
+
+            if (Physics.Raycast(player.transform.position, player.transform.forward, out hit, 2f, player.skillData.grappleMask))
+            {
+                model.transform.localPosition = new Vector3(0f, model.transform.localPosition.y, 0f);
+            }
+
+            Vector3 temp = new Vector3(model.transform.position.x, 0f, model.transform.position.z);
+            player.transform.position = model.transform.position;
+            model.transform.localPosition = Vector3.zero;
+        }
+    }
+
     public IEnumerator outLineCor(Outline outLine, float value, float oper, float pitch)
     {
         if (oper > 0f)
@@ -315,6 +344,7 @@ public class WhiteCharacter : PlayerCharacter
     public override void Update()
     {
         base.Update();
+        RotationZero();
     }
 
     public override void LeftAction()
@@ -621,6 +651,7 @@ public class GreenCharacter : PlayerCharacter
         ExitAttack();
         FollowEnemy();
         AnimTransform();
+        RotationZero();
         //if (Input.GetKeyDown(KeyCode.Space) && !player.isGround)
         //{
         //    player.currentCharacter.StopGrapple();
@@ -857,6 +888,7 @@ public class RedCharacter : PlayerCharacter
     {
         ExitAttack();
         FollowEnemy();
+        RotationZero();
         AnimTransform();
     }
 
@@ -867,17 +899,7 @@ public class RedCharacter : PlayerCharacter
         NormalAttack();
     }
 
-    private void AnimTransform()
-    {
-        if (player.currentCharacter.animator.GetCurrentAnimatorStateInfo(3).IsTag("Attack"))
-        {
-            //Debug.LogError(model.transform.localPosition);
-
-            Vector3 temp = new Vector3(model.transform.position.x, 0f, model.transform.position.z);
-            player.transform.position = model.transform.position;
-            model.transform.localPosition = Vector3.zero;
-        }
-    }
+    
 
 
     public override void RightAction()

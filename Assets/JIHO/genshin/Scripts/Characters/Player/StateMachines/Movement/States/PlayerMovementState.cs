@@ -27,6 +27,7 @@ public class PlayerMovementState : IState
     public virtual void Enter()
     {
         Debug.Log("State: " + GetType().Name);
+        stateMachine.Player.text.text = GetType().Name;
         AddInputActionsCallbacks();
     }
 

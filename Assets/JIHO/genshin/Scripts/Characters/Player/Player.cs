@@ -31,7 +31,7 @@ public class Player : SerializedMonoBehaviour
     [field: Header("Animations")]
     [field: SerializeField] public PlayerAnimationData AnimationData { get; private set; }
 
-
+    public TextMeshProUGUI text;
     
 
 

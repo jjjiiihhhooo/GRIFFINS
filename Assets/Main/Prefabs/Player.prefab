@@ -129,7 +129,7 @@ RectTransform:
   m_GameObject: {fileID: 898438140}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 0.68, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.9, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1882920197}
@@ -162,14 +162,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a9673e7e163bb1c4d8b2a4e84526b5ea, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a14a6dc0a81bc2f4aa5ed3a88987337f, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -449,14 +449,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a9673e7e163bb1c4d8b2a4e84526b5ea, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c20554c6218fc704592799f9dbe761fe, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -48067,7 +48067,7 @@ MonoBehaviour:
       Data: false
     - Name: index
       Entry: 3
-      Data: 3
+      Data: 1
     - Name: comboCounter
       Entry: 3
       Data: 0
@@ -48208,7 +48208,7 @@ MonoBehaviour:
       Data: false
     - Name: index
       Entry: 3
-      Data: 3
+      Data: 2
     - Name: comboCounter
       Entry: 3
       Data: 0
@@ -48333,6 +48333,7 @@ MonoBehaviour:
     hardLandParameterName: isHardLanding
     fallParameterName: isFalling
     airDashParameterName: isAirDashing
+  text: {fileID: 0}
   targetSet: {fileID: 4943424079398178719}
   skillData: {fileID: 4943424079398178718}
   swinging: {fileID: 2098397367}

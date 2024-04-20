@@ -106,8 +106,6 @@ public class PlayerGroundedState : PlayerMovementState
 
         stateMachine.Player.Input.PlayerActions.Dash.started += OnDashStarted;
 
-        if (stateMachine.Player.currentCharacter.animator.GetCurrentAnimatorStateInfo(3).IsTag("Attack")) return;
-
         stateMachine.Player.Input.PlayerActions.Jump.started += OnJumpStarted;
     }
 
@@ -116,8 +114,6 @@ public class PlayerGroundedState : PlayerMovementState
         base.RemoveInputActionsCallbacks();
 
         stateMachine.Player.Input.PlayerActions.Dash.started -= OnDashStarted;
-
-        if (stateMachine.Player.currentCharacter.animator.GetCurrentAnimatorStateInfo(3).IsTag("Attack")) return;
 
         stateMachine.Player.Input.PlayerActions.Jump.started -= OnJumpStarted;
     }
@@ -138,7 +134,8 @@ public class PlayerGroundedState : PlayerMovementState
     protected virtual void OnJumpStarted(InputAction.CallbackContext context)
     {
         if (stateMachine.CurStateName() == "PlayerDashingState") return;
-
+        if (stateMachine.Player.currentCharacter.animator.GetCurrentAnimatorStateInfo(3).IsTag("Attack")) return;
+        if (stateMachine.Player.currentCharacter.animator.GetCurrentAnimatorStateInfo(0).IsTag("Airborne")) return;
         if (stateMachine.Player.skillData.grappling) return;
         if (GameManager.Instance.dialogueManager.IsChat) return;
         if (stateMachine.Player.swinging.swinging) return;
