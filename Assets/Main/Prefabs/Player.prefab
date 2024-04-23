@@ -47896,19 +47896,23 @@ MonoBehaviour:
     - {fileID: 7400000, guid: 4a3faac237fe87d48978d2e1420b72bb, type: 2}
     - {fileID: 7953770746103701267}
     - {fileID: 2228946302037379760}
-    - {fileID: 172729094580288441, guid: 7416fef74936c2143b7f3da3118078c7, type: 3}
+    - {fileID: 198029330456189316, guid: d049ba934ceedbd4793e1edfed552656, type: 3}
     - {fileID: 4491862266691707059, guid: bb979f7168279864ca6ead18eba53c33, type: 3}
     - {fileID: 310365506411822839, guid: 944664efe22f6ae428cf357a30d78284, type: 3}
     - {fileID: 3890982889359641450}
     - {fileID: 7517757006039092138}
-    - {fileID: 7400000, guid: 81baee436282693479ce6b1585eb6161, type: 2}
-    - {fileID: 7400000, guid: 551d87fece4b0b34ea0e86af4648e98e, type: 2}
-    - {fileID: 7400000, guid: 02f17521baa5c314f8bc7a8ce550eaa3, type: 2}
-    - {fileID: 7400000, guid: 23c0c06042a1d7149b19c7d2dbec2b12, type: 2}
+    - {fileID: 7400000, guid: adfc437c28c83b0438392302cec5dd59, type: 2}
+    - {fileID: 7400000, guid: fba2b48d1edfd3e479d9a69ba5484f04, type: 2}
+    - {fileID: 7400000, guid: 9f1d2a9d2a48cf34ebc5b3085d0f4efb, type: 2}
+    - {fileID: 7400000, guid: a2662f6001d43b940833a42bacd909ce, type: 2}
+    - {fileID: 7400000, guid: efdcfd3fc446ba74b8488bb4ae17e3ff, type: 2}
     - {fileID: 7400000, guid: ced75be3290af0741987a49bc769f234, type: 2}
     - {fileID: 4943424079763285554}
     - {fileID: 2498017058599107179}
     - {fileID: 2302569346801337710}
+    - {fileID: 8023782338582125332}
+    - {fileID: 198109985788967936, guid: df04aeb82c805e24b8e9df43237d0f4d, type: 3}
+    - {fileID: 1107324212316225835, guid: 15c637eff0bed914eaea2a1a7953a57a, type: 3}
     - {fileID: 198285461679219400, guid: a270d4b31a4d11a4b8302acf069f853a, type: 3}
     - {fileID: 198406564588387756, guid: 89f21bbcc5cb3ea418e1be51775f9548, type: 3}
     - {fileID: 198178008105517744, guid: 306e7743e5cc81f4b9e82b22a0e8bf62, type: 3}
@@ -48013,6 +48017,18 @@ MonoBehaviour:
     - Name: curParticle
       Entry: 6
       Data: 
+    - Name: Right_Particle
+      Entry: 6
+      Data: 
+    - Name: E_Particle
+      Entry: 6
+      Data: 
+    - Name: R_Particle
+      Entry: 6
+      Data: 
+    - Name: Chasing_Particle
+      Entry: 6
+      Data: 
     - Name: normalAttackEffects
       Entry: 6
       Data: 
@@ -48021,7 +48037,7 @@ MonoBehaviour:
       Data: UnityEngine.LayerMask, UnityEngine.CoreModule
     - Name: 
       Entry: 3
-      Data: 0
+      Data: 2176
     - Name: 
       Entry: 8
       Data: 
@@ -48129,13 +48145,13 @@ MonoBehaviour:
       Data: 3
     - Name: 
       Entry: 4
-      Data: 0.5
+      Data: 1
     - Name: 
       Entry: 4
-      Data: 0.5
+      Data: 1
     - Name: 
       Entry: 4
-      Data: 0.5
+      Data: 1
     - Name: 
       Entry: 13
       Data: 
@@ -48148,6 +48164,18 @@ MonoBehaviour:
     - Name: curParticle
       Entry: 6
       Data: 
+    - Name: Right_Particle
+      Entry: 6
+      Data: 
+    - Name: E_Particle
+      Entry: 10
+      Data: 9
+    - Name: R_Particle
+      Entry: 6
+      Data: 
+    - Name: Chasing_Particle
+      Entry: 6
+      Data: 
     - Name: normalAttackEffects
       Entry: 7
       Data: 5|UnityEngine.ParticleSystem[], UnityEngine.ParticleSystemModule
@@ -48156,13 +48184,13 @@ MonoBehaviour:
       Data: 3
     - Name: 
       Entry: 10
-      Data: 9
-    - Name: 
-      Entry: 10
       Data: 10
     - Name: 
       Entry: 10
       Data: 11
+    - Name: 
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 13
       Data: 
@@ -48224,11 +48252,11 @@ MonoBehaviour:
       Entry: 10
       Data: 17
     - Name: R_Anim
-      Entry: 6
-      Data: 
-    - Name: followAnim
       Entry: 10
       Data: 18
+    - Name: followAnim
+      Entry: 10
+      Data: 19
     - Name: isGrappleReady
       Entry: 5
       Data: false
@@ -48252,19 +48280,19 @@ MonoBehaviour:
       Data: 0
     - Name: normalAttackCol
       Entry: 10
-      Data: 19
+      Data: 20
     - Name: normalAttackCol_2
       Entry: 10
-      Data: 20
+      Data: 21
     - Name: Q_AttackCol
       Entry: 6
       Data: 
     - Name: E_AttackCol
       Entry: 10
-      Data: 21
+      Data: 22
     - Name: R_AttackCol
-      Entry: 6
-      Data: 
+      Entry: 10
+      Data: 23
     - Name: targetArea
       Entry: 4
       Data: 15
@@ -48273,22 +48301,28 @@ MonoBehaviour:
       Data: 3
     - Name: followSpeed
       Entry: 4
-      Data: 25
+      Data: 15
     - Name: knockbacks
       Entry: 7
       Data: 8|System.Single[], mscorlib
     - Name: 
       Entry: 14
-      Data: 3
+      Data: 5
     - Name: 
       Entry: 4
-      Data: 0.5
+      Data: 0.3
     - Name: 
       Entry: 4
-      Data: 0.5
+      Data: 0.3
     - Name: 
       Entry: 4
-      Data: 0.5
+      Data: 0.3
+    - Name: 
+      Entry: 4
+      Data: 1
+    - Name: 
+      Entry: 4
+      Data: 2
     - Name: 
       Entry: 13
       Data: 
@@ -48301,6 +48335,18 @@ MonoBehaviour:
     - Name: curParticle
       Entry: 6
       Data: 
+    - Name: Right_Particle
+      Entry: 6
+      Data: 
+    - Name: E_Particle
+      Entry: 10
+      Data: 24
+    - Name: R_Particle
+      Entry: 6
+      Data: 
+    - Name: Chasing_Particle
+      Entry: 10
+      Data: 25
     - Name: normalAttackEffects
       Entry: 7
       Data: 9|UnityEngine.ParticleSystem[], UnityEngine.ParticleSystemModule
@@ -48309,13 +48355,13 @@ MonoBehaviour:
       Data: 3
     - Name: 
       Entry: 10
-      Data: 22
+      Data: 26
     - Name: 
       Entry: 10
-      Data: 23
+      Data: 27
     - Name: 
       Entry: 10
-      Data: 24
+      Data: 28
     - Name: 
       Entry: 13
       Data: 
@@ -48327,7 +48373,7 @@ MonoBehaviour:
       Data: UnityEngine.LayerMask, UnityEngine.CoreModule
     - Name: 
       Entry: 3
-      Data: 0
+      Data: 2176
     - Name: 
       Entry: 8
       Data: 
@@ -81503,7 +81549,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 3
+  m_Radius: 5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6929884767117083563
 GameObject:
@@ -82388,7 +82434,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7142604031789781264
 Transform:
   m_ObjectHideFlags: 0

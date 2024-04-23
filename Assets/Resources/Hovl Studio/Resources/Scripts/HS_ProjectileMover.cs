@@ -4,54 +4,84 @@ using UnityEngine;
 
 public class HS_ProjectileMover : MonoBehaviour
 {
-    public float speed = 15f;
-    public float hitOffset = 0f;
-    public bool UseFirePointRotation;
-    public Vector3 rotationOffset = new Vector3(0, 0, 0);
-    public GameObject hit;
-    public GameObject flash;
-    private Rigidbody rb;
-    public GameObject[] Detached;
+    [SerializeField] protected float speed = 15f;
+    [SerializeField] protected float hitOffset = 0f;
+    [SerializeField] protected bool UseFirePointRotation;
+    [SerializeField] protected Vector3 rotationOffset = new Vector3(0, 0, 0);
+    [SerializeField] protected GameObject hit;
+    [SerializeField] protected ParticleSystem hitPS;
+    [SerializeField] protected GameObject flash;
+    [SerializeField] protected Rigidbody rb;
+    [SerializeField] protected Collider col;
+    [SerializeField] protected Light lightSourse;
+    [SerializeField] protected GameObject[] Detached;
+    [SerializeField] protected ParticleSystem projectilePS;
+    private bool startChecker = false;
+    [SerializeField]protected bool notDestroy = false;
 
-    void Start()
+    protected virtual void Start()
     {
-        rb = GetComponent<Rigidbody>();
-        if (flash != null)
+        if (!startChecker)
         {
-            //Instantiate flash effect on projectile position
-            var flashInstance = Instantiate(flash, transform.position, Quaternion.identity);
-            flashInstance.transform.forward = gameObject.transform.forward;
-            
-            //Destroy flash effect depending on particle Duration time
-            var flashPs = flashInstance.GetComponent<ParticleSystem>();
-            if (flashPs != null)
+            /*lightSourse = GetComponent<Light>();
+            rb = GetComponent<Rigidbody>();
+            col = GetComponent<Collider>();
+            if (hit != null)
+                hitPS = hit.GetComponent<ParticleSystem>();*/
+            if (flash != null)
             {
-                Destroy(flashInstance, flashPs.main.duration);
-            }
-            else
-            {
-                var flashPsParts = flashInstance.transform.GetChild(0).GetComponent<ParticleSystem>();
-                Destroy(flashInstance, flashPsParts.main.duration);
+                flash.transform.parent = null;
             }
         }
-        Destroy(gameObject,5);
-	}
+        if (notDestroy)
+            StartCoroutine(DisableTimer(5));
+        else
+            Destroy(gameObject, 5);
+        startChecker = true;
+    }
 
-    void FixedUpdate ()
+    protected virtual IEnumerator DisableTimer(float time)
     {
-		if (speed != 0)
+        yield return new WaitForSeconds(time);
+        if(gameObject.activeSelf)
+            gameObject.SetActive(false);
+        yield break;
+    }
+
+    protected virtual void OnEnable()
+    {
+        if (startChecker)
         {
-            rb.velocity = transform.forward * speed;
-            //transform.position += transform.forward * (speed * Time.deltaTime);         
+            if (flash != null)
+            {
+                flash.transform.parent = null;
+            }
+            if (lightSourse != null)
+                lightSourse.enabled = true;
+            col.enabled = true;
+            rb.constraints = RigidbodyConstraints.None;
         }
-	}
+    }
+
+    protected virtual void FixedUpdate()
+    {
+        if (speed != 0)
+        {
+            rb.velocity = transform.forward * speed;      
+        }
+    }
 
     //https ://docs.unity3d.com/ScriptReference/Rigidbody.OnCollisionEnter.html
-    void OnCollisionEnter(Collision collision)
+    protected virtual void OnCollisionEnter(Collision collision)
     {
         //Lock all axes movement and rotation
         rb.constraints = RigidbodyConstraints.FreezeAll;
-        speed = 0;
+        //speed = 0;
+        if (lightSourse != null)
+            lightSourse.enabled = false;
+        col.enabled = false;
+        projectilePS.Stop();
+        projectilePS.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
 
         ContactPoint contact = collision.contacts[0];
         Quaternion rot = Quaternion.FromToRotation(Vector3.up, contact.normal);
@@ -60,22 +90,12 @@ public class HS_ProjectileMover : MonoBehaviour
         //Spawn hit effect on collision
         if (hit != null)
         {
-            var hitInstance = Instantiate(hit, pos, rot);
-            if (UseFirePointRotation) { hitInstance.transform.rotation = gameObject.transform.rotation * Quaternion.Euler(0, 180f, 0); }
-            else if (rotationOffset != Vector3.zero) { hitInstance.transform.rotation = Quaternion.Euler(rotationOffset); }
-            else { hitInstance.transform.LookAt(contact.point + contact.normal); }
-
-            //Destroy hit effects depending on particle Duration time
-            var hitPs = hitInstance.GetComponent<ParticleSystem>();
-            if (hitPs != null)
-            {
-                Destroy(hitInstance, hitPs.main.duration);
-            }
-            else
-            {
-                var hitPsParts = hitInstance.transform.GetChild(0).GetComponent<ParticleSystem>();
-                Destroy(hitInstance, hitPsParts.main.duration);
-            }
+            hit.transform.rotation = rot;
+            hit.transform.position = pos;
+            if (UseFirePointRotation) { hit.transform.rotation = gameObject.transform.rotation * Quaternion.Euler(0, 180f, 0); }
+            else if (rotationOffset != Vector3.zero) { hit.transform.rotation = Quaternion.Euler(rotationOffset); }
+            else { hit.transform.LookAt(contact.point + contact.normal); }
+            hitPS.Play();
         }
 
         //Removing trail from the projectile on cillision enter or smooth removing. Detached elements must have "AutoDestroying script"
@@ -83,11 +103,20 @@ public class HS_ProjectileMover : MonoBehaviour
         {
             if (detachedPrefab != null)
             {
-                detachedPrefab.transform.parent = null;
-                Destroy(detachedPrefab, 1);
+                ParticleSystem detachedPS = detachedPrefab.GetComponent<ParticleSystem>();
+                detachedPS.Stop();
             }
         }
-        //Destroy projectile on collision
-        Destroy(gameObject);
+        if (notDestroy)
+            StartCoroutine(DisableTimer(hitPS.main.duration));
+        else
+        {
+            if (hitPS != null)
+            {
+                Destroy(gameObject, hitPS.main.duration);
+            }
+            else
+                Destroy(gameObject, 1);
+        }
     }
 }

@@ -50,6 +50,7 @@ public class PlayerCharacter
     public ParticleSystem Right_Particle;
     public ParticleSystem E_Particle;
     public ParticleSystem R_Particle;
+    public ParticleSystem Chasing_Particle;
     public ParticleSystem[] normalAttackEffects;
 
     public LayerMask animCheckLayer;
@@ -927,9 +928,11 @@ public class RedCharacter : PlayerCharacter
 
     private void HellDive()
     {
+        player.Rigidbody.velocity = Vector3.zero;
         player.isAttack = true;
         player.transform.forward = Camera.main.transform.forward;
         player.transform.eulerAngles = new Vector3(0f, player.transform.eulerAngles.y, 0f);
+        player.Rigidbody.useGravity = false;
         curParticle = normalAttackEffects[2];
         curKnockback = knockbacks[3];
         player.currentCharacter.animator.Play(E_Anim.name, 3, 0f);
@@ -946,7 +949,13 @@ public class RedCharacter : PlayerCharacter
 
     private void Devastation()
     {
+        player.Rigidbody.velocity = Vector3.zero;
+        player.isAttack = true;
+        player.transform.forward = Camera.main.transform.forward;
+        player.transform.eulerAngles = new Vector3(0f, player.transform.eulerAngles.y, 0f);
+        curParticle = normalAttackEffects[2];
         curKnockback = knockbacks[4];
+        player.currentCharacter.animator.Play(R_Anim.name, 3, 0f);
     }
 
     public override void FollowEnemy()
@@ -958,8 +967,12 @@ public class RedCharacter : PlayerCharacter
         
         if (Vector3.Distance(target.transform.position, player.transform.position) > attackArea)
         {
-
-            player.currentCharacter.animator.Play(followAnim.name, 3, 0f);
+            if(!animator.GetCurrentAnimatorStateInfo(3).IsName(followAnim.name))
+            {
+                player.currentCharacter.animator.Play(followAnim.name, 3, 0f);
+                GameObject.Instantiate(Chasing_Particle.gameObject, model.transform.position + Vector3.up, model.transform.rotation);
+            }
+            
 
             player.transform.forward = target.transform.position - player.transform.position;
             player.transform.eulerAngles = new Vector3(0f, player.transform.eulerAngles.y, 0f);
@@ -983,24 +996,30 @@ public class RedCharacter : PlayerCharacter
 
     public override void FollowExit()
     {
-        followEnemy = false;
         //AttackMotion = null;
-        AttackMotion();
+        FollowAttack();
     }
 
     public override void FollowAttack()
     {
-
+        player.isAttack = true;
+        curParticle = normalAttackEffects[2];
+        curKnockback = knockbacks[2];
+        player.currentCharacter.animator.Play(attackAnim[2].name, 3, 0f);
+        followEnemy = false;
+        comboCounter = 0;
     }
 
     public override void NormalAttackExit()
     {
+        player.isAttack = false;
         GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["red_normalAttack1"], false);
         normalAttackCol.gameObject.SetActive(true);
     }
 
     public override void StrongAttackExit()
     {
+        player.isAttack = false;
         OnlySingleton.Instance.camShake.ShakeCamera(7f, 0.1f);
         GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["red_normalAttack2"], false);
         normalAttackCol_2.gameObject.SetActive(true);
@@ -1015,18 +1034,22 @@ public class RedCharacter : PlayerCharacter
     {
         GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["red_normalAttack1"], false);
         player.isAttack = false;
-        //GameObject.Instantiate(E_Particle.gameObject, model.transform.position, Quaternion.identity);
+        GameObject.Instantiate(E_Particle.gameObject, model.transform.position, Quaternion.identity);
+        player.Rigidbody.useGravity = true;
         E_AttackCol.gameObject.SetActive(true);
     }
 
     public override void R_AnimExit()
     {
+        GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["red_normalAttack1"], false);
+
         player.isAttack = false;
+        R_AttackCol.gameObject.SetActive(true);
     }
 
     public override void AttackMotion()
     {
-        if (Time.time - lastComboEnd > 0.1f && comboCounter < attackAnim.Length)
+        if (Time.time - lastComboEnd > 0.1f && comboCounter < attackAnim.Length && !player.isAttack)
         {
             player.CancelInvoke("EndCombo");
             if (Time.time - lastClickedTime >= 0.4f)
@@ -1073,7 +1096,9 @@ public class RedCharacter : PlayerCharacter
         {
             
             target = player.targetSet.targetEnemy;
-            followEnemy = true;
+            if (Vector3.Distance(target.transform.position, player.transform.position) > attackArea)
+                followEnemy = true;
+            else AttackMotion();
         }
         else
         {

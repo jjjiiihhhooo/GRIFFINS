@@ -6,21 +6,22 @@ using UnityEngine;
 
 public class HS_DemoShooting : MonoBehaviour
 {
+    [Header("Fire rate")]
+    private int Prefab;
+    [Range(0.0f, 1.0f)]
+    public float fireRate = 0.1f;
+    private float fireCountdown = 0f;
+
     public GameObject FirePoint;
     public Camera Cam;
+
+    //How far you can point raycast for projectiles
     public float MaxLength;
     public GameObject[] Prefabs;
 
     private Ray RayMouse;
     private Vector3 direction;
     private Quaternion rotation;
-
-    [Header("GUI")]
-    private float windowDpi;
-    private int Prefab;
-    private GameObject Instance;
-    private float hSliderValue = 0.1f;
-    private float fireCountdown = 0f;
 
     //Double-click protection
     private float buttonSaver = 0f;
@@ -30,9 +31,6 @@ public class HS_DemoShooting : MonoBehaviour
 
     void Start()
     {
-        if (Screen.dpi < 1) windowDpi = 1;
-        if (Screen.dpi < 200) windowDpi = 1;
-        else windowDpi = Screen.dpi / 200f;
         Counter(0);
     }
 
@@ -50,7 +48,7 @@ public class HS_DemoShooting : MonoBehaviour
         {
             Instantiate(Prefabs[Prefab], FirePoint.transform.position, FirePoint.transform.rotation);
             fireCountdown = 0;
-            fireCountdown += hSliderValue;
+            fireCountdown += fireRate;
         }
         fireCountdown -= Time.deltaTime;
 
@@ -82,16 +80,6 @@ public class HS_DemoShooting : MonoBehaviour
         {
             Debug.Log("No camera");
         }
-    }
-
-    //GUI Text
-    void OnGUI()
-    {
-        GUI.Label(new Rect(10 * windowDpi, 5 * windowDpi, 400 * windowDpi, 20 * windowDpi), "Use left mouse button to single shoot!");
-        GUI.Label(new Rect(10 * windowDpi, 25 * windowDpi, 400 * windowDpi, 20 * windowDpi), "Use and hold the right mouse button for quick shooting!");
-        GUI.Label(new Rect(10 * windowDpi, 45 * windowDpi, 400 * windowDpi, 20 * windowDpi), "Fire rate:");
-        hSliderValue = GUI.HorizontalSlider(new Rect(70 * windowDpi, 50 * windowDpi, 100 * windowDpi, 20 * windowDpi), hSliderValue, 0.0f, 1.0f);
-        GUI.Label(new Rect(10 * windowDpi, 65 * windowDpi, 400 * windowDpi, 20 * windowDpi), "Use the keyboard buttons A/<- and D/-> to change projectiles!");
     }
 
     // To change prefabs (count - prefab number)

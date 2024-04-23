@@ -191,7 +191,7 @@ public class Normal_Enemy : Enemy
     {
         if (curHp <= 0) Die();
 
-        hitDelay = 0.2f;
+        hitDelay = 0.1f;
         isHit = true;
 
         //if (animator != null) animator.Play("GetDamage", 0, 0);
