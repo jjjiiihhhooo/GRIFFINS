@@ -83,7 +83,7 @@ public class GameManager : SerializedMonoBehaviour
 
     public void PauseT(float time)
     {
-        Time.timeScale = 0.3f;
+        Time.timeScale = 0.6f;
         StartCoroutine(PauseCor(time));
     }
     private IEnumerator PauseCor(float time)

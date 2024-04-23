@@ -172,7 +172,6 @@ public class PlayerMovementState : IState
     {
         if (stateMachine.Player.isAttack) return;
         if (GameManager.Instance.dialogueManager.IsChat) return;
-        
 
         if (stateMachine.ReusableData.MovementInput == Vector2.zero || stateMachine.ReusableData.MovementSpeedModifier == 0f)
         {

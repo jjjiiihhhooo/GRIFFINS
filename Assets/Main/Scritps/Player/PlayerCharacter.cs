@@ -47,7 +47,12 @@ public class PlayerCharacter
 
     [Header("Effect")]
     public ParticleSystem curParticle;
+    public ParticleSystem Right_Particle;
+    public ParticleSystem E_Particle;
+    public ParticleSystem R_Particle;
     public ParticleSystem[] normalAttackEffects;
+
+    public LayerMask animCheckLayer;
 
     protected Vector3 grappleVec;
   
@@ -288,12 +293,11 @@ public class PlayerCharacter
 
             RaycastHit hit;
 
-            if (Physics.Raycast(player.transform.position, player.transform.forward, out hit, 2f, player.skillData.grappleMask))
+            if (Physics.Raycast(player.transform.position, player.transform.forward, out hit, 3f, animCheckLayer))
             {
                 model.transform.localPosition = new Vector3(0f, model.transform.localPosition.y, 0f);
             }
 
-            Vector3 temp = new Vector3(model.transform.position.x, 0f, model.transform.position.z);
             player.transform.position = model.transform.position;
             model.transform.localPosition = Vector3.zero;
         }
@@ -923,15 +927,26 @@ public class RedCharacter : PlayerCharacter
 
     private void HellDive()
     {
+        player.isAttack = true;
         player.transform.forward = Camera.main.transform.forward;
         player.transform.eulerAngles = new Vector3(0f, player.transform.eulerAngles.y, 0f);
         curParticle = normalAttackEffects[2];
+        curKnockback = knockbacks[3];
         player.currentCharacter.animator.Play(E_Anim.name, 3, 0f);
     }
 
     public override void R_Action()
     {
+        if (!GameManager.Instance.coolTimeManager.CoolCheck("Red_R")) return;
 
+        GameManager.Instance.coolTimeManager.GetCoolTime("Red_R");
+
+        Devastation();
+    }
+
+    private void Devastation()
+    {
+        curKnockback = knockbacks[4];
     }
 
     public override void FollowEnemy()
@@ -944,7 +959,7 @@ public class RedCharacter : PlayerCharacter
         if (Vector3.Distance(target.transform.position, player.transform.position) > attackArea)
         {
 
-            if (!animator.GetCurrentAnimatorStateInfo(3).IsTag("Attack")) player.currentCharacter.animator.Play(followAnim.name, 3, 0f);
+            player.currentCharacter.animator.Play(followAnim.name, 3, 0f);
 
             player.transform.forward = target.transform.position - player.transform.position;
             player.transform.eulerAngles = new Vector3(0f, player.transform.eulerAngles.y, 0f);
@@ -999,12 +1014,14 @@ public class RedCharacter : PlayerCharacter
     public override void E_AnimExit()
     {
         GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["red_normalAttack1"], false);
+        player.isAttack = false;
+        //GameObject.Instantiate(E_Particle.gameObject, model.transform.position, Quaternion.identity);
         E_AttackCol.gameObject.SetActive(true);
     }
 
     public override void R_AnimExit()
     {
-        base.R_AnimExit();
+        player.isAttack = false;
     }
 
     public override void AttackMotion()
