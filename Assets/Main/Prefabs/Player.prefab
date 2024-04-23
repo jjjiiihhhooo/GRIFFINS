@@ -47904,6 +47904,7 @@ MonoBehaviour:
     - {fileID: 7400000, guid: 551d87fece4b0b34ea0e86af4648e98e, type: 2}
     - {fileID: 7400000, guid: 02f17521baa5c314f8bc7a8ce550eaa3, type: 2}
     - {fileID: 7400000, guid: 23c0c06042a1d7149b19c7d2dbec2b12, type: 2}
+    - {fileID: 7400000, guid: ced75be3290af0741987a49bc769f234, type: 2}
     - {fileID: 4943424079763285554}
     - {fileID: 2498017058599107179}
     - {fileID: 2302569346801337710}
@@ -47952,6 +47953,9 @@ MonoBehaviour:
       Entry: 6
       Data: 
     - Name: R_Anim
+      Entry: 6
+      Data: 
+    - Name: followAnim
       Entry: 6
       Data: 
     - Name: isGrappleReady
@@ -48057,6 +48061,9 @@ MonoBehaviour:
       Entry: 6
       Data: 
     - Name: R_Anim
+      Entry: 6
+      Data: 
+    - Name: followAnim
       Entry: 6
       Data: 
     - Name: isGrappleReady
@@ -48200,6 +48207,9 @@ MonoBehaviour:
     - Name: R_Anim
       Entry: 6
       Data: 
+    - Name: followAnim
+      Entry: 10
+      Data: 18
     - Name: isGrappleReady
       Entry: 5
       Data: false
@@ -48223,16 +48233,16 @@ MonoBehaviour:
       Data: 0
     - Name: normalAttackCol
       Entry: 10
-      Data: 18
+      Data: 19
     - Name: normalAttackCol_2
       Entry: 10
-      Data: 19
+      Data: 20
     - Name: Q_AttackCol
       Entry: 6
       Data: 
     - Name: E_AttackCol
       Entry: 10
-      Data: 20
+      Data: 21
     - Name: R_AttackCol
       Entry: 6
       Data: 
@@ -48244,7 +48254,7 @@ MonoBehaviour:
       Data: 3
     - Name: followSpeed
       Entry: 4
-      Data: 15
+      Data: 25
     - Name: knockbacks
       Entry: 7
       Data: 8|System.Single[], mscorlib
@@ -48280,13 +48290,13 @@ MonoBehaviour:
       Data: 3
     - Name: 
       Entry: 10
-      Data: 21
-    - Name: 
-      Entry: 10
       Data: 22
     - Name: 
       Entry: 10
       Data: 23
+    - Name: 
+      Entry: 10
+      Data: 24
     - Name: 
       Entry: 13
       Data: 

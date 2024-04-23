@@ -17,6 +17,7 @@ public class PlayerCharacter
     public AnimationClip Q_Anim;
     public AnimationClip E_Anim;
     public AnimationClip R_Anim;
+    public AnimationClip followAnim;
 
     public bool isGrappleReady;
     public bool followEnemy;
@@ -942,6 +943,9 @@ public class RedCharacter : PlayerCharacter
         
         if (Vector3.Distance(target.transform.position, player.transform.position) > attackArea)
         {
+
+            if (!animator.GetCurrentAnimatorStateInfo(3).IsTag("Attack")) player.currentCharacter.animator.Play(followAnim.name, 3, 0f);
+
             player.transform.forward = target.transform.position - player.transform.position;
             player.transform.eulerAngles = new Vector3(0f, player.transform.eulerAngles.y, 0f);
 
@@ -1050,6 +1054,7 @@ public class RedCharacter : PlayerCharacter
 
         if(player.targetSet.targetEnemy != null)
         {
+            
             target = player.targetSet.targetEnemy;
             followEnemy = true;
         }

@@ -23,7 +23,7 @@ public class SpawnPoint : MonoBehaviour
         if (Player.Instance.spawn != this)
         {
             Player.Instance.spawn = this;
-            GameManager.Instance.event_dictionary["SetSpawn"]?.Invoke();
+            //GameManager.Instance.event_dictionary["SetSpawn"]?.Invoke();
         }
     }
 

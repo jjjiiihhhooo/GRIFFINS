@@ -17,11 +17,11 @@ public class GameManager : SerializedMonoBehaviour
     public TimelineManager timelineManager;
     public TutorialManager tutorialManager;
     public GuideManager guideManager;
-    public QuestManager questManager;
     public EventManager eventManager;
     public DialogueManager dialogueManager;
     public UIManager uiManager;
     public CoolTimeManager coolTimeManager;
+    public CurrentQuest currentQuest;
     public Transform predictionHitTransform;
 
     public Dictionary<string, UnityEvent> event_dictionary;

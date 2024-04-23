@@ -72,7 +72,7 @@ public class DialogueManager : MonoBehaviour
         isChat = false;
         tempIndex = 0;
         curDialogues = null;
-        GameManager.Instance.questManager.ChatQuestCheck(questChatKey);
+        FindObjectOfType<QuestManager>().ChatQuestCheck(questChatKey);
         if (!string.IsNullOrEmpty(eventName))
         {
             // eventName이 비어있지 않은 경우에만 이벤트 호출

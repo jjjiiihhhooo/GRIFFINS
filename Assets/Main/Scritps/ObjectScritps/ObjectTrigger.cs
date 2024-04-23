@@ -28,8 +28,8 @@ public class ObjectTrigger : MonoBehaviour
     {
         if (collider.transform.name == physicsName)
         {
-            if (exit_event_key != "") GameManager.Instance.event_dictionary[exit_event_key]?.Invoke();
-            exit_event?.Invoke();
+            //if (exit_event_key != "") GameManager.Instance.event_dictionary[exit_event_key]?.Invoke();
+            //exit_event?.Invoke();
 
             if (oneTime) GetComponent<Collider>().enabled = false;
         }

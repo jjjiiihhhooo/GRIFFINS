@@ -17,15 +17,22 @@ public class QuestManager : SerializedMonoBehaviour
     public Image questImage;
     public TextMeshProUGUI[] questTexts;
 
- 
+    
+
+    public void UpdateQuest()
+    {
+        if (curQuest == null) curQuest = FindObjectOfType<CurrentQuest>().curQuest;
+    }
 
     private void QuestDestroy()
     {
+        UpdateQuest();
         curQuest = null;
     }
 
     private void QuestClear(QuestData questData, int index)
     {
+        UpdateQuest();
         questData.clear = true;
         questTexts[index].text = questTexts[index].text + " (¿Ï·á)";
         if (questData.clear_event != null) questData.clear_event.Invoke();
@@ -35,9 +42,9 @@ public class QuestManager : SerializedMonoBehaviour
 
     private void QuestAllClear()
     {
+        UpdateQuest();
         if (curQuest.QuestDatas.Length <= 0) return;
-
-        for(int i = 0; i < curQuest.QuestDatas.Length; i++)
+        for (int i = 0; i < curQuest.QuestDatas.Length; i++)
         {
             if (!curQuest.QuestDatas[i].clear) return;
         }
@@ -51,7 +58,8 @@ public class QuestManager : SerializedMonoBehaviour
 
     private void QuestTextFalse()
     {
-        for(int i = 0; i < questTexts.Length; i++)
+        UpdateQuest();
+        for (int i = 0; i < questTexts.Length; i++)
         {
             questTexts[i].gameObject.SetActive(false);
         }
@@ -59,6 +67,7 @@ public class QuestManager : SerializedMonoBehaviour
 
     public void QuestInput(string key)
     {
+        UpdateQuest();
         curQuest = questDictionary[key];
         QuestText();
     }
@@ -66,7 +75,7 @@ public class QuestManager : SerializedMonoBehaviour
     private void QuestText()
     {
         int count = 0;
-
+        UpdateQuest();
         while (curQuest != null && count < curQuest.QuestDatas.Length)
         {
             int temp = count + 1;
@@ -85,6 +94,8 @@ public class QuestManager : SerializedMonoBehaviour
 
     public void ChatQuestCheck(string chatKey)
     {
+        UpdateQuest();
+
         if (curQuest == null) return;
 
         int count = 0;
@@ -105,6 +116,8 @@ public class QuestManager : SerializedMonoBehaviour
     
     public void ItemQuestcheck(string name)
     {
+        UpdateQuest();
+
         if (curQuest == null) return;
 
         for (int i = 0; i < curQuest.QuestDatas.Length; i++)
@@ -126,6 +139,7 @@ public class QuestManager : SerializedMonoBehaviour
 
     public void InteractionQuestCheck(string name)
     {
+        UpdateQuest();
         if (curQuest == null) return;
 
         int count = 0;
@@ -145,6 +159,7 @@ public class QuestManager : SerializedMonoBehaviour
     
     public void EnemyQuestCheck(string name)
     {
+        UpdateQuest();
         if (curQuest == null) return;
 
         int count = 0;
@@ -172,6 +187,7 @@ public class QuestManager : SerializedMonoBehaviour
 
     public void PositionQuestCheck(string name)
     {
+        UpdateQuest();
         if (curQuest == null) return;
 
         int count = 0;

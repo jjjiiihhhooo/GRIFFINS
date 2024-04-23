@@ -11,6 +11,7 @@ public class CinemachineShake : MonoBehaviour
 
     private void Awake()
     {
+        shakeTimer = 0;
         virtualCamera = GetComponent<CinemachineVirtualCamera>();
     }
 

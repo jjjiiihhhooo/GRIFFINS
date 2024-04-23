@@ -9,7 +9,12 @@ public class BattleArea : MonoBehaviour
     public float plus;
     public Vector3 pos;
 
-   
+
+    private void Awake()
+    {
+        Create();
+    }
+
 
     public void Create()
     {
@@ -32,7 +37,7 @@ public class BattleArea : MonoBehaviour
     private IEnumerator CreateCor()
     {
         Vector3 scale = Vector3.zero;
-        transform.position = pos;
+
         while(transform.localScale.x < size)
         {
             yield return new WaitForEndOfFrame();
@@ -62,6 +67,5 @@ public class BattleArea : MonoBehaviour
             scale.z -= plus * 2;
             transform.localScale = scale;
         }
-        Destroy(this.gameObject);
     }
 }
