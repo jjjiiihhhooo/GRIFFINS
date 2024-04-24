@@ -20,9 +20,8 @@ public class GuideManager : MonoBehaviour
         dotAnim.DORestartById("Start");
     }
 
-    public void WarningSetMessage(string text)
+    public void WarningSetMessage()
     {
-        warningText.text = text;
         warningAnim.DORestartById("Start");
     }
 }

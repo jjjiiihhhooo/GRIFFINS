@@ -7981,7 +7981,7 @@ Animator:
   m_Controller: {fileID: 22100000, guid: 4f66d4017d05d2946891f8bc9f87bdaa, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -47883,509 +47883,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a1b33e9b6f6d0d4bbd7829414d6023f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
-    ReferencedUnityObjects:
-    - {fileID: 6483238805084134663}
-    - {fileID: 311569915311873479}
-    - {fileID: 7416860150122619575}
-    - {fileID: 4271109520312410743}
-    - {fileID: 7400000, guid: 0ce8c00efc6b87148a60256c9a5271c0, type: 2}
-    - {fileID: 7400000, guid: 42907c535412b5b4f8a8546b1213e07e, type: 2}
-    - {fileID: 7400000, guid: 4a3faac237fe87d48978d2e1420b72bb, type: 2}
-    - {fileID: 7953770746103701267}
-    - {fileID: 2228946302037379760}
-    - {fileID: 198029330456189316, guid: d049ba934ceedbd4793e1edfed552656, type: 3}
-    - {fileID: 4491862266691707059, guid: bb979f7168279864ca6ead18eba53c33, type: 3}
-    - {fileID: 310365506411822839, guid: 944664efe22f6ae428cf357a30d78284, type: 3}
-    - {fileID: 3890982889359641450}
-    - {fileID: 7517757006039092138}
-    - {fileID: 7400000, guid: adfc437c28c83b0438392302cec5dd59, type: 2}
-    - {fileID: 7400000, guid: fba2b48d1edfd3e479d9a69ba5484f04, type: 2}
-    - {fileID: 7400000, guid: 9f1d2a9d2a48cf34ebc5b3085d0f4efb, type: 2}
-    - {fileID: 7400000, guid: a2662f6001d43b940833a42bacd909ce, type: 2}
-    - {fileID: 7400000, guid: efdcfd3fc446ba74b8488bb4ae17e3ff, type: 2}
-    - {fileID: 7400000, guid: ced75be3290af0741987a49bc769f234, type: 2}
-    - {fileID: 4943424079763285554}
-    - {fileID: 2498017058599107179}
-    - {fileID: 2302569346801337710}
-    - {fileID: 8023782338582125332}
-    - {fileID: 198109985788967936, guid: df04aeb82c805e24b8e9df43237d0f4d, type: 3}
-    - {fileID: 1107324212316225835, guid: 15c637eff0bed914eaea2a1a7953a57a, type: 3}
-    - {fileID: 198285461679219400, guid: a270d4b31a4d11a4b8302acf069f853a, type: 3}
-    - {fileID: 198406564588387756, guid: 89f21bbcc5cb3ea418e1be51775f9548, type: 3}
-    - {fileID: 198178008105517744, guid: 306e7743e5cc81f4b9e82b22a0e8bf62, type: 3}
-    SerializedBytesString: 
-    Prefab: {fileID: 0}
-    PrefabModificationsReferencedUnityObjects: []
-    PrefabModifications: []
-    SerializationNodes:
-    - Name: movementStateMachine
-      Entry: 6
-      Data: 
-    - Name: currentCharacter
-      Entry: 6
-      Data: 
-    - Name: characters
-      Entry: 7
-      Data: 0|PlayerCharacter[], Assembly-CSharp
-    - Name: 
-      Entry: 12
-      Data: 3
-    - Name: 
-      Entry: 7
-      Data: 1|WhiteCharacter, Assembly-CSharp
-    - Name: animator
-      Entry: 10
-      Data: 0
-    - Name: player
-      Entry: 6
-      Data: 
-    - Name: target
-      Entry: 6
-      Data: 
-    - Name: model
-      Entry: 10
-      Data: 1
-    - Name: attackAnim
-      Entry: 6
-      Data: 
-    - Name: Q_Anim
-      Entry: 6
-      Data: 
-    - Name: E_Anim
-      Entry: 6
-      Data: 
-    - Name: R_Anim
-      Entry: 6
-      Data: 
-    - Name: followAnim
-      Entry: 6
-      Data: 
-    - Name: isGrappleReady
-      Entry: 5
-      Data: false
-    - Name: followEnemy
-      Entry: 5
-      Data: false
-    - Name: index
-      Entry: 3
-      Data: 0
-    - Name: comboCounter
-      Entry: 3
-      Data: 0
-    - Name: normalAttackDamage
-      Entry: 4
-      Data: 3
-    - Name: lastClickedTime
-      Entry: 4
-      Data: 0
-    - Name: lastComboEnd
-      Entry: 4
-      Data: 0
-    - Name: normalAttackCol
-      Entry: 6
-      Data: 
-    - Name: normalAttackCol_2
-      Entry: 6
-      Data: 
-    - Name: Q_AttackCol
-      Entry: 6
-      Data: 
-    - Name: E_AttackCol
-      Entry: 6
-      Data: 
-    - Name: R_AttackCol
-      Entry: 6
-      Data: 
-    - Name: targetArea
-      Entry: 4
-      Data: 10
-    - Name: attackArea
-      Entry: 4
-      Data: 10
-    - Name: followSpeed
-      Entry: 4
-      Data: 15
-    - Name: knockbacks
-      Entry: 6
-      Data: 
-    - Name: curKnockback
-      Entry: 4
-      Data: 0
-    - Name: curParticle
-      Entry: 6
-      Data: 
-    - Name: Right_Particle
-      Entry: 6
-      Data: 
-    - Name: E_Particle
-      Entry: 6
-      Data: 
-    - Name: R_Particle
-      Entry: 6
-      Data: 
-    - Name: Chasing_Particle
-      Entry: 6
-      Data: 
-    - Name: normalAttackEffects
-      Entry: 6
-      Data: 
-    - Name: animCheckLayer
-      Entry: 7
-      Data: UnityEngine.LayerMask, UnityEngine.CoreModule
-    - Name: 
-      Entry: 3
-      Data: 2176
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 2|GreenCharacter, Assembly-CSharp
-    - Name: animator
-      Entry: 10
-      Data: 2
-    - Name: player
-      Entry: 6
-      Data: 
-    - Name: target
-      Entry: 6
-      Data: 
-    - Name: model
-      Entry: 10
-      Data: 3
-    - Name: attackAnim
-      Entry: 7
-      Data: 3|UnityEngine.AnimationClip[], UnityEngine.AnimationModule
-    - Name: 
-      Entry: 12
-      Data: 3
-    - Name: 
-      Entry: 10
-      Data: 4
-    - Name: 
-      Entry: 10
-      Data: 5
-    - Name: 
-      Entry: 10
-      Data: 6
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: Q_Anim
-      Entry: 6
-      Data: 
-    - Name: E_Anim
-      Entry: 6
-      Data: 
-    - Name: R_Anim
-      Entry: 6
-      Data: 
-    - Name: followAnim
-      Entry: 6
-      Data: 
-    - Name: isGrappleReady
-      Entry: 5
-      Data: false
-    - Name: followEnemy
-      Entry: 5
-      Data: false
-    - Name: index
-      Entry: 3
-      Data: 1
-    - Name: comboCounter
-      Entry: 3
-      Data: 0
-    - Name: normalAttackDamage
-      Entry: 4
-      Data: 3
-    - Name: lastClickedTime
-      Entry: 4
-      Data: 0
-    - Name: lastComboEnd
-      Entry: 4
-      Data: 0
-    - Name: normalAttackCol
-      Entry: 10
-      Data: 7
-    - Name: normalAttackCol_2
-      Entry: 10
-      Data: 8
-    - Name: Q_AttackCol
-      Entry: 6
-      Data: 
-    - Name: E_AttackCol
-      Entry: 6
-      Data: 
-    - Name: R_AttackCol
-      Entry: 6
-      Data: 
-    - Name: targetArea
-      Entry: 4
-      Data: 15
-    - Name: attackArea
-      Entry: 4
-      Data: 3
-    - Name: followSpeed
-      Entry: 4
-      Data: 15
-    - Name: knockbacks
-      Entry: 7
-      Data: 4|System.Single[], mscorlib
-    - Name: 
-      Entry: 14
-      Data: 3
-    - Name: 
-      Entry: 4
-      Data: 1
-    - Name: 
-      Entry: 4
-      Data: 1
-    - Name: 
-      Entry: 4
-      Data: 1
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: curKnockback
-      Entry: 4
-      Data: 0
-    - Name: curParticle
-      Entry: 6
-      Data: 
-    - Name: Right_Particle
-      Entry: 6
-      Data: 
-    - Name: E_Particle
-      Entry: 10
-      Data: 9
-    - Name: R_Particle
-      Entry: 6
-      Data: 
-    - Name: Chasing_Particle
-      Entry: 6
-      Data: 
-    - Name: normalAttackEffects
-      Entry: 7
-      Data: 5|UnityEngine.ParticleSystem[], UnityEngine.ParticleSystemModule
-    - Name: 
-      Entry: 12
-      Data: 3
-    - Name: 
-      Entry: 10
-      Data: 10
-    - Name: 
-      Entry: 10
-      Data: 11
-    - Name: 
-      Entry: 6
-      Data: 
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: animCheckLayer
-      Entry: 7
-      Data: UnityEngine.LayerMask, UnityEngine.CoreModule
-    - Name: 
-      Entry: 3
-      Data: 0
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 6|RedCharacter, Assembly-CSharp
-    - Name: animator
-      Entry: 10
-      Data: 12
-    - Name: player
-      Entry: 6
-      Data: 
-    - Name: target
-      Entry: 6
-      Data: 
-    - Name: model
-      Entry: 10
-      Data: 13
-    - Name: attackAnim
-      Entry: 7
-      Data: 7|UnityEngine.AnimationClip[], UnityEngine.AnimationModule
-    - Name: 
-      Entry: 12
-      Data: 3
-    - Name: 
-      Entry: 10
-      Data: 14
-    - Name: 
-      Entry: 10
-      Data: 15
-    - Name: 
-      Entry: 10
-      Data: 16
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: Q_Anim
-      Entry: 6
-      Data: 
-    - Name: E_Anim
-      Entry: 10
-      Data: 17
-    - Name: R_Anim
-      Entry: 10
-      Data: 18
-    - Name: followAnim
-      Entry: 10
-      Data: 19
-    - Name: isGrappleReady
-      Entry: 5
-      Data: false
-    - Name: followEnemy
-      Entry: 5
-      Data: false
-    - Name: index
-      Entry: 3
-      Data: 2
-    - Name: comboCounter
-      Entry: 3
-      Data: 0
-    - Name: normalAttackDamage
-      Entry: 4
-      Data: 3
-    - Name: lastClickedTime
-      Entry: 4
-      Data: 0
-    - Name: lastComboEnd
-      Entry: 4
-      Data: 0
-    - Name: normalAttackCol
-      Entry: 10
-      Data: 20
-    - Name: normalAttackCol_2
-      Entry: 10
-      Data: 21
-    - Name: Q_AttackCol
-      Entry: 6
-      Data: 
-    - Name: E_AttackCol
-      Entry: 10
-      Data: 22
-    - Name: R_AttackCol
-      Entry: 10
-      Data: 23
-    - Name: targetArea
-      Entry: 4
-      Data: 15
-    - Name: attackArea
-      Entry: 4
-      Data: 3
-    - Name: followSpeed
-      Entry: 4
-      Data: 15
-    - Name: knockbacks
-      Entry: 7
-      Data: 8|System.Single[], mscorlib
-    - Name: 
-      Entry: 14
-      Data: 5
-    - Name: 
-      Entry: 4
-      Data: 0.3
-    - Name: 
-      Entry: 4
-      Data: 0.3
-    - Name: 
-      Entry: 4
-      Data: 0.3
-    - Name: 
-      Entry: 4
-      Data: 1
-    - Name: 
-      Entry: 4
-      Data: 2
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: curKnockback
-      Entry: 4
-      Data: 0
-    - Name: curParticle
-      Entry: 6
-      Data: 
-    - Name: Right_Particle
-      Entry: 6
-      Data: 
-    - Name: E_Particle
-      Entry: 10
-      Data: 24
-    - Name: R_Particle
-      Entry: 6
-      Data: 
-    - Name: Chasing_Particle
-      Entry: 10
-      Data: 25
-    - Name: normalAttackEffects
-      Entry: 7
-      Data: 9|UnityEngine.ParticleSystem[], UnityEngine.ParticleSystemModule
-    - Name: 
-      Entry: 12
-      Data: 3
-    - Name: 
-      Entry: 10
-      Data: 26
-    - Name: 
-      Entry: 10
-      Data: 27
-    - Name: 
-      Entry: 10
-      Data: 28
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: animCheckLayer
-      Entry: 7
-      Data: UnityEngine.LayerMask, UnityEngine.CoreModule
-    - Name: 
-      Entry: 3
-      Data: 2176
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
   <Data>k__BackingField: {fileID: 11400000, guid: 6a73e8c18a853874288e9ed4d0627a22, type: 2}
   normalAttackCol: {fileID: 4943424079763285554}
   normalAttackCol_2: {fileID: 2498017058599107179}
@@ -48430,6 +47927,152 @@ MonoBehaviour:
   staminaFill: {fileID: 1882920195}
   interactionImage: {fileID: 1984551419}
   interactionText: {fileID: 1328491976}
+  whiteCharacter:
+    animator: {fileID: 6483238805084134663}
+    player: {fileID: 4943424079398178706}
+    target: {fileID: 0}
+    model: {fileID: 311569915311873479}
+    attackAnim: []
+    Q_Anim: {fileID: 0}
+    E_Anim: {fileID: 0}
+    R_Anim: {fileID: 0}
+    followAnim: {fileID: 0}
+    isGrappleReady: 0
+    followEnemy: 0
+    index: 0
+    comboCounter: 0
+    normalAttackDamage: 0
+    lastClickedTime: 0
+    lastComboEnd: 0
+    normalAttackCol: {fileID: 0}
+    normalAttackCol_2: {fileID: 0}
+    Q_AttackCol: {fileID: 0}
+    E_AttackCol: {fileID: 0}
+    R_AttackCol: {fileID: 0}
+    targetArea: 0
+    attackArea: 0
+    followSpeed: 0
+    knockbacks: []
+    curKnockback: 0
+    curParticle: {fileID: 0}
+    Right_Particle: {fileID: 0}
+    E_Particle: {fileID: 0}
+    R_Particle: {fileID: 0}
+    Chasing_Particle: {fileID: 0}
+    normalAttackEffects: []
+    animCheckLayer:
+      serializedVersion: 2
+      m_Bits: 0
+    knockbackDirs: []
+    curKnockbackDir: {x: 0, y: 0, z: 0}
+  greenCharacter:
+    animator: {fileID: 7416860150122619575}
+    player: {fileID: 4943424079398178706}
+    target: {fileID: 0}
+    model: {fileID: 4271109520312410743}
+    attackAnim:
+    - {fileID: 7400000, guid: 0ce8c00efc6b87148a60256c9a5271c0, type: 2}
+    - {fileID: 7400000, guid: 42907c535412b5b4f8a8546b1213e07e, type: 2}
+    - {fileID: 7400000, guid: 4a3faac237fe87d48978d2e1420b72bb, type: 2}
+    Q_Anim: {fileID: 0}
+    E_Anim: {fileID: 0}
+    R_Anim: {fileID: 0}
+    followAnim: {fileID: 0}
+    isGrappleReady: 0
+    followEnemy: 0
+    index: 0
+    comboCounter: 0
+    normalAttackDamage: 0
+    lastClickedTime: 0
+    lastComboEnd: 0
+    normalAttackCol: {fileID: 7953770746103701267}
+    normalAttackCol_2: {fileID: 2228946302037379760}
+    Q_AttackCol: {fileID: 0}
+    E_AttackCol: {fileID: 0}
+    R_AttackCol: {fileID: 0}
+    targetArea: 12
+    attackArea: 5
+    followSpeed: 15
+    knockbacks:
+    - 0.3
+    - 0.3
+    - 0.3
+    - 2
+    - 2
+    curKnockback: 0
+    curParticle: {fileID: 0}
+    Right_Particle: {fileID: 0}
+    E_Particle: {fileID: 0}
+    R_Particle: {fileID: 0}
+    Chasing_Particle: {fileID: 0}
+    normalAttackEffects:
+    - {fileID: 172729094580288441, guid: 7416fef74936c2143b7f3da3118078c7, type: 3}
+    - {fileID: 4491862266691707059, guid: bb979f7168279864ca6ead18eba53c33, type: 3}
+    - {fileID: 310365506411822839, guid: 944664efe22f6ae428cf357a30d78284, type: 3}
+    animCheckLayer:
+      serializedVersion: 2
+      m_Bits: 2176
+    knockbackDirs:
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 1, z: 0}
+    - {x: 0, y: 1, z: 0}
+    curKnockbackDir: {x: 0, y: 0, z: 0}
+  redCharacter:
+    animator: {fileID: 3890982889359641450}
+    player: {fileID: 4943424079398178706}
+    target: {fileID: 0}
+    model: {fileID: 7517757006039092138}
+    attackAnim:
+    - {fileID: 7400000, guid: adfc437c28c83b0438392302cec5dd59, type: 2}
+    - {fileID: 7400000, guid: fba2b48d1edfd3e479d9a69ba5484f04, type: 2}
+    - {fileID: 7400000, guid: 9f1d2a9d2a48cf34ebc5b3085d0f4efb, type: 2}
+    Q_Anim: {fileID: 7400000, guid: efdcfd3fc446ba74b8488bb4ae17e3ff, type: 2}
+    E_Anim: {fileID: 7400000, guid: a2662f6001d43b940833a42bacd909ce, type: 2}
+    R_Anim: {fileID: 0}
+    followAnim: {fileID: 7400000, guid: ced75be3290af0741987a49bc769f234, type: 2}
+    isGrappleReady: 0
+    followEnemy: 0
+    index: 2
+    comboCounter: 0
+    normalAttackDamage: 3
+    lastClickedTime: 0
+    lastComboEnd: 0
+    normalAttackCol: {fileID: 4943424079763285554}
+    normalAttackCol_2: {fileID: 2498017058599107179}
+    Q_AttackCol: {fileID: 8023782338582125332}
+    E_AttackCol: {fileID: 2302569346801337710}
+    R_AttackCol: {fileID: 0}
+    targetArea: 12
+    attackArea: 3
+    followSpeed: 15
+    knockbacks:
+    - 0.3
+    - 0.3
+    - 0.3
+    - 2
+    - 2
+    curKnockback: 0
+    curParticle: {fileID: 0}
+    Right_Particle: {fileID: 0}
+    E_Particle: {fileID: 198109985788967936, guid: df04aeb82c805e24b8e9df43237d0f4d, type: 3}
+    R_Particle: {fileID: 0}
+    Chasing_Particle: {fileID: 1107324212316225835, guid: 15c637eff0bed914eaea2a1a7953a57a, type: 3}
+    normalAttackEffects:
+    - {fileID: 198285461679219400, guid: a270d4b31a4d11a4b8302acf069f853a, type: 3}
+    - {fileID: 198406564588387756, guid: 89f21bbcc5cb3ea418e1be51775f9548, type: 3}
+    - {fileID: 198178008105517744, guid: 306e7743e5cc81f4b9e82b22a0e8bf62, type: 3}
+    animCheckLayer:
+      serializedVersion: 2
+      m_Bits: 2176
+    knockbackDirs:
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 1, z: 0}
+    curKnockbackDir: {x: 0, y: 0, z: 0}
   maxHp: 100
   curHp: 0
   dir: {x: 0, y: 0, z: 0}
@@ -81247,6 +80890,7 @@ GameObject:
   - component: {fileID: 3321321491162413055}
   - component: {fileID: 2911695373636555252}
   - component: {fileID: 707741384451172906}
+  - component: {fileID: 2082195345042744346}
   m_Layer: 0
   m_Name: Red_DevastationAttackCol
   m_TagString: Untagged
@@ -81295,8 +80939,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 6.19, y: 3.47, z: 1}
-  m_Center: {x: 0, y: 0.3, z: 5.026289}
+  m_Size: {x: 8.23, y: 3.47, z: 1}
+  m_Center: {x: 0, y: 0.3, z: 6.37}
 --- !u!65 &6119067742335374906
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -81308,8 +80952,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 5.39, y: 3.47, z: 1}
-  m_Center: {x: 0, y: 0.3, z: 4.24}
+  m_Size: {x: 7.36, y: 3.47, z: 1}
+  m_Center: {x: 0, y: 0.3, z: 5.44}
 --- !u!65 &8469782030704442916
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -81321,7 +80965,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 4.6, y: 3.47, z: 1}
+  m_Size: {x: 5.44, y: 3.47, z: 1}
   m_Center: {x: 0, y: 0.3, z: 3.48}
 --- !u!65 &3321321491162413055
 BoxCollider:
@@ -81334,7 +80978,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 4.16, y: 3.47, z: 1}
+  m_Size: {x: 4.87, y: 3.47, z: 1}
   m_Center: {x: 0, y: 0.3, z: 2.58}
 --- !u!65 &2911695373636555252
 BoxCollider:
@@ -81347,7 +80991,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 3.75, y: 3.47, z: 1}
+  m_Size: {x: 4.33, y: 3.47, z: 1}
   m_Center: {x: 0, y: 0.3, z: 1.74}
 --- !u!65 &707741384451172906
 BoxCollider:
@@ -81362,6 +81006,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 3.24, y: 3.47, z: 1}
   m_Center: {x: 0, y: 0.3, z: 1.03}
+--- !u!65 &2082195345042744346
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6894227721320862650}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 6.22, y: 3.47, z: 1.18}
+  m_Center: {x: 0, y: 0.3, z: 4.42}
 --- !u!1 &6894550895169279691
 GameObject:
   m_ObjectHideFlags: 0
@@ -81549,7 +81206,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 5
+  m_Radius: 6
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6929884767117083563
 GameObject:
@@ -82434,7 +82091,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7142604031789781264
 Transform:
   m_ObjectHideFlags: 0

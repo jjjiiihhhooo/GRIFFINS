@@ -55,6 +55,8 @@ public class PlayerCharacter
 
     public LayerMask animCheckLayer;
 
+    public Vector3[] knockbackDirs;
+    public Vector3 curKnockbackDir;
     protected Vector3 grappleVec;
   
 
@@ -342,14 +344,19 @@ public class PlayerCharacter
 [System.Serializable]
 public class WhiteCharacter : PlayerCharacter
 {
+    public override void Init(Player playerController)
+    {
+        base.Init(playerController);
+
+    }
+
     public override void CharacterChange()
     {
-        PutDown();
+        //PutDown();
     }
 
     public override void Update()
     {
-        base.Update();
         RotationZero();
     }
 
@@ -358,10 +365,28 @@ public class WhiteCharacter : PlayerCharacter
         
     }
 
+    
+
     public override void RightAction()
     {
-        if (player.skillData.isHand) Throw();
-        else Catch();
+
+
+
+
+
+        //if (player.skillData.isHand) Throw();
+        //else Catch();
+    }
+
+
+    public override void NormalAttack()
+    {
+        
+    }
+
+    public override void AttackMotion()
+    {
+        
     }
 
     public override void Q_Action()
@@ -647,6 +672,12 @@ public class WhiteCharacter : PlayerCharacter
 [System.Serializable]
 public class GreenCharacter : PlayerCharacter
 {
+    public override void Init(Player playerController)
+    {
+        base.Init(playerController);
+
+    }
+
     public override void CharacterChange()
     {
         GameManager.Instance.predictionHitTransform.gameObject.SetActive(false);
@@ -658,27 +689,7 @@ public class GreenCharacter : PlayerCharacter
         FollowEnemy();
         AnimTransform();
         RotationZero();
-        //if (Input.GetKeyDown(KeyCode.Space) && !player.isGround)
-        //{
-        //    player.currentCharacter.StopGrapple();
-        //    player.swinging.StopSwing();
-        //}
-
-        //if (Input.GetKeyDown(KeyCode.Space) && player.isGround && player.skillData.grappling)
-        //{
-        //    ExecuteGrapple();
-        //}
-    }
-
-    private void AnimTransform()
-    {
-        if(player.currentCharacter.animator.GetCurrentAnimatorStateInfo(3).IsTag("Attack"))
-        {
-            Debug.LogError(1);
-            //Debug.LogError(model.transform.localPosition);
-            player.transform.position += model.transform.localPosition;
-            model.transform.localPosition = Vector3.zero;
-        }
+        
     }
 
     public override void LeftAction()
@@ -686,8 +697,7 @@ public class GreenCharacter : PlayerCharacter
         //if (!player.isGround) StartGrappleAnim();
 
         if (player.Animator.GetBool("isDashing")) return;
-
-
+        if (!player.isGround) return;
         NormalAttack();
     }
 
@@ -721,29 +731,35 @@ public class GreenCharacter : PlayerCharacter
         base.StartGrapple();
     }
 
-    public override void Q_Action()
-    {
-
-    }
-
-    public override void E_Action()
-    {
-
-    }
-
-    public override void R_Action()
-    {
-
-    }
-
     public override void ExecuteGrapple()
     {
         base.ExecuteGrapple();
     }
-
+    
     public override void StopGrapple()
     {
         base.StopGrapple();
+    }
+    
+    public override void Q_Action()
+    {
+        if (!GameManager.Instance.coolTimeManager.CoolCheck("Green_Q")) return;
+
+        GameManager.Instance.coolTimeManager.GetCoolTime("Green_Q");
+    }
+
+    public override void E_Action()
+    {
+        if (!GameManager.Instance.coolTimeManager.CoolCheck("Green_E")) return;
+
+        GameManager.Instance.coolTimeManager.GetCoolTime("Green_E");
+    }
+
+    public override void R_Action()
+    {
+        if (!GameManager.Instance.coolTimeManager.CoolCheck("Green_R")) return;
+
+        GameManager.Instance.coolTimeManager.GetCoolTime("Green_R");
     }
 
     public override void FollowEnemy()
@@ -755,6 +771,13 @@ public class GreenCharacter : PlayerCharacter
 
         if (Vector3.Distance(target.transform.position, player.transform.position) > attackArea)
         {
+            if (!animator.GetCurrentAnimatorStateInfo(3).IsName(followAnim.name))
+            {
+                player.currentCharacter.animator.Play(followAnim.name, 3, 0f);
+                GameObject.Instantiate(Chasing_Particle.gameObject, model.transform.position + Vector3.up, model.transform.rotation);
+            }
+
+
             player.transform.forward = target.transform.position - player.transform.position;
             player.transform.eulerAngles = new Vector3(0f, player.transform.eulerAngles.y, 0f);
 
@@ -777,27 +800,42 @@ public class GreenCharacter : PlayerCharacter
 
     public override void FollowExit()
     {
-        followEnemy = false;
         //AttackMotion = null;
-        AttackMotion();
+        FollowAttack();
     }
 
-    public override void NormalAttackExit()
+    public override void FollowAttack()
     {
-        GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["red_normalAttack1"], false);
-        normalAttackCol.gameObject.SetActive(true);
+        player.isAttack = true;
+        curParticle = normalAttackEffects[2];
+        curKnockback = knockbacks[2];
+        curKnockbackDir = knockbackDirs[2];
+        player.currentCharacter.animator.Play(attackAnim[2].name, 3, 0f);
+        followEnemy = false;
+        comboCounter = 0;
     }
 
-    public override void StrongAttackExit()
+    public override void NormalAttack()
     {
-        OnlySingleton.Instance.camShake.ShakeCamera(7f, 0.1f);
-        GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["red_normalAttack2"], false);
-        normalAttackCol_2.gameObject.SetActive(true);
+        if (followEnemy) return;
+
+        if (player.targetSet.targetEnemy != null)
+        {
+
+            target = player.targetSet.targetEnemy;
+            if (Vector3.Distance(target.transform.position, player.transform.position) > attackArea)
+                followEnemy = true;
+            else AttackMotion();
+        }
+        else
+        {
+            AttackMotion();
+        }
     }
 
     public override void AttackMotion()
     {
-        if (Time.time - lastComboEnd > 0.1f && comboCounter < attackAnim.Length)
+        if (Time.time - lastComboEnd > 0.1f && comboCounter < attackAnim.Length && !player.isAttack)
         {
             player.CancelInvoke("EndCombo");
             if (Time.time - lastClickedTime >= 0.4f)
@@ -806,6 +844,7 @@ public class GreenCharacter : PlayerCharacter
                 player.currentCharacter.animator.Play(attackAnim[comboCounter].name, 3, 0f);
                 curParticle = normalAttackEffects[comboCounter];
                 curKnockback = knockbacks[comboCounter];
+                curKnockbackDir = knockbackDirs[comboCounter];
                 comboCounter++;
                 lastClickedTime = Time.time;
 
@@ -821,11 +860,8 @@ public class GreenCharacter : PlayerCharacter
                     player.transform.forward = target.transform.position - player.transform.position;
                     player.transform.eulerAngles = new Vector3(0f, player.transform.eulerAngles.y, 0f);
                 }
-
-                //player.Rigidbody.AddForce(player.transform.forward * 10f, ForceMode.VelocityChange);
             }
         }
-
     }
 
     public override void Sound(string name)
@@ -836,21 +872,20 @@ public class GreenCharacter : PlayerCharacter
         }
     }
 
-    public override void NormalAttack()
+    public override void NormalAttackExit()
     {
-        if (followEnemy) return;
-
-        if (player.targetSet.targetEnemy != null)
-        {
-            target = player.targetSet.targetEnemy;
-            followEnemy = true;
-        }
-        else
-        {
-            AttackMotion();
-        }
+        player.isAttack = false;
+        GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["red_normalAttack1"], false);
+        normalAttackCol.gameObject.SetActive(true);
     }
 
+    public override void StrongAttackExit()
+    {
+        player.isAttack = false;
+        OnlySingleton.Instance.camShake.ShakeCamera(7f, 0.1f);
+        GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["red_normalAttack2"], false);
+        normalAttackCol_2.gameObject.SetActive(true);
+    }
     public override float Right_Cool()
     {
         return GameManager.Instance.coolTimeManager.coolDic["Green_Right"].curCoolTime /
@@ -884,7 +919,13 @@ public class GreenCharacter : PlayerCharacter
 [System.Serializable]
 public class RedCharacter : PlayerCharacter
 {
-    
+
+    public override void Init(Player playerController)
+    {
+        base.Init(playerController);
+
+    }
+
     public override void CharacterChange()
     {
 
@@ -905,9 +946,6 @@ public class RedCharacter : PlayerCharacter
         NormalAttack();
     }
 
-    
-
-
     public override void RightAction()
     {
         base.RightAction();
@@ -915,7 +953,11 @@ public class RedCharacter : PlayerCharacter
 
     public override void Q_Action()
     {
+        if (!GameManager.Instance.coolTimeManager.CoolCheck("Red_Q")) return;
 
+        GameManager.Instance.coolTimeManager.GetCoolTime("Red_Q");
+
+        Devastation();
     }
 
     public override void E_Action()
@@ -935,16 +977,14 @@ public class RedCharacter : PlayerCharacter
         player.Rigidbody.useGravity = false;
         curParticle = normalAttackEffects[2];
         curKnockback = knockbacks[3];
+        curKnockbackDir = knockbackDirs[3];
+        
         player.currentCharacter.animator.Play(E_Anim.name, 3, 0f);
     }
 
     public override void R_Action()
     {
-        if (!GameManager.Instance.coolTimeManager.CoolCheck("Red_R")) return;
-
-        GameManager.Instance.coolTimeManager.GetCoolTime("Red_R");
-
-        Devastation();
+        
     }
 
     private void Devastation()
@@ -955,7 +995,8 @@ public class RedCharacter : PlayerCharacter
         player.transform.eulerAngles = new Vector3(0f, player.transform.eulerAngles.y, 0f);
         curParticle = normalAttackEffects[2];
         curKnockback = knockbacks[4];
-        player.currentCharacter.animator.Play(R_Anim.name, 3, 0f);
+        curKnockbackDir = knockbackDirs[4];
+        player.currentCharacter.animator.Play(Q_Anim.name, 3, 0f);
     }
 
     public override void FollowEnemy()
@@ -1005,6 +1046,7 @@ public class RedCharacter : PlayerCharacter
         player.isAttack = true;
         curParticle = normalAttackEffects[2];
         curKnockback = knockbacks[2];
+        curKnockbackDir = knockbackDirs[2];
         player.currentCharacter.animator.Play(attackAnim[2].name, 3, 0f);
         followEnemy = false;
         comboCounter = 0;
@@ -1058,6 +1100,7 @@ public class RedCharacter : PlayerCharacter
                 player.currentCharacter.animator.Play(attackAnim[comboCounter].name, 3, 0f);
                 curParticle = normalAttackEffects[comboCounter];
                 curKnockback = knockbacks[comboCounter];
+                curKnockbackDir = knockbackDirs[comboCounter];
                 comboCounter++;
                 lastClickedTime = Time.time;
 

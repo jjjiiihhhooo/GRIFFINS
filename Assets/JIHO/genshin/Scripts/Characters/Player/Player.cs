@@ -14,7 +14,7 @@ using static UnityEngine.EventSystems.EventTrigger;
 
 [RequireComponent(typeof(PlayerInput))]
 [RequireComponent(typeof(PlayerResizableCapsuleCollider))]
-public class Player : SerializedMonoBehaviour
+public class Player : MonoBehaviour
 {
     public static Player Instance;
 
@@ -66,6 +66,16 @@ public class Player : SerializedMonoBehaviour
     public PlayerCharacter currentCharacter;
     public PlayerCharacter[] characters;
 
+    [Header("WhiteCharacter")]
+    public WhiteCharacter whiteCharacter;
+
+    [Header("GreenCharacter")]
+    public GreenCharacter greenCharacter;
+
+    [Header("RedCharacter")]
+    public RedCharacter redCharacter;
+
+
     public float maxHp;
     public float curHp;
 
@@ -106,6 +116,11 @@ public class Player : SerializedMonoBehaviour
             swinging = GetComponent<Swinging>();
             Rigidbody = GetComponent<Rigidbody>();
             curHp = maxHp;
+            characters = new PlayerCharacter[3];
+            characters[0] = whiteCharacter;
+            characters[1] = greenCharacter;
+            characters[2] = redCharacter;
+
             for(int i = 0; i < characters.Length; i++)
             {
                 characters[i].Init(this);

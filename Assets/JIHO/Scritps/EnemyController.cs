@@ -27,8 +27,11 @@ public class EnemyController : SerializedMonoBehaviour
 
     public float maxHitCool;
 
+    public float uiShowDelay;
+
     private float hitCool = 0.1f;
 
+    private Vector3 dummy = Vector3.zero;
 
 
     private void Awake()
@@ -43,8 +46,6 @@ public class EnemyController : SerializedMonoBehaviour
     private void Update()
     {
         enemy.EnemyUpdate();
-
-        UIUpdate();
 
         if(isHit)
         {
@@ -174,7 +175,7 @@ public class EnemyController : SerializedMonoBehaviour
         }
     }
 
-    public void DamageMessage(float _knockback, float damage, Vector3 targetPos, ParticleSystem particle = null)
+    public void DamageMessage(float _knockback, Vector3 _knockbackDir, float damage, Vector3 targetPos, ParticleSystem particle = null )
     {
         if (isHit) return;
 
@@ -184,15 +185,7 @@ public class EnemyController : SerializedMonoBehaviour
 
         DamageEffect(damage, targetPos, particle);
         enemy.knockback = _knockback;
-        enemy.GetDamage(damage);
-    }
-
-    public void DamageMessage(float damage)
-    {
-        if (isHit) return;
-        isHit = true;
-        hitCool = maxHitCool;
-
+        enemy.knockbackDir = _knockbackDir;
         enemy.GetDamage(damage);
     }
 

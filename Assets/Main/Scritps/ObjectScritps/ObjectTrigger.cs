@@ -62,8 +62,8 @@ public class ObjectTrigger : MonoBehaviour
         Player.Instance.PlayerSpawn();
     }
 
-    public void WarningMessage(string name)
+    public void WarningMessage()
     {
-        GameManager.Instance.guideManager.WarningSetMessage(name);
+        GameManager.Instance.guideManager.WarningSetMessage();
     }
 }

@@ -105,9 +105,7 @@ public class TargetSet : MonoBehaviour
 
             if(player.currentCharacter.target == null)
             {
-                if (targetEnemy != null) targetEnemy.TargetCheck(false);
                 targetEnemy = closestEnemy;
-                if (targetEnemy != null) targetEnemy.TargetCheck(true);
             }
             
         }
@@ -115,14 +113,12 @@ public class TargetSet : MonoBehaviour
         {
             if(player.currentCharacter.target != null)
             {
-                player.currentCharacter.target.TargetCheck(false);
                 player.currentCharacter.target = null;
 
             }
 
             if(targetEnemy != null)
             {
-                targetEnemy.TargetCheck(false);
                 targetEnemy = null;
             }
         }

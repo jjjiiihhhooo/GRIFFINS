@@ -98,10 +98,10 @@ public class InputData : MonoBehaviour
             player.currentCharacter.E_Action();
         }
 
-        if (Input.GetKeyDown(R))
-        {
-            player.currentCharacter.R_Action();
-        }
+        //if (Input.GetKeyDown(R))
+        //{
+        //    player.currentCharacter.R_Action();
+        //}
     }
 
     private void InteractInput()

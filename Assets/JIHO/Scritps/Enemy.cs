@@ -2,6 +2,7 @@ using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net.NetworkInformation;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem.XR;
@@ -36,7 +37,8 @@ public class Enemy
 
     public bool isAction;
     public bool isHit;
-    
+
+    public Vector3 knockbackDir;
 
     public bool isBossStart;
 
@@ -81,6 +83,11 @@ public class Enemy
         animator.SetTrigger("Die");
     }
 
+    public virtual void UiUpdate()
+    {
+
+    }
+
     public virtual void ModelShake()
     {
 
@@ -111,6 +118,29 @@ public class Normal_Enemy : Enemy
         Action();
         AttackDelay();
         ModelShake();
+        UiUpdate();
+    }
+
+    public override void UiUpdate()
+    {
+        if (enemyController.uiShowDelay < 0f)
+            enemyController.canvas.gameObject.SetActive(false);
+        else
+            enemyController.uiShowDelay -= Time.deltaTime;
+
+        enemyController.hpSlider.value = Mathf.Lerp(enemyController.hpSlider.value, curHp / maxHp, Time.deltaTime * 5f);
+
+        if (backHpHit)
+        {
+            enemyController.backHpSlider.value = Mathf.Lerp(enemyController.backHpSlider.value, enemyController.hpSlider.value, Time.deltaTime * 6f);
+            if (enemyController.hpSlider.value >= enemyController.backHpSlider.value - 0.001f)
+            {
+                backHpHit = false;
+                enemyController.backHpSlider.value = enemyController.hpSlider.value;
+            }
+        }
+
+        enemyController.canvas.transform.LookAt(enemyController.canvas.transform.position + Camera.main.transform.rotation * Vector3.forward, Camera.main.transform.rotation * Vector3.up);
     }
 
     private void AttackDelay()
@@ -137,11 +167,16 @@ public class Normal_Enemy : Enemy
         {
             hitDelay -= Time.deltaTime;
             Vector3 playerPos = new Vector3(target.transform.position.x, enemyController.transform.position.y, target.transform.position.z);
+            Vector3 KnockbackDir;
 
-            Vector3 KnockbackDir = playerPos - enemyController.transform.position;
-
+            if(knockbackDir == Vector3.zero)
+                KnockbackDir = enemyController.transform.position - playerPos;
+            else
+            {
+                KnockbackDir = knockbackDir;
+            }
             enemyController.rigid.velocity = Vector3.zero;
-            enemyController.rigid.AddForce(-KnockbackDir * target.GetComponent<Player>().currentCharacter.curKnockback, ForceMode.VelocityChange);
+            enemyController.rigid.AddForce(KnockbackDir * knockback, ForceMode.VelocityChange);
 
             if (hitDelay < 0)
             {
@@ -189,9 +224,11 @@ public class Normal_Enemy : Enemy
 
     public override void GetDamage(float damage)
     {
-        if (curHp <= 0) Die();
 
-        hitDelay = 0.1f;
+        enemyController.uiShowDelay = 4f;
+        enemyController.canvas.gameObject.SetActive(true);
+
+        hitDelay = 0.2f;
         isHit = true;
 
         //if (animator != null) animator.Play("GetDamage", 0, 0);
@@ -199,7 +236,8 @@ public class Normal_Enemy : Enemy
         backHpHit = false;
         GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["enemyHit"], false);
         enemyController.Invoke("BackHpFunMessage", 0.3f);
-        Debug.Log(curHp);
+
+        if (curHp <= 0) Die();
     }
 
     public override void Die()

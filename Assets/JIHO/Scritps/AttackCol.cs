@@ -36,7 +36,7 @@ public class AttackCol : MonoBehaviour
 
             Vector3 finalCenter = (center1 + center2) / 2f;
             if(otherTag == "Enemy")
-                other.GetComponent<EnemyController>().DamageMessage(Player.Instance.currentCharacter.curKnockback, damage, finalCenter, Player.Instance.currentCharacter.curParticle);
+                other.GetComponent<EnemyController>().DamageMessage(Player.Instance.currentCharacter.curKnockback,Player.Instance.currentCharacter.curKnockbackDir, damage, finalCenter, Player.Instance.currentCharacter.curParticle);
             
             if(otherTag == "Player")
             {
