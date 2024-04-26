@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -11,16 +10,16 @@ public class ObjectTrigger : MonoBehaviour
     [SerializeField] private string physicsName;
     [SerializeField] private string event_key = "";
     [SerializeField] private string exit_event_key = "";
-    
+
 
     private void OnTriggerEnter(Collider collider)
     {
-        if(collider.transform.name == physicsName)
+        if (collider.transform.name == physicsName)
         {
-            if(event_key != "") GameManager.Instance.event_dictionary[event_key]?.Invoke();
+            if (event_key != "") GameManager.Instance.event_dictionary[event_key]?.Invoke();
             enter_event?.Invoke();
 
-            if(oneTime) GetComponent<Collider>().enabled = false;
+            if (oneTime) GetComponent<Collider>().enabled = false;
         }
     }
 
@@ -37,7 +36,7 @@ public class ObjectTrigger : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.transform.name == physicsName)
+        if (collision.transform.name == physicsName)
         {
             if (event_key != "") GameManager.Instance.event_dictionary[event_key]?.Invoke();
             enter_event?.Invoke();

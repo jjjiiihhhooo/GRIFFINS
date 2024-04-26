@@ -1,6 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
+
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -69,26 +67,26 @@ public class InputData : MonoBehaviour
             player.currentCharacter.LeftAction();
         }
 
-        if(Input.GetKeyDown(RightAction) && player.currentCharacter.GetType() != typeof(GreenCharacter))
+        if (Input.GetKeyDown(RightAction) && player.currentCharacter.GetType() != typeof(GreenCharacter))
         {
             player.currentCharacter.RightAction();
         }
-        else if(Input.GetKeyDown(RightAction) && player.currentCharacter.GetType() == typeof(GreenCharacter))
+        else if (Input.GetKeyDown(RightAction) && player.currentCharacter.GetType() == typeof(GreenCharacter))
         {
             player.swinging.StartSwing();
         }
 
-        if(Input.GetKeyUp(RightAction) && player.currentCharacter.GetType() == typeof(GreenCharacter))
+        if (Input.GetKeyUp(RightAction) && player.currentCharacter.GetType() == typeof(GreenCharacter))
         {
             player.swinging.StopSwing();
         }
 
-        if(Input.GetKeyDown(itemSaveKey))
+        if (Input.GetKeyDown(itemSaveKey))
         {
             player.currentCharacter.ItemSave();
         }
 
-        if(Input.GetKeyDown(Q))
+        if (Input.GetKeyDown(Q))
         {
             player.currentCharacter.Q_Action();
         }
@@ -130,7 +128,7 @@ public class InputData : MonoBehaviour
         if (Input.GetKeyDown(WhiteKey))
         {
             Debug.Log("whiteChange");
-            
+
             player.ChangeCharacter(0);
 
         }
@@ -147,6 +145,6 @@ public class InputData : MonoBehaviour
             player.ChangeCharacter(2);
         }
 
-        
+
     }
 }

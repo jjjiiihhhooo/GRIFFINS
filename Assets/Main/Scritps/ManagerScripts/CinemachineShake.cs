@@ -1,6 +1,4 @@
 using Cinemachine;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CinemachineShake : MonoBehaviour
@@ -31,10 +29,10 @@ public class CinemachineShake : MonoBehaviour
 
     private void Shake()
     {
-        if(shakeTimer > 0)
+        if (shakeTimer > 0)
         {
             shakeTimer -= Time.deltaTime;
-            if(shakeTimer <= 0f)
+            if (shakeTimer <= 0f)
             {
                 CinemachineBasicMultiChannelPerlin cinemachineBasicMultiChannelPerlin =
                     virtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();

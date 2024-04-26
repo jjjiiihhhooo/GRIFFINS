@@ -1,13 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.VFX;
 
 public class SpawnShieldRipples : MonoBehaviour
 {
-    public GameObject shieldRipples;  
+    public GameObject shieldRipples;
 
-    private VisualEffect shieldRipplesVFX;  
+    private VisualEffect shieldRipplesVFX;
 
     private void OnCollisionEnter(Collision co)
     {

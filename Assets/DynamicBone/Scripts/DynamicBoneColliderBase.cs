@@ -31,7 +31,7 @@ public class DynamicBoneColliderBase : MonoBehaviour
     public int PrepareFrame { set; get; }
 
     public virtual void Start()
-    {        
+    {
     }
 
     public virtual void Prepare()

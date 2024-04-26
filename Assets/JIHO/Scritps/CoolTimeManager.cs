@@ -19,7 +19,7 @@ public class CoolTimeManager : MonoBehaviour
 
     public Dictionary<string, CoolData> coolDic;
 
-    
+
     public void Init()
     {
         coolDic = new Dictionary<string, CoolData>();
@@ -36,7 +36,7 @@ public class CoolTimeManager : MonoBehaviour
         coolDic.Add("Red_Q", new CoolData(5, 0));
         coolDic.Add("Red_E", new CoolData(1, 0));
         coolDic.Add("Red_R", new CoolData(1, 0));
-        
+
     }
 
     private IEnumerator CoolDownCor(string name)
@@ -47,7 +47,7 @@ public class CoolTimeManager : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
 
-        if(name == "CharacterChange")
+        if (name == "CharacterChange")
         {
             GameManager.Instance.uiManager.ChangeAnim();
         }

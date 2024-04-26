@@ -1,13 +1,13 @@
 #if UNITY_EDITOR
-using UnityEngine;
 using UnityEditor;
+using UnityEngine;
 
 
 public class AutoLODProperties : Editor
 {
     public enum MeshDecimatorBackend
     {
-        Fast=0,
+        Fast = 0,
         HighQuality
     }
 

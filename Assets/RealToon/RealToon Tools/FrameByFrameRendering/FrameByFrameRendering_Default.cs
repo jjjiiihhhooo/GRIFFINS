@@ -3,7 +3,6 @@
 //2018
 
 using UnityEngine;
-using System.Collections;
 
 namespace RealToon.Tools.FrameByFrameRendering
 {

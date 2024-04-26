@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Swinging : MonoBehaviour
@@ -100,7 +98,7 @@ public class Swinging : MonoBehaviour
     public void StartSwing()
     {
         Player playerController = transform.GetComponent<Player>();
-        
+
         if (playerController.isGround) return;
         // return if predictionHit not found
         if (predictionHit.point == Vector3.zero) return;
@@ -113,7 +111,7 @@ public class Swinging : MonoBehaviour
             playerController.movementStateMachine.ChangeState(playerController.movementStateMachine.FallingState);
         }
         lr.gameObject.SetActive(true);
-        Player.Instance.currentCharacter.StopGrapple(); 
+        Player.Instance.currentCharacter.StopGrapple();
 
         // deactivate active grapple
         //if (GetComponent<Grappling>() != null)

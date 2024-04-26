@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Xml.Schema;
 using UnityEngine;
 
 public class cubetest : MonoBehaviour
@@ -38,11 +35,11 @@ public class cubetest : MonoBehaviour
         if (isJumpPressed)
         {
             float gravity = Physics.gravity.y;
-            float trajectoryHeight = a.position.y- (transform.position.y - height);
+            float trajectoryHeight = a.position.y - (transform.position.y - height);
             //float highestPointOnArc = trajectoryHeight + overshootYAxis;
             // the cube is going to move upwards in 10 units per second
             //Vector3 velocityY = Vector3.up * Mathf.Sqrt(-2f * gravity * highestPointOnArc);
-           // rb.velocity = new Vector3(dir.x, velocityY.y, dir.z);
+            // rb.velocity = new Vector3(dir.x, velocityY.y, dir.z);
             isMoving = true;
             Debug.Log("jump");
 
@@ -61,7 +58,7 @@ public class cubetest : MonoBehaviour
         }
 
 
-        
+
     }
 
 

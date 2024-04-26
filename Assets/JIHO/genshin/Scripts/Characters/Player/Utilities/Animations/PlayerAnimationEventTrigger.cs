@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -72,7 +69,7 @@ public class PlayerAnimationEventTrigger : MonoBehaviour
     public void NormalAttackExit_2()
     {
         player.currentCharacter.StrongAttackExit();
-        
+
     }
 
     public void Q_AttackExit()
@@ -101,6 +98,6 @@ public class PlayerAnimationEventTrigger : MonoBehaviour
         player.currentCharacter.StopGrapple();
     }
 
-    
+
 }
 

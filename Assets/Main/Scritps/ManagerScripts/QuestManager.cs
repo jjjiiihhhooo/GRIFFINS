@@ -1,11 +1,6 @@
-using DG.Tweening;
 using Sirenix.OdinInspector;
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
-using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class QuestManager : SerializedMonoBehaviour
@@ -17,7 +12,7 @@ public class QuestManager : SerializedMonoBehaviour
     public Image questImage;
     public TextMeshProUGUI[] questTexts;
 
-    
+
 
     public void UpdateQuest()
     {
@@ -100,7 +95,7 @@ public class QuestManager : SerializedMonoBehaviour
 
         int count = 0;
 
-        while(curQuest != null && count < curQuest.QuestDatas.Length)
+        while (curQuest != null && count < curQuest.QuestDatas.Length)
         {
             if (curQuest.QuestDatas[count].type == QuestType.Chat)
             {
@@ -113,7 +108,7 @@ public class QuestManager : SerializedMonoBehaviour
         }
 
     }
-    
+
     public void ItemQuestcheck(string name)
     {
         UpdateQuest();
@@ -144,7 +139,7 @@ public class QuestManager : SerializedMonoBehaviour
 
         int count = 0;
 
-        while(curQuest != null && count < curQuest.QuestDatas.Length)
+        while (curQuest != null && count < curQuest.QuestDatas.Length)
         {
             if (curQuest.QuestDatas[count].type == QuestType.Interaction)
             {
@@ -156,7 +151,7 @@ public class QuestManager : SerializedMonoBehaviour
             count++;
         }
     }
-    
+
     public void EnemyQuestCheck(string name)
     {
         UpdateQuest();
@@ -182,7 +177,7 @@ public class QuestManager : SerializedMonoBehaviour
             count++;
         }
 
-        
+
     }
 
     public void PositionQuestCheck(string name)
@@ -192,7 +187,7 @@ public class QuestManager : SerializedMonoBehaviour
 
         int count = 0;
 
-        while(curQuest != null && count < curQuest.QuestDatas.Length)
+        while (curQuest != null && count < curQuest.QuestDatas.Length)
         {
             if (curQuest.QuestDatas[count].type == QuestType.Position)
             {
@@ -205,7 +200,7 @@ public class QuestManager : SerializedMonoBehaviour
         }
 
     }
-    
+
 }
 
 

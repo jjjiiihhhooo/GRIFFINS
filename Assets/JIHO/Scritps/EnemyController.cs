@@ -2,7 +2,6 @@
 using DG.Tweening;
 using Sirenix.OdinInspector;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -47,9 +46,9 @@ public class EnemyController : SerializedMonoBehaviour
     {
         enemy.EnemyUpdate();
 
-        if(isHit)
+        if (isHit)
         {
-            if (hitCool > 0) hitCool -= Time.deltaTime; 
+            if (hitCool > 0) hitCool -= Time.deltaTime;
             else isHit = false;
         }
     }
@@ -58,20 +57,20 @@ public class EnemyController : SerializedMonoBehaviour
     {
         if (hpSlider == null) hpSlider = GameManager.Instance.uiManager.bossHp;
         if (backHpSlider == null) backHpSlider = GameManager.Instance.uiManager.bossBackHp;
-        
+
 
         hpSlider.value = Mathf.Lerp(hpSlider.value, enemy.curHp / enemy.maxHp, Time.deltaTime * 5f);
 
-        if(enemy.backHpHit)
+        if (enemy.backHpHit)
         {
             backHpSlider.value = Mathf.Lerp(backHpSlider.value, hpSlider.value, Time.deltaTime * 6f);
-            if(hpSlider.value >= backHpSlider.value - 0.001f)
+            if (hpSlider.value >= backHpSlider.value - 0.001f)
             {
                 enemy.backHpHit = false;
                 backHpSlider.value = hpSlider.value;
             }
         }
-        if(enemy.GetType().Name != "Boss_Enemy")
+        if (enemy.GetType().Name != "Boss_Enemy")
             canvas.transform.LookAt(canvas.transform.position + Camera.main.transform.rotation * Vector3.forward, Camera.main.transform.rotation * Vector3.up);
     }
 
@@ -119,7 +118,7 @@ public class EnemyController : SerializedMonoBehaviour
         //}
     }
 
-    
+
 
     private void DamageEffect(float damage, Vector3 targetPos, ParticleSystem particle)
     {
@@ -165,7 +164,7 @@ public class EnemyController : SerializedMonoBehaviour
     public void TargetCheck(bool _bool)
     {
         if (enemy.ToString() == "Boss_Enemy") return;
-        if(_bool)
+        if (_bool)
         {
             targetUI_obj.SetActive(true);
         }
@@ -175,7 +174,7 @@ public class EnemyController : SerializedMonoBehaviour
         }
     }
 
-    public void DamageMessage(float _knockback, Vector3 _knockbackDir, float damage, Vector3 targetPos, ParticleSystem particle = null )
+    public void DamageMessage(float _knockback, Vector3 _knockbackDir, float damage, Vector3 targetPos, ParticleSystem particle = null)
     {
         if (isHit) return;
 
@@ -193,7 +192,7 @@ public class EnemyController : SerializedMonoBehaviour
     {
         enemy.backHpHit = true;
     }
-        
+
     public void BossNormalAttackAnim()
     {
         enemy.isAction = false;

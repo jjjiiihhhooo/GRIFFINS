@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using UnityEngine;
 
 namespace EpicToonFX
 {
@@ -41,7 +41,7 @@ namespace EpicToonFX
 
         private void Update()
         {
-            if(target)
+            if (target)
             {
                 if (Input.GetMouseButton(1))
                 {
@@ -58,7 +58,7 @@ namespace EpicToonFX
             }
         }
 
-		private void FixedUpdate()
+        private void FixedUpdate()
         {
             if (target)
             {
@@ -67,10 +67,10 @@ namespace EpicToonFX
                 rotationXAxis = ClampAngle(rotationXAxis, yMinLimit, yMaxLimit);
                 Quaternion toRotation = Quaternion.Euler(rotationXAxis, rotationYAxis, 0);
                 Quaternion rotation = toRotation;
-                
+
                 if (Physics.Linecast(target.position, transform.position, out RaycastHit hit))
                 {
-                   distance -= hit.distance;
+                    distance -= hit.distance;
                 }
 
                 Vector3 negDistance = new Vector3(0.0f, 0.0f, -distance);

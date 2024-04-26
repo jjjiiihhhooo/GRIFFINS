@@ -1,11 +1,7 @@
 using DG.Tweening;
-using MoreMountains.Tools;
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEngine.EventSystems.EventTrigger;
 
 public class UIManager : MonoBehaviour
 {
@@ -46,7 +42,7 @@ public class UIManager : MonoBehaviour
 
     private Player player;
 
-    
+
 
     private void Update()
     {
@@ -96,11 +92,11 @@ public class UIManager : MonoBehaviour
 
     public void CharacterCharacter(int index)
     {
-        for(int i = 0; i < 3; i++)
+        for (int i = 0; i < 3; i++)
         {
             //characterFaces[i].sprite = nonColorCharacters[i];
 
-            if(i != index) characterCools[i].fillAmount = 1;
+            if (i != index) characterCools[i].fillAmount = 1;
         }
 
         //characterFaces[index].sprite = colorCharacters[index];
@@ -118,9 +114,9 @@ public class UIManager : MonoBehaviour
     {
         int index = Player.Instance.currentCharacter.index;
 
-        for(int i = 0; i < 3; i++)
+        for (int i = 0; i < 3; i++)
         {
-            if(index != i) StartCoroutine(CharacterChange(i));
+            if (index != i) StartCoroutine(CharacterChange(i));
         }
 
     }
@@ -189,10 +185,10 @@ public class UIManager : MonoBehaviour
 
         yield return new WaitForSecondsRealtime(0.01f);
         characterChangeAnim[index].sprite = characterChangeLogo;
-        
+
         yield return new WaitForSecondsRealtime(0.02f);
         characterChangeAnim[index].sprite = characterChangeWhite;
-       
+
         float count = 1f;
 
         while (count > 0)

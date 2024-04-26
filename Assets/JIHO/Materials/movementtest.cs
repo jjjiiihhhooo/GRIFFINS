@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 public class movementtest : MonoBehaviour
 {
@@ -21,7 +18,7 @@ public class movementtest : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.Q))
         {
             rb.velocity = Vector3.zero;
             transform.position = new Vector3(0, 5, 0);
@@ -33,13 +30,13 @@ public class movementtest : MonoBehaviour
             isGrounded = false;
         }
 
-        if(Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1))
         {
             rb.velocity = Vector3.zero;
             rb.AddForce(Vector3.down * super, ForceMode.Impulse);
         }
 
-        if(Input.GetKeyDown(KeyCode.LeftShift))
+        if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             rb.AddForce(transform.forward * dashSpeed, ForceMode.Impulse);
         }

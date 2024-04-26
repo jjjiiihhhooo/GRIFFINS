@@ -1,8 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using TMPro.EditorUtilities;
-using UnityEngine;
 using UnityEngine.InputSystem;
 
 
@@ -35,7 +30,7 @@ public class PlayerStoppingState : PlayerGroundedState
     {
         base.PhysicsUpdate();
 
-        if(!stateMachine.Player.isAttack)
+        if (!stateMachine.Player.isAttack)
             RotateTowardsTargetRotation();
 
         if (!IsMovingHorizontally())

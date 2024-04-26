@@ -1,11 +1,6 @@
-using JetBrains.Annotations;
 using System.Collections;
-using System.Collections.Generic;
-using System.Net.NetworkInformation;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.InputSystem.XR;
 
 
 public class Enemy
@@ -17,7 +12,7 @@ public class Enemy
     public GameObject obj;
     public UnityEvent _event;
 
-    
+
     public string name;
 
     public float maxHp;
@@ -67,7 +62,7 @@ public class Enemy
 
     public virtual void Action()
     {
-        if(_event != null) _event.Invoke();
+        if (_event != null) _event.Invoke();
     }
 
     public virtual void Die()
@@ -151,7 +146,7 @@ public class Normal_Enemy : Enemy
 
     public override void ModelShake()
     {
-        if(modelShakeTime > 0f)
+        if (modelShakeTime > 0f)
         {
             modelShakeTime -= Time.deltaTime;
             animator.transform.localPosition = Random.insideUnitSphere * 0.3f + Vector3.zero;
@@ -169,8 +164,8 @@ public class Normal_Enemy : Enemy
             Vector3 playerPos = new Vector3(target.transform.position.x, enemyController.transform.position.y, target.transform.position.z);
             Vector3 KnockbackDir;
 
-            if(knockbackDir == Vector3.zero)
-                KnockbackDir = enemyController.transform.position - playerPos;
+            if (knockbackDir == Vector3.zero)
+                KnockbackDir = -enemyController.transform.forward;
             else
             {
                 KnockbackDir = knockbackDir;
@@ -207,7 +202,7 @@ public class Normal_Enemy : Enemy
 
         enemyController.transform.forward = forward;
         enemyController.transform.eulerAngles = new Vector3(x, enemyController.transform.eulerAngles.y, z);
-         NormalAttack();
+        NormalAttack();
     }
 
     private void Move()
@@ -287,7 +282,7 @@ public class Epic_1_Enemy : Epic_Enemy
     public override void EnemyUpdate()
     {
         if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Idle_Boss")) animator.Play("Idle_Boss", 0, 0f);
-        
+
         AttackDelay();
     }
 
@@ -295,7 +290,7 @@ public class Epic_1_Enemy : Epic_Enemy
     {
         if (curTime > 0) curTime -= Time.deltaTime;
         else Action();
-    }   
+    }
 
     public override void Action()
     {
@@ -419,7 +414,7 @@ public class Boss_Enemy : Enemy
         Vector3 data = new Vector3(0, 1f, 0);
         animator.Play("Defense_Boss", 0, 0f);
 
-        while(enemyController.transform.position.y < 50)
+        while (enemyController.transform.position.y < 50)
         {
             yield return new WaitForEndOfFrame();
             enemyController.transform.position += data;
@@ -438,7 +433,7 @@ public class Boss_Enemy : Enemy
 
         float y = Player.Instance.transform.position.y + 8f;
 
-        for(int i = 0; i < 10; i++)
+        for (int i = 0; i < 10; i++)
         {
             float x = Random.Range(-5f, 5f);
             if (x > 0) x += 5f;
@@ -455,7 +450,7 @@ public class Boss_Enemy : Enemy
 
         yield return new WaitForSeconds(1f);
 
-        for(int i = 0; i < defenseObjects.Length; i++)
+        for (int i = 0; i < defenseObjects.Length; i++)
         {
             defenseObjects[i].SetActive(true);
             defenseObjects[i].transform.position = defenseTransforms[i].position;
@@ -468,7 +463,7 @@ public class Boss_Enemy : Enemy
             GameManager.Instance.uiManager.bossTiming.value = time / 10;
             curHp += Time.deltaTime * 2f;
             enemyController.backHpSlider.value = enemyController.hpSlider.value;
-            for(int i = 0; i < defenseObjects.Length; i++)
+            for (int i = 0; i < defenseObjects.Length; i++)
             {
                 if (defenseObjects[i].activeSelf) test = true;
             }
@@ -566,7 +561,7 @@ public class Boss_Enemy : Enemy
     {
         if (curHp <= 0) Die();
 
-        if(!superArmor)
+        if (!superArmor)
             curHp -= damage;
         backHpHit = false;
 

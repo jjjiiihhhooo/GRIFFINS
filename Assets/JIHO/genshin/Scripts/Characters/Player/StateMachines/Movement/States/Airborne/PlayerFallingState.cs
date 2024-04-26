@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class PlayerFallingState : PlayerAirborneState
 {
@@ -23,7 +20,7 @@ public class PlayerFallingState : PlayerAirborneState
         ResetVerticalVelocity();
     }
 
-   
+
 
     public override void Exit()
     {

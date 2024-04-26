@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
 public class Projectile : MonoBehaviour
@@ -13,8 +12,8 @@ public class Projectile : MonoBehaviour
     private void Awake()
     {
         rigid = GetComponent<Rigidbody>();
-        
-        
+
+
     }
 
     private void Start()
@@ -29,7 +28,7 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(!(other.tag == "useObject"))
+        if (!(other.tag == "useObject"))
         {
             if (isCol) return;
             isCol = true;
@@ -45,7 +44,7 @@ public class Projectile : MonoBehaviour
             }
             else
             {
-                
+
                 Rigidbody rigid = transform.GetChild(0).GetComponent<Rigidbody>();
                 transform.GetChild(0).transform.SetParent(null);
                 rigid.velocity = this.rigid.velocity;

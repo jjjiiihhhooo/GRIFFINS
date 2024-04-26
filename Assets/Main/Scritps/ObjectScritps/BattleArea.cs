@@ -1,7 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class BattleArea : MonoBehaviour
 {
@@ -38,7 +36,7 @@ public class BattleArea : MonoBehaviour
     {
         Vector3 scale = Vector3.zero;
 
-        while(transform.localScale.x < size)
+        while (transform.localScale.x < size)
         {
             yield return new WaitForEndOfFrame();
             scale.x += plus;

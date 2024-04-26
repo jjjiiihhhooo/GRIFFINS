@@ -1,12 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class SpawnShield : MonoBehaviour
 {
     public float delayToDestroy = 5;
     public GameObject shieldVFX;
-    public Vector3 shieldOffset;  
+    public Vector3 shieldOffset;
 
     void Update()
     {
@@ -16,6 +14,6 @@ public class SpawnShield : MonoBehaviour
             vfx.transform.SetParent(null);
             vfx.transform.position += shieldOffset;
             Destroy(vfx, delayToDestroy);
-        }        
+        }
     }
 }

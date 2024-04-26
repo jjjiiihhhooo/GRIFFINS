@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class FPSShooterTut : MonoBehaviour
 {
@@ -17,9 +15,9 @@ public class FPSShooterTut : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetButton("Fire1") && Time.time >= timeToFire)
+        if (Input.GetButton("Fire1") && Time.time >= timeToFire)
         {
-            timeToFire = Time.time + 1/fireRate;
+            timeToFire = Time.time + 1 / fireRate;
             ShootProjectile();
         }
     }
@@ -29,17 +27,17 @@ public class FPSShooterTut : MonoBehaviour
         Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
         RaycastHit hit;
         destination = ray.GetPoint(1000);
-        InstantiateProjectile(firePoint);        
+        InstantiateProjectile(firePoint);
     }
 
     void InstantiateProjectile(Transform firePoint)
     {
-        var projectileObj = Instantiate (projectile, firePoint.position, Quaternion.identity) as GameObject;
+        var projectileObj = Instantiate(projectile, firePoint.position, Quaternion.identity) as GameObject;
         projectileObj.GetComponent<Rigidbody>().velocity = (destination - firePoint.position).normalized * projectileSpeed;
 
-        iTween.PunchPosition(projectileObj, new Vector3 (Random.Range(-arcRange, arcRange), Random.Range(-arcRange, arcRange), 0), Random.Range(0.5f, 2));
+        iTween.PunchPosition(projectileObj, new Vector3(Random.Range(-arcRange, arcRange), Random.Range(-arcRange, arcRange), 0), Random.Range(0.5f, 2));
 
-        var muzzleObj = Instantiate (muzzle, firePoint.position, Quaternion.identity) as GameObject;
-        Destroy (muzzleObj, 2);
+        var muzzleObj = Instantiate(muzzle, firePoint.position, Quaternion.identity) as GameObject;
+        Destroy(muzzleObj, 2);
     }
 }

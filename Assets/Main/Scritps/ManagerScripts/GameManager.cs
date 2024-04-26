@@ -2,10 +2,8 @@ using DG.Tweening;
 using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.UI;
 
 public class GameManager : SerializedMonoBehaviour
 {
@@ -31,7 +29,7 @@ public class GameManager : SerializedMonoBehaviour
 
     private void Awake()
     {
-        if(Instance == null)
+        if (Instance == null)
         {
             Instance = this;
             Init();
@@ -57,7 +55,7 @@ public class GameManager : SerializedMonoBehaviour
 
     public void MouseLocked(bool _bool = false)
     {
-        if(!_bool)
+        if (!_bool)
         {
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;

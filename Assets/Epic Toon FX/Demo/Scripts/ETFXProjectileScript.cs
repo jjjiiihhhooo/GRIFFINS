@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 namespace EpicToonFX
 {
@@ -23,16 +22,16 @@ namespace EpicToonFX
                 Destroy(muzzleParticle, 1.5f); // 2nd parameter is lifetime of effect in seconds
             }
         }
-		
+
         void FixedUpdate()
-        {	
-			if (GetComponent<Rigidbody>().velocity.magnitude != 0)
-			{
-			    transform.rotation = Quaternion.LookRotation(GetComponent<Rigidbody>().velocity); // Sets rotation to look at direction of movement
-			}
-			
+        {
+            if (GetComponent<Rigidbody>().velocity.magnitude != 0)
+            {
+                transform.rotation = Quaternion.LookRotation(GetComponent<Rigidbody>().velocity); // Sets rotation to look at direction of movement
+            }
+
             RaycastHit hit;
-			
+
             float radius; // Sets the radius of the collision detection
             if (transform.GetComponent<SphereCollider>())
                 radius = transform.GetComponent<SphereCollider>().radius;

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -32,7 +30,7 @@ public class PlayerAirDashingState : PlayerAirborneState
 
         stateMachine.Player.Rigidbody.velocity = Vector3.zero;
         stateMachine.Player.Rigidbody.useGravity = false;
-        
+
         Dash();
 
         shouldKeepRotating = stateMachine.ReusableData.MovementInput != Vector2.zero;

@@ -1,6 +1,4 @@
 using Cinemachine;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class OnlySingleton : MonoBehaviour
@@ -10,11 +8,13 @@ public class OnlySingleton : MonoBehaviour
     public CinemachineShake camShake;
     public Transform normalTransform;
     public CinemachineVirtualCamera red_E_cam;
+    public CinemachineVirtualCamera green_E_cam;
+
 
 
     private void Awake()
     {
-        if(Instance == null)
+        if (Instance == null)
         {
             Instance = this;
             DontDestroyOnLoad(this.gameObject);

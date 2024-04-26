@@ -1,13 +1,11 @@
+using DG.Tweening;
 using System.Collections;
 using UnityEngine;
-using DG.Tweening;
-using UnityEngine.SceneManagement;
-using Unity.VisualScripting;
 
 public class PlayerCharacter
 {
     public Animator animator;
-    
+
     public Player player;
     public EnemyController target;
 
@@ -63,7 +61,7 @@ public class PlayerCharacter
     public Vector3[] knockbackDirs;
     public Vector3 curKnockbackDir;
     protected Vector3 grappleVec;
-  
+
 
     public virtual void Init(Player playerController)
     {
@@ -78,7 +76,7 @@ public class PlayerCharacter
 
     public virtual void Update()
     {
-        
+
     }
 
     public virtual void LeftAction()
@@ -95,7 +93,7 @@ public class PlayerCharacter
     {
 
     }
-    
+
     public virtual void E_Action()
     {
 
@@ -108,7 +106,7 @@ public class PlayerCharacter
 
     public virtual void StartGrapple()
     {
-        
+
         player.skillData.grappling = true;
         player.freeze = true;
         player.Rigidbody.useGravity = true;
@@ -144,10 +142,10 @@ public class PlayerCharacter
 
     public virtual void ExecuteGrapple()
     {
-        
+
         player.freeze = false;
         player.Rigidbody.constraints = ~RigidbodyConstraints.FreezePosition;
-        
+
         player.currentCharacter.animator.Play("chardash", 2, 0f);
         //player.skillData.grapplingCdTimer = player.skillData.grapplingCd;
         Vector3 lowestPoint = new Vector3(player.transform.position.x, player.transform.position.y - 1f, player.transform.position.z);
@@ -162,9 +160,9 @@ public class PlayerCharacter
         player.skillData.velocity = CalculateJumpVelocity(player.transform.position, player.skillData.grapplePoint, highestPointOnArc);
         player.ResizableCapsuleCollider.SlopeData.StepHeightPercentage = 0f;
         player.skillData.touch = true;
-       // player.skillData.lr.gameObject.SetActive(false);
+        // player.skillData.lr.gameObject.SetActive(false);
         //player.GetComponent<Rigidbody>().velocity = player.skillData.velocity;
-        
+
         player.Rigidbody.AddForce(grappleVec * player.skillData.grappleSpeed, ForceMode.Impulse);
     }
 
@@ -172,11 +170,11 @@ public class PlayerCharacter
     {
         player.freeze = false;
         player.Rigidbody.constraints = ~RigidbodyConstraints.FreezePosition;
-        
+
         player.ResizableCapsuleCollider.SlopeData.StepHeightPercentage = 0.25f;
         player.skillData.grappling = false;
         //player.skillData.grapplingCdTimer = player.skillData.grapplingCd;
-        
+
         player.skillData.lr.enabled = false;
     }
 
@@ -199,7 +197,7 @@ public class PlayerCharacter
     {
 
     }
-    
+
     public virtual void AttackMotion()
     {
 
@@ -217,7 +215,7 @@ public class PlayerCharacter
 
     public void ExitAttack()
     {
-        if(player.currentCharacter.animator.GetCurrentAnimatorStateInfo(3).normalizedTime > 0.9f && player.currentCharacter.animator.GetCurrentAnimatorStateInfo(3).IsTag("Attack"))
+        if (player.currentCharacter.animator.GetCurrentAnimatorStateInfo(3).normalizedTime > 0.9f && player.currentCharacter.animator.GetCurrentAnimatorStateInfo(3).IsTag("Attack"))
         {
 
             player.isAttack = false;
@@ -227,7 +225,7 @@ public class PlayerCharacter
 
     public virtual void Sound(string name)
     {
-        if(name == "jump")
+        if (name == "jump")
         {
 
         }
@@ -289,7 +287,7 @@ public class PlayerCharacter
         float y = model.transform.localEulerAngles.y;
         float z = model.transform.localEulerAngles.z;
 
-        if(x != 0 || y != 0 || z != 0)
+        if (x != 0 || y != 0 || z != 0)
             model.transform.localEulerAngles = Vector3.zero;
     }
 
@@ -367,10 +365,10 @@ public class WhiteCharacter : PlayerCharacter
 
     public override void LeftAction()
     {
-        
+
     }
 
-    
+
 
     public override void RightAction()
     {
@@ -382,12 +380,12 @@ public class WhiteCharacter : PlayerCharacter
 
     public override void NormalAttack()
     {
-        
+
     }
 
     public override void AttackMotion()
     {
-        
+
     }
 
     public override void Q_Action()
@@ -397,7 +395,7 @@ public class WhiteCharacter : PlayerCharacter
 
     public override void E_Action()
     {
-        
+
     }
 
     public override void R_Action()
@@ -457,8 +455,8 @@ public class WhiteCharacter : PlayerCharacter
 
         player.skillData.isHand = false;
         player.Rigidbody.velocity = Vector3.zero;
-        
-        if(save)
+
+        if (save)
         {
             GameObject.Destroy(player.skillData.handObj);
         }
@@ -468,12 +466,12 @@ public class WhiteCharacter : PlayerCharacter
 
     private void Catch(bool load = false)
     {
-        if(!load)
+        if (!load)
         {
             if (!GameManager.Instance.staminaManager.ChechStamina(20f)) return;
             if (player.targetSet.targetObject == null || player.skillData.isHand || player.skillData.handObj != null || !player.isGround) return;
         }
-        
+
         if (player.currentCharacter.animator.GetCurrentAnimatorStateInfo(1).IsName("Idle") || player.currentCharacter.animator.GetCurrentAnimatorStateInfo(1).IsName("Throw")) return;
         GameManager.Instance.uiManager.crossHair.SetActive(true);
 
@@ -482,7 +480,7 @@ public class WhiteCharacter : PlayerCharacter
 
         player.currentCharacter.animator.SetBool("isHand", true);
 
-        if(!load)
+        if (!load)
         {
             player.skillData.handObj = player.targetSet.targetObject;
         }
@@ -503,12 +501,12 @@ public class WhiteCharacter : PlayerCharacter
         rigid.useGravity = false;
         rigid.isKinematic = true;
         player.skillData.handObj.transform.DOKill(false);
-        
-        if(!load)
+
+        if (!load)
             player.skillData.handObj.transform.DOMove(player.skillData.catchTransform.position, 0.2f).SetEase(Ease.OutQuad).OnComplete(() => { player.skillData.handObj.transform.position = player.skillData.catchTransform.position; camZoom.maximumDistance = 2f; player.skillData.lookatTransform.localPosition = new Vector3(0.75f, 1.41f, 0f); player.skillData.handObj.transform.SetParent(player.transform); });
         else
             player.skillData.handObj.transform.DOMove(player.skillData.catchTransform.position, 0.01f).SetEase(Ease.OutQuad).OnComplete(() => { player.skillData.handObj.transform.position = player.skillData.catchTransform.position; camZoom.maximumDistance = 2f; player.skillData.lookatTransform.localPosition = new Vector3(0.75f, 1.41f, 0f); player.skillData.handObj.transform.SetParent(player.transform); });
-        
+
         player.movementStateMachine.ReusableData.ShouldWalk = true;
         player.movementStateMachine.ReusableData.ShouldSprint = false;
 
@@ -557,7 +555,7 @@ public class WhiteCharacter : PlayerCharacter
         camZoom.transform.DOLocalMove(Vector3.zero, 0.3f).OnComplete(() => camZoom.minimumDistance = 1f);
 
         player.skillData.lookatTransform.localPosition = new Vector3(0, 1.23f, 0f);
-        
+
         if (player.movementStateMachine.ReusableData.MovementInput != Vector2.zero) player.movementStateMachine.ChangeState(player.movementStateMachine.RunningState);
 
         player.skillData.isHand = false;
@@ -690,7 +688,7 @@ public class GreenCharacter : PlayerCharacter
         FollowEnemy();
         AnimTransform();
         RotationZero();
-        
+
     }
 
     public override void LeftAction()
@@ -736,12 +734,12 @@ public class GreenCharacter : PlayerCharacter
     {
         base.ExecuteGrapple();
     }
-    
+
     public override void StopGrapple()
     {
         base.StopGrapple();
     }
-    
+
     public override void Q_Action()
     {
         if (!GameManager.Instance.coolTimeManager.CoolCheck("Green_Q")) return;
@@ -749,11 +747,39 @@ public class GreenCharacter : PlayerCharacter
         GameManager.Instance.coolTimeManager.GetCoolTime("Green_Q");
     }
 
+
+
     public override void E_Action()
     {
         if (!GameManager.Instance.coolTimeManager.CoolCheck("Green_E")) return;
 
         GameManager.Instance.coolTimeManager.GetCoolTime("Green_E");
+        Gust();
+    }
+
+    private void Gust()
+    {
+        player.Rigidbody.velocity = Vector3.zero;
+        player.isAttack = true;
+        player.transform.forward = Camera.main.transform.forward;
+        player.transform.eulerAngles = new Vector3(0f, player.transform.eulerAngles.y, 0f);
+        OnlySingleton.Instance.green_E_cam.Priority = 11;
+        player.Rigidbody.useGravity = false;
+        curParticle = normalAttackEffects[2];
+        curKnockback = knockbacks[3];
+        curKnockbackDir = knockbackDirs[3];
+
+        player.currentCharacter.animator.Play(E_Anim.name, 3, 0f);
+    }
+
+    public override void E_AnimExit()
+    {
+        GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["red_normalAttack1"], false);
+        player.isAttack = false;
+        OnlySingleton.Instance.green_E_cam.Priority = 9;
+        GameObject.Instantiate(E_Particle.gameObject, model.transform.position, Quaternion.identity);
+        player.Rigidbody.useGravity = true;
+        E_AttackCol.gameObject.SetActive(true);
     }
 
     public override void R_Action()
@@ -980,13 +1006,13 @@ public class RedCharacter : PlayerCharacter
         curParticle = normalAttackEffects[2];
         curKnockback = knockbacks[3];
         curKnockbackDir = knockbackDirs[3];
-        
+
         player.currentCharacter.animator.Play(E_Anim.name, 3, 0f);
     }
 
     public override void R_Action()
     {
-        
+
     }
 
     private void Devastation()
@@ -1008,15 +1034,15 @@ public class RedCharacter : PlayerCharacter
 
         if (target == null) { followEnemy = false; return; };
 
-        
+
         if (Vector3.Distance(target.transform.position, player.transform.position) > attackArea)
         {
-            if(!animator.GetCurrentAnimatorStateInfo(3).IsName(followAnim.name))
+            if (!animator.GetCurrentAnimatorStateInfo(3).IsName(followAnim.name))
             {
                 player.currentCharacter.animator.Play(followAnim.name, 3, 0f);
                 GameObject.Instantiate(Chasing_Particle.gameObject, model.transform.position + Vector3.up, model.transform.rotation);
             }
-            
+
 
             player.transform.forward = target.transform.position - player.transform.position;
             player.transform.eulerAngles = new Vector3(0f, player.transform.eulerAngles.y, 0f);
@@ -1093,7 +1119,7 @@ public class RedCharacter : PlayerCharacter
 
     public override void R_AnimExit()
     {
-        
+
     }
 
     public override void AttackMotion()
@@ -1132,7 +1158,7 @@ public class RedCharacter : PlayerCharacter
 
     public override void Sound(string name)
     {
-        if(name == "jump")
+        if (name == "jump")
         {
             GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["red_jump"], false);
         }
@@ -1142,9 +1168,9 @@ public class RedCharacter : PlayerCharacter
     {
         if (followEnemy) return;
 
-        if(player.targetSet.targetEnemy != null)
+        if (player.targetSet.targetEnemy != null)
         {
-            
+
             target = player.targetSet.targetEnemy;
             if (Vector3.Distance(target.transform.position, player.transform.position) > attackArea)
                 followEnemy = true;
@@ -1158,7 +1184,7 @@ public class RedCharacter : PlayerCharacter
 
     public override float Right_Cool()
     {
-        return GameManager.Instance.coolTimeManager.coolDic["Red_Right"].curCoolTime / 
+        return GameManager.Instance.coolTimeManager.coolDic["Red_Right"].curCoolTime /
             GameManager.Instance.coolTimeManager.coolDic["Red_Right"].maxCoolTime;
     }
 

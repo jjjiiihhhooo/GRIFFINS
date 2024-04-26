@@ -1,6 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
+
 using UnityEngine;
 
 public class EnemySkilldata : MonoBehaviour
@@ -19,7 +17,7 @@ public class EnemySkilldata : MonoBehaviour
         float randZ = Random.Range(-enemyController.enemy.rangeZ, enemyController.enemy.rangeZ);
 
         Vector3 velocity = Vector3.zero;
-        velocity = CalculateJumpVelocity(enemyController.enemy.fireTransform.position, new Vector3(enemyController.enemy.fireTransform.position.x + randX, Player.Instance.transform.position.y, enemyController.enemy.fireTransform.position.z + randZ ), highestPointOnArc); ;
+        velocity = CalculateJumpVelocity(enemyController.enemy.fireTransform.position, new Vector3(enemyController.enemy.fireTransform.position.x + randX, Player.Instance.transform.position.y, enemyController.enemy.fireTransform.position.z + randZ), highestPointOnArc); ;
         GameObject temp = Instantiate(enemyController.enemy.obj, enemyController.enemy.fireTransform.position, Quaternion.identity);
         temp.GetComponent<Rigidbody>().velocity = velocity;
     }

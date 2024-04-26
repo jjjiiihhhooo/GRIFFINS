@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
 public class SpawnPoint : MonoBehaviour
@@ -9,7 +8,7 @@ public class SpawnPoint : MonoBehaviour
 
     void Start()
     {
-        if(!isNotSceneChange)
+        if (!isNotSceneChange)
         {
             Debug.Log("qqqq");
             Invoke("SetSpawn", 0.05f);

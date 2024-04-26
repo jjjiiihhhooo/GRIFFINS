@@ -1,24 +1,22 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ProjectileTut : MonoBehaviour
 {
-    public GameObject impactVFX; 
+    public GameObject impactVFX;
 
     private bool collided;
 
-    void OnCollisionEnter (Collision co)
+    void OnCollisionEnter(Collision co)
     {
-        if(co.gameObject.tag != "Bullet" && co.gameObject.tag != "Player" && !collided)
+        if (co.gameObject.tag != "Bullet" && co.gameObject.tag != "Player" && !collided)
         {
             collided = true;
 
-            var impact = Instantiate (impactVFX, co.contacts[0].point, Quaternion.identity) as GameObject;
+            var impact = Instantiate(impactVFX, co.contacts[0].point, Quaternion.identity) as GameObject;
 
-            Destroy (impact, 2);
+            Destroy(impact, 2);
 
-            Destroy (gameObject);
+            Destroy(gameObject);
         }
     }
 }

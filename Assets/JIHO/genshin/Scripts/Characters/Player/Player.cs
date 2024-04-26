@@ -1,16 +1,6 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UIElements;
-using UnityEngine.UI;
-
-using Sirenix.OdinInspector;
 using TMPro;
-using Unity.VisualScripting;
-using System.Transactions;
-using UnityEngine.Rendering.Universal;
-using static UnityEngine.EventSystems.EventTrigger;
+using UnityEngine;
 
 [RequireComponent(typeof(PlayerInput))]
 [RequireComponent(typeof(PlayerResizableCapsuleCollider))]
@@ -32,7 +22,7 @@ public class Player : MonoBehaviour
     [field: SerializeField] public PlayerAnimationData AnimationData { get; private set; }
 
     public TextMeshProUGUI text;
-    
+
 
 
     public Rigidbody Rigidbody { get; private set; }
@@ -49,7 +39,7 @@ public class Player : MonoBehaviour
     public SpawnPoint spawn;
     public PlayerMovementStateMachine movementStateMachine;
 
-    
+
     [Header("GameObject")]
     public GameObject jumpEffect;
     public GameObject dashEffect;
@@ -90,7 +80,7 @@ public class Player : MonoBehaviour
     public Vector3 dir;
     public Ray ray;
     public Ray camRay;
-    
+
     public bool isGround; //땅에 있는 상태인지
 
     public bool isAttack; //공격 상태인지
@@ -121,7 +111,7 @@ public class Player : MonoBehaviour
             characters[1] = greenCharacter;
             characters[2] = redCharacter;
 
-            for(int i = 0; i < characters.Length; i++)
+            for (int i = 0; i < characters.Length; i++)
             {
                 characters[i].Init(this);
             }
@@ -138,7 +128,7 @@ public class Player : MonoBehaviour
 
             MainCameraTransform = Camera.main.transform;
 
-            
+
 
             DontDestroyOnLoad(this.gameObject);
         }
@@ -201,7 +191,7 @@ public class Player : MonoBehaviour
             swinging.StopSwing();
         }
 
-        if(collider.tag == "EnemyAttackCol")
+        if (collider.tag == "EnemyAttackCol")
         {
             //if (movementStateMachine.CurStateName() == "PlayerDashingState") return;
             GetDamage(collider.GetComponent<AttackCol>().damage);
@@ -238,7 +228,7 @@ public class Player : MonoBehaviour
 
     public void PlayerDead()
     {
-        
+
     }
 
     public void PlayerSpawn()
@@ -335,7 +325,7 @@ public class Player : MonoBehaviour
 
     public void SetActiveInteraction(bool _bool, string text = "")
     {
-        if(_bool)
+        if (_bool)
         {
             interactionText.text = text;
             interactionImage.gameObject.SetActive(true);
@@ -348,7 +338,7 @@ public class Player : MonoBehaviour
 
     public GameObject InstantiateEvent(GameObject obj, Vector3 transform, Quaternion quaternion)
     {
-       return Instantiate(obj, transform, quaternion);
+        return Instantiate(obj, transform, quaternion);
     }
 
 }

@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class HS_ProjectileMover : MonoBehaviour
@@ -17,7 +16,7 @@ public class HS_ProjectileMover : MonoBehaviour
     [SerializeField] protected GameObject[] Detached;
     [SerializeField] protected ParticleSystem projectilePS;
     private bool startChecker = false;
-    [SerializeField]protected bool notDestroy = false;
+    [SerializeField] protected bool notDestroy = false;
 
     protected virtual void Start()
     {
@@ -43,7 +42,7 @@ public class HS_ProjectileMover : MonoBehaviour
     protected virtual IEnumerator DisableTimer(float time)
     {
         yield return new WaitForSeconds(time);
-        if(gameObject.activeSelf)
+        if (gameObject.activeSelf)
             gameObject.SetActive(false);
         yield break;
     }
@@ -67,7 +66,7 @@ public class HS_ProjectileMover : MonoBehaviour
     {
         if (speed != 0)
         {
-            rb.velocity = transform.forward * speed;      
+            rb.velocity = transform.forward * speed;
         }
     }
 

@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class HS_EffectSound : MonoBehaviour
 {
@@ -14,7 +12,7 @@ public class HS_EffectSound : MonoBehaviour
 
     private AudioSource soundComponent;
 
-    void Start ()
+    void Start()
     {
         soundComponent = GetComponent<AudioSource>();
         clip = soundComponent.clip;

@@ -1,10 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class HS_CallBackParent : MonoBehaviour
 {
-    [SerializeField]protected Transform parentObject;
+    [SerializeField] protected Transform parentObject;
 
     protected virtual void OnParticleSystemStopped()
     {
