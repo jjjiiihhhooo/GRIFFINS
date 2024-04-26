@@ -125,6 +125,7 @@ public class PlayerGroundedState : PlayerMovementState
         if (GameManager.Instance.dialogueManager.IsChat) return;
         if (stateMachine.Player.skillData.grappling) return;
         if (stateMachine.Player.swinging.swinging) return;
+        if (stateMachine.Player.isAttack) return;
 
         GameManager.Instance.staminaManager.MinusStamina(20f);
 

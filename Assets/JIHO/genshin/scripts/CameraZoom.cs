@@ -14,10 +14,12 @@ public class CameraZoom : MonoBehaviour
     [SerializeField][Range(0f, 20f)] private float smoothing = 4f;
     [SerializeField][Range(0f, 20f)] private float zoomSensitivity = 1f;
 
+
     private CinemachineFramingTransposer framingTransposer;
     private CinemachineInputProvider inputProvider;
     public CinemachineVirtualCamera virtualCamera;
 
+    private bool isZoom;
 
     private float currentTargetDistance;
 

@@ -46,6 +46,12 @@ public class CoolTimeManager : MonoBehaviour
             coolDic[name].curCoolTime -= Time.deltaTime;
             yield return new WaitForEndOfFrame();
         }
+
+        if(name == "CharacterChange")
+        {
+            GameManager.Instance.uiManager.ChangeAnim();
+        }
+
         coolDic[name].curCoolTime = 0;
     }
 
@@ -57,6 +63,7 @@ public class CoolTimeManager : MonoBehaviour
     public void GetCoolTime(string name)
     {
         coolDic[name].curCoolTime = coolDic[name].maxCoolTime;
+        StopCoroutine(CoolDownCor(name));
         StartCoroutine(CoolDownCor(name));
     }
 

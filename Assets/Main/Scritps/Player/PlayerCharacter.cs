@@ -21,6 +21,7 @@ public class PlayerCharacter
 
     public bool isGrappleReady;
     public bool followEnemy;
+    public bool isActionSkill;
     protected bool vectorReset;
 
     public int index;
@@ -49,9 +50,13 @@ public class PlayerCharacter
     public ParticleSystem curParticle;
     public ParticleSystem Right_Particle;
     public ParticleSystem E_Particle;
-    public ParticleSystem R_Particle;
+    public ParticleSystem Q_Particle;
     public ParticleSystem Chasing_Particle;
     public ParticleSystem[] normalAttackEffects;
+
+    [Header("Transform")]
+    public Transform Q_Transform;
+    public Transform E_Transform;
 
     public LayerMask animCheckLayer;
 
@@ -369,10 +374,6 @@ public class WhiteCharacter : PlayerCharacter
 
     public override void RightAction()
     {
-
-
-
-
 
         //if (player.skillData.isHand) Throw();
         //else Catch();
@@ -777,7 +778,6 @@ public class GreenCharacter : PlayerCharacter
                 GameObject.Instantiate(Chasing_Particle.gameObject, model.transform.position + Vector3.up, model.transform.rotation);
             }
 
-
             player.transform.forward = target.transform.position - player.transform.position;
             player.transform.eulerAngles = new Vector3(0f, player.transform.eulerAngles.y, 0f);
 
@@ -937,6 +937,7 @@ public class RedCharacter : PlayerCharacter
         FollowEnemy();
         RotationZero();
         AnimTransform();
+
     }
 
     public override void LeftAction()
@@ -974,6 +975,7 @@ public class RedCharacter : PlayerCharacter
         player.isAttack = true;
         player.transform.forward = Camera.main.transform.forward;
         player.transform.eulerAngles = new Vector3(0f, player.transform.eulerAngles.y, 0f);
+        OnlySingleton.Instance.red_E_cam.Priority = 11;
         player.Rigidbody.useGravity = false;
         curParticle = normalAttackEffects[2];
         curKnockback = knockbacks[3];
@@ -989,6 +991,7 @@ public class RedCharacter : PlayerCharacter
 
     private void Devastation()
     {
+        isActionSkill = true;
         player.Rigidbody.velocity = Vector3.zero;
         player.isAttack = true;
         player.transform.forward = Camera.main.transform.forward;
@@ -1069,24 +1072,28 @@ public class RedCharacter : PlayerCharacter
 
     public override void Q_AnimExit()
     {
-        base.Q_AnimExit();
+        GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["red_normalAttack1"], false);
+        GameObject temp = GameObject.Instantiate(Q_Particle.gameObject, model.transform.position, Quaternion.identity);
+        temp.transform.forward = player.transform.forward;
+        player.isAttack = false;
+        Q_AttackCol.gameObject.SetActive(true);
     }
 
     public override void E_AnimExit()
     {
         GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["red_normalAttack1"], false);
         player.isAttack = false;
+        OnlySingleton.Instance.red_E_cam.Priority = 9;
         GameObject.Instantiate(E_Particle.gameObject, model.transform.position, Quaternion.identity);
         player.Rigidbody.useGravity = true;
         E_AttackCol.gameObject.SetActive(true);
     }
 
+
+
     public override void R_AnimExit()
     {
-        GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["red_normalAttack1"], false);
-
-        player.isAttack = false;
-        R_AttackCol.gameObject.SetActive(true);
+        
     }
 
     public override void AttackMotion()

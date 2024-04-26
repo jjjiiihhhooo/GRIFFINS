@@ -284,7 +284,6 @@ public class Player : MonoBehaviour
 
         GameManager.Instance.uiManager.CharacterCharacter(index);
         currentCharacter.CharacterChange();
-
         //GameManager.Instance.uiManager.ChangeCharacterUI(index);
 
         characters[index].model.SetActive(true);

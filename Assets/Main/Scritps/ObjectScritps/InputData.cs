@@ -132,6 +132,7 @@ public class InputData : MonoBehaviour
             Debug.Log("whiteChange");
             
             player.ChangeCharacter(0);
+
         }
         else if (Input.GetKeyDown(GreenKey))
         {
@@ -146,5 +147,6 @@ public class InputData : MonoBehaviour
             player.ChangeCharacter(2);
         }
 
+        
     }
 }
