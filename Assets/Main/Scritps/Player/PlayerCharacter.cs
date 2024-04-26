@@ -349,6 +349,13 @@ public class PlayerCharacter
 [System.Serializable]
 public class WhiteCharacter : PlayerCharacter
 {
+
+    [SerializeField] private GameObject normal_projectile;
+    [SerializeField] private Transform fireTransform;
+    [SerializeField] private GameObject fireEffect;
+    [SerializeField] private GameObject psionicStormEffect;
+    [SerializeField] private GameObject explosionEffect;
+
     public override void Init(Player playerController)
     {
         base.Init(playerController);
@@ -362,15 +369,175 @@ public class WhiteCharacter : PlayerCharacter
 
     public override void Update()
     {
+        ExitAttack();
+        FollowEnemy();
+        AnimTransform();
         RotationZero();
     }
 
     public override void LeftAction()
     {
+        if (player.Animator.GetBool("isDashing")) return;
+        if (!player.isGround) return;
+        NormalAttack();
+    }
+
+    public override void NormalAttack()
+    {
+        if (followEnemy) return;
+
+        if (player.targetSet.targetEnemy != null)
+            target = player.targetSet.targetEnemy;
+        player.movementStateMachine.ChangeState(player.movementStateMachine.IdlingState);
+        AttackMotion();
+    }
+
+    public override void AttackMotion()
+    {
+        if (Time.time - lastComboEnd > 0.1f && comboCounter < attackAnim.Length && !player.isAttack)
+        {
+            player.CancelInvoke("EndCombo");
+            if (Time.time - lastClickedTime >= 0.4f)
+            {
+                player.isAttack = true;
+                player.currentCharacter.animator.Play(attackAnim[comboCounter].name, 3, 0f);
+                curParticle = normalAttackEffects[comboCounter];
+                curKnockback = knockbacks[comboCounter];
+                curKnockbackDir = knockbackDirs[comboCounter];
+                comboCounter++;
+                lastClickedTime = Time.time;
+
+                if (comboCounter >= attackAnim.Length)
+                {
+                    comboCounter = 0;
+                }
+
+                player.Rigidbody.velocity = Vector3.zero;
+
+                if (target != null)
+                {
+                    player.transform.forward = target.transform.position - player.transform.position;
+                    player.transform.eulerAngles = new Vector3(0f, player.transform.eulerAngles.y, 0f);
+                }
+            }
+        }
+    }
+
+    public override void Q_Action()
+    {
+        if (!GameManager.Instance.coolTimeManager.CoolCheck("White_Q")) return;
+        GameManager.Instance.coolTimeManager.GetCoolTime("White_Q");
+
+        Explosion();
+    }
+
+    private void Explosion()
+    {
+        player.Rigidbody.velocity = Vector3.zero;
+        player.isAttack = true;
+        player.transform.forward = Camera.main.transform.forward;
+        player.transform.eulerAngles = new Vector3(0f, player.transform.eulerAngles.y, 0f);
+        OnlySingleton.Instance.white_Q_cam.Priority = 11;
+        curParticle = normalAttackEffects[2];
+        curKnockback = knockbacks[4];
+        curKnockbackDir = knockbackDirs[4];
+
+        player.currentCharacter.animator.Play(Q_Anim.name, 3, 0f);
+    }
+
+    public override void E_Action()
+    {
+        if (!GameManager.Instance.coolTimeManager.CoolCheck("White_E")) return;
+        GameManager.Instance.coolTimeManager.GetCoolTime("White_E");
+
+        PsionicStorm();
+    }
+
+    private void PsionicStorm()
+    {
+        GameObject temp = GameObject.Instantiate(psionicStormEffect, player.transform.position, Quaternion.identity);
+        temp.SetActive(true);
+    }
+
+    public override void NormalAttackExit()
+    {
+        player.isAttack = false;
+        GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["red_normalAttack1"], false);
+        if(target != null)
+        {
+            Player.Instance.StartCoroutine(ProjectileCor());
+        }
+
+        GameObject temp_2 = GameObject.Instantiate(fireEffect, fireTransform.position, Quaternion.identity);
+        temp_2.transform.forward = player.transform.forward;
 
     }
 
+    private IEnumerator ProjectileCor()
+    {
+        for(int i = 0; i < 3; i++)
+        {   
+            if (target != null)
+            {
+                GameObject temp = GameObject.Instantiate(normal_projectile, fireTransform.position, Quaternion.identity);
+                temp.GetComponent<White_projectile>().target = target.transform;
+                temp.gameObject.SetActive(true);
+            }
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
 
+    public override void StrongAttackExit()
+    {
+        base.StrongAttackExit();
+    }
+
+    public override void Q_AnimExit()
+    {
+        OnlySingleton.Instance.white_Q_cam.Priority = 9;
+        Vector3 pos = player.transform.position + player.transform.forward * 20f;
+        OnlySingleton.Instance.camShake.ShakeCamera(7f, 0.1f);
+        GameObject temp = GameObject.Instantiate(explosionEffect, pos, Quaternion.identity);
+        temp.SetActive(true);
+    }
+
+    public override void E_AnimExit()
+    {
+        base.E_AnimExit();
+    }
+
+    public override float Q_Cool()
+    {
+        return GameManager.Instance.coolTimeManager.coolDic["White_Q"].curCoolTime /
+            GameManager.Instance.coolTimeManager.coolDic["White_Q"].maxCoolTime;
+    }
+
+    public override float E_Cool()
+    {
+        return GameManager.Instance.coolTimeManager.coolDic["White_E"].curCoolTime /
+           GameManager.Instance.coolTimeManager.coolDic["White_E"].maxCoolTime;
+    }
+
+    public override float Change_Cool()
+    {
+        return base.Change_Cool();
+    }
+    
+    public override void Sound(string name)
+    {
+        if (name == "jump")
+        {
+            GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["red_jump"], false);
+        }
+    }
+
+
+    #region No
+
+    public override void R_Action()
+    {
+
+    }
 
     public override void RightAction()
     {
@@ -378,33 +545,6 @@ public class WhiteCharacter : PlayerCharacter
         //if (player.skillData.isHand) Throw();
         //else Catch();
     }
-
-
-    public override void NormalAttack()
-    {
-
-    }
-
-    public override void AttackMotion()
-    {
-
-    }
-
-    public override void Q_Action()
-    {
-
-    }
-
-    public override void E_Action()
-    {
-
-    }
-
-    public override void R_Action()
-    {
-
-    }
-
 
     public override void ItemSave()
     {
@@ -615,24 +755,10 @@ public class WhiteCharacter : PlayerCharacter
         player.skillData.GhandObj = null;
     }
 
-    public override void NormalAttackExit()
+    public override float R_Cool()
     {
-        base.NormalAttackExit();
-    }
-
-    public override void StrongAttackExit()
-    {
-        base.StrongAttackExit();
-    }
-
-    public override void Q_AnimExit()
-    {
-        base.Q_AnimExit();
-    }
-
-    public override void E_AnimExit()
-    {
-        base.E_AnimExit();
+        return GameManager.Instance.coolTimeManager.coolDic["White_R"].curCoolTime /
+           GameManager.Instance.coolTimeManager.coolDic["White_R"].maxCoolTime;
     }
 
     public override void R_AnimExit()
@@ -645,29 +771,7 @@ public class WhiteCharacter : PlayerCharacter
         return GameManager.Instance.coolTimeManager.coolDic["White_Right"].curCoolTime /
             GameManager.Instance.coolTimeManager.coolDic["White_Right"].maxCoolTime;
     }
-
-    public override float Q_Cool()
-    {
-        return GameManager.Instance.coolTimeManager.coolDic["White_Q"].curCoolTime /
-            GameManager.Instance.coolTimeManager.coolDic["White_Q"].maxCoolTime;
-    }
-
-    public override float E_Cool()
-    {
-        return GameManager.Instance.coolTimeManager.coolDic["White_E"].curCoolTime /
-           GameManager.Instance.coolTimeManager.coolDic["White_E"].maxCoolTime;
-    }
-
-    public override float R_Cool()
-    {
-        return GameManager.Instance.coolTimeManager.coolDic["White_R"].curCoolTime /
-           GameManager.Instance.coolTimeManager.coolDic["White_R"].maxCoolTime;
-    }
-
-    public override float Change_Cool()
-    {
-        return base.Change_Cool();
-    }
+    #endregion
 }
 
 [System.Serializable]
@@ -704,45 +808,6 @@ public class GreenCharacter : PlayerCharacter
         NormalAttack();
     }
 
-    private void StartGrappleAnim()
-    {
-        if (isGrappleReady) return;
-        if (player.skillData.grapplingCdTimer > 0) return;
-        if (!GameManager.Instance.staminaManager.ChechStamina(20f)) return;
-        GameManager.Instance.staminaManager.MinusStamina(20f);
-        player.skillData.grapplingCdTimer = player.skillData.grapplingCd;
-        player.Rigidbody.velocity = Vector3.zero;
-        isGrappleReady = true;
-        player.movementStateMachine.ChangeState(player.movementStateMachine.FallingState);
-        player.Rigidbody.useGravity = false;
-        player.transform.rotation = player.CameraRecenteringUtility.VirtualCamera.transform.rotation;
-        player.transform.rotation = new Quaternion(0f, player.CameraRecenteringUtility.VirtualCamera.transform.rotation.y, 0f, player.transform.rotation.w);
-        grappleVec = Camera.main.transform.forward;
-
-        player.skillData.grapplePoint = model.transform.position + grappleVec * player.skillData.maxGrappleDistance;
-        //player.skillData.lr.enabled = false;
-        player.currentCharacter.animator.Play("GrappleReady", 2, 0f);
-    }
-
-    public override void RightAction()
-    {
-        base.RightAction();
-    }
-
-    public override void StartGrapple()
-    {
-        base.StartGrapple();
-    }
-
-    public override void ExecuteGrapple()
-    {
-        base.ExecuteGrapple();
-    }
-
-    public override void StopGrapple()
-    {
-        base.StopGrapple();
-    }
 
     public override void Q_Action()
     {
@@ -791,15 +856,19 @@ public class GreenCharacter : PlayerCharacter
         player.currentCharacter.animator.Play(E_Anim.name, 3, 0f);
     }
 
-    public override void E_AnimExit()
+    public override void NormalAttackExit()
     {
-        GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["red_normalAttack1"], false);
         player.isAttack = false;
-        OnlySingleton.Instance.green_E_cam.Priority = 9;
-        GameObject temp = GameObject.Instantiate(E_Particle.gameObject, model.transform.position, Quaternion.identity);
-        temp.transform.forward = player.transform.forward;
-        player.Rigidbody.useGravity = true;
-        E_AttackCol.gameObject.SetActive(true);
+        GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["red_normalAttack1"], false);
+        normalAttackCol.gameObject.SetActive(true);
+    }
+
+    public override void StrongAttackExit()
+    {
+        player.isAttack = false;
+        OnlySingleton.Instance.camShake.ShakeCamera(7f, 0.1f);
+        GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["red_normalAttack2"], false);
+        normalAttackCol_2.gameObject.SetActive(true);
     }
 
     public override void Q_AnimExit()
@@ -813,11 +882,15 @@ public class GreenCharacter : PlayerCharacter
         temp.gameObject.SetActive(true);
     }
 
-    public override void R_Action()
+    public override void E_AnimExit()
     {
-        if (!GameManager.Instance.coolTimeManager.CoolCheck("Green_R")) return;
-
-        GameManager.Instance.coolTimeManager.GetCoolTime("Green_R");
+        GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["red_normalAttack1"], false);
+        player.isAttack = false;
+        OnlySingleton.Instance.green_E_cam.Priority = 9;
+        GameObject temp = GameObject.Instantiate(E_Particle.gameObject, model.transform.position, Quaternion.identity);
+        temp.transform.forward = player.transform.forward;
+        player.Rigidbody.useGravity = true;
+        E_AttackCol.gameObject.SetActive(true);
     }
 
     public override void FollowEnemy()
@@ -830,6 +903,7 @@ public class GreenCharacter : PlayerCharacter
         if (target != null && Vector3.Distance(target.transform.position, player.transform.position) > attackArea)
         {
             time -= Time.deltaTime;
+            player.movementStateMachine.ChangeState(player.movementStateMachine.IdlingState);
             if (!animator.GetCurrentAnimatorStateInfo(3).IsName(followAnim.name))
             {
                 player.currentCharacter.animator.Play(followAnim.name, 3, 0f);
@@ -940,26 +1014,6 @@ public class GreenCharacter : PlayerCharacter
         }
     }
 
-    public override void NormalAttackExit()
-    {
-        player.isAttack = false;
-        GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["red_normalAttack1"], false);
-        normalAttackCol.gameObject.SetActive(true);
-    }
-
-    public override void StrongAttackExit()
-    {
-        player.isAttack = false;
-        OnlySingleton.Instance.camShake.ShakeCamera(7f, 0.1f);
-        GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["red_normalAttack2"], false);
-        normalAttackCol_2.gameObject.SetActive(true);
-    }
-    public override float Right_Cool()
-    {
-        return GameManager.Instance.coolTimeManager.coolDic["Green_Right"].curCoolTime /
-            GameManager.Instance.coolTimeManager.coolDic["Green_Right"].maxCoolTime;
-    }
-
     public override float Q_Cool()
     {
         return GameManager.Instance.coolTimeManager.coolDic["Green_Q"].curCoolTime /
@@ -972,16 +1026,71 @@ public class GreenCharacter : PlayerCharacter
             GameManager.Instance.coolTimeManager.coolDic["Green_E"].maxCoolTime;
     }
 
+    public override float Change_Cool()
+    {
+        return base.Change_Cool();
+    }
+
+
+    #region No
+    public override void R_Action()
+    {
+        if (!GameManager.Instance.coolTimeManager.CoolCheck("Green_R")) return;
+
+        GameManager.Instance.coolTimeManager.GetCoolTime("Green_R");
+    }
+    public override float Right_Cool()
+    {
+        return GameManager.Instance.coolTimeManager.coolDic["Green_Right"].curCoolTime /
+            GameManager.Instance.coolTimeManager.coolDic["Green_Right"].maxCoolTime;
+    }
+
+    private void StartGrappleAnim()
+    {
+        if (isGrappleReady) return;
+        if (player.skillData.grapplingCdTimer > 0) return;
+        if (!GameManager.Instance.staminaManager.ChechStamina(20f)) return;
+        GameManager.Instance.staminaManager.MinusStamina(20f);
+        player.skillData.grapplingCdTimer = player.skillData.grapplingCd;
+        player.Rigidbody.velocity = Vector3.zero;
+        isGrappleReady = true;
+        player.movementStateMachine.ChangeState(player.movementStateMachine.FallingState);
+        player.Rigidbody.useGravity = false;
+        player.transform.rotation = player.CameraRecenteringUtility.VirtualCamera.transform.rotation;
+        player.transform.rotation = new Quaternion(0f, player.CameraRecenteringUtility.VirtualCamera.transform.rotation.y, 0f, player.transform.rotation.w);
+        grappleVec = Camera.main.transform.forward;
+
+        player.skillData.grapplePoint = model.transform.position + grappleVec * player.skillData.maxGrappleDistance;
+        //player.skillData.lr.enabled = false;
+        player.currentCharacter.animator.Play("GrappleReady", 2, 0f);
+    }
+
     public override float R_Cool()
     {
         return GameManager.Instance.coolTimeManager.coolDic["Green_R"].curCoolTime /
             GameManager.Instance.coolTimeManager.coolDic["Green_R"].maxCoolTime;
     }
 
-    public override float Change_Cool()
+    public override void RightAction()
     {
-        return base.Change_Cool();
+        base.RightAction();
     }
+
+    public override void StartGrapple()
+    {
+        base.StartGrapple();
+    }
+
+    public override void ExecuteGrapple()
+    {
+        base.ExecuteGrapple();
+    }
+
+    public override void StopGrapple()
+    {
+        base.StopGrapple();
+    }
+    #endregion
 }
 
 [System.Serializable]
@@ -1015,11 +1124,6 @@ public class RedCharacter : PlayerCharacter
         NormalAttack();
     }
 
-    public override void RightAction()
-    {
-        base.RightAction();
-    }
-
     public override void Q_Action()
     {
         if (!GameManager.Instance.coolTimeManager.CoolCheck("Red_Q")) return;
@@ -1050,11 +1154,6 @@ public class RedCharacter : PlayerCharacter
         curKnockbackDir = knockbackDirs[3];
 
         player.currentCharacter.animator.Play(E_Anim.name, 3, 0f);
-    }
-
-    public override void R_Action()
-    {
-
     }
 
     private void Devastation()
@@ -1169,13 +1268,6 @@ public class RedCharacter : PlayerCharacter
         E_AttackCol.gameObject.SetActive(true);
     }
 
-
-
-    public override void R_AnimExit()
-    {
-
-    }
-
     public override void AttackMotion()
     {
         if (Time.time - lastComboEnd > 0.1f && comboCounter < attackAnim.Length && !player.isAttack)
@@ -1210,14 +1302,6 @@ public class RedCharacter : PlayerCharacter
 
     }
 
-    public override void Sound(string name)
-    {
-        if (name == "jump")
-        {
-            GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["red_jump"], false);
-        }
-    }
-
     public override void NormalAttack()
     {
         if (followEnemy) return;
@@ -1239,12 +1323,6 @@ public class RedCharacter : PlayerCharacter
         }
     }
 
-    public override float Right_Cool()
-    {
-        return GameManager.Instance.coolTimeManager.coolDic["Red_Right"].curCoolTime /
-            GameManager.Instance.coolTimeManager.coolDic["Red_Right"].maxCoolTime;
-    }
-
     public override float Q_Cool()
     {
         return GameManager.Instance.coolTimeManager.coolDic["Red_Q"].curCoolTime /
@@ -1257,15 +1335,43 @@ public class RedCharacter : PlayerCharacter
             GameManager.Instance.coolTimeManager.coolDic["Red_E"].maxCoolTime;
     }
 
+    public override float Change_Cool()
+    {
+        return base.Change_Cool();
+    }
+
+    public override void Sound(string name)
+    {
+        if (name == "jump")
+        {
+            GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["red_jump"], false);
+        }
+    }
+
+
+    #region No
+    public override void R_Action()
+    {
+
+    }
+    public override void R_AnimExit()
+    {
+
+    }
     public override float R_Cool()
     {
         return GameManager.Instance.coolTimeManager.coolDic["Red_R"].curCoolTime /
             GameManager.Instance.coolTimeManager.coolDic["Red_R"].maxCoolTime;
     }
-
-    public override float Change_Cool()
+    public override float Right_Cool()
     {
-        return base.Change_Cool();
+        return GameManager.Instance.coolTimeManager.coolDic["Red_Right"].curCoolTime /
+            GameManager.Instance.coolTimeManager.coolDic["Red_Right"].maxCoolTime;
     }
+    public override void RightAction()
+    {
+        base.RightAction();
+    }
+    #endregion
 }
 

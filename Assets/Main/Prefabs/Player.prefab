@@ -59,8 +59,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 3.13, y: 2.09, z: 5.26}
-  m_Center: {x: 0, y: 1.04, z: 3.06}
+  m_Size: {x: 6, y: 2.09, z: 6.46}
+  m_Center: {x: 0, y: 1.04, z: 3.59}
 --- !u!1 &801795069
 GameObject:
   m_ObjectHideFlags: 0
@@ -606,6 +606,37 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &2014009240
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2014009241}
+  m_Layer: 0
+  m_Name: FireTransform
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2014009241
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2014009240}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3958439995398736965}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1644282416777760
 GameObject:
   m_ObjectHideFlags: 0
@@ -6439,6 +6470,37 @@ Transform:
   - {fileID: 3461983579105584923}
   m_Father: {fileID: 1198799440540875376}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3634161627405085396
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1053171079570174109}
+  m_Layer: 0
+  m_Name: White_Q_Transform
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1053171079570174109
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3634161627405085396}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.073, y: 1.65, z: -3.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6786805432400480841}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3648392570494438623
 GameObject:
@@ -48150,9 +48212,12 @@ MonoBehaviour:
     player: {fileID: 4943424079398178706}
     target: {fileID: 0}
     model: {fileID: 311569915311873479}
-    attackAnim: []
-    Q_Anim: {fileID: 0}
-    E_Anim: {fileID: 0}
+    attackAnim:
+    - {fileID: 7400000, guid: c2afcf59af7061548aa17a6d3d0d6776, type: 2}
+    - {fileID: 7400000, guid: c2afcf59af7061548aa17a6d3d0d6776, type: 2}
+    - {fileID: 7400000, guid: c2afcf59af7061548aa17a6d3d0d6776, type: 2}
+    Q_Anim: {fileID: 7400000, guid: 4f85809d08cc62f49a562b9bf52a05c6, type: 2}
+    E_Anim: {fileID: 7400000, guid: c2afcf59af7061548aa17a6d3d0d6776, type: 2}
     R_Anim: {fileID: 0}
     followAnim: {fileID: 0}
     isGrappleReady: 0
@@ -48168,25 +48233,43 @@ MonoBehaviour:
     Q_AttackCol: {fileID: 0}
     E_AttackCol: {fileID: 0}
     R_AttackCol: {fileID: 0}
-    targetArea: 0
+    targetArea: 25
     attackArea: 0
     followSpeed: 0
-    knockbacks: []
+    knockbacks:
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
     curKnockback: 0
     curParticle: {fileID: 0}
     Right_Particle: {fileID: 0}
-    E_Particle: {fileID: 0}
-    Q_Particle: {fileID: 0}
-    Chasing_Particle: {fileID: 0}
-    normalAttackEffects: []
+    E_Particle: {fileID: 198178008105517744, guid: 269d2ea7c26f5a943b27f22403a1417b, type: 3}
+    Q_Particle: {fileID: 198178008105517744, guid: 269d2ea7c26f5a943b27f22403a1417b, type: 3}
+    Chasing_Particle: {fileID: 198178008105517744, guid: 269d2ea7c26f5a943b27f22403a1417b, type: 3}
+    normalAttackEffects:
+    - {fileID: 198285461679219400, guid: 42eec05d614490a4487bc722ec0d9aea, type: 3}
+    - {fileID: 198406564588387756, guid: 98e859f4c90281b458f61d8656ad9369, type: 3}
+    - {fileID: 198178008105517744, guid: 269d2ea7c26f5a943b27f22403a1417b, type: 3}
     Q_Transform: {fileID: 0}
     E_Transform: {fileID: 0}
     animCheckLayer:
       serializedVersion: 2
-      m_Bits: 0
-    knockbackDirs: []
+      m_Bits: 2176
+    knockbackDirs:
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
     curKnockbackDir: {x: 0, y: 0, z: 0}
     time: 0
+    normal_projectile: {fileID: 737575270001804770, guid: 2696c2db57d7a7742aa43aabf3826f1f, type: 3}
+    fireTransform: {fileID: 2014009241}
+    fireEffect: {fileID: 1347330118340980, guid: 42eec05d614490a4487bc722ec0d9aea, type: 3}
+    psionicStormEffect: {fileID: 3157896834441741635, guid: 4e6b25c3fbfc7aa47a89ba65162abb5c, type: 3}
+    explosionEffect: {fileID: 4549978591083210952, guid: 2487cb595507e8f4d93094602ef17bb0, type: 3}
   greenCharacter:
     animator: {fileID: 7416860150122619575}
     player: {fileID: 4943424079398178706}
@@ -48220,8 +48303,8 @@ MonoBehaviour:
     - 0.5
     - 0.5
     - 0.5
-    - 1
-    - 2
+    - 3
+    - 5
     curKnockback: 0
     curParticle: {fileID: 0}
     Right_Particle: {fileID: 0}
@@ -48241,7 +48324,7 @@ MonoBehaviour:
     - {x: 0, y: 0, z: 0}
     - {x: 0, y: 0, z: 0}
     - {x: 0, y: 0, z: 0}
-    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 1, z: 0}
     - {x: 0, y: 0, z: 0}
     curKnockbackDir: {x: 0, y: 0, z: 0}
     time: 0
@@ -78260,6 +78343,7 @@ Transform:
   - {fileID: 814580743324702140}
   - {fileID: 3780231264869893640}
   - {fileID: 2394537014466114894}
+  - {fileID: 1053171079570174109}
   m_Father: {fileID: 4943424079398178705}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -78911,6 +78995,7 @@ Transform:
   - {fileID: 5257803474777616407}
   - {fileID: 1721403627891664578}
   - {fileID: 8652857875746610407}
+  - {fileID: 2014009241}
   m_Father: {fileID: 7520000218099497131}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

@@ -9,7 +9,8 @@ public class OnlySingleton : MonoBehaviour
     public Transform normalTransform;
     public CinemachineVirtualCamera red_E_cam;
     public CinemachineVirtualCamera green_E_cam;
-
+    public CinemachineVirtualCamera white_Q_cam;
+    
 
 
     private void Awake()

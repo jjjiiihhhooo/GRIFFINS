@@ -25,6 +25,7 @@ public class Dragon_Projectile : MonoBehaviour
     {
         col = GetComponent<SphereCollider>();
         Player.Instance.currentCharacter.curKnockbackDir = Vector3.up;
+        Player.Instance.currentCharacter.curKnockback = 2;
         for(int i = 0; i < 10; i++)
         {
             col.enabled = true;
