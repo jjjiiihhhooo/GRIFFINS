@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -31,7 +32,6 @@ public class Enemy
     public bool backHpHit;
 
     public bool isAction;
-    public bool isHit;
 
     public Vector3 knockbackDir;
 
@@ -158,9 +158,9 @@ public class Normal_Enemy : Enemy
     {
         if (target == null) target = Player.Instance.transform;
 
-        if (isHit)
+        if (enemyController.isHit)
         {
-            hitDelay -= Time.deltaTime;
+            enemyController.hitCool -= Time.deltaTime;
             Vector3 playerPos = new Vector3(target.transform.position.x, enemyController.transform.position.y, target.transform.position.z);
             Vector3 KnockbackDir;
 
@@ -173,10 +173,10 @@ public class Normal_Enemy : Enemy
             enemyController.rigid.velocity = Vector3.zero;
             enemyController.rigid.AddForce(KnockbackDir * knockback, ForceMode.VelocityChange);
 
-            if (hitDelay < 0)
+            if (enemyController.hitCool < 0)
             {
                 enemyController.rigid.velocity = Vector3.zero;
-                isHit = false;
+                enemyController.isHit = false;
             }
             return;
         }
@@ -213,7 +213,10 @@ public class Normal_Enemy : Enemy
 
         enemyController.transform.LookAt(target.transform);
         enemyController.transform.eulerAngles = new Vector3(0f, enemyController.transform.eulerAngles.y, 0f);
-
+        
+        //enemyController.rigid.AddForce(enemyController.transform.forward.normalized * moveSpeed , ForceMode.VelocityChange);
+        
+        //enemyController.rigid.velocity = enemyController.transform.forward * moveSpeed;
         enemyController.transform.position = enemyController.transform.position + enemyController.transform.forward.normalized * moveSpeed * Time.deltaTime;
     }
 
@@ -222,9 +225,6 @@ public class Normal_Enemy : Enemy
 
         enemyController.uiShowDelay = 4f;
         enemyController.canvas.gameObject.SetActive(true);
-
-        hitDelay = 0.2f;
-        isHit = true;
 
         //if (animator != null) animator.Play("GetDamage", 0, 0);
         curHp -= damage;

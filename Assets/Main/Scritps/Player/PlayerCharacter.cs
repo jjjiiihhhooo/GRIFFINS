@@ -62,6 +62,8 @@ public class PlayerCharacter
     public Vector3 curKnockbackDir;
     protected Vector3 grappleVec;
 
+    public float time;
+
 
     public virtual void Init(Player playerController)
     {
@@ -671,6 +673,8 @@ public class WhiteCharacter : PlayerCharacter
 [System.Serializable]
 public class GreenCharacter : PlayerCharacter
 {
+    [SerializeField] private GameObject dragon_projectile;
+
     public override void Init(Player playerController)
     {
         base.Init(playerController);
@@ -745,9 +749,24 @@ public class GreenCharacter : PlayerCharacter
         if (!GameManager.Instance.coolTimeManager.CoolCheck("Green_Q")) return;
 
         GameManager.Instance.coolTimeManager.GetCoolTime("Green_Q");
+
+        Dragon();
     }
 
+    private void Dragon()
+    {
+        player.Rigidbody.velocity = Vector3.zero;
+        player.isAttack = true;
+        player.transform.forward = Camera.main.transform.forward;
+        player.transform.eulerAngles = new Vector3(0f, player.transform.eulerAngles.y, 0f);
+        //OnlySingleton.Instance.green_E_cam.Priority = 11;
+        player.Rigidbody.useGravity = false;
+        curParticle = normalAttackEffects[2];
+        curKnockback = knockbacks[3];
+        curKnockbackDir = knockbackDirs[3];
 
+        player.currentCharacter.animator.Play(Q_Anim.name, 3, 0f);
+    }
 
     public override void E_Action()
     {
@@ -777,9 +796,21 @@ public class GreenCharacter : PlayerCharacter
         GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["red_normalAttack1"], false);
         player.isAttack = false;
         OnlySingleton.Instance.green_E_cam.Priority = 9;
-        GameObject.Instantiate(E_Particle.gameObject, model.transform.position, Quaternion.identity);
+        GameObject temp = GameObject.Instantiate(E_Particle.gameObject, model.transform.position, Quaternion.identity);
+        temp.transform.forward = player.transform.forward;
         player.Rigidbody.useGravity = true;
         E_AttackCol.gameObject.SetActive(true);
+    }
+
+    public override void Q_AnimExit()
+    {
+        GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["red_normalAttack1"], false);
+        player.isAttack = false;
+        GameObject.Instantiate(Q_Particle.gameObject, model.transform.position, Quaternion.identity);
+        player.Rigidbody.useGravity = true;
+        GameObject temp = GameObject.Instantiate(dragon_projectile, model.transform.position + Vector3.up, Quaternion.identity);
+        temp.transform.forward = player.transform.forward;
+        temp.gameObject.SetActive(true);
     }
 
     public override void R_Action()
@@ -796,8 +827,9 @@ public class GreenCharacter : PlayerCharacter
         if (target == null) { followEnemy = false; return; };
 
 
-        if (Vector3.Distance(target.transform.position, player.transform.position) > attackArea)
+        if (target != null && Vector3.Distance(target.transform.position, player.transform.position) > attackArea)
         {
+            time -= Time.deltaTime;
             if (!animator.GetCurrentAnimatorStateInfo(3).IsName(followAnim.name))
             {
                 player.currentCharacter.animator.Play(followAnim.name, 3, 0f);
@@ -809,7 +841,13 @@ public class GreenCharacter : PlayerCharacter
 
             RaycastHit hit;
 
-            if (Physics.Raycast(player.transform.position, player.transform.forward, out hit, Vector3.Distance(target.transform.position, player.transform.position), player.skillData.grappleMask))
+            if(time < 0)
+            {
+                FollowExit();
+                return;
+            }
+
+            if (target != null && Physics.Raycast(player.transform.position, player.transform.forward, out hit, Vector3.Distance(target.transform.position, player.transform.position), player.skillData.grappleMask))
             {
                 FollowExit();
                 return;
@@ -836,6 +874,7 @@ public class GreenCharacter : PlayerCharacter
         curParticle = normalAttackEffects[2];
         curKnockback = knockbacks[2];
         curKnockbackDir = knockbackDirs[2];
+        player.transform.forward = target.transform.position - player.transform.position;
         player.currentCharacter.animator.Play(attackAnim[2].name, 3, 0f);
         followEnemy = false;
         comboCounter = 0;
@@ -850,7 +889,10 @@ public class GreenCharacter : PlayerCharacter
 
             target = player.targetSet.targetEnemy;
             if (Vector3.Distance(target.transform.position, player.transform.position) > attackArea)
+            {
                 followEnemy = true;
+                time = 0.5f;
+            }
             else AttackMotion();
         }
         else
@@ -1035,25 +1077,34 @@ public class RedCharacter : PlayerCharacter
         if (target == null) { followEnemy = false; return; };
 
 
-        if (Vector3.Distance(target.transform.position, player.transform.position) > attackArea)
+        if (target != null && Vector3.Distance(target.transform.position, player.transform.position) > attackArea)
         {
+            time -= Time.deltaTime;
+            player.movementStateMachine.ChangeState(player.movementStateMachine.IdlingState);
             if (!animator.GetCurrentAnimatorStateInfo(3).IsName(followAnim.name))
             {
                 player.currentCharacter.animator.Play(followAnim.name, 3, 0f);
                 GameObject.Instantiate(Chasing_Particle.gameObject, model.transform.position + Vector3.up, model.transform.rotation);
             }
 
-
             player.transform.forward = target.transform.position - player.transform.position;
             player.transform.eulerAngles = new Vector3(0f, player.transform.eulerAngles.y, 0f);
 
             RaycastHit hit;
 
-            if (Physics.Raycast(player.transform.position, player.transform.forward, out hit, Vector3.Distance(target.transform.position, player.transform.position), player.skillData.grappleMask))
+            if(time < 0)
             {
                 FollowExit();
                 return;
             }
+
+            if (target != null && Physics.Raycast(player.transform.position, player.transform.forward, out hit, Vector3.Distance(target.transform.position, player.transform.position), player.skillData.grappleMask))
+            {
+                FollowExit();
+                return;
+            }
+
+
 
             player.Rigidbody.velocity = Vector3.zero;
             player.Rigidbody.AddForce(player.transform.forward * followSpeed, ForceMode.VelocityChange);
@@ -1076,6 +1127,8 @@ public class RedCharacter : PlayerCharacter
         curParticle = normalAttackEffects[2];
         curKnockback = knockbacks[2];
         curKnockbackDir = knockbackDirs[2];
+        player.Rigidbody.velocity = Vector3.zero;
+        player.transform.forward = target.transform.position - player.transform.position;
         player.currentCharacter.animator.Play(attackAnim[2].name, 3, 0f);
         followEnemy = false;
         comboCounter = 0;
@@ -1110,7 +1163,8 @@ public class RedCharacter : PlayerCharacter
         GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["red_normalAttack1"], false);
         player.isAttack = false;
         OnlySingleton.Instance.red_E_cam.Priority = 9;
-        GameObject.Instantiate(E_Particle.gameObject, model.transform.position, Quaternion.identity);
+        GameObject temp = GameObject.Instantiate(E_Particle.gameObject, model.transform.position, Quaternion.identity);
+        temp.transform.forward = player.transform.forward;
         player.Rigidbody.useGravity = true;
         E_AttackCol.gameObject.SetActive(true);
     }
@@ -1173,7 +1227,10 @@ public class RedCharacter : PlayerCharacter
 
             target = player.targetSet.targetEnemy;
             if (Vector3.Distance(target.transform.position, player.transform.position) > attackArea)
+            {
                 followEnemy = true;
+                time = 0.5f;
+            }
             else AttackMotion();
         }
         else

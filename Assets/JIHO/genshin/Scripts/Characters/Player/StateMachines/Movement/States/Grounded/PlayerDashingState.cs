@@ -18,7 +18,7 @@ public class PlayerDashingState : PlayerGroundedState
     public override void Enter()
     {
         stateMachine.ReusableData.MovementSpeedModifier = groundedData.DashData.SpeedModifier;
-
+        stateMachine.Player.currentCharacter.animator.SetLayerWeight(3, 0);
         base.Enter();
 
         EffectActive(stateMachine.Player.dashEffect, true);
@@ -40,6 +40,7 @@ public class PlayerDashingState : PlayerGroundedState
 
     public override void Exit()
     {
+        stateMachine.Player.currentCharacter.animator.SetLayerWeight(3, 1);
         base.Exit();
 
         EffectActive(stateMachine.Player.dashEffect, false);

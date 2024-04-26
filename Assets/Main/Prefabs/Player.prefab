@@ -5733,6 +5733,67 @@ Transform:
   m_Father: {fileID: 8498197523931436996}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3289464815194551968
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1535784648040699724}
+  - component: {fileID: 360096888153706559}
+  - component: {fileID: 3153878664666623340}
+  m_Layer: 0
+  m_Name: Green_DragonAttackCol
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1535784648040699724
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3289464815194551968}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4943424078580569078}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &360096888153706559
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3289464815194551968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3cfc397da3fd1048843198b5fc40ded, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  time: 0.1
+  damage: 200
+  otherTag: Enemy
+--- !u!65 &3153878664666623340
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3289464815194551968}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3.13, y: 2.09, z: 5.26}
+  m_Center: {x: 0, y: 1.04, z: 3.06}
 --- !u!1 &3299424912076795203
 GameObject:
   m_ObjectHideFlags: 0
@@ -6435,7 +6496,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3668693151197217653}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.35, y: 2.22, z: -0}
+  m_LocalPosition: {x: 1.26, y: 1.57, z: -4.07}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -9337,6 +9398,7 @@ Transform:
   - {fileID: 2185539572649738493}
   - {fileID: 662845089587766963}
   - {fileID: 540552089}
+  - {fileID: 1535784648040699724}
   m_Father: {fileID: 4943424079398178705}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -48124,6 +48186,7 @@ MonoBehaviour:
       m_Bits: 0
     knockbackDirs: []
     curKnockbackDir: {x: 0, y: 0, z: 0}
+    time: 0
   greenCharacter:
     animator: {fileID: 7416860150122619575}
     player: {fileID: 4943424079398178706}
@@ -48133,8 +48196,8 @@ MonoBehaviour:
     - {fileID: 7400000, guid: 0ce8c00efc6b87148a60256c9a5271c0, type: 2}
     - {fileID: 7400000, guid: 42907c535412b5b4f8a8546b1213e07e, type: 2}
     - {fileID: 7400000, guid: 4a3faac237fe87d48978d2e1420b72bb, type: 2}
-    Q_Anim: {fileID: 0}
-    E_Anim: {fileID: 0}
+    Q_Anim: {fileID: 7400000, guid: 5d426e45ca2d0a040832fa7cc84c50a3, type: 2}
+    E_Anim: {fileID: 7400000, guid: c5596780a3a6bb941a25d69a525aa271, type: 2}
     R_Anim: {fileID: 0}
     followAnim: {fileID: 7400000, guid: ced75be3290af0741987a49bc769f234, type: 2}
     isGrappleReady: 0
@@ -48147,23 +48210,23 @@ MonoBehaviour:
     lastComboEnd: 0
     normalAttackCol: {fileID: 7953770746103701267}
     normalAttackCol_2: {fileID: 2228946302037379760}
-    Q_AttackCol: {fileID: 0}
+    Q_AttackCol: {fileID: 360096888153706559}
     E_AttackCol: {fileID: 540552091}
     R_AttackCol: {fileID: 0}
-    targetArea: 12
+    targetArea: 8
     attackArea: 3
     followSpeed: 15
     knockbacks:
-    - 0.3
-    - 0.3
-    - 0.3
-    - 0.7
-    - 0.7
+    - 0.5
+    - 0.5
+    - 0.5
+    - 1
+    - 2
     curKnockback: 0
     curParticle: {fileID: 0}
     Right_Particle: {fileID: 0}
-    E_Particle: {fileID: 0}
-    Q_Particle: {fileID: 0}
+    E_Particle: {fileID: 172729094580288441, guid: 7416fef74936c2143b7f3da3118078c7, type: 3}
+    Q_Particle: {fileID: 310365506411822839, guid: 944664efe22f6ae428cf357a30d78284, type: 3}
     Chasing_Particle: {fileID: 1107324212316225835, guid: 15c637eff0bed914eaea2a1a7953a57a, type: 3}
     normalAttackEffects:
     - {fileID: 172729094580288441, guid: 7416fef74936c2143b7f3da3118078c7, type: 3}
@@ -48178,9 +48241,11 @@ MonoBehaviour:
     - {x: 0, y: 0, z: 0}
     - {x: 0, y: 0, z: 0}
     - {x: 0, y: 0, z: 0}
-    - {x: 0, y: 1, z: 0}
-    - {x: 0, y: 1, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
     curKnockbackDir: {x: 0, y: 0, z: 0}
+    time: 0
+    dragon_projectile: {fileID: 6204870102194752054, guid: 825e0b4246e9de949ba13eebb500ef21, type: 3}
   redCharacter:
     animator: {fileID: 3890982889359641450}
     player: {fileID: 4943424079398178706}
@@ -48207,15 +48272,15 @@ MonoBehaviour:
     Q_AttackCol: {fileID: 8023782338582125332}
     E_AttackCol: {fileID: 2302569346801337710}
     R_AttackCol: {fileID: 0}
-    targetArea: 12
+    targetArea: 8
     attackArea: 3
     followSpeed: 15
     knockbacks:
-    - 0.3
-    - 0.3
-    - 0.3
-    - 0.7
+    - 0.5
+    - 0.5
+    - 0.5
     - 3
+    - 5
     curKnockback: 0
     curParticle: {fileID: 0}
     Right_Particle: {fileID: 0}
@@ -48238,6 +48303,7 @@ MonoBehaviour:
     - {x: 0, y: 1, z: 0}
     - {x: 0, y: 0, z: 0}
     curKnockbackDir: {x: 0, y: 0, z: 0}
+    time: 0
   maxHp: 100
   curHp: 0
   dir: {x: 0, y: 0, z: 0}

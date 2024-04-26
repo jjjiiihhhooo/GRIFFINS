@@ -167,6 +167,7 @@ public class PlayerMovementState : IState
     private void Move()
     {
         if (stateMachine.Player.isAttack) return;
+        if (stateMachine.Player.currentCharacter.animator.GetCurrentAnimatorStateInfo(3).IsTag("Attack")) return;
         if (GameManager.Instance.dialogueManager.IsChat) return;
 
         if (stateMachine.ReusableData.MovementInput == Vector2.zero || stateMachine.ReusableData.MovementSpeedModifier == 0f)

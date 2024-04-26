@@ -123,7 +123,7 @@ public class PlayerGroundedState : PlayerMovementState
         if (stateMachine.Player.isAttack) return;
 
         GameManager.Instance.staminaManager.MinusStamina(20f);
-
+        
         stateMachine.ChangeState(stateMachine.DashingState);
     }
 

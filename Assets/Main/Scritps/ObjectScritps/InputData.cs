@@ -67,19 +67,19 @@ public class InputData : MonoBehaviour
             player.currentCharacter.LeftAction();
         }
 
-        if (Input.GetKeyDown(RightAction) && player.currentCharacter.GetType() != typeof(GreenCharacter))
-        {
-            player.currentCharacter.RightAction();
-        }
-        else if (Input.GetKeyDown(RightAction) && player.currentCharacter.GetType() == typeof(GreenCharacter))
-        {
-            player.swinging.StartSwing();
-        }
+        //if (Input.GetKeyDown(RightAction) && player.currentCharacter.GetType() != typeof(GreenCharacter))
+        //{
+        //    player.currentCharacter.RightAction();
+        //}
+        //else if (Input.GetKeyDown(RightAction) && player.currentCharacter.GetType() == typeof(GreenCharacter))
+        //{
+        //    player.swinging.StartSwing();
+        //}
 
-        if (Input.GetKeyUp(RightAction) && player.currentCharacter.GetType() == typeof(GreenCharacter))
-        {
-            player.swinging.StopSwing();
-        }
+        //if (Input.GetKeyUp(RightAction) && player.currentCharacter.GetType() == typeof(GreenCharacter))
+        //{
+        //    player.swinging.StopSwing();
+        //}
 
         if (Input.GetKeyDown(itemSaveKey))
         {

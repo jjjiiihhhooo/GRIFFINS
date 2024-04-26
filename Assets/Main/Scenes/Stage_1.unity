@@ -357,9 +357,6 @@ MonoBehaviour:
     - Name: isAction
       Entry: 5
       Data: false
-    - Name: isHit
-      Entry: 5
-      Data: false
     - Name: knockbackDir
       Entry: 7
       Data: UnityEngine.Vector3, UnityEngine.CoreModule
@@ -399,6 +396,7 @@ MonoBehaviour:
   isHit: 0
   maxHitCool: 0.3
   uiShowDelay: 0
+  hitCool: 0.1
 --- !u!1 &6157508
 GameObject:
   m_ObjectHideFlags: 0
@@ -6624,7 +6622,7 @@ MonoBehaviour:
       Data: 0
     - Name: moveSpeed
       Entry: 4
-      Data: 1
+      Data: 3
     - Name: attackDamage
       Entry: 4
       Data: 1
@@ -6653,9 +6651,6 @@ MonoBehaviour:
       Entry: 5
       Data: false
     - Name: isAction
-      Entry: 5
-      Data: false
-    - Name: isHit
       Entry: 5
       Data: false
     - Name: knockbackDir
@@ -6697,6 +6692,7 @@ MonoBehaviour:
   isHit: 0
   maxHitCool: 0.1
   uiShowDelay: 0
+  hitCool: 0.1
 --- !u!1 &226476697
 GameObject:
   m_ObjectHideFlags: 0
@@ -9957,30 +9953,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 24833004, guid: 54f585b81b650c249a28b22ce73c7885, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 24833004, guid: 54f585b81b650c249a28b22ce73c7885, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1703356775, guid: 54f585b81b650c249a28b22ce73c7885, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1703356775, guid: 54f585b81b650c249a28b22ce73c7885, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1768939555, guid: 54f585b81b650c249a28b22ce73c7885, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1768939555, guid: 54f585b81b650c249a28b22ce73c7885, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 794910029088164304, guid: 54f585b81b650c249a28b22ce73c7885, type: 3}
       propertyPath: serializationData.Prefab
       value: 
@@ -12017,9 +11989,6 @@ MonoBehaviour:
     - Name: isAction
       Entry: 5
       Data: false
-    - Name: isHit
-      Entry: 5
-      Data: false
     - Name: knockbackDir
       Entry: 7
       Data: UnityEngine.Vector3, UnityEngine.CoreModule
@@ -12059,6 +12028,7 @@ MonoBehaviour:
   isHit: 0
   maxHitCool: 0.3
   uiShowDelay: 0
+  hitCool: 0.1
 --- !u!1 &455735896
 GameObject:
   m_ObjectHideFlags: 0
@@ -26900,9 +26870,6 @@ MonoBehaviour:
     - Name: isAction
       Entry: 5
       Data: false
-    - Name: isHit
-      Entry: 5
-      Data: false
     - Name: knockbackDir
       Entry: 7
       Data: UnityEngine.Vector3, UnityEngine.CoreModule
@@ -26942,6 +26909,7 @@ MonoBehaviour:
   isHit: 0
   maxHitCool: 0.3
   uiShowDelay: 0
+  hitCool: 0.1
 --- !u!64 &989962296
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -27922,9 +27890,6 @@ MonoBehaviour:
     - Name: isAction
       Entry: 5
       Data: false
-    - Name: isHit
-      Entry: 5
-      Data: false
     - Name: knockbackDir
       Entry: 7
       Data: UnityEngine.Vector3, UnityEngine.CoreModule
@@ -27964,6 +27929,7 @@ MonoBehaviour:
   isHit: 0
   maxHitCool: 0.3
   uiShowDelay: 0
+  hitCool: 0.1
 --- !u!64 &1010912966
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -33845,7 +33811,7 @@ MonoBehaviour:
       Data: 0
     - Name: moveSpeed
       Entry: 4
-      Data: 1
+      Data: 3
     - Name: attackDamage
       Entry: 4
       Data: 1
@@ -33874,9 +33840,6 @@ MonoBehaviour:
       Entry: 5
       Data: false
     - Name: isAction
-      Entry: 5
-      Data: false
-    - Name: isHit
       Entry: 5
       Data: false
     - Name: knockbackDir
@@ -33918,6 +33881,7 @@ MonoBehaviour:
   isHit: 0
   maxHitCool: 0.1
   uiShowDelay: 0
+  hitCool: 0.1
 --- !u!64 &1209459670
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -38580,7 +38544,7 @@ MonoBehaviour:
       Data: 0
     - Name: moveSpeed
       Entry: 4
-      Data: 1
+      Data: 3
     - Name: attackDamage
       Entry: 4
       Data: 1
@@ -38609,9 +38573,6 @@ MonoBehaviour:
       Entry: 5
       Data: false
     - Name: isAction
-      Entry: 5
-      Data: false
-    - Name: isHit
       Entry: 5
       Data: false
     - Name: knockbackDir
@@ -38653,6 +38614,7 @@ MonoBehaviour:
   isHit: 0
   maxHitCool: 0.1
   uiShowDelay: 0
+  hitCool: 0.1
 --- !u!1 &1372328465
 GameObject:
   m_ObjectHideFlags: 0
@@ -54186,9 +54148,6 @@ MonoBehaviour:
     - Name: isAction
       Entry: 5
       Data: false
-    - Name: isHit
-      Entry: 5
-      Data: false
     - Name: knockbackDir
       Entry: 7
       Data: UnityEngine.Vector3, UnityEngine.CoreModule
@@ -54228,6 +54187,7 @@ MonoBehaviour:
   isHit: 0
   maxHitCool: 0.3
   uiShowDelay: 0
+  hitCool: 0.1
 --- !u!1 &1673727162
 GameObject:
   m_ObjectHideFlags: 0
@@ -57641,9 +57601,6 @@ MonoBehaviour:
     - Name: isAction
       Entry: 5
       Data: false
-    - Name: isHit
-      Entry: 5
-      Data: false
     - Name: knockbackDir
       Entry: 7
       Data: UnityEngine.Vector3, UnityEngine.CoreModule
@@ -57683,6 +57640,7 @@ MonoBehaviour:
   isHit: 0
   maxHitCool: 0.3
   uiShowDelay: 0
+  hitCool: 0.1
 --- !u!64 &1778688123
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -59008,7 +58966,7 @@ MonoBehaviour:
       Data: 0
     - Name: moveSpeed
       Entry: 4
-      Data: 1
+      Data: 3
     - Name: attackDamage
       Entry: 4
       Data: 1
@@ -59037,9 +58995,6 @@ MonoBehaviour:
       Entry: 5
       Data: false
     - Name: isAction
-      Entry: 5
-      Data: false
-    - Name: isHit
       Entry: 5
       Data: false
     - Name: knockbackDir
@@ -59081,6 +59036,7 @@ MonoBehaviour:
   isHit: 0
   maxHitCool: 0.1
   uiShowDelay: 0
+  hitCool: 0.1
 --- !u!1 &1830262478
 GameObject:
   m_ObjectHideFlags: 0
@@ -60245,7 +60201,7 @@ MonoBehaviour:
       Data: 0
     - Name: moveSpeed
       Entry: 4
-      Data: 1
+      Data: 3
     - Name: attackDamage
       Entry: 4
       Data: 1
@@ -60274,9 +60230,6 @@ MonoBehaviour:
       Entry: 5
       Data: false
     - Name: isAction
-      Entry: 5
-      Data: false
-    - Name: isHit
       Entry: 5
       Data: false
     - Name: knockbackDir
@@ -60318,6 +60271,7 @@ MonoBehaviour:
   isHit: 0
   maxHitCool: 0.1
   uiShowDelay: 0
+  hitCool: 0.1
 --- !u!64 &1865400985
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -84898,7 +84852,7 @@ MonoBehaviour:
       Data: 0
     - Name: moveSpeed
       Entry: 4
-      Data: 1
+      Data: 3
     - Name: attackDamage
       Entry: 4
       Data: 1
@@ -84927,9 +84881,6 @@ MonoBehaviour:
       Entry: 5
       Data: false
     - Name: isAction
-      Entry: 5
-      Data: false
-    - Name: isHit
       Entry: 5
       Data: false
     - Name: knockbackDir
@@ -84971,6 +84922,7 @@ MonoBehaviour:
   isHit: 0
   maxHitCool: 0.1
   uiShowDelay: 0
+  hitCool: 0.1
 --- !u!4 &3882574449273942902
 Transform:
   m_ObjectHideFlags: 0
@@ -85124,10 +85076,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 799499853952794638, guid: eefddb4d058dc7049a1cfaee4b193de9, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2143864241363218876, guid: eefddb4d058dc7049a1cfaee4b193de9, type: 3}
       propertyPath: m_Follow
       value: 
@@ -85184,38 +85132,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3912300992441684447, guid: eefddb4d058dc7049a1cfaee4b193de9, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 62.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3912300992441684447, guid: eefddb4d058dc7049a1cfaee4b193de9, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.23
-      objectReference: {fileID: 0}
-    - target: {fileID: 3912300992441684447, guid: eefddb4d058dc7049a1cfaee4b193de9, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -43.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 3912300992441684447, guid: eefddb4d058dc7049a1cfaee4b193de9, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3912300992441684447, guid: eefddb4d058dc7049a1cfaee4b193de9, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3912300992441684447, guid: eefddb4d058dc7049a1cfaee4b193de9, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3912300992441684447, guid: eefddb4d058dc7049a1cfaee4b193de9, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3912300993202486189, guid: eefddb4d058dc7049a1cfaee4b193de9, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3912300993202486194, guid: eefddb4d058dc7049a1cfaee4b193de9, type: 3}
       propertyPath: m_Follow
       value: 
@@ -85224,70 +85140,6 @@ PrefabInstance:
       propertyPath: m_LookAt
       value: 
       objectReference: {fileID: 580981150}
-    - target: {fileID: 3912300993202486195, guid: eefddb4d058dc7049a1cfaee4b193de9, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 62.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3912300993202486195, guid: eefddb4d058dc7049a1cfaee4b193de9, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.23
-      objectReference: {fileID: 0}
-    - target: {fileID: 5180236605541729010, guid: eefddb4d058dc7049a1cfaee4b193de9, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 62.340885
-      objectReference: {fileID: 0}
-    - target: {fileID: 5180236605541729010, guid: eefddb4d058dc7049a1cfaee4b193de9, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 4.776606
-      objectReference: {fileID: 0}
-    - target: {fileID: 5180236605541729010, guid: eefddb4d058dc7049a1cfaee4b193de9, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -43.640472
-      objectReference: {fileID: 0}
-    - target: {fileID: 5180236605541729010, guid: eefddb4d058dc7049a1cfaee4b193de9, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.964969
-      objectReference: {fileID: 0}
-    - target: {fileID: 5180236605541729010, guid: eefddb4d058dc7049a1cfaee4b193de9, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0.26234213
-      objectReference: {fileID: 0}
-    - target: {fileID: 5180236605541729010, guid: eefddb4d058dc7049a1cfaee4b193de9, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0.0032657366
-      objectReference: {fileID: 0}
-    - target: {fileID: 5180236605541729010, guid: eefddb4d058dc7049a1cfaee4b193de9, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0.0008878424
-      objectReference: {fileID: 0}
-    - target: {fileID: 5725855509992578384, guid: eefddb4d058dc7049a1cfaee4b193de9, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 63.604603
-      objectReference: {fileID: 0}
-    - target: {fileID: 5725855509992578384, guid: eefddb4d058dc7049a1cfaee4b193de9, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.582036
-      objectReference: {fileID: 0}
-    - target: {fileID: 5725855509992578384, guid: eefddb4d058dc7049a1cfaee4b193de9, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -41.814075
-      objectReference: {fileID: 0}
-    - target: {fileID: 5725855509992578384, guid: eefddb4d058dc7049a1cfaee4b193de9, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.98797065
-      objectReference: {fileID: 0}
-    - target: {fileID: 5725855509992578384, guid: eefddb4d058dc7049a1cfaee4b193de9, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0.03935818
-      objectReference: {fileID: 0}
-    - target: {fileID: 5725855509992578384, guid: eefddb4d058dc7049a1cfaee4b193de9, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0.1494306
-      objectReference: {fileID: 0}
-    - target: {fileID: 5725855509992578384, guid: eefddb4d058dc7049a1cfaee4b193de9, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0.0059529273
-      objectReference: {fileID: 0}
     - target: {fileID: 7871471667616869727, guid: eefddb4d058dc7049a1cfaee4b193de9, type: 3}
       propertyPath: m_Follow
       value: 
@@ -85296,10 +85148,6 @@ PrefabInstance:
       propertyPath: m_LookAt
       value: 
       objectReference: {fileID: 580981150}
-    - target: {fileID: 8103722500953274941, guid: eefddb4d058dc7049a1cfaee4b193de9, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eefddb4d058dc7049a1cfaee4b193de9, type: 3}
 --- !u!1 &3919131457947552570
@@ -90789,26 +90637,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 311569915311873479, guid: c88bd6aa48cd9f9458e2144aa4fee5f3, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2394537014466114894, guid: c88bd6aa48cd9f9458e2144aa4fee5f3, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 1.26
-      objectReference: {fileID: 0}
-    - target: {fileID: 2394537014466114894, guid: c88bd6aa48cd9f9458e2144aa4fee5f3, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.57
-      objectReference: {fileID: 0}
-    - target: {fileID: 2394537014466114894, guid: c88bd6aa48cd9f9458e2144aa4fee5f3, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -4.07
-      objectReference: {fileID: 0}
-    - target: {fileID: 4271109520312410743, guid: c88bd6aa48cd9f9458e2144aa4fee5f3, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4943424079398178705, guid: c88bd6aa48cd9f9458e2144aa4fee5f3, type: 3}
       propertyPath: m_RootOrder
       value: 7
@@ -90857,14 +90685,6 @@ PrefabInstance:
       propertyPath: text
       value: 
       objectReference: {fileID: 1178062215}
-    - target: {fileID: 4943424079398178706, guid: c88bd6aa48cd9f9458e2144aa4fee5f3, type: 3}
-      propertyPath: greenCharacter.E_Anim
-      value: 
-      objectReference: {fileID: 7400000, guid: c5596780a3a6bb941a25d69a525aa271, type: 2}
-    - target: {fileID: 4943424079398178706, guid: c88bd6aa48cd9f9458e2144aa4fee5f3, type: 3}
-      propertyPath: greenCharacter.E_Particle
-      value: 
-      objectReference: {fileID: 172729094580288441, guid: 7416fef74936c2143b7f3da3118078c7, type: 3}
     - target: {fileID: 4943424079398178706, guid: c88bd6aa48cd9f9458e2144aa4fee5f3, type: 3}
       propertyPath: <CameraRecenteringUtility>k__BackingField.<VirtualCamera>k__BackingField
       value: 

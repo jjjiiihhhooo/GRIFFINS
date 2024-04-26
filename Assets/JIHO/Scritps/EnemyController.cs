@@ -28,7 +28,7 @@ public class EnemyController : SerializedMonoBehaviour
 
     public float uiShowDelay;
 
-    private float hitCool = 0.1f;
+    public float hitCool = 0.1f;
 
     private Vector3 dummy = Vector3.zero;
 
@@ -46,11 +46,7 @@ public class EnemyController : SerializedMonoBehaviour
     {
         enemy.EnemyUpdate();
 
-        if (isHit)
-        {
-            if (hitCool > 0) hitCool -= Time.deltaTime;
-            else isHit = false;
-        }
+        
     }
 
     private void UIUpdate()
@@ -177,7 +173,6 @@ public class EnemyController : SerializedMonoBehaviour
     public void DamageMessage(float _knockback, Vector3 _knockbackDir, float damage, Vector3 targetPos, ParticleSystem particle = null)
     {
         if (isHit) return;
-
         isHit = true;
         hitCool = maxHitCool;
         enemy.modelShakeTime = 0.1f;
