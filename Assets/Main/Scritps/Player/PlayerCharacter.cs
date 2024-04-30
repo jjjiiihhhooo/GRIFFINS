@@ -10,6 +10,8 @@ public class PlayerCharacter
     public EnemyController target;
 
     public GameObject model;
+    public GameObject cutScene;
+
 
     public AnimationClip[] attackAnim;
     public AnimationClip Q_Anim;
@@ -310,6 +312,12 @@ public class PlayerCharacter
             model.transform.localPosition = Vector3.zero;
         }
     }
+
+    public virtual void CutSceneEvent(GameObject cut)
+    {
+
+    }
+
 
     public IEnumerator outLineCor(Outline outLine, float value, float oper, float pitch)
     {
@@ -815,11 +823,25 @@ public class GreenCharacter : PlayerCharacter
 
         GameManager.Instance.coolTimeManager.GetCoolTime("Green_Q");
 
+        DragonAnim();
+    }
+
+    private void DragonAnim()
+    {
+        GameObject temp =  GameObject.Instantiate(cutScene, player.transform.position, Quaternion.identity);
+        temp.SetActive(true);
+    }
+
+
+    public override void CutSceneEvent(GameObject cut)
+    {
+        GameObject.Destroy(cut);
         Dragon();
     }
 
     private void Dragon()
     {
+        player.movementStateMachine.ChangeState(player.movementStateMachine.IdlingState);
         player.Rigidbody.velocity = Vector3.zero;
         player.isAttack = true;
         player.transform.forward = Camera.main.transform.forward;
@@ -843,6 +865,7 @@ public class GreenCharacter : PlayerCharacter
 
     private void Gust()
     {
+        player.movementStateMachine.ChangeState(player.movementStateMachine.IdlingState);
         player.Rigidbody.velocity = Vector3.zero;
         player.isAttack = true;
         player.transform.forward = Camera.main.transform.forward;
