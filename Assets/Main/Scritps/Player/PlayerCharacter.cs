@@ -1245,6 +1245,7 @@ public class RedCharacter : PlayerCharacter
     public override void FollowAttack()
     {
         player.isAttack = true;
+        handParticle[2].SetActive(true);
         curParticle = normalAttackEffects[2];
         curKnockback = knockbacks[2];
         curKnockbackDir = knockbackDirs[2];
@@ -1299,9 +1300,10 @@ public class RedCharacter : PlayerCharacter
             {
                 player.isAttack = true;
                 player.currentCharacter.animator.Play(attackAnim[comboCounter].name, 3, 0f);
-                GameObject temp = GameObject.Instantiate(handParticle[comboCounter], handTransform[comboCounter].transform);
-                temp.transform.position = temp.transform.parent.transform.position;
-                temp.SetActive(true);
+                handParticle[comboCounter].SetActive(true);
+                //GameObject temp = GameObject.Instantiate(handParticle[comboCounter], handTransform[comboCounter].transform);
+                //temp.transform.position = temp.transform.parent.transform.position;
+                //temp.SetActive(true);
                 curParticle = normalAttackEffects[comboCounter];
                 curKnockback = knockbacks[comboCounter];
                 curKnockbackDir = knockbackDirs[comboCounter];

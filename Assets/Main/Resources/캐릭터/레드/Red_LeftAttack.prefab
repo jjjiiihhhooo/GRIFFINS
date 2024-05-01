@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4284411682528870817}
   - component: {fileID: 4284411682528870816}
-  - component: {fileID: 6139386346138361430}
   m_Layer: 0
   m_Name: Red_LeftAttack
   m_TagString: Untagged
@@ -26,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4284411682528870831}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.07, y: 0, z: -1.63}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -49,23 +48,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selfdestruct_in: 0.5
---- !u!114 &6139386346138361430
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4284411682528870831}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_IsGlobal: 1
-  priority: 0
-  blendDistance: 0
-  weight: 1
-  sharedProfile: {fileID: 11400000, guid: e8c4c2f63aa6f9449a152182f758aed0, type: 2}
 --- !u!1 &4620005397321691108
 GameObject:
   m_ObjectHideFlags: 0
@@ -157,8 +139,8 @@ TrailRenderer:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.26037687
-        value: 0.14286366
+        time: 0.4142236
+        value: 0.11602345
         inSlope: 1.8590332
         outSlope: 1.8590332
         tangentMode: 0
@@ -166,8 +148,8 @@ TrailRenderer:
         inWeight: 0.33333334
         outWeight: 0.85948104
       - serializedVersion: 3
-        time: 0.5240198
-        value: 0.4168889
+        time: 0.4737268
+        value: 0.14171952
         inSlope: -0.24268389
         outSlope: -0.24268389
         tangentMode: 0
@@ -298,7 +280,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 0.2
+  m_Time: 0.3
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -315,8 +297,8 @@ TrailRenderer:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 0.2377319
-        value: 0.15935934
+        time: 0.43299863
+        value: 0.15264547
         inSlope: 1.7834743
         outSlope: 1.7834743
         tangentMode: 0
@@ -324,8 +306,8 @@ TrailRenderer:
         inWeight: 0.33333334
         outWeight: 0.54118305
       - serializedVersion: 3
-        time: 0.5053472
-        value: 0.3342175
+        time: 0.49054617
+        value: 0.15301174
         inSlope: -0.79209054
         outSlope: -0.79209054
         tangentMode: 0
@@ -456,7 +438,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 0.2
+  m_Time: 0.3
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -473,8 +455,8 @@ TrailRenderer:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 0.2377319
-        value: 0.15935934
+        time: 0.43299863
+        value: 0.15264547
         inSlope: 1.7834743
         outSlope: 1.7834743
         tangentMode: 0
@@ -482,8 +464,8 @@ TrailRenderer:
         inWeight: 0.33333334
         outWeight: 0.54118305
       - serializedVersion: 3
-        time: 0.5053472
-        value: 0.3342175
+        time: 0.49054617
+        value: 0.15301174
         inSlope: -0.79209054
         outSlope: -0.79209054
         tangentMode: 0
