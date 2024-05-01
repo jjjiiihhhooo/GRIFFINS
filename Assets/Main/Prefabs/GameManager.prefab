@@ -2158,7 +2158,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ee05cdc20586e54780882f5eb908c48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  crossHair: {fileID: 719263522491789985}
+  canvas: {fileID: 1184086353}
   playerHp: {fileID: 792132124867922732}
   playerBackHp: {fileID: 0}
   bossBackHp: {fileID: 473325574}
@@ -4054,6 +4054,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8652625044806181607}
   - component: {fileID: 794910029088164304}
+  - component: {fileID: 357052116}
   m_Layer: 0
   m_Name: TimelineManager
   m_TagString: Untagged
@@ -4099,6 +4100,25 @@ MonoBehaviour:
     SerializationNodes: []
   playableAsset: {fileID: 0}
   playableDirecter: {fileID: 0}
+--- !u!320 &357052116
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4551397908439048131}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: 79dc11eb68eb05b45ad57309099dbbb6, type: 2}
+  m_InitialState: 1
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings:
+  - key: {fileID: 1817949860054925006, guid: 79dc11eb68eb05b45ad57309099dbbb6, type: 2}
+    value: {fileID: 0}
+  m_ExposedReferences:
+    m_References: []
 --- !u!1 &4629785310717664385
 GameObject:
   m_ObjectHideFlags: 0
@@ -7644,11 +7664,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f0d4afb9625fa554f9dd140059d41400, type: 3}
---- !u!1 &719263522491789985 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3258358077294087436, guid: f0d4afb9625fa554f9dd140059d41400, type: 3}
-  m_PrefabInstance: {fileID: 2649054689834270637}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &719263522491789986 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3258358077294087439, guid: f0d4afb9625fa554f9dd140059d41400, type: 3}

@@ -82,6 +82,8 @@ public class PlayerAnimationEventTrigger : MonoBehaviour
         player.currentCharacter.E_AnimExit();
     }
 
+
+
     public void R_AttackExit()
     {
         player.currentCharacter.R_AnimExit();

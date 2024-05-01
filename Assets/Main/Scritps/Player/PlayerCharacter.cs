@@ -11,6 +11,8 @@ public class PlayerCharacter
 
     public GameObject model;
     public GameObject cutScene;
+    public GameObject[] handParticle;
+    public GameObject[] handTransform;
 
 
     public AnimationClip[] attackAnim;
@@ -318,7 +320,6 @@ public class PlayerCharacter
 
     }
 
-
     public IEnumerator outLineCor(Outline outLine, float value, float oper, float pitch)
     {
         if (oper > 0f)
@@ -579,7 +580,6 @@ public class WhiteCharacter : PlayerCharacter
     private void PutDown(bool save = false)
     {
         if (!player.skillData.isHand || player.skillData.handObj == null) return;
-        GameManager.Instance.uiManager.crossHair.SetActive(false);
         GameManager.Instance.staminaManager.staminaImage.transform.parent.GetComponent<RectTransform>().anchoredPosition = new Vector3(62f, 35.4f, 0f);
         Rigidbody rigid = player.skillData.handObj.GetComponent<Rigidbody>();
         CameraZoom camZoom = player.skillData.camZoom;
@@ -623,7 +623,7 @@ public class WhiteCharacter : PlayerCharacter
         }
 
         if (player.currentCharacter.animator.GetCurrentAnimatorStateInfo(1).IsName("Idle") || player.currentCharacter.animator.GetCurrentAnimatorStateInfo(1).IsName("Throw")) return;
-        GameManager.Instance.uiManager.crossHair.SetActive(true);
+        
 
         GameManager.Instance.staminaManager.staminaImage.transform.parent.GetComponent<RectTransform>().anchoredPosition = new Vector3(140f, 35.4f, 0f);
         //GameManager.Instance.staminaManager.staminaImage.rectTransform.anchoredPosition = new Vector3(140f, 35.4f, 0f);
@@ -671,7 +671,6 @@ public class WhiteCharacter : PlayerCharacter
     private void Throw()
     {
         if (!player.skillData.isHand || player.skillData.handObj == null) return;
-        GameManager.Instance.uiManager.crossHair.SetActive(false);
         GameManager.Instance.staminaManager.staminaImage.transform.parent.GetComponent<RectTransform>().anchoredPosition = new Vector3(62f, 35.4f, 0f);
         Rigidbody rigid = player.skillData.handObj.GetComponent<Rigidbody>();
         CameraZoom camZoom = player.skillData.camZoom;
@@ -1300,6 +1299,9 @@ public class RedCharacter : PlayerCharacter
             {
                 player.isAttack = true;
                 player.currentCharacter.animator.Play(attackAnim[comboCounter].name, 3, 0f);
+                GameObject temp = GameObject.Instantiate(handParticle[comboCounter], handTransform[comboCounter].transform);
+                temp.transform.position = temp.transform.parent.transform.position;
+                temp.SetActive(true);
                 curParticle = normalAttackEffects[comboCounter];
                 curKnockback = knockbacks[comboCounter];
                 curKnockbackDir = knockbackDirs[comboCounter];

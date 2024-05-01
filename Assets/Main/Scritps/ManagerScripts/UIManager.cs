@@ -5,8 +5,7 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-
-    public GameObject crossHair;
+    public Canvas canvas;
 
     [Header("Player")]
     public Image playerHp;

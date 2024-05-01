@@ -17,7 +17,7 @@ Material:
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 3000
+  m_CustomRenderQueue: -1
   stringTagMap:
     RenderType: Transparent
   disabledShaderPasses:
@@ -124,20 +124,19 @@ Material:
     - _Surface: 1
     - _UVSec: 0
     - _Usecenterglow: 0
-    - _Usecustomrandom: 0
     - _Usedepth: 1
     - _ZTest: 4
     - _ZWrite: 0
     - _ZWriteControl: 0
     m_Colors:
-    - _Color: {r: 0.8018868, g: 0.07186719, b: 0.07186719, a: 1}
+    - _Color: {r: 1, g: 0, b: 0, a: 1}
     - _DistortionSpeedXYPowerZ: {r: 0, g: 0, b: 0, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpeedMainTexUVNoiseUV: {r: 0, g: 0, b: 0, a: 0}
     - _SpeedMainTexUVNoiseZW: {r: 0, g: 0, b: 0, a: 0}
     - _TintColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
---- !u!114 &6405295205606668556
+--- !u!114 &7361796768504417543
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
