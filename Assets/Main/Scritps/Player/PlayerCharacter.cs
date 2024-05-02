@@ -20,6 +20,7 @@ public class PlayerCharacter
     public AnimationClip E_Anim;
     public AnimationClip R_Anim;
     public AnimationClip followAnim;
+    
 
     public bool isGrappleReady;
     public bool followEnemy;
@@ -315,6 +316,11 @@ public class PlayerCharacter
         }
     }
 
+    public virtual void SkillCoolTimeResetAnim(int index)
+    {
+
+    }
+
     public virtual void CutSceneEvent(GameObject cut)
     {
 
@@ -531,7 +537,22 @@ public class WhiteCharacter : PlayerCharacter
     {
         return base.Change_Cool();
     }
-    
+
+    public override void SkillCoolTimeResetAnim(int index)
+    {
+        if (index == 0)
+        {
+            GameManager.Instance.uiManager.Q_Skill_Icon.SetActive(true);
+            GameManager.Instance.uiManager.Q_Skill_Icon.GetComponent<Animator>().Play("Q", 0);
+        }
+        else if (index == 1)
+        {
+            GameManager.Instance.uiManager.E_Skill_Icon.SetActive(true);
+            GameManager.Instance.uiManager.E_Skill_Icon.GetComponent<Animator>().Play("E", 0);
+
+        }
+    }
+
     public override void Sound(string name)
     {
         if (name == "jump")
@@ -1053,6 +1074,20 @@ public class GreenCharacter : PlayerCharacter
         return base.Change_Cool();
     }
 
+    public override void SkillCoolTimeResetAnim(int index)
+    {
+        if (index == 2)
+        {
+            GameManager.Instance.uiManager.Q_Skill_Icon.SetActive(true);
+            GameManager.Instance.uiManager.Q_Skill_Icon.GetComponent<Animator>().Play("Q", 0);
+        }
+        else if (index == 3)
+        {
+            GameManager.Instance.uiManager.E_Skill_Icon.SetActive(true);
+            GameManager.Instance.uiManager.E_Skill_Icon.GetComponent<Animator>().Play("E", 0);
+
+        }
+    }
 
     #region No
     public override void R_Action()
@@ -1365,6 +1400,21 @@ public class RedCharacter : PlayerCharacter
     public override float Change_Cool()
     {
         return base.Change_Cool();
+    }
+
+    public override void SkillCoolTimeResetAnim(int index)
+    {
+        if (index == 4)
+        {
+            GameManager.Instance.uiManager.Q_Skill_Icon.SetActive(true);
+            GameManager.Instance.uiManager.Q_Skill_Icon.GetComponent<Animator>().Play("Q", 0);
+        }
+        else if (index == 5)
+        {
+            GameManager.Instance.uiManager.E_Skill_Icon.SetActive(true);
+            GameManager.Instance.uiManager.E_Skill_Icon.GetComponent<Animator>().Play("E", 0);
+
+        }
     }
 
     public override void Sound(string name)

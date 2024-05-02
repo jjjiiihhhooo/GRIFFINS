@@ -16,6 +16,8 @@ public class UIManager : MonoBehaviour
     public Slider bossHp;
     public Slider bossTiming;
 
+    public GameObject Q_Skill_Icon;
+    public GameObject E_Skill_Icon;
 
     [Header("DotweenAnimation")]
     public DOTweenAnimation playerHpDotween;
