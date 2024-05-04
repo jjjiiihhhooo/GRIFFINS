@@ -543,12 +543,12 @@ public class WhiteCharacter : PlayerCharacter
         if (index == 0)
         {
             GameManager.Instance.uiManager.Q_Skill_Icon.SetActive(true);
-            GameManager.Instance.uiManager.Q_Skill_Icon.GetComponent<Animator>().Play("Q", 0);
+            GameManager.Instance.uiManager.Q_Skill_Icon.GetComponent<Animator>().Play("Effect", 0);
         }
         else if (index == 1)
         {
             GameManager.Instance.uiManager.E_Skill_Icon.SetActive(true);
-            GameManager.Instance.uiManager.E_Skill_Icon.GetComponent<Animator>().Play("E", 0);
+            GameManager.Instance.uiManager.E_Skill_Icon.GetComponent<Animator>().Play("Effect", 0);
 
         }
     }
@@ -1079,12 +1079,12 @@ public class GreenCharacter : PlayerCharacter
         if (index == 2)
         {
             GameManager.Instance.uiManager.Q_Skill_Icon.SetActive(true);
-            GameManager.Instance.uiManager.Q_Skill_Icon.GetComponent<Animator>().Play("Q", 0);
+            GameManager.Instance.uiManager.Q_Skill_Icon.GetComponent<Animator>().Play("QEffect", 0);
         }
         else if (index == 3)
         {
             GameManager.Instance.uiManager.E_Skill_Icon.SetActive(true);
-            GameManager.Instance.uiManager.E_Skill_Icon.GetComponent<Animator>().Play("E", 0);
+            GameManager.Instance.uiManager.E_Skill_Icon.GetComponent<Animator>().Play("Effect", 0);
 
         }
     }
@@ -1407,12 +1407,12 @@ public class RedCharacter : PlayerCharacter
         if (index == 4)
         {
             GameManager.Instance.uiManager.Q_Skill_Icon.SetActive(true);
-            GameManager.Instance.uiManager.Q_Skill_Icon.GetComponent<Animator>().Play("Q", 0);
+            GameManager.Instance.uiManager.Q_Skill_Icon.GetComponent<Animator>().Play("Effect", 0);
         }
         else if (index == 5)
         {
             GameManager.Instance.uiManager.E_Skill_Icon.SetActive(true);
-            GameManager.Instance.uiManager.E_Skill_Icon.GetComponent<Animator>().Play("E", 0);
+            GameManager.Instance.uiManager.E_Skill_Icon.GetComponent<Animator>().Play("Effect", 0);
 
         }
     }

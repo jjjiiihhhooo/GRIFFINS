@@ -62,6 +62,7 @@ public class InputData : MonoBehaviour
     {
         if (Player.Instance.currentCharacter.isGrappleReady) return;
         if (!Player.Instance.isGround) return;
+        if (Player.Instance.isAttack) return;
         if (Input.GetKeyDown(LeftAction))
         {
             player.currentCharacter.LeftAction();
@@ -90,8 +91,7 @@ public class InputData : MonoBehaviour
         {
             player.currentCharacter.Q_Action();
         }
-
-        if (Input.GetKeyDown(E))
+        else if (Input.GetKeyDown(E))
         {
             player.currentCharacter.E_Action();
         }
