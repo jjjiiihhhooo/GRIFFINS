@@ -63,6 +63,8 @@ public class InputData : MonoBehaviour
         if (Player.Instance.currentCharacter.isGrappleReady) return;
         if (!Player.Instance.isGround) return;
         if (Player.Instance.isAttack) return;
+
+
         if (Input.GetKeyDown(LeftAction))
         {
             player.currentCharacter.LeftAction();

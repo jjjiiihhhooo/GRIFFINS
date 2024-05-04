@@ -964,7 +964,7 @@ public class GreenCharacter : PlayerCharacter
                 return;
             }
 
-            if (target != null && Physics.Raycast(player.transform.position, player.transform.forward, out hit, Vector3.Distance(target.transform.position, player.transform.position), player.skillData.grappleMask))
+            if (target != null && Physics.Raycast(player.transform.position, player.transform.forward, out hit, Vector3.Distance(target.transform.position, player.transform.position), player.LayerData.GroundLayer))
             {
                 FollowExit();
                 return;
@@ -1186,7 +1186,6 @@ public class RedCharacter : PlayerCharacter
         if (!GameManager.Instance.coolTimeManager.CoolCheck("Red_Q")) return;
 
         GameManager.Instance.coolTimeManager.GetCoolTime("Red_Q");
-
         Devastation();
     }
 
@@ -1254,7 +1253,7 @@ public class RedCharacter : PlayerCharacter
                 return;
             }
 
-            if (target != null && Physics.Raycast(player.transform.position, player.transform.forward, out hit, Vector3.Distance(target.transform.position, player.transform.position), player.skillData.grappleMask))
+            if (target != null && Physics.Raycast(player.transform.position, player.transform.forward, out hit, Vector3.Distance(target.transform.position, player.transform.position), player.LayerData.GroundLayer))
             {
                 FollowExit();
                 return;

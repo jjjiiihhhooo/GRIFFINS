@@ -13,7 +13,7 @@ public class TestWave : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.P))
         {
             Instantiate(temp, Player.Instance.transform.position, Quaternion.identity);
-            FindObjectOfType<QuestManager>().QuestInput(FindObjectOfType<CurrentQuest>());
+            FindObjectOfType<QuestManager>().QuestInput(FindObjectOfType<QuestContainer>().curQuest);
         }
     }
 }

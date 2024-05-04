@@ -19,7 +19,9 @@ public class GameManager : SerializedMonoBehaviour
     public DialogueManager dialogueManager;
     public UIManager uiManager;
     public CoolTimeManager coolTimeManager;
-    public CurrentQuest currentQuest;
+    public QuestManager questManager;
+    public MiniMapManager miniMapManager;
+    public MinimapCam d;
     public Transform predictionHitTransform;
 
     public Dictionary<string, UnityEvent> event_dictionary;

@@ -8,7 +8,6 @@ using UnityEngine.Rendering.Universal;
 
 public class QuestManager : SerializedMonoBehaviour
 {
-    public Dictionary<string, QuestBox> questDictionary;
 
     public QuestBox curQuest;
 
@@ -87,11 +86,11 @@ public class QuestManager : SerializedMonoBehaviour
         //}
     }
 
-    public void QuestInput(CurrentQuest quest)
+    public void QuestInput(QuestBox quest)
     {
         //UpdateQuest();
         titleText.text = quest.QuestTitleText;
-        curQuest = quest.curQuest;
+        curQuest = quest;
         titleLogo.DORestartById("Start");
         QuestSetText();
         questUIdatas[0].GetComponent<DOTweenAnimation>().DORestartById("Start");

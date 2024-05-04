@@ -154,8 +154,8 @@ public class Player : MonoBehaviour
         ray = new Ray(new Vector3(transform.position.x, transform.position.y + 2f, transform.position.z), dir);
         camRay = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
 
-        if (skillData.touch) return;
-        if (swinging.swinging) return;
+        //if (skillData.touch) return;
+        //if (swinging.swinging) return;
         if (currentCharacter.animator.GetCurrentAnimatorStateInfo(1).IsName("Idle") || currentCharacter.animator.GetCurrentAnimatorStateInfo(1).IsName("Throw"))
         {
             transform.rotation = CameraRecenteringUtility.VirtualCamera.transform.rotation;
@@ -170,26 +170,26 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (skillData.touch) return;
-        if (swinging.swinging) return;
+        //if (skillData.touch) return;
+        //if (swinging.swinging) return;
         movementStateMachine.PhysicsUpdate();
     }
 
     private void OnTriggerEnter(Collider collider)
     {
-        if (skillData.touch)
-        {
-            skillData.touch = false;
+        //if (skillData.touch)
+        //{
+        //    skillData.touch = false;
 
-            currentCharacter.StopGrapple();
-            //skillData.StopGrapple();
-        }
+        //    currentCharacter.StopGrapple();
+        //    //skillData.StopGrapple();
+        //}
 
-        if (swinging.swinging)
-        {
-            swinging.swinging = false;
-            swinging.StopSwing();
-        }
+        //if (swinging.swinging)
+        //{
+        //    swinging.swinging = false;
+        //    swinging.StopSwing();
+        //}
 
         if (collider.tag == "EnemyAttackCol")
         {

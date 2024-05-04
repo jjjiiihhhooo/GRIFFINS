@@ -11,6 +11,7 @@ public enum QuestType
 [System.Serializable]
 public class QuestBox
 {
+    public string QuestTitleText;
     public QuestData[] QuestDatas;
     public UnityEvent clear_event = null;
 }
