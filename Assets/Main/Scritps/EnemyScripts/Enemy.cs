@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Data;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
@@ -27,6 +28,8 @@ public class Enemy
     public float hitDelay;
     public float knockback;
 
+    protected Transform target;
+
     public float modelShakeTime;
 
     public bool backHpHit;
@@ -40,6 +43,7 @@ public class Enemy
     public virtual void Init(EnemyController controller)
     {
         Debug.Log("ddddd");
+        if (Player.Instance != null) target = Player.Instance.transform;
         enemyController = controller;
         animator = controller.animator;
         curHp = maxHp;
@@ -92,6 +96,19 @@ public class Enemy
     {
 
     }
+
+    public virtual Vector3 CalculateJumpVelocity(Vector3 startPoint, Vector3 endPoint, float trajectoryHeight) //목표 위치까지 포물선 trajectoryHeight 높이 추가
+    {
+        float gravity = Physics.gravity.y;
+        float displacementY = endPoint.y - startPoint.y;
+        Vector3 displacementXZ = new Vector3(endPoint.x - startPoint.x, 0f, endPoint.z - startPoint.z);
+
+        Vector3 velocityY = Vector3.up * Mathf.Sqrt(-2 * gravity * trajectoryHeight);
+        Vector3 velocityXZ = displacementXZ / (Mathf.Sqrt(-2 * trajectoryHeight / gravity)
+          + Mathf.Sqrt(2 * (displacementY - trajectoryHeight) / gravity));
+
+        return (velocityXZ + velocityY);
+    }
 }
 
 [System.Serializable]
@@ -100,8 +117,6 @@ public class Normal_Enemy : Enemy
 
     public float coolTime = 2f;
     public float curTime = 2f;
-
-    private Transform target;
 
     public override void Init(EnemyController controller)
     {
@@ -325,26 +340,14 @@ public class Epic_1_Enemy : Epic_Enemy
 
 }
 
-
 [System.Serializable]
-public class Boss_Enemy : Enemy
+public class Boss_Destroyer : Enemy
 {
-
-
-    private bool isDefense;
-    private bool isRangeAttack;
-    private bool superArmor;
-    public float coolTime = 2f;
-    public float curTime = 2f;
-
-    public GameObject[] defenseObjects;
-    public Transform[] defenseTransforms;
-
-    public GameObject rangeAttack;
-
-    public Transform startPos;
-    public Transform rangeTransform;
-    private Transform target;
+    [SerializeField] private int trackingCount;
+    [SerializeField] private int bombingCount;
+    [SerializeField] private int bombingBulletCount;
+    [SerializeField] private GameObject trackingArea;
+    [SerializeField] private GameObject trackingEffect;
 
     public override void Init(EnemyController controller)
     {
@@ -353,221 +356,102 @@ public class Boss_Enemy : Enemy
 
     public override void EnemyUpdate()
     {
-        if (isBossStart)
-        {
-            Action();
-            AttackDelay();
-        }
-    }
-
-    public override void BossStart()
-    {
-        if (isBossStart) return;
-        if (enemyController.anim_dot == null) enemyController.anim_dot = GameManager.Instance.uiManager.bossHpDot;
-        isBossStart = true;
-        isDefense = false;
-        isRangeAttack = false;
-        curHp = maxHp;
-        enemyController.transform.position = startPos.position;
-        curTime = 0;
-        enemyController.anim_dot.DOPlayById("Start");
-    }
-
-    private void AttackDelay()
-    {
-        if (curTime > 0) curTime -= Time.deltaTime;
-    }
-
-
-
-    private void Move()
-    {
-        Debug.Log(animator.GetCurrentAnimatorStateInfo(0));
-        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Walking_Boss")) animator.Play("Walking_Boss", 0, 0f);
-
-
-        enemyController.transform.LookAt(target.transform);
-        enemyController.transform.eulerAngles = new Vector3(0f, enemyController.transform.eulerAngles.y, 0f);
-
-        enemyController.transform.position = enemyController.transform.position + enemyController.transform.forward.normalized * moveSpeed * Time.deltaTime;
-    }
-
-    private void NormalAttack()
-    {
-        Debug.Log("NormalAttack");
-        isAction = true;
-        animator.Play("Attack_Boss", 0, 0f);
-        curTime = coolTime;
-    }
-
-    private void DefenseMode()
-    {
-        isAction = true;
-        enemyController.CorEvent(DefenseCor());
-    }
-
-    public IEnumerator DefenseCor()
-    {
-        float time = 20f;
-        enemyController.rigid.useGravity = false;
-        superArmor = true;
-        Vector3 data = new Vector3(0, 1f, 0);
-        animator.Play("Defense_Boss", 0, 0f);
-
-        while (enemyController.transform.position.y < 50)
-        {
-            yield return new WaitForEndOfFrame();
-            enemyController.transform.position += data;
-        }
-
-        enemyController.transform.position = rangeTransform.position;
-
-
-        while (enemyController.transform.position.y > 5)
-        {
-            yield return new WaitForEndOfFrame();
-            enemyController.transform.position -= data;
-        }
-
-        enemyController.rigid.useGravity = true;
-
-        float y = Player.Instance.transform.position.y + 8f;
-
-        for (int i = 0; i < 10; i++)
-        {
-            float x = Random.Range(-5f, 5f);
-            if (x > 0) x += 5f;
-            else x -= 5f;
-
-            float z = Random.Range(-5f, 5f);
-            if (z > 0) z += 5f;
-            else z -= 5f;
-
-            GameObject temp = GameObject.Instantiate(obj, new Vector3(enemyController.transform.position.x + x, y, enemyController.transform.position.z + z), Quaternion.identity);
-            temp.SetActive(true);
-        }
-
-
-        yield return new WaitForSeconds(1f);
-
-        for (int i = 0; i < defenseObjects.Length; i++)
-        {
-            defenseObjects[i].SetActive(true);
-            defenseObjects[i].transform.position = defenseTransforms[i].position;
-        }
-
-        while (time > 0)
-        {
-            bool test = false;
-            time -= Time.deltaTime;
-            GameManager.Instance.uiManager.bossTiming.value = time / 10;
-            curHp += Time.deltaTime * 2f;
-            enemyController.backHpSlider.value = enemyController.hpSlider.value;
-            for (int i = 0; i < defenseObjects.Length; i++)
-            {
-                if (defenseObjects[i].activeSelf) test = true;
-            }
-
-            if (!test) time = 0;
-            yield return new WaitForEndOfFrame();
-        }
-
-        for (int i = 0; i < defenseObjects.Length; i++)
-        {
-            defenseObjects[i].SetActive(false);
-        }
-
-        superArmor = false;
-        GameManager.Instance.uiManager.bossTiming.value = 0;
-        isAction = false;
-        isDefense = true;
-    }
-
-
-    private void RangeAttack()
-    {
-        isAction = true;
-        enemyController.CorEvent(RangeAttackCor());
-    }
-
-    public IEnumerator RangeAttackCor()
-    {
-        float time = 5f;
-        enemyController.rigid.useGravity = false;
-        superArmor = true;
-
-        Vector3 data = new Vector3(0, 1f, 0);
-        animator.Play("Defense_Boss", 0, 0f);
-
-        while (enemyController.transform.position.y < 50)
-        {
-            yield return new WaitForEndOfFrame();
-            enemyController.transform.position += data;
-        }
-
-        enemyController.transform.position = rangeTransform.position;
-
-
-        while (enemyController.transform.position.y > 5)
-        {
-            yield return new WaitForEndOfFrame();
-            enemyController.transform.position -= data;
-        }
-
-        enemyController.rigid.useGravity = true;
-
-        while (time > 0)
-        {
-            time -= Time.deltaTime;
-            GameManager.Instance.uiManager.bossTiming.value = time / 5;
-            yield return new WaitForEndOfFrame();
-        }
-
-        GameManager.Instance.uiManager.bossTiming.value = 0;
-        superArmor = false;
-        isAction = false;
-        isRangeAttack = true;
-        rangeAttack.SetActive(true);
-    }
-
-    private void Attack()
-    {
-        Vector3 forward = target.transform.position - enemyController.transform.position;
-        float x = enemyController.transform.eulerAngles.x;
-        float z = enemyController.transform.eulerAngles.z;
-
-        enemyController.transform.forward = forward;
-        enemyController.transform.eulerAngles = new Vector3(x, enemyController.transform.eulerAngles.y, z);
-
-        if (!isRangeAttack && curHp < 60f) RangeAttack();
-        else if (!isDefense && curHp < 30f) DefenseMode();
-        else NormalAttack();
+        //UiUpdate();
+        if (target == null) target = Player.Instance.transform;
+        TrackingBullet();
+        //Bombing();
     }
 
     public override void Action()
     {
-        if (target == null) target = Player.Instance.transform;
+        base.Action();
+    }
 
-        if (Vector3.Distance(target.transform.position, enemyController.transform.position) > 10f && curTime <= 0 && !isAction) Move();
-        else if (Vector3.Distance(target.transform.position, enemyController.transform.position) <= 10f && curTime <= 0 && !isAction) Attack();
+    public override void UiUpdate()
+    {
+        enemyController.hpSlider.value = Mathf.Lerp(enemyController.hpSlider.value, curHp / maxHp, Time.deltaTime * 5f);
+
+        if (backHpHit)
+        {
+            enemyController.backHpSlider.value = Mathf.Lerp(enemyController.backHpSlider.value, enemyController.hpSlider.value, Time.deltaTime * 6f);
+            if (enemyController.hpSlider.value >= enemyController.backHpSlider.value - 0.001f)
+            {
+                backHpHit = false;
+                enemyController.backHpSlider.value = enemyController.hpSlider.value;
+            }
+        }
+    }
+
+    private void TrackingBullet()
+    {
+        if (isAction) return;
+        isAction = true;
+
+        target.GetComponent<Player>().CoroutineEvent(TrackingCor());
+        
+    }
+
+    private IEnumerator TrackingCor()
+    {
+        Vector3 endPos;
+
+        for(int i = 0; i < trackingCount; i++)
+        {
+            endPos = target.position;
+            GameObject area = GameObject.Instantiate(trackingArea, endPos, Quaternion.identity);
+            yield return new WaitForSeconds(0.5f);
+            GameObject.Destroy(area);
+            GameObject effect = GameObject.Instantiate(trackingEffect, endPos, Quaternion.identity);
+        }
+    }
+
+    private void Bombing()
+    {
+        if (isAction) return;
+        isAction = true;
+        
+        target.GetComponent<Player>().CoroutineEvent(BombingCor());
+
+    }
+
+    private IEnumerator BombingCor()
+    {
+        Vector3[] positions = new Vector3[bombingBulletCount];
+        GameObject[] gameObjects = new GameObject[bombingBulletCount];
+
+        for (int i = 0; i < bombingCount; i++)
+        {
+            yield return new WaitForSeconds(0.5f);
+            for (int j = 0; j < bombingBulletCount; j++)
+            {
+                Vector3 pos = new Vector3(enemyController.transform.position.x + Random.Range(-30f, 30f), 0f, enemyController.transform.position.z + Random.Range(-30f, 30f));
+                positions[j] = pos;
+                gameObjects[j] = GameObject.Instantiate(trackingArea, pos, Quaternion.identity); 
+            }
+            yield return new WaitForSeconds(0.5f);
+
+            for(int k = 0; k < bombingBulletCount; k++)
+            {
+                GameObject.Destroy(gameObjects[k].gameObject);
+                GameObject.Instantiate(trackingEffect, positions[k], Quaternion.identity);
+            }
+        }
+    }
+
+    
+
+    public override void GetDamage(float damage)
+    {
+        curHp -= damage;
+        backHpHit = false;
+        GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["enemyHit"], false);
+        enemyController.Invoke("BackHpFunMessage", 0.3f);
+
+        if (curHp <= 0) Die();
     }
 
     public override void Die()
     {
         enemyController.DeadMessage();
-    }
-
-    public override void GetDamage(float damage)
-    {
-        if (curHp <= 0) Die();
-
-        if (!superArmor)
-            curHp -= damage;
-        backHpHit = false;
-
-        enemyController.Invoke("BackHpFunMessage", 0.3f);
-
-        Debug.Log(curHp);
-        enemyController.anim_dot.DORestartById("GetDamage");
     }
 }

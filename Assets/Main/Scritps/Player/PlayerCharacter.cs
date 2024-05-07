@@ -1226,6 +1226,7 @@ public class RedCharacter : PlayerCharacter
 
     private void Devastation()
     {
+        player.movementStateMachine.ChangeState(player.movementStateMachine.IdlingState);
         isActionSkill = true;
         player.Rigidbody.velocity = Vector3.zero;
         player.transform.forward = Camera.main.transform.forward;

@@ -65,5 +65,8 @@ public class BattleArea : MonoBehaviour
             scale.z -= plus * 2;
             transform.localScale = scale;
         }
+
+        Destroy(transform.parent.gameObject);
+        
     }
 }

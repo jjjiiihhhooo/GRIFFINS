@@ -114,7 +114,11 @@ public class EnemyController : SerializedMonoBehaviour
         //}
     }
 
-
+    public void CoroutineEvent(string name)
+    {
+        StopCoroutine(name);
+        StartCoroutine(name);
+    }
 
     private void DamageEffect(float damage, Vector3 targetPos, ParticleSystem particle)
     {
