@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 20827425}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 83.1, z: 0}
-  m_LocalScale: {x: 100, y: 100, z: 100}
+  m_LocalScale: {x: 50, y: 50, z: 50}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 4943424079398178705}
@@ -73,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 4b9671e2f6baacd4881ee347802d1f74, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1848,7 +1848,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1087966220800264061
 Transform:
   m_ObjectHideFlags: 0
@@ -6433,7 +6433,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   time: 0.1
-  damage: 200
+  damage: 40
   otherTag: Enemy
 --- !u!65 &3153878664666623340
 BoxCollider:
@@ -49027,8 +49027,8 @@ MonoBehaviour:
     - {x: 0, y: 0, z: 0}
     curKnockbackDir: {x: 0, y: 0, z: 0}
     time: 0
-  maxHp: 100
-  curHp: 0
+  maxHp: 200
+  curHp: 200
   dir: {x: 0, y: 0, z: 0}
   isGround: 0
   isAttack: 0
@@ -63803,7 +63803,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   time: 0.1
-  damage: 55
+  damage: 40
   otherTag: Enemy
 --- !u!1 &4943424079945503237
 GameObject:
@@ -81160,7 +81160,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   time: 0.1
-  damage: 55
+  damage: 30
   otherTag: Enemy
 --- !u!1 &6610457469773913422
 GameObject:
@@ -81918,7 +81918,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   time: 0.1
-  damage: 500
+  damage: 400
   otherTag: Enemy
 --- !u!65 &3819662498641541598
 BoxCollider:

@@ -78,12 +78,23 @@ public class QuestManager : SerializedMonoBehaviour
         }
         
 
+        
+
         //for (int i = 4; i >= 0; i++)
         //{
         //    //questTexts[i].gameObject.SetActive(false);
         //    //questTexts[i].transform.parent.gameObject.SetActive(false);
         //    questUIdatas[i].QuestEnd();
         //}
+    }
+
+    public void QuestDelete()
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            questUIdatas[i].Exit();
+            questUIdatas[i].gameObject.SetActive(false);
+        }
     }
 
     public void QuestInput(QuestBox quest)
@@ -99,6 +110,7 @@ public class QuestManager : SerializedMonoBehaviour
     private void QuestSetText()
     {
         int count = 0;
+        Debug.LogError(curQuest.QuestDatas.Length);
         //UpdateQuest();
         while (curQuest != null && count < curQuest.QuestDatas.Length)
         {

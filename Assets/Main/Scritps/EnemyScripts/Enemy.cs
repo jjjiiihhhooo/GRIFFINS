@@ -346,8 +346,13 @@ public class Boss_Destroyer : Enemy
     [SerializeField] private int trackingCount;
     [SerializeField] private int bombingCount;
     [SerializeField] private int bombingBulletCount;
-    [SerializeField] private GameObject trackingArea;
-    [SerializeField] private GameObject trackingEffect;
+    [SerializeField] private float attackDelay;
+    [SerializeField] private GameObject bombingArea;
+    [SerializeField] private GameObject bombingEffect;
+    [SerializeField] private GameObject trackingFireEffect;
+    [SerializeField] private Transform firePos;
+
+    private float attackCurDelay;
 
     public override void Init(EnemyController controller)
     {
@@ -358,7 +363,17 @@ public class Boss_Destroyer : Enemy
     {
         //UiUpdate();
         if (target == null) target = Player.Instance.transform;
-        TrackingBullet();
+        RandomPattern();
+
+        if (enemyController.isHit)
+        {
+            if (enemyController.hitCool < 0)
+            {
+                enemyController.isHit = false;
+            }
+        }
+
+        //TrackingBullet();
         //Bombing();
     }
 
@@ -382,27 +397,83 @@ public class Boss_Destroyer : Enemy
         }
     }
 
+    private void RandomPattern()
+    {
+        if(attackCurDelay > 0)
+        {
+            attackCurDelay -= Time.deltaTime;
+            return;
+        }
+
+        int rand = Random.Range(0, 2);
+
+        if(rand == 0)
+        {
+            TrackingBullet();
+        }
+        else if(rand == 1)
+        {
+            Bombing();
+        }
+    }
+
     private void TrackingBullet()
     {
         if (isAction) return;
         isAction = true;
-
         target.GetComponent<Player>().CoroutineEvent(TrackingCor());
         
     }
 
     private IEnumerator TrackingCor()
     {
+        float time = 5f;
         Vector3 endPos;
+        Vector3 dir;
 
-        for(int i = 0; i < trackingCount; i++)
+
+        while(time > 0)
         {
-            endPos = target.position;
-            GameObject area = GameObject.Instantiate(trackingArea, endPos, Quaternion.identity);
-            yield return new WaitForSeconds(0.5f);
-            GameObject.Destroy(area);
-            GameObject effect = GameObject.Instantiate(trackingEffect, endPos, Quaternion.identity);
+            if (target != null)
+            {
+                endPos = target.position;
+                dir = endPos - firePos.position;
+                enemyController.transform.forward = target.transform.position - enemyController.transform.position;
+                enemyController.transform.eulerAngles = new Vector3(0f, enemyController.transform.eulerAngles.y, 0f);
+                GameObject projectile = GameObject.Instantiate(trackingFireEffect, firePos.position, Quaternion.identity);
+                projectile.transform.forward = dir;
+                projectile.gameObject.SetActive(true);
+            }
+            
+            time -= 0.1f;
+            yield return new WaitForSeconds(0.1f);
         }
+        attackCurDelay = attackDelay;
+        isAction = false;
+        //Vector3 endPos;
+        //Vector3 dir;
+        //for(int i = 0; i < trackingCount; i++)
+        //{
+        //    endPos = target.position;
+        //    dir = endPos - firePos.position;
+
+        //    GameObject area = GameObject.Instantiate(trackingArea, endPos, Quaternion.identity);
+        //    yield return new WaitForSeconds(0.5f);
+
+        //    GameObject.Destroy(area);
+
+
+        //    for(int j = 0; j < 10; j++)
+        //    {
+        //        GameObject projectile = GameObject.Instantiate(trackingFireEffect, firePos.position, Quaternion.identity);
+        //        projectile.transform.forward = dir;
+        //        projectile.gameObject.SetActive(true);
+        //        yield return new WaitForSeconds(0.05f);
+        //    }
+
+
+        //    //GameObject effect = GameObject.Instantiate(trackingEffect, endPos, Quaternion.identity);
+        //}
     }
 
     private void Bombing()
@@ -424,18 +495,23 @@ public class Boss_Destroyer : Enemy
             yield return new WaitForSeconds(0.5f);
             for (int j = 0; j < bombingBulletCount; j++)
             {
-                Vector3 pos = new Vector3(enemyController.transform.position.x + Random.Range(-30f, 30f), 0f, enemyController.transform.position.z + Random.Range(-30f, 30f));
-                positions[j] = pos;
-                gameObjects[j] = GameObject.Instantiate(trackingArea, pos, Quaternion.identity); 
+                if (enemyController != null)
+                {
+                    Vector3 pos = new Vector3(enemyController.transform.position.x + Random.Range(-30f, 30f), 0f, enemyController.transform.position.z + Random.Range(-30f, 30f));
+                    positions[j] = pos;
+                    gameObjects[j] = GameObject.Instantiate(bombingArea, pos, Quaternion.identity);
+                }
             }
             yield return new WaitForSeconds(0.5f);
 
             for(int k = 0; k < bombingBulletCount; k++)
             {
                 GameObject.Destroy(gameObjects[k].gameObject);
-                GameObject.Instantiate(trackingEffect, positions[k], Quaternion.identity);
+                GameObject.Instantiate(bombingEffect, positions[k]+Vector3.up, Quaternion.identity);
             }
         }
+        isAction = false;
+        attackCurDelay = attackDelay;
     }
 
     
@@ -444,10 +520,17 @@ public class Boss_Destroyer : Enemy
     {
         curHp -= damage;
         backHpHit = false;
+        enemyController.anim_dot.DORestartById("Hit");
         GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["enemyHit"], false);
         enemyController.Invoke("BackHpFunMessage", 0.3f);
+        enemyController.isHit = false;
 
-        if (curHp <= 0) Die();
+        if (curHp <= 0)
+        {
+            target.GetComponent<Player>().CoroutineExit(BombingCor());
+            target.GetComponent<Player>().CoroutineExit(TrackingCor());
+            Die();
+        }
     }
 
     public override void Die()

@@ -17,12 +17,14 @@ public class EnemyController : SerializedMonoBehaviour
     public Slider hpSlider;
     public Slider backHpSlider;
 
+
     public AttackCol attackCol;
     public GameObject targetUI_obj;
 
     public DOTweenAnimation anim_dot;
 
     public bool isHit;
+    public bool isBoss;
 
     public float maxHitCool;
 
@@ -45,16 +47,14 @@ public class EnemyController : SerializedMonoBehaviour
     private void Update()
     {
         enemy.EnemyUpdate();
+        UIUpdate();
 
-        
+
     }
 
     private void UIUpdate()
     {
-        if (hpSlider == null) hpSlider = GameManager.Instance.uiManager.bossHp;
-        if (backHpSlider == null) backHpSlider = GameManager.Instance.uiManager.bossBackHp;
-
-
+        
         hpSlider.value = Mathf.Lerp(hpSlider.value, enemy.curHp / enemy.maxHp, Time.deltaTime * 5f);
 
         if (enemy.backHpHit)
@@ -66,7 +66,7 @@ public class EnemyController : SerializedMonoBehaviour
                 backHpSlider.value = hpSlider.value;
             }
         }
-        if (enemy.GetType().Name != "Boss_Enemy")
+        if (!isBoss)
             canvas.transform.LookAt(canvas.transform.position + Camera.main.transform.rotation * Vector3.forward, Camera.main.transform.rotation * Vector3.up);
     }
 
@@ -143,7 +143,7 @@ public class EnemyController : SerializedMonoBehaviour
     private void Dead()
     {
         //QuestManager.instance.QuestMonsterCheck(enemy.name);
-        FindObjectOfType<QuestManager>().EnemyQuestCheck(this.name);
+        GameManager.Instance.questManager.EnemyQuestCheck(this.name);
         Destroy(this.gameObject);
     }
 

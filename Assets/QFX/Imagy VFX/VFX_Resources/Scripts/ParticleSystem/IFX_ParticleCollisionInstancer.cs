@@ -9,8 +9,9 @@ namespace QFX.IFX
     {
         public ParticleSystem CollisionFx;
         public float LifeTime = 1.5f;
+        public float damage = 2f;
         public Vector3 RotationOffset;
-
+        public GameObject col;
         private ParticleSystem _mainPs;
         private readonly List<ParticleCollisionEvent> _collisionEvents = new List<ParticleCollisionEvent>();
 
@@ -21,10 +22,13 @@ namespace QFX.IFX
 
         private void OnParticleCollision(GameObject other)
         {
+            
+
             int collisionEventsCount = _mainPs.GetCollisionEvents(other, _collisionEvents);
 
+
             if (collisionEventsCount <= 0)
-                return;
+                 return;
 
             var collisionFx = Instantiate(CollisionFx, _collisionEvents[0].intersection, Quaternion.identity);
 

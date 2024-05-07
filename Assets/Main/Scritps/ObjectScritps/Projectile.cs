@@ -3,15 +3,13 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    [SerializeField] private float speed;
-    private Vector3 endPos;
+    [SerializeField] private float damage;
 
-    public Vector3 EndPos { get => endPos; set => endPos = value; }
-
-
-
-    private void Update()
+    private void OnTriggerEnter(Collider other)
     {
-        
+        if(other.tag == "Player")
+        {
+            other.GetComponent<Player>().GetDamage(damage);
+        }
     }
 }

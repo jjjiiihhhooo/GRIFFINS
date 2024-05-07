@@ -310,6 +310,11 @@ public class Player : MonoBehaviour
         StartCoroutine(enumerator);
     }
 
+    public void CoroutineExit(IEnumerator enumerator)
+    {
+        StopCoroutine(enumerator);
+    }
+
     public void DestroyEvent(UnityEngine.Object obj, float delay = 0f)
     {
         Destroy(obj, delay);
