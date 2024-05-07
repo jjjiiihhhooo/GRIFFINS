@@ -123,7 +123,7 @@ public class InputData : MonoBehaviour
 
     private void ChangeInput()
     {
-        if (!GameManager.Instance.tutorialManager.characterChange) return;
+        //if (!GameManager.Instance.tutorialManager.characterChange) return;
         if (Player.Instance.currentCharacter.isGrappleReady) return;
         if (Player.Instance.isAttack) return;
 

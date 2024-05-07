@@ -21,10 +21,10 @@ public class InteractableObject : MonoBehaviour
         Debug.Log("interact");
         actionOnInteract?.Invoke();
 
-        for (int i = 0; i < eventNames.Length; i++)
-        {
-            GameManager.Instance.event_dictionary[eventNames[i]]?.Invoke();
-        }
+        //for (int i = 0; i < eventNames.Length; i++)
+        //{
+        //    GameManager.Instance.event_dictionary[eventNames[i]]?.Invoke();
+        //}
 
         if (oneTime)
         {

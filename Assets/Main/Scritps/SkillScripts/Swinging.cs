@@ -77,7 +77,7 @@ public class Swinging : MonoBehaviour
         else
             realHitPoint = Vector3.zero;
 
-        if (predictionPoint == null) predictionPoint = GameManager.Instance.predictionHitTransform;
+        //if (predictionPoint == null) predictionPoint = GameManager.Instance.predictionHitTransform;
 
         // realHitPoint found
         if (realHitPoint != Vector3.zero)

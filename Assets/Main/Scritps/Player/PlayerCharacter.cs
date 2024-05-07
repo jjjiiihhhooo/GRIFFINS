@@ -442,14 +442,13 @@ public class WhiteCharacter : PlayerCharacter
     {
         if (!GameManager.Instance.coolTimeManager.CoolCheck("White_Q")) return;
         GameManager.Instance.coolTimeManager.GetCoolTime("White_Q");
-
+        player.isAttack = true;
         Explosion();
     }
 
     private void Explosion()
     {
         player.Rigidbody.velocity = Vector3.zero;
-        player.isAttack = true;
         player.transform.forward = Camera.main.transform.forward;
         player.transform.eulerAngles = new Vector3(0f, player.transform.eulerAngles.y, 0f);
         OnlySingleton.Instance.white_Q_cam.Priority = 11;
@@ -464,7 +463,7 @@ public class WhiteCharacter : PlayerCharacter
     {
         if (!GameManager.Instance.coolTimeManager.CoolCheck("White_E")) return;
         GameManager.Instance.coolTimeManager.GetCoolTime("White_E");
-
+        player.isAttack = true;
         PsionicStorm();
     }
 
@@ -815,7 +814,7 @@ public class GreenCharacter : PlayerCharacter
 
     public override void CharacterChange()
     {
-        GameManager.Instance.predictionHitTransform.gameObject.SetActive(false);
+        
     }
 
     public override void Update()
@@ -842,7 +841,7 @@ public class GreenCharacter : PlayerCharacter
         if (!GameManager.Instance.coolTimeManager.CoolCheck("Green_Q")) return;
 
         GameManager.Instance.coolTimeManager.GetCoolTime("Green_Q");
-
+        player.isAttack = true;
         DragonAnim();
     }
 
@@ -863,7 +862,7 @@ public class GreenCharacter : PlayerCharacter
     {
         player.movementStateMachine.ChangeState(player.movementStateMachine.IdlingState);
         player.Rigidbody.velocity = Vector3.zero;
-        player.isAttack = true;
+        
         player.transform.forward = Camera.main.transform.forward;
         player.transform.eulerAngles = new Vector3(0f, player.transform.eulerAngles.y, 0f);
         //OnlySingleton.Instance.green_E_cam.Priority = 11;
@@ -880,6 +879,7 @@ public class GreenCharacter : PlayerCharacter
         if (!GameManager.Instance.coolTimeManager.CoolCheck("Green_E")) return;
 
         GameManager.Instance.coolTimeManager.GetCoolTime("Green_E");
+        player.isAttack = true;
         Gust();
     }
 
@@ -887,7 +887,6 @@ public class GreenCharacter : PlayerCharacter
     {
         player.movementStateMachine.ChangeState(player.movementStateMachine.IdlingState);
         player.Rigidbody.velocity = Vector3.zero;
-        player.isAttack = true;
         player.transform.forward = Camera.main.transform.forward;
         player.transform.eulerAngles = new Vector3(0f, player.transform.eulerAngles.y, 0f);
         OnlySingleton.Instance.green_E_cam.Priority = 11;
@@ -1186,6 +1185,7 @@ public class RedCharacter : PlayerCharacter
         if (!GameManager.Instance.coolTimeManager.CoolCheck("Red_Q")) return;
 
         GameManager.Instance.coolTimeManager.GetCoolTime("Red_Q");
+        player.isAttack = true;
         Devastation();
     }
 
@@ -1194,13 +1194,13 @@ public class RedCharacter : PlayerCharacter
         if (!GameManager.Instance.coolTimeManager.CoolCheck("Red_E")) return;
 
         GameManager.Instance.coolTimeManager.GetCoolTime("Red_E");
+        player.isAttack = true;
         HellDive();
     }
 
     private void HellDive()
     {
         player.Rigidbody.velocity = Vector3.zero;
-        player.isAttack = true;
         player.transform.forward = Camera.main.transform.forward;
         player.transform.eulerAngles = new Vector3(0f, player.transform.eulerAngles.y, 0f);
         OnlySingleton.Instance.red_E_cam.Priority = 11;
@@ -1216,7 +1216,6 @@ public class RedCharacter : PlayerCharacter
     {
         isActionSkill = true;
         player.Rigidbody.velocity = Vector3.zero;
-        player.isAttack = true;
         player.transform.forward = Camera.main.transform.forward;
         player.transform.eulerAngles = new Vector3(0f, player.transform.eulerAngles.y, 0f);
         curParticle = normalAttackEffects[2];

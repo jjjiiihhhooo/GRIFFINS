@@ -12,19 +12,12 @@ public class GameManager : SerializedMonoBehaviour
     public SoundManager soundManager;
     public InputData inputData;
     public StaminaManager staminaManager;
-    public TimelineManager timelineManager;
-    public TutorialManager tutorialManager;
     public GuideManager guideManager;
-    public EventManager eventManager;
     public DialogueManager dialogueManager;
     public UIManager uiManager;
     public CoolTimeManager coolTimeManager;
     public QuestManager questManager;
     public MiniMapManager miniMapManager;
-    public MinimapCam d;
-    public Transform predictionHitTransform;
-
-    public Dictionary<string, UnityEvent> event_dictionary;
 
     public bool gameStart;
     public bool isMouseLock;
@@ -48,7 +41,6 @@ public class GameManager : SerializedMonoBehaviour
         soundManager.Init();
         inputData.Init();
         staminaManager.Init();
-        timelineManager.Init();
         dialogueManager.Init();
         uiManager.Init();
         coolTimeManager.Init();

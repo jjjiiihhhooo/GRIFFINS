@@ -31,22 +31,4 @@ public class MiniMapManager : MonoBehaviour
         miniMapCam.transform.position = pos;
     }
 
-    private void PointMove()
-    {
-        if(ObjectisInCamera(player.transform))
-        {
-            Vector2 pos = miniMapCam.WorldToScreenPoint(player.transform.position);
-            if (temp == null) temp = Instantiate(image, GameManager.Instance.uiManager.canvas.gameObject.transform);
-            pos.x = pos.x * -1;
-            pos.y = pos.y * -1;
-            temp.transform.position = pos;
-        }
-    }
-
-    private bool ObjectisInCamera(Transform target)
-    {
-        Vector3 screenPoint = miniMapCam.WorldToViewportPoint(target.position);
-        bool isIn = screenPoint.z > 0 && screenPoint.x > 0 && screenPoint.x < 1 && screenPoint.y > 0 && screenPoint.y < 1;
-        return isIn;
-    }
 }
