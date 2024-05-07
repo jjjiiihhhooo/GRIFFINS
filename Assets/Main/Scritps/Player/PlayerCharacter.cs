@@ -306,7 +306,7 @@ public class PlayerCharacter
 
             RaycastHit hit;
 
-            if (Physics.Raycast(player.transform.position, player.transform.forward, out hit, 3f, animCheckLayer))
+            if (Physics.Raycast(player.transform.position, player.transform.forward, out hit, 5f, animCheckLayer))
             {
                 model.transform.localPosition = new Vector3(0f, model.transform.localPosition.y, 0f);
             }
@@ -1186,7 +1186,7 @@ public class RedCharacter : PlayerCharacter
 
         GameManager.Instance.coolTimeManager.GetCoolTime("Red_Q");
         player.isAttack = true;
-        Devastation();
+        DevastationAnim();
     }
 
     public override void E_Action()
@@ -1212,6 +1212,18 @@ public class RedCharacter : PlayerCharacter
         player.currentCharacter.animator.Play(E_Anim.name, 3, 0f);
     }
 
+    private void DevastationAnim()
+    {
+        GameObject temp = GameObject.Instantiate(cutScene, player.transform.position, Quaternion.identity);
+        temp.SetActive(true);
+    }
+
+    public override void CutSceneEvent(GameObject cut)
+    {
+        GameObject.Destroy(cut);
+        Devastation();
+    }
+
     private void Devastation()
     {
         isActionSkill = true;
@@ -1223,6 +1235,8 @@ public class RedCharacter : PlayerCharacter
         curKnockbackDir = knockbackDirs[4];
         player.currentCharacter.animator.Play(Q_Anim.name, 3, 0f);
     }
+
+    
 
     public override void FollowEnemy()
     {
