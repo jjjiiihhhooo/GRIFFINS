@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
 
@@ -11,23 +9,23 @@ public class TimelineEvent : MonoBehaviour
 
     public void SetTimeline()
     {
-        GameManager.Instance.timelineManager.TimelineChange(director);
+       // GameManager.Instance.timelineManager.TimelineChange(director);
     }
 
     public void TimelineStart()
     {
         SetTimeline();
-        GameManager.Instance.timelineManager.TimelineStart();
+        //GameManager.Instance.timelineManager.TimelineStart();
     }
 
     public void PauseToStart()
     {
-        GameManager.Instance.timelineManager.TimelinePauseToStart();
+       // GameManager.Instance.timelineManager.TimelinePauseToStart();
     }
 
     public void TimelineEnd()
     {
         Debug.Log("timelineEndSignal");
-        GameManager.Instance.timelineManager.TimelineEnd();
+        //GameManager.Instance.timelineManager.TimelineEnd();
     }
 }

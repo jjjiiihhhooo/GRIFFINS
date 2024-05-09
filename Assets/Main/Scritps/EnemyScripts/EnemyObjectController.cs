@@ -1,6 +1,4 @@
 using Sirenix.OdinInspector;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyObjectController : SerializedMonoBehaviour
@@ -9,12 +7,12 @@ public class EnemyObjectController : SerializedMonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.transform.CompareTag("Player"))
+        if (collision.transform.CompareTag("Player"))
         {
             collision.transform.GetComponent<Player>().testHp--;
         }
 
-        if(!collision.transform.CompareTag(this.transform.tag))
+        if (!collision.transform.CompareTag(this.transform.tag))
         {
             Destroy(this.gameObject);
         }

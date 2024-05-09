@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.Serialization.Formatters;
-using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Hovl_DemoLasers : MonoBehaviour
 {
@@ -26,7 +22,7 @@ public class Hovl_DemoLasers : MonoBehaviour
     //Double-click protection
     private float buttonSaver = 0f;
 
-    void Start ()
+    void Start()
     {
         //LaserEndPoint = new Vector3(0, 0, 0);
         if (Screen.dpi < 1) windowDpi = 1;
@@ -52,7 +48,7 @@ public class Hovl_DemoLasers : MonoBehaviour
         {
             if (LaserScript) LaserScript.DisablePrepare();
             if (LaserScript2) LaserScript2.DisablePrepare();
-            Destroy(Instance,1);
+            Destroy(Instance, 1);
         }
 
         //To change lazers
@@ -64,10 +60,10 @@ public class Hovl_DemoLasers : MonoBehaviour
         if ((Input.GetKey(KeyCode.D) || Input.GetAxis("Horizontal") > 0) && buttonSaver >= 0.4f)// right button
         {
             buttonSaver = 0f;
-            Counter(+1);         
+            Counter(+1);
         }
         buttonSaver += Time.deltaTime;
-        
+
 
         //Current fire point
         if (Cam != null)
@@ -114,12 +110,12 @@ public class Hovl_DemoLasers : MonoBehaviour
             Prefab = Prefabs.Length - 1;
         }
     }
-  
+
     //To rotate fire point
-    void RotateToMouseDirection (GameObject obj, Vector3 destination)
+    void RotateToMouseDirection(GameObject obj, Vector3 destination)
     {
         direction = destination - obj.transform.position;
-        rotation = Quaternion.LookRotation(direction);     
+        rotation = Quaternion.LookRotation(direction);
         obj.transform.localRotation = Quaternion.Lerp(obj.transform.rotation, rotation, 1);
     }
 }

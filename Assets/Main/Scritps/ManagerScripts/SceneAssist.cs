@@ -1,7 +1,5 @@
 using Cinemachine;
 using DG.Tweening;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SceneAssist : MonoBehaviour
@@ -10,7 +8,7 @@ public class SceneAssist : MonoBehaviour
 
     private void Start()
     {
-        if(dot != null)
+        if (dot != null)
         {
             Time.timeScale = 0f;
             FindObjectOfType<CinemachineInputProvider>().enabled = false;
@@ -27,7 +25,7 @@ public class SceneAssist : MonoBehaviour
 
     public void Exit()
     {
-        
+
         FindObjectOfType<CinemachineInputProvider>().enabled = true;
         GameManager.Instance.MouseLocked();
         this.gameObject.SetActive(false);

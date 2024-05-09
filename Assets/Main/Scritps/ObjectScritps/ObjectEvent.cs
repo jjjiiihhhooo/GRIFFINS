@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -17,7 +16,7 @@ public class ObjectEvent : MonoBehaviour
 
     private void Update()
     {
-        if(isMove)
+        if (isMove)
         {
             Move();
         }
@@ -43,13 +42,13 @@ public class ObjectEvent : MonoBehaviour
             if (colEffect != null)
             {
                 colEffect.transform.position = other.contacts[0].point;
-                if (!colEffect.gameObject.activeSelf) 
-                { 
+                if (!colEffect.gameObject.activeSelf)
+                {
                     colEffect.gameObject.SetActive(true);
                     colEffect.transform.parent = null;
                     colEffect.Play();
                 }
-                
+
             }
             _event?.Invoke();
         }

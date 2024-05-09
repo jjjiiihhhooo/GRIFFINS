@@ -1,10 +1,9 @@
 #if UNITY_EDITOR
-using System.IO;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEditor;
 using AutoLOD.MeshDecimator;
-using AutoLOD.Utilities;
+using System.Collections.Generic;
+using System.IO;
+using UnityEditor;
+using UnityEngine;
 
 public class AutoLODWindow : EditorWindow
 {
@@ -379,7 +378,7 @@ public class AutoLODWindow : EditorWindow
             }
             else
             {
-                if(isPreview)
+                if (isPreview)
                     ResetPreviewObject();
             }
             EditorGUILayout.Space(2, false);
@@ -700,8 +699,8 @@ public class AutoLODWindow : EditorWindow
         GUILayout.FlexibleSpace();
         GUILayout.BeginVertical();
         GUILayout.Label("AutoLOD v5.1 ", smallFont, GUILayout.Height(8));
-        GUILayout.Label("© 2020-2024 ", smallFont, GUILayout.Height(8));
-        GUILayout.Label("Léo Chaumartin ", smallFont, GUILayout.Height(8));
+        GUILayout.Label("?2020-2024 ", smallFont, GUILayout.Height(8));
+        GUILayout.Label("L? Chaumartin ", smallFont, GUILayout.Height(8));
         GUILayout.EndVertical();
         GUILayout.EndHorizontal();
         EditorGUILayout.Separator();
@@ -778,7 +777,7 @@ public class AutoLODWindow : EditorWindow
         UnityEngine.Mesh lodMesh;
         lodMesh = detailedMesh.GetComponent<MeshFilter>().sharedMesh;
 
-        
+
 
         IMeshDecimator meshDecimator;
         switch (properties._backend)
@@ -919,7 +918,7 @@ public class AutoLODWindow : EditorWindow
                 meshDecimator = new CFastMeshDecimator();
                 break;
         }
-       
+
         meshDecimator.Initialize();
 
         meshDecimator.statusReportInvoker += ReportDecimationStatus;

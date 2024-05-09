@@ -4,9 +4,9 @@
 #define ENABLE_MULTITHREAD
 #endif
 
-using UnityEngine;
 using System.Collections.Generic;
 using System.Threading;
+using UnityEngine;
 
 [AddComponentMenu("Dynamic Bone/Dynamic Bone")]
 public class DynamicBone : MonoBehaviour

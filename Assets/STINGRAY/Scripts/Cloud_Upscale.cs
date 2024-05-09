@@ -55,7 +55,7 @@ public class Cloud_Upscale : ScriptableRendererFeature
         // You don't have to call ScriptableRenderContext.submit, the render pipeline will call it at specific points in the pipeline.
         public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
         {
-            if(renderingData.cameraData.cameraType != CameraType.Reflection)
+            if (renderingData.cameraData.cameraType != CameraType.Reflection)
             {
                 CommandBuffer commandBuffer = CommandBufferPool.Get();
 
@@ -87,7 +87,7 @@ public class Cloud_Upscale : ScriptableRendererFeature
 
     public override void Create()
     {
-        if(settings.material == null)
+        if (settings.material == null)
         {
             settings.material = (Material)Resources.Load("Cloud_Renderer");
         }

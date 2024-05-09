@@ -1,6 +1,3 @@
-using MoreMountains.Feedbacks;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -14,7 +11,7 @@ public class PlayerJumpingState : PlayerAirborneState
     public PlayerJumpingState(PlayerMovementStateMachine playerMovementStateMachine) : base(playerMovementStateMachine)
     {
     }
-    
+
 
     public override void Enter()
     {
@@ -128,7 +125,7 @@ public class PlayerJumpingState : PlayerAirborneState
 
     protected override void OnContactWithGround(Collider collider)
     {
-       
+
     }
 
     protected override void ResetSprintState()

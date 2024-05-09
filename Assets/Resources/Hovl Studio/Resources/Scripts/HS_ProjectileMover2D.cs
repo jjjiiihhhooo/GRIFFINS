@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class HS_ProjectileMover2D : MonoBehaviour
 {
@@ -21,7 +19,7 @@ public class HS_ProjectileMover2D : MonoBehaviour
             //Instantiate flash effect on projectile position
             var flashInstance = Instantiate(flash, transform.position, Quaternion.identity);
             flashInstance.transform.forward = gameObject.transform.forward;
-            
+
             //Destroy flash effect depending on particle Duration time
             var flashPs = flashInstance.GetComponent<ParticleSystem>();
             if (flashPs != null)
@@ -34,17 +32,17 @@ public class HS_ProjectileMover2D : MonoBehaviour
                 Destroy(flashInstance, flashPsParts.main.duration);
             }
         }
-        Destroy(gameObject,5);
-	}
+        Destroy(gameObject, 5);
+    }
 
-    void FixedUpdate ()
+    void FixedUpdate()
     {
-		if (speed != 0)
+        if (speed != 0)
         {
             rb.velocity = transform.forward * speed;
             //transform.position += transform.forward * (speed * Time.deltaTime);         
         }
-	}
+    }
 
     //https ://docs.unity3d.com/ScriptReference/Rigidbody.OnCollisionEnter.html
     void OnCollisionEnter2D(Collision2D collision)

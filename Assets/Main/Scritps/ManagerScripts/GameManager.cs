@@ -2,10 +2,8 @@ using DG.Tweening;
 using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.UI;
 
 public class GameManager : SerializedMonoBehaviour
 {
@@ -14,22 +12,19 @@ public class GameManager : SerializedMonoBehaviour
     public SoundManager soundManager;
     public InputData inputData;
     public StaminaManager staminaManager;
-    public TimelineManager timelineManager;
-    public TutorialManager tutorialManager;
     public GuideManager guideManager;
-    public QuestManager questManager;
-    public EventManager eventManager;
     public DialogueManager dialogueManager;
     public UIManager uiManager;
-    public Transform predictionHitTransform;
+    public CoolTimeManager coolTimeManager;
+    public QuestManager questManager;
+    public MiniMapManager miniMapManager;
 
-    public Dictionary<string, UnityEvent> event_dictionary;
-
+    public bool gameStart;
     public bool isMouseLock;
 
     private void Awake()
     {
-        if(Instance == null)
+        if (Instance == null)
         {
             Instance = this;
             Init();
@@ -46,15 +41,15 @@ public class GameManager : SerializedMonoBehaviour
         soundManager.Init();
         inputData.Init();
         staminaManager.Init();
-        timelineManager.Init();
         dialogueManager.Init();
         uiManager.Init();
+        coolTimeManager.Init();
         MouseLocked(isMouseLock);
     }
 
     public void MouseLocked(bool _bool = false)
     {
-        if(!_bool)
+        if (!_bool)
         {
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
@@ -80,7 +75,7 @@ public class GameManager : SerializedMonoBehaviour
 
     public void PauseT(float time)
     {
-        Time.timeScale = 0.3f;
+        Time.timeScale = 0.6f;
         StartCoroutine(PauseCor(time));
     }
     private IEnumerator PauseCor(float time)

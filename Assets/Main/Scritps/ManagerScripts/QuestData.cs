@@ -1,6 +1,4 @@
 using Sirenix.OdinInspector;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -13,6 +11,7 @@ public enum QuestType
 [System.Serializable]
 public class QuestBox
 {
+    public string QuestTitleText;
     public QuestData[] QuestDatas;
     public UnityEvent clear_event = null;
 }
@@ -41,7 +40,7 @@ public class QuestData
     [TabGroup("아이템 퀘스트")]
     [Header("아이템 현재 갯수")]
     [ReadOnly] public int itemCurCount;
-    
+
 
     [TabGroup("위치이동 퀘스트")]
     [Header("위치 이름")]
@@ -68,6 +67,6 @@ public class QuestData
     public string questString;
     [Header("클리어여부")]
     [ReadOnly] public bool clear;
-    
+
     public UnityEvent clear_event = null;
 }
