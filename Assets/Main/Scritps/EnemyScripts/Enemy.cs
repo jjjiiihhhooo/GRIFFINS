@@ -284,59 +284,59 @@ public class Epic_Enemy : Enemy
 [System.Serializable]
 public class Epic_1_Enemy : Epic_Enemy
 {
-    public float coolTime = 3f;
-    public float curTime = 3f;
+    //public float coolTime = 3f;
+    //public float curTime = 3f;
 
-    public Transform target;
+    //public Transform target;
 
-    public override void Init(EnemyController controller)
-    {
-        base.Init(controller);
-    }
+    //public override void Init(EnemyController controller)
+    //{
+    //    base.Init(controller);
+    //}
 
-    public override void EnemyUpdate()
-    {
-        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Idle_Boss")) animator.Play("Idle_Boss", 0, 0f);
+    //public override void EnemyUpdate()
+    //{
+    //    if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Idle_Boss")) animator.Play("Idle_Boss", 0, 0f);
 
-        AttackDelay();
-    }
+    //    AttackDelay();
+    //}
 
-    private void AttackDelay()
-    {
-        if (curTime > 0) curTime -= Time.deltaTime;
-        else Action();
-    }
+    //private void AttackDelay()
+    //{
+    //    if (curTime > 0) curTime -= Time.deltaTime;
+    //    else Action();
+    //}
 
-    public override void Action()
-    {
-        if (target == null) target = Player.Instance.transform;
+    //public override void Action()
+    //{
+    //    if (target == null) target = Player.Instance.transform;
 
-        Shoot();
-    }
+    //    Shoot();
+    //}
 
-    private void Shoot()
-    {
-        curTime = coolTime;
-        enemyController.transform.LookAt(target.transform);
-        enemyController.transform.eulerAngles = new Vector3(0f, enemyController.transform.eulerAngles.y, 0f);
-        GameObject temp = GameObject.Instantiate(obj, fireTransform.position, Quaternion.identity);
-        temp.GetComponent<EnemyBullet>().dir = target.position - temp.transform.position;
-        temp.SetActive(true);
-    }
+    //private void Shoot()
+    //{
+    //    curTime = coolTime;
+    //    enemyController.transform.LookAt(target.transform);
+    //    enemyController.transform.eulerAngles = new Vector3(0f, enemyController.transform.eulerAngles.y, 0f);
+    //    GameObject temp = GameObject.Instantiate(obj, fireTransform.position, Quaternion.identity);
+    //    temp.GetComponent<EnemyBullet>().dir = target.position - temp.transform.position;
+    //    temp.SetActive(true);
+    //}
 
-    public override void Die()
-    {
-        enemyController.DeadMessage();
-    }
+    //public override void Die()
+    //{
+    //    enemyController.DeadMessage();
+    //}
 
-    public override void GetDamage(float damage)
-    {
-        if (curHp <= 0) Die();
+    //public override void GetDamage(float damage)
+    //{
+    //    if (curHp <= 0) Die();
 
-        curHp -= damage;
-        backHpHit = false;
-        enemyController.Invoke("BackHpFunMessage", 0.3f);
-    }
+    //    curHp -= damage;
+    //    backHpHit = false;
+    //    enemyController.Invoke("BackHpFunMessage", 0.3f);
+    //}
 
 }
 
