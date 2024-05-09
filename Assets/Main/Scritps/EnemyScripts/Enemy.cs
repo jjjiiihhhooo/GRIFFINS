@@ -502,13 +502,15 @@ public class Boss_Destroyer : Enemy
                     gameObjects[j] = GameObject.Instantiate(bombingArea, pos, Quaternion.identity);
                 }
             }
-            yield return new WaitForSeconds(0.5f);
 
             for(int k = 0; k < bombingBulletCount; k++)
             {
                 GameObject.Destroy(gameObjects[k].gameObject);
-                GameObject.Instantiate(bombingEffect, positions[k]+Vector3.up, Quaternion.identity);
+                yield return new WaitForSeconds(0.2f);
+                GameObject.Instantiate(bombingEffect, positions[k], Quaternion.identity);
             }
+
+            yield return new WaitForSeconds(0.5f);
         }
         isAction = false;
         attackCurDelay = attackDelay;

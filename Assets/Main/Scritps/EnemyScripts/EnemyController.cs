@@ -46,6 +46,7 @@ public class EnemyController : SerializedMonoBehaviour
 
     private void Update()
     {
+        if (GameManager.Instance.isCutScene) return;
         enemy.EnemyUpdate();
         UIUpdate();
 

@@ -13,9 +13,10 @@ public class CutSceneEvent : MonoBehaviour
 
     private IEnumerator EnableCor()
     {
-        Time.timeScale = 0f;
+        GameManager.Instance.isCutScene = true;
         yield return new WaitForSecondsRealtime(time);
-        Time.timeScale = 1f;
+        GameManager.Instance.isCutScene = false;
+        //Time.timeScale = 1f;
         Player.Instance.currentCharacter.CutSceneEvent(this.gameObject);
         
     }

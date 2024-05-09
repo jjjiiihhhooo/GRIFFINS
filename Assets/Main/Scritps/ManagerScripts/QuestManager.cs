@@ -110,7 +110,6 @@ public class QuestManager : SerializedMonoBehaviour
     private void QuestSetText()
     {
         int count = 0;
-        Debug.LogError(curQuest.QuestDatas.Length);
         //UpdateQuest();
         while (curQuest != null && count < curQuest.QuestDatas.Length)
         {

@@ -1598,7 +1598,7 @@ Animator:
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: f09463d2fa399d249b4547d44276fcd6, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 0
+  m_UpdateMode: 2
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
@@ -3873,7 +3873,7 @@ Animator:
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: f09463d2fa399d249b4547d44276fcd6, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 0
+  m_UpdateMode: 2
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
@@ -5915,6 +5915,7 @@ MonoBehaviour:
   miniMapManager: {fileID: 788556521892181457}
   gameStart: 1
   isMouseLock: 0
+  isCutScene: 0
 --- !u!1 &6478123727209342822
 GameObject:
   m_ObjectHideFlags: 0

@@ -147,6 +147,7 @@ public class Player : MonoBehaviour
     private void Update()
     {
         if (GameManager.Instance.dialogueManager.IsChat) return;
+        if (GameManager.Instance.isCutScene) return;
 
         currentCharacter.Update();
         //UIUpdate();
