@@ -35,6 +35,7 @@ public class InputData : MonoBehaviour
     private void Update()
     {
         if (player == null) player = Player.Instance;
+        if (GameManager.Instance.isCutScene) return;
         KeyboardInput();
         MouseInput();
     }

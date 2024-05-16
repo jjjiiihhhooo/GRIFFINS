@@ -402,6 +402,7 @@ public class Boss_Destroyer : Enemy
         if(attackCurDelay > 0)
         {
             attackCurDelay -= Time.deltaTime;
+            if (!animator.GetCurrentAnimatorStateInfo(0).IsName("BossIdle")) animator.Play("BossIdle", 0, 0f);
             return;
         }
 
@@ -431,6 +432,7 @@ public class Boss_Destroyer : Enemy
         Vector3 endPos;
         Vector3 dir;
 
+        animator.Play("Tracking", 0, 0f);
 
         while(time > 0)
         {
@@ -474,6 +476,8 @@ public class Boss_Destroyer : Enemy
 
         //    //GameObject effect = GameObject.Instantiate(trackingEffect, endPos, Quaternion.identity);
         //}
+
+        animator.Play("BossIdle", 0, 0f);
     }
 
     private void Bombing()
@@ -490,6 +494,8 @@ public class Boss_Destroyer : Enemy
         Vector3[] positions = new Vector3[bombingBulletCount];
         GameObject[] gameObjects = new GameObject[bombingBulletCount];
 
+        animator.Play("Bombing", 0, 0f);
+
         for (int i = 0; i < bombingCount; i++)
         {
             yield return new WaitForSeconds(0.5f);
@@ -500,16 +506,20 @@ public class Boss_Destroyer : Enemy
                     Vector3 pos = new Vector3(enemyController.transform.position.x + Random.Range(-30f, 30f), 0f, enemyController.transform.position.z + Random.Range(-30f, 30f));
                     positions[j] = pos;
                     gameObjects[j] = GameObject.Instantiate(bombingArea, pos, Quaternion.identity);
+                    yield return new WaitForSeconds(0.2f);
                 }
             }
-            yield return new WaitForSeconds(0.5f);
 
-            for(int k = 0; k < bombingBulletCount; k++)
-            {
-                GameObject.Destroy(gameObjects[k].gameObject);
-                GameObject.Instantiate(bombingEffect, positions[k]+Vector3.up, Quaternion.identity);
-            }
+            //for(int k = 0; k < bombingBulletCount; k++)
+            //{
+            //    GameObject.Destroy(gameObjects[k].gameObject);
+            //    yield return new WaitForSeconds(0.2f);
+            //    GameObject.Instantiate(bombingEffect, positions[k], Quaternion.identity);
+            //}
+
         }
+
+        animator.Play("BossIdle", 0, 0f);
         isAction = false;
         attackCurDelay = attackDelay;
     }

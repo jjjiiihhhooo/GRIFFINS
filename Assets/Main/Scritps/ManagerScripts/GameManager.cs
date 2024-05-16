@@ -21,6 +21,7 @@ public class GameManager : SerializedMonoBehaviour
 
     public bool gameStart;
     public bool isMouseLock;
+    public bool isCutScene;
 
     private void Awake()
     {

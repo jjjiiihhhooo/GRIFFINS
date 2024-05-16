@@ -463,7 +463,7 @@ public class WhiteCharacter : PlayerCharacter
     {
         if (!GameManager.Instance.coolTimeManager.CoolCheck("White_E")) return;
         GameManager.Instance.coolTimeManager.GetCoolTime("White_E");
-        player.isAttack = true;
+        
         PsionicStorm();
     }
 
