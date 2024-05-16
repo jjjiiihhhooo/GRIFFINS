@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class HS_RaycastInstance : MonoBehaviour
 {
@@ -41,7 +39,7 @@ public class HS_RaycastInstance : MonoBehaviour
             else
             {
                 Debug.Log("No camera");
-            }          
+            }
         }
 
         if ((Input.GetKey(KeyCode.A) || Input.GetAxis("Horizontal") < 0) && buttonSaver >= 0.4f)// left button

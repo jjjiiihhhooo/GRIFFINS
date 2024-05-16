@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Grappling : MonoBehaviour
@@ -42,7 +40,7 @@ public class Grappling : MonoBehaviour
 
     private void LateUpdate()
     {
-         if (grappling)
+        if (grappling)
             lr.SetPosition(0, gunTip.position);
     }
 
@@ -91,7 +89,7 @@ public class Grappling : MonoBehaviour
 
     public void StopGrapple()
     {
-        
+
         pm.freeze = false;
 
         grappling = false;

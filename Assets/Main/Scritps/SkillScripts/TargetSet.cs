@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
@@ -42,8 +40,8 @@ public class TargetSet : MonoBehaviour
     public void ObjectTarget()
     {
         Collider[] ObjectColliders = Physics.OverlapSphere(transform.position, objectViewArea, objectTargetMask);
-        
-        if(ObjectColliders.Length > 0)
+
+        if (ObjectColliders.Length > 0)
         {
             float closestAngle = Mathf.Infinity;
             GameObject closestObject = null;
@@ -55,7 +53,7 @@ public class TargetSet : MonoBehaviour
 
                 if (angle < closestAngle)
                 {
-                    if(collider.tag == "useObject")
+                    if (collider.tag == "useObject")
                     {
                         closestAngle = angle;
                         closestObject = collider.gameObject;
@@ -81,39 +79,44 @@ public class TargetSet : MonoBehaviour
 
             foreach (Collider collider in EnemyColliders)
             {
-                Vector3 direction = collider.transform.position - transform.position;
-                float angle = Vector3.Angle(Camera.main.transform.forward, direction);
+                //Vector3 direction = collider.transform.position - transform.position;
+                //float angle = Vector3.Angle(Camera.main.transform.forward, direction);
 
-                if (angle <= closestAngle)
+                //if (angle <= closestAngle)
+                //{
+                //    if (collider.tag == "Enemy")
+                //    {
+                //        closestAngle = angle;
+                //        closestEnemy = collider.GetComponent<EnemyController>();
+                //    }
+                //}
+
+                if (closestEnemy == null) closestEnemy = collider.GetComponent<EnemyController>();
+                else
                 {
-                    if (collider.tag == "Enemy")
+                    if (Vector3.Distance(collider.transform.position, player.transform.position) < Vector3.Distance(closestEnemy.transform.position, player.transform.position))
                     {
-                        closestAngle = angle;
                         closestEnemy = collider.GetComponent<EnemyController>();
                     }
                 }
             }
 
-            if(player.currentCharacter.target == null)
+            if (player.currentCharacter.target == null)
             {
-                if (targetEnemy != null) targetEnemy.TargetCheck(false);
                 targetEnemy = closestEnemy;
-                if (targetEnemy != null) targetEnemy.TargetCheck(true);
             }
-            
+
         }
         else
         {
-            if(player.currentCharacter.target != null)
+            if (player.currentCharacter.target != null)
             {
-                player.currentCharacter.target.TargetCheck(false);
                 player.currentCharacter.target = null;
 
             }
 
-            if(targetEnemy != null)
+            if (targetEnemy != null)
             {
-                targetEnemy.TargetCheck(false);
                 targetEnemy = null;
             }
         }
@@ -179,7 +182,7 @@ public class TargetSet : MonoBehaviour
             targetInteraction = closestInteraction;
             if (targetInteraction != null)
             {
-                if(targetInteraction.GetReady())
+                if (targetInteraction.GetReady())
                     Player.Instance.SetActiveInteraction(true, targetInteraction.InteractorName);
             }
         }
@@ -257,23 +260,5 @@ public class TargetSet : MonoBehaviour
     }
 
 
-    private void OnDrawGizmos()
-    {
-        //Handles.DrawWireArc(transform.position, Vector3.up, transform.forward, 360, objectViewArea);
-        //if(targetObject != null)
-        //    Handles.DrawLine(transform.position, targetObject.transform.position);
-
-
-        Handles.DrawWireArc(transform.position, Vector3.up, transform.forward, 360, enemyViewArea);
-        if (targetEnemy != null)
-            Handles.DrawLine(transform.position, targetEnemy.transform.position);
-
-        Handles.DrawWireArc(transform.position, Vector3.up, transform.forward, 360, enemyViewArea_2);
-        if (attackEnemy != null)
-            Handles.DrawLine(transform.position, attackEnemy.transform.position);
-
-        //Handles.DrawWireArc(transform.position, Vector3.up, transform.forward, 360, interactionViewArea);
-        //if (targetInteraction != null)
-        //    Handles.DrawLine(transform.position, targetInteraction.transform.position);
-    }
+    
 }

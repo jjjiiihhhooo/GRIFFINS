@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -17,8 +16,8 @@ public class DmgTxt : MonoBehaviour
     {
         float time = 0;
         Vector3 tempPos = transform.position;
-        
-        while(time < 1)
+
+        while (time < 1)
         {
             tempPos.y += 0.002f;
             time += Time.deltaTime;

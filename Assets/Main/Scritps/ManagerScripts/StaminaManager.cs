@@ -1,19 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
-using Unity.VisualScripting;
-using DG.Tweening;
 
 public class StaminaManager : MonoBehaviour
 {
     [SerializeField] private float maxStamina;                       //최대스태미나
     [SerializeField] private float curStamina;                       //현재스태미나            
-    
+
 
     private Canvas playerCanvas;                                     //플레이어가 들고있는 캔버스
 
-    
+
     public Image staminaImage;
 
     public void Init()
@@ -42,9 +39,9 @@ public class StaminaManager : MonoBehaviour
             staminaImage = Player.Instance.staminaFill;
         }
 
-        if(playerCanvas != null)
+        if (playerCanvas != null)
             playerCanvas.transform.LookAt(playerCanvas.transform.position + Camera.main.transform.rotation * Vector3.forward, Camera.main.transform.rotation * Vector3.up);
-        if(staminaImage != null)
+        if (staminaImage != null)
             staminaImage.fillAmount = curStamina / maxStamina;
     }
 
@@ -59,7 +56,7 @@ public class StaminaManager : MonoBehaviour
         }
         else
         {
-            if(!staminaImage.transform.parent.gameObject.activeSelf) staminaImage.transform.parent.gameObject.SetActive(true);
+            if (!staminaImage.transform.parent.gameObject.activeSelf) staminaImage.transform.parent.gameObject.SetActive(true);
         }
     }
 
@@ -98,11 +95,11 @@ public class StaminaManager : MonoBehaviour
         }
     }
 
-   
+
     public void PlusStamina(float value, bool isCor = false)
     {
         //ShowStaminaTrigger();
-        if(isCor)
+        if (isCor)
         {
             curStamina += value;
         }
