@@ -348,7 +348,7 @@ public class Boss_Destroyer : Enemy
     [SerializeField] private int bombingBulletCount;
     [SerializeField] private float attackDelay;
     [SerializeField] private GameObject bombingArea;
-    [SerializeField] private GameObject bombingEffect;
+    [SerializeField] private GameObject[] fireWaveArea;
     [SerializeField] private GameObject trackingFireEffect;
     [SerializeField] private Transform firePos;
 
@@ -402,19 +402,54 @@ public class Boss_Destroyer : Enemy
         if(attackCurDelay > 0)
         {
             attackCurDelay -= Time.deltaTime;
+            if (!animator.GetCurrentAnimatorStateInfo(0).IsName("BossIdle")) animator.Play("BossIdle", 0, 0f);
             return;
         }
 
-        int rand = Random.Range(0, 2);
+        int rand = Random.Range(0, 101);
+        //FireWave();
 
-        if(rand == 0)
+        if (rand <= 40)
         {
             TrackingBullet();
         }
-        else if(rand == 1)
+        else if (40 < rand && rand <= 70)
         {
             Bombing();
         }
+        else if (70 < rand && rand <= 100)
+        {
+            FireWave();
+        }
+    }
+
+    private void FireWave()
+    {
+        if (isAction) return;
+        isAction = true;
+        target.GetComponent<Player>().CoroutineEvent(FireWaveCor());
+    }
+
+    private IEnumerator FireWaveCor()
+    {
+        animator.Play("FireWave", 0, 0f);
+        enemyController.transform.forward = target.transform.position - enemyController.transform.position;
+        enemyController.transform.eulerAngles = new Vector3(0f, enemyController.transform.eulerAngles.y, 0f);
+        float temp = 0;
+
+        for (int i = 0; i < fireWaveArea.Length; i++)
+        {
+            temp += 6;
+            Vector3 pos = enemyController.transform.forward * temp;
+            
+            GameObject obj = GameObject.Instantiate(fireWaveArea[i], enemyController.transform.position + pos, Quaternion.identity);
+            obj.transform.forward = enemyController.transform.forward;
+            yield return new WaitForSeconds(0.2f);
+        }
+
+        animator.Play("BossIdle", 0, 0f);
+        isAction = false;
+        attackCurDelay = attackDelay;
     }
 
     private void TrackingBullet()
@@ -422,15 +457,15 @@ public class Boss_Destroyer : Enemy
         if (isAction) return;
         isAction = true;
         target.GetComponent<Player>().CoroutineEvent(TrackingCor());
-        
     }
 
     private IEnumerator TrackingCor()
     {
-        float time = 5f;
+        float time = 2f;
         Vector3 endPos;
         Vector3 dir;
 
+        animator.Play("Tracking", 0, 0f);
 
         while(time > 0)
         {
@@ -450,30 +485,9 @@ public class Boss_Destroyer : Enemy
         }
         attackCurDelay = attackDelay;
         isAction = false;
-        //Vector3 endPos;
-        //Vector3 dir;
-        //for(int i = 0; i < trackingCount; i++)
-        //{
-        //    endPos = target.position;
-        //    dir = endPos - firePos.position;
+        
 
-        //    GameObject area = GameObject.Instantiate(trackingArea, endPos, Quaternion.identity);
-        //    yield return new WaitForSeconds(0.5f);
-
-        //    GameObject.Destroy(area);
-
-
-        //    for(int j = 0; j < 10; j++)
-        //    {
-        //        GameObject projectile = GameObject.Instantiate(trackingFireEffect, firePos.position, Quaternion.identity);
-        //        projectile.transform.forward = dir;
-        //        projectile.gameObject.SetActive(true);
-        //        yield return new WaitForSeconds(0.05f);
-        //    }
-
-
-        //    //GameObject effect = GameObject.Instantiate(trackingEffect, endPos, Quaternion.identity);
-        //}
+        animator.Play("BossIdle", 0, 0f);
     }
 
     private void Bombing()
@@ -490,6 +504,8 @@ public class Boss_Destroyer : Enemy
         Vector3[] positions = new Vector3[bombingBulletCount];
         GameObject[] gameObjects = new GameObject[bombingBulletCount];
 
+        animator.Play("Bombing", 0, 0f);
+
         for (int i = 0; i < bombingCount; i++)
         {
             yield return new WaitForSeconds(0.5f);
@@ -497,21 +513,25 @@ public class Boss_Destroyer : Enemy
             {
                 if (enemyController != null)
                 {
+                    enemyController.transform.forward = target.transform.position - enemyController.transform.position;
+                    enemyController.transform.eulerAngles = new Vector3(0f, enemyController.transform.eulerAngles.y, 0f);
                     Vector3 pos = new Vector3(enemyController.transform.position.x + Random.Range(-30f, 30f), 0f, enemyController.transform.position.z + Random.Range(-30f, 30f));
                     positions[j] = pos;
                     gameObjects[j] = GameObject.Instantiate(bombingArea, pos, Quaternion.identity);
+                    yield return new WaitForSeconds(0.2f);
                 }
             }
 
-            for(int k = 0; k < bombingBulletCount; k++)
-            {
-                GameObject.Destroy(gameObjects[k].gameObject);
-                yield return new WaitForSeconds(0.2f);
-                GameObject.Instantiate(bombingEffect, positions[k], Quaternion.identity);
-            }
+            //for(int k = 0; k < bombingBulletCount; k++)
+            //{
+            //    GameObject.Destroy(gameObjects[k].gameObject);
+            //    yield return new WaitForSeconds(0.2f);
+            //    GameObject.Instantiate(bombingEffect, positions[k], Quaternion.identity);
+            //}
 
-            yield return new WaitForSeconds(0.5f);
         }
+
+        animator.Play("BossIdle", 0, 0f);
         isAction = false;
         attackCurDelay = attackDelay;
     }
