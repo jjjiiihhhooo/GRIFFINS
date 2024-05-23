@@ -306,7 +306,7 @@ public class PlayerCharacter
 
             RaycastHit hit;
 
-            if (Physics.Raycast(player.transform.position, player.transform.forward, out hit, 5f, animCheckLayer))
+            if (Physics.Raycast(player.transform.position + Vector3.up, player.transform.forward, out hit, 5f, animCheckLayer))
             {
                 model.transform.localPosition = new Vector3(0f, model.transform.localPosition.y, 0f);
             }
@@ -314,6 +314,18 @@ public class PlayerCharacter
             player.transform.position = model.transform.position;
             model.transform.localPosition = Vector3.zero;
         }
+        else
+        {
+            model.transform.localPosition = Vector3.zero;
+
+        }
+    }
+
+    public void AnimToPos()
+    {
+        Debug.LogError("d");
+        //player.transform.position = model.transform.position;
+        model.transform.localPosition = new Vector3(0, 0, 0);
     }
 
     public virtual void SkillCoolTimeResetAnim(int index)
@@ -509,7 +521,7 @@ public class WhiteCharacter : PlayerCharacter
     public override void Q_AnimExit()
     {
         OnlySingleton.Instance.white_Q_cam.Priority = 9;
-        Vector3 pos = player.transform.position + player.transform.forward * 20f;
+        Vector3 pos = player.transform.position + player.transform.forward * 10f;
         OnlySingleton.Instance.camShake.ShakeCamera(7f, 0.1f);
         GameObject temp = GameObject.Instantiate(explosionEffect, pos, Quaternion.identity);
         temp.SetActive(true);
@@ -1078,7 +1090,7 @@ public class GreenCharacter : PlayerCharacter
         if (index == 2)
         {
             GameManager.Instance.uiManager.Q_Skill_Icon.SetActive(true);
-            GameManager.Instance.uiManager.Q_Skill_Icon.GetComponent<Animator>().Play("QEffect", 0);
+            GameManager.Instance.uiManager.Q_Skill_Icon.GetComponent<Animator>().Play("Effect", 0);
         }
         else if (index == 3)
         {

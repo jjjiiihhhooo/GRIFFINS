@@ -349,6 +349,7 @@ public class Boss_Destroyer : Enemy
     [SerializeField] private float attackDelay;
     [SerializeField] private GameObject bombingArea;
     [SerializeField] private GameObject[] fireWaveArea;
+    [SerializeField] private GameObject[] pizzaArea;
     [SerializeField] private GameObject trackingFireEffect;
     [SerializeField] private Transform firePos;
 
@@ -367,6 +368,7 @@ public class Boss_Destroyer : Enemy
 
         if (enemyController.isHit)
         {
+            enemyController.hitCool -= Time.deltaTime;
             if (enemyController.hitCool < 0)
             {
                 enemyController.isHit = false;
@@ -407,20 +409,46 @@ public class Boss_Destroyer : Enemy
         }
 
         int rand = Random.Range(0, 101);
-        //FireWave();
-
-        if (rand <= 40)
+        if (rand <= 20)
         {
             TrackingBullet();
         }
-        else if (40 < rand && rand <= 70)
+        else if (20 < rand && rand <= 40)
         {
             Bombing();
         }
-        else if (70 < rand && rand <= 100)
+        else if (40 < rand && rand <= 70)
         {
             FireWave();
         }
+        else if (70 < rand && rand <= 100)
+        {
+            ContinuousPizza();
+        }
+        //ContinuousPizza();
+    }
+
+    private void ContinuousPizza()
+    {
+        if (isAction) return;
+        isAction = true;
+        target.GetComponent<Player>().CoroutineEvent(PizzaCor());
+    }
+
+    private IEnumerator PizzaCor()
+    {
+        for (int i = 0; i < pizzaArea.Length; i++)
+        {
+            if (animator == null) break;
+
+            GameObject obj = GameObject.Instantiate(pizzaArea[i], enemyController.transform.position, Quaternion.identity);
+            //obj.transform.forward = enemyController.transform.forward;
+            yield return new WaitForSeconds(1f);
+        }
+
+        isAction = false;
+        attackCurDelay = attackDelay;
+        yield return null;
     }
 
     private void FireWave()
@@ -435,16 +463,15 @@ public class Boss_Destroyer : Enemy
         animator.Play("FireWave", 0, 0f);
         enemyController.transform.forward = target.transform.position - enemyController.transform.position;
         enemyController.transform.eulerAngles = new Vector3(0f, enemyController.transform.eulerAngles.y, 0f);
-        float temp = 0;
+        
 
         for (int i = 0; i < fireWaveArea.Length; i++)
         {
-            temp += 6;
-            Vector3 pos = enemyController.transform.forward * temp;
+            if (animator == null) break;
             
-            GameObject obj = GameObject.Instantiate(fireWaveArea[i], enemyController.transform.position + pos, Quaternion.identity);
-            obj.transform.forward = enemyController.transform.forward;
-            yield return new WaitForSeconds(0.2f);
+            GameObject obj = GameObject.Instantiate(fireWaveArea[i], enemyController.transform.position, Quaternion.identity);
+            //obj.transform.forward = enemyController.transform.forward;
+            yield return new WaitForSeconds(0.8f);
         }
 
         animator.Play("BossIdle", 0, 0f);
@@ -471,6 +498,7 @@ public class Boss_Destroyer : Enemy
         {
             if (target != null)
             {
+                if (animator == null) break;
                 endPos = target.position;
                 dir = endPos - firePos.position;
                 enemyController.transform.forward = target.transform.position - enemyController.transform.position;
@@ -508,14 +536,16 @@ public class Boss_Destroyer : Enemy
 
         for (int i = 0; i < bombingCount; i++)
         {
+            if (animator == null) break;
             yield return new WaitForSeconds(0.5f);
             for (int j = 0; j < bombingBulletCount; j++)
             {
+                if (animator == null) break;
                 if (enemyController != null)
                 {
                     enemyController.transform.forward = target.transform.position - enemyController.transform.position;
                     enemyController.transform.eulerAngles = new Vector3(0f, enemyController.transform.eulerAngles.y, 0f);
-                    Vector3 pos = new Vector3(enemyController.transform.position.x + Random.Range(-30f, 30f), 0f, enemyController.transform.position.z + Random.Range(-30f, 30f));
+                    Vector3 pos = new Vector3(enemyController.transform.position.x + Random.Range(-15f, 15f), 0f, enemyController.transform.position.z + Random.Range(-15f, 15f));
                     positions[j] = pos;
                     gameObjects[j] = GameObject.Instantiate(bombingArea, pos, Quaternion.identity);
                     yield return new WaitForSeconds(0.2f);
@@ -545,7 +575,6 @@ public class Boss_Destroyer : Enemy
         enemyController.anim_dot.DORestartById("Hit");
         GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["enemyHit"], false);
         enemyController.Invoke("BackHpFunMessage", 0.3f);
-        enemyController.isHit = false;
 
         if (curHp <= 0)
         {

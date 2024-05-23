@@ -61,7 +61,7 @@ public class PlayerDashingState : PlayerGroundedState
 
         Float();
 
-        RotateTowardsTargetRotation();
+        //RotateTowardsTargetRotation();
     }
 
     private float SetSlopeSpeedModifierOnAngle(float angle)
@@ -160,6 +160,7 @@ public class PlayerDashingState : PlayerGroundedState
         }
 
         stateMachine.Player.Rigidbody.velocity = dashDirection * GetMovementSpeed(false);
+        stateMachine.Player.transform.forward = stateMachine.Player.Rigidbody.velocity.normalized;
     }
 
     private void UpdateConsecutiveDashes()

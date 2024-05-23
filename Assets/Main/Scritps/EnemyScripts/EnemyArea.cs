@@ -14,7 +14,7 @@ public class EnemyArea : MonoBehaviour
         else
         {
             for(int i = 0; i < objs.Length; i++)
-                Instantiate(objs[i], transform.position, Quaternion.identity);
+                Instantiate(objs[i], transform.position, transform.rotation);
             Destroy(this.gameObject);
         }
     }

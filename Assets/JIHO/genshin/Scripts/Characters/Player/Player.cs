@@ -1,6 +1,7 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 [RequireComponent(typeof(PlayerInput))]
 [RequireComponent(typeof(PlayerResizableCapsuleCollider))]
@@ -90,7 +91,10 @@ public class Player : MonoBehaviour
     public bool backHpHit;
 
     public bool freeze;
+    public bool playerHit;
 
+    public float maxHitCool;
+    public float curHitCool;
     public float testHp;
 
 
@@ -148,6 +152,15 @@ public class Player : MonoBehaviour
     {
         if (GameManager.Instance.dialogueManager.IsChat) return;
         if (GameManager.Instance.isCutScene) return;
+
+        if(playerHit)
+        {
+            curHitCool -= Time.deltaTime;
+            if(curHitCool < 0)
+            {
+                playerHit = false;
+            }
+        }
 
         currentCharacter.Update();
         //UIUpdate();
@@ -239,6 +252,9 @@ public class Player : MonoBehaviour
 
     public void GetDamage(float damage)
     {
+        if (playerHit) return;
+        playerHit = true;
+        curHitCool = maxHitCool;
         curHp -= damage;
         GameManager.Instance.uiManager.PlayerHitUI();
         backHpHit = false;
