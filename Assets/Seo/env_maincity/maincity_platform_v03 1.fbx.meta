@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: b9958fb187dbafe4299e8579ddd3ee37
+guid: 07fb048265d7ca64da3a7ce6cd3dbd1b
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
@@ -7,8 +7,13 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Material #68
-    second: {fileID: 2100000, guid: def40e8452f778f438ef001676d2d5d3, type: 2}
+      name: env_maincity_building
+    second: {fileID: 2100000, guid: 80dcf1c31ce682d4a9c522b86a71b6ac, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: env_maincity_floor
+    second: {fileID: 2100000, guid: 61a5b8c543375c342b62c954bbc4886f, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -54,7 +59,7 @@ ModelImporter:
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
-    keepQuads: 0
+    keepQuads: 1
     weldVertices: 1
     bakeAxisConversion: 0
     preserveHierarchy: 0
