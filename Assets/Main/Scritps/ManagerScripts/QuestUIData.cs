@@ -1,6 +1,4 @@
 using DG.Tweening;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,7 +11,7 @@ public class QuestUIData : MonoBehaviour
     public DOTweenAnimation quest_Dot;
     public DOTweenAnimation logo_Dot;
     public DOTweenAnimation background_Dot;
-    
+
 
     public void Create()
     {

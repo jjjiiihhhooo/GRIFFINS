@@ -7,41 +7,41 @@ using MoreMountains.Tools;
 
 namespace MoreMountains.FeedbacksForThirdParty
 {
-	/// <summary>
-	/// Add this class to a Camera with a lens distortion post processing and it'll be able to "shake" its values by getting events
-	/// </summary>
-	[AddComponentMenu("More Mountains/Feedbacks/Shakers/PostProcessing/MMLensDistortionShaker")]
-	#if MM_POSTPROCESSING
+    /// <summary>
+    /// Add this class to a Camera with a lens distortion post processing and it'll be able to "shake" its values by getting events
+    /// </summary>
+    [AddComponentMenu("More Mountains/Feedbacks/Shakers/PostProcessing/MMLensDistortionShaker")]
+#if MM_POSTPROCESSING
 	[RequireComponent(typeof(PostProcessVolume))]
-	#endif
-	public class MMLensDistortionShaker : MMShaker
-	{
-		[MMInspectorGroup("Lens Distortion Intensity", true, 51)]
-		/// whether or not to add to the initial value
-		[Tooltip("whether or not to add to the initial value")]
-		public bool RelativeIntensity = false;
-		/// the curve used to animate the intensity value on
-		[Tooltip("the curve used to animate the intensity value on")]
-		public AnimationCurve ShakeIntensity = new AnimationCurve(new Keyframe(0, 0),
-			new Keyframe(0.2f, 1),
-			new Keyframe(0.25f, -1),
-			new Keyframe(0.35f, 0.7f),
-			new Keyframe(0.4f, -0.7f),
-			new Keyframe(0.6f, 0.3f),
-			new Keyframe(0.65f, -0.3f),
-			new Keyframe(0.8f, 0.1f),
-			new Keyframe(0.85f, -0.1f),
-			new Keyframe(1, 0));
-		/// the value to remap the curve's 0 to
-		[Tooltip("the value to remap the curve's 0 to")]
-		[Range(-100f, 100f)]
-		public float RemapIntensityZero = 0f;
-		/// the value to remap the curve's 1 to
-		[Tooltip("the value to remap the curve's 1 to")]
-		[Range(-100f, 100f)]
-		public float RemapIntensityOne = 50f;
+#endif
+    public class MMLensDistortionShaker : MMShaker
+    {
+        [MMInspectorGroup("Lens Distortion Intensity", true, 51)]
+        /// whether or not to add to the initial value
+        [Tooltip("whether or not to add to the initial value")]
+        public bool RelativeIntensity = false;
+        /// the curve used to animate the intensity value on
+        [Tooltip("the curve used to animate the intensity value on")]
+        public AnimationCurve ShakeIntensity = new AnimationCurve(new Keyframe(0, 0),
+            new Keyframe(0.2f, 1),
+            new Keyframe(0.25f, -1),
+            new Keyframe(0.35f, 0.7f),
+            new Keyframe(0.4f, -0.7f),
+            new Keyframe(0.6f, 0.3f),
+            new Keyframe(0.65f, -0.3f),
+            new Keyframe(0.8f, 0.1f),
+            new Keyframe(0.85f, -0.1f),
+            new Keyframe(1, 0));
+        /// the value to remap the curve's 0 to
+        [Tooltip("the value to remap the curve's 0 to")]
+        [Range(-100f, 100f)]
+        public float RemapIntensityZero = 0f;
+        /// the value to remap the curve's 1 to
+        [Tooltip("the value to remap the curve's 1 to")]
+        [Range(-100f, 100f)]
+        public float RemapIntensityOne = 50f;
 
-		#if MM_POSTPROCESSING
+#if MM_POSTPROCESSING
 		protected PostProcessVolume _volume;
 		protected LensDistortion _lensDistortion;
 		protected float _initialIntensity;
@@ -179,28 +179,28 @@ namespace MoreMountains.FeedbacksForThirdParty
 			base.StopListening();
 			MMLensDistortionShakeEvent.Unregister(OnMMLensDistortionShakeEvent);
 		}
-		#endif
-	}
+#endif
+    }
 
-	/// <summary>
-	/// An event used to trigger vignette shakes
-	/// </summary>
-	public struct MMLensDistortionShakeEvent
-	{
-		static private event Delegate OnEvent;
-		[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)] private static void RuntimeInitialization() { OnEvent = null; }
-		static public void Register(Delegate callback) { OnEvent += callback; }
-		static public void Unregister(Delegate callback) { OnEvent -= callback; }
+    /// <summary>
+    /// An event used to trigger vignette shakes
+    /// </summary>
+    public struct MMLensDistortionShakeEvent
+    {
+        static private event Delegate OnEvent;
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)] private static void RuntimeInitialization() { OnEvent = null; }
+        static public void Register(Delegate callback) { OnEvent += callback; }
+        static public void Unregister(Delegate callback) { OnEvent -= callback; }
 
-		public delegate void Delegate(AnimationCurve intensity, float duration, float remapMin, float remapMax, bool relativeIntensity = false,
-			float feedbacksIntensity = 1.0f, MMChannelData channelData = null, bool resetShakerValuesAfterShake = true, bool resetTargetValuesAfterShake = true, 
-			bool forwardDirection = true, TimescaleModes timescaleMode = TimescaleModes.Scaled, bool stop = false, bool restore = false);
-		
-		static public void Trigger(AnimationCurve intensity, float duration, float remapMin, float remapMax, bool relativeIntensity = false,
-			float feedbacksIntensity = 1.0f, MMChannelData channelData = null, bool resetShakerValuesAfterShake = true, bool resetTargetValuesAfterShake = true, 
-			bool forwardDirection = true, TimescaleModes timescaleMode = TimescaleModes.Scaled, bool stop = false, bool restore = false)
-		{
-			OnEvent?.Invoke(intensity, duration, remapMin, remapMax, relativeIntensity, feedbacksIntensity, channelData, resetShakerValuesAfterShake, resetTargetValuesAfterShake, forwardDirection, timescaleMode, stop, restore);
-		}
-	}
+        public delegate void Delegate(AnimationCurve intensity, float duration, float remapMin, float remapMax, bool relativeIntensity = false,
+            float feedbacksIntensity = 1.0f, MMChannelData channelData = null, bool resetShakerValuesAfterShake = true, bool resetTargetValuesAfterShake = true,
+            bool forwardDirection = true, TimescaleModes timescaleMode = TimescaleModes.Scaled, bool stop = false, bool restore = false);
+
+        static public void Trigger(AnimationCurve intensity, float duration, float remapMin, float remapMax, bool relativeIntensity = false,
+            float feedbacksIntensity = 1.0f, MMChannelData channelData = null, bool resetShakerValuesAfterShake = true, bool resetTargetValuesAfterShake = true,
+            bool forwardDirection = true, TimescaleModes timescaleMode = TimescaleModes.Scaled, bool stop = false, bool restore = false)
+        {
+            OnEvent?.Invoke(intensity, duration, remapMin, remapMax, relativeIntensity, feedbacksIntensity, channelData, resetShakerValuesAfterShake, resetTargetValuesAfterShake, forwardDirection, timescaleMode, stop, restore);
+        }
+    }
 }

@@ -72,7 +72,7 @@ namespace QFX.IFX
             _lerpMotion.LaunchPosition = GrenadeFx.transform.position;
             _lerpMotion.TargetPosition = ResultTargetPosition;
             _lerpMotion.Run();
-            _isActivated = true;    
+            _isActivated = true;
             TrailRenderer.enabled = true;
         }
 

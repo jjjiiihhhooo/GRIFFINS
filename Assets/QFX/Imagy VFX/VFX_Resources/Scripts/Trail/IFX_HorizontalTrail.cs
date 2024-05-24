@@ -37,7 +37,7 @@ namespace QFX.IFX
 
             TrailObject = _trailObj.transform;
 
-            var meshFilter = (MeshFilter) _trailObj.AddComponent(typeof(MeshFilter));
+            var meshFilter = (MeshFilter)_trailObj.AddComponent(typeof(MeshFilter));
             mesh = meshFilter.mesh;
 
             _trailObj.AddComponent(typeof(MeshRenderer));
@@ -151,13 +151,13 @@ namespace QFX.IFX
                         width = Mathf.Lerp(Widths[0], Widths[1], ratio);
                         break;
                     default:
-                    {
-                        float widthRatio = ratio * (Widths.Length - 1);
-                        int min = (int) Mathf.Floor(widthRatio);
-                        float lerp = Mathf.InverseLerp(min, min + 1, widthRatio);
-                        width = Mathf.Lerp(Widths[min], Widths[min + 1], lerp);
-                        break;
-                    }
+                        {
+                            float widthRatio = ratio * (Widths.Length - 1);
+                            int min = (int)Mathf.Floor(widthRatio);
+                            float lerp = Mathf.InverseLerp(min, min + 1, widthRatio);
+                            width = Mathf.Lerp(Widths[min], Widths[min + 1], lerp);
+                            break;
+                        }
                 }
 
                 _trailObj.transform.position = point.position;

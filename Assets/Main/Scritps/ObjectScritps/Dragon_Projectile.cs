@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Dragon_Projectile : MonoBehaviour
@@ -19,14 +18,14 @@ public class Dragon_Projectile : MonoBehaviour
 
     }
 
-    
+
 
     private IEnumerator BoomCor()
     {
         col = GetComponent<SphereCollider>();
         Player.Instance.currentCharacter.curKnockbackDir = Vector3.up;
         Player.Instance.currentCharacter.curKnockback = 2;
-        for(int i = 0; i < 10; i++)
+        for (int i = 0; i < 10; i++)
         {
             col.enabled = true;
             yield return new WaitForSeconds(0.1f);
@@ -39,7 +38,7 @@ public class Dragon_Projectile : MonoBehaviour
     {
         yield return null;
         float time = 1f;
-        while(time > 0)
+        while (time > 0)
         {
             time -= Time.deltaTime;
             transform.position += transform.forward * speed * Time.deltaTime;
@@ -51,5 +50,5 @@ public class Dragon_Projectile : MonoBehaviour
         Destroy(this.gameObject);
     }
 
-    
+
 }

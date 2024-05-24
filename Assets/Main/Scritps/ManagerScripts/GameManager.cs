@@ -1,9 +1,8 @@
+using Cinemachine;
 using DG.Tweening;
 using Sirenix.OdinInspector;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class GameManager : SerializedMonoBehaviour
 {
@@ -22,6 +21,9 @@ public class GameManager : SerializedMonoBehaviour
     public bool gameStart;
     public bool isMouseLock;
     public bool isCutScene;
+
+    public bool isDestroy;
+    public bool isMenu = false;
 
     private void Awake()
     {
@@ -72,7 +74,39 @@ public class GameManager : SerializedMonoBehaviour
         Time.timeScale = scale;
         StartCoroutine(PauseCor(time));
     }
+  
+    public void GameExit()
+    {
+        Application.Quit();
+    }
 
+    public void Menu()
+    {
+        if (isMenu)
+        {
+            isMenu = false;
+            OnlySingleton.Instance.camShake.GetComponent<CinemachineInputProvider>().enabled = true;
+            MouseLocked(false);
+            uiManager.GamePause(true);
+            Time.timeScale = 1f;
+        }
+        else
+        {
+            isMenu = true;
+            OnlySingleton.Instance.camShake.GetComponent<CinemachineInputProvider>().enabled = false;
+            MouseLocked(true);
+            uiManager.GamePause(false);
+            Time.timeScale = 0f;
+        }
+
+    }
+
+    public void ReStart(string name)
+    {
+        Time.timeScale = 1f;
+        isDestroy = true;
+        LoadingSceneManager.LoadScene(name);
+    }
 
     public void PauseT(float time)
     {

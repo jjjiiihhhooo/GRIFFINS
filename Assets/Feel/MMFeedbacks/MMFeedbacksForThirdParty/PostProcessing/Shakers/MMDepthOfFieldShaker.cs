@@ -7,56 +7,56 @@ using MoreMountains.Tools;
 
 namespace MoreMountains.FeedbacksForThirdParty
 {
-	/// <summary>
-	/// Add this class to a Camera with a depth of field post processing and it'll be able to "shake" its values by getting events
-	/// </summary>
-	[AddComponentMenu("More Mountains/Feedbacks/Shakers/PostProcessing/MMDepthOfFieldShaker")]
-	#if MM_POSTPROCESSING
+    /// <summary>
+    /// Add this class to a Camera with a depth of field post processing and it'll be able to "shake" its values by getting events
+    /// </summary>
+    [AddComponentMenu("More Mountains/Feedbacks/Shakers/PostProcessing/MMDepthOfFieldShaker")]
+#if MM_POSTPROCESSING
 	[RequireComponent(typeof(PostProcessVolume))]
-	#endif
-	public class MMDepthOfFieldShaker : MMShaker
-	{
-		/// whether or not to add to the initial value
-		public bool RelativeValues = true;
+#endif
+    public class MMDepthOfFieldShaker : MMShaker
+    {
+        /// whether or not to add to the initial value
+        public bool RelativeValues = true;
 
-		[MMInspectorGroup("Focus Distance", true, 49)]
-		/// the curve used to animate the focus distance value on
-		[Tooltip("the curve used to animate the focus distance value on")]
-		public AnimationCurve ShakeFocusDistance = new AnimationCurve(new Keyframe(0, 0), new Keyframe(0.5f, 1), new Keyframe(1, 0));
-		/// the value to remap the curve's 0 to
-		[Tooltip("the value to remap the curve's 0 to")]
-		public float RemapFocusDistanceZero = 0f;
-		/// the value to remap the curve's 1 to
-		[Tooltip("the value to remap the curve's 1 to")]
-		public float RemapFocusDistanceOne = 3f;
+        [MMInspectorGroup("Focus Distance", true, 49)]
+        /// the curve used to animate the focus distance value on
+        [Tooltip("the curve used to animate the focus distance value on")]
+        public AnimationCurve ShakeFocusDistance = new AnimationCurve(new Keyframe(0, 0), new Keyframe(0.5f, 1), new Keyframe(1, 0));
+        /// the value to remap the curve's 0 to
+        [Tooltip("the value to remap the curve's 0 to")]
+        public float RemapFocusDistanceZero = 0f;
+        /// the value to remap the curve's 1 to
+        [Tooltip("the value to remap the curve's 1 to")]
+        public float RemapFocusDistanceOne = 3f;
 
-		[MMInspectorGroup("Aperture", true, 50)]
-		/// the curve used to animate the aperture value on
-		[Tooltip("the curve used to animate the aperture value on")]
-		public AnimationCurve ShakeAperture = new AnimationCurve(new Keyframe(0, 0), new Keyframe(0.5f, 1), new Keyframe(1, 0));
-		/// the value to remap the curve's 0 to
-		[Tooltip("the value to remap the curve's 0 to")]
-		[Range(0.1f, 32f)]
-		public float RemapApertureZero = 0f;
-		/// the value to remap the curve's 1 to
-		[Tooltip("the value to remap the curve's 1 to")]
-		[Range(0.1f, 32f)]
-		public float RemapApertureOne = 0f;
+        [MMInspectorGroup("Aperture", true, 50)]
+        /// the curve used to animate the aperture value on
+        [Tooltip("the curve used to animate the aperture value on")]
+        public AnimationCurve ShakeAperture = new AnimationCurve(new Keyframe(0, 0), new Keyframe(0.5f, 1), new Keyframe(1, 0));
+        /// the value to remap the curve's 0 to
+        [Tooltip("the value to remap the curve's 0 to")]
+        [Range(0.1f, 32f)]
+        public float RemapApertureZero = 0f;
+        /// the value to remap the curve's 1 to
+        [Tooltip("the value to remap the curve's 1 to")]
+        [Range(0.1f, 32f)]
+        public float RemapApertureOne = 0f;
 
-		[MMInspectorGroup("Focal Length", true, 51)]
-		/// the curve used to animate the focal length value on
-		[Tooltip("the curve used to animate the focal length value on")]
-		public AnimationCurve ShakeFocalLength = new AnimationCurve(new Keyframe(0, 0), new Keyframe(0.5f, 1), new Keyframe(1, 0));
-		/// the value to remap the curve's 0 to
-		[Tooltip("the value to remap the curve's 0 to")]
-		[Range(0f, 300f)]
-		public float RemapFocalLengthZero = 0f;
-		/// the value to remap the curve's 1 to
-		[Tooltip("the value to remap the curve's 1 to")]
-		[Range(0f, 300f)]
-		public float RemapFocalLengthOne = 0f;
-        
-		#if MM_POSTPROCESSING
+        [MMInspectorGroup("Focal Length", true, 51)]
+        /// the curve used to animate the focal length value on
+        [Tooltip("the curve used to animate the focal length value on")]
+        public AnimationCurve ShakeFocalLength = new AnimationCurve(new Keyframe(0, 0), new Keyframe(0.5f, 1), new Keyframe(1, 0));
+        /// the value to remap the curve's 0 to
+        [Tooltip("the value to remap the curve's 0 to")]
+        [Range(0f, 300f)]
+        public float RemapFocalLengthZero = 0f;
+        /// the value to remap the curve's 1 to
+        [Tooltip("the value to remap the curve's 1 to")]
+        [Range(0f, 300f)]
+        public float RemapFocalLengthOne = 0f;
+
+#if MM_POSTPROCESSING
 		protected PostProcessVolume _volume;
 		protected DepthOfField _depthOfField;
 		protected float _initialFocusDistance;
@@ -245,37 +245,37 @@ namespace MoreMountains.FeedbacksForThirdParty
 			base.StopListening();
 			MMDepthOfFieldShakeEvent.Unregister(OnDepthOfFieldShakeEvent);
 		}
-		#endif
-	}
+#endif
+    }
 
-	/// <summary>
-	/// An event used to trigger vignette shakes
-	/// </summary>
-	public struct MMDepthOfFieldShakeEvent
-	{
-		static private event Delegate OnEvent;
-		[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)] private static void RuntimeInitialization() { OnEvent = null; }
-		static public void Register(Delegate callback) { OnEvent += callback; }
-		static public void Unregister(Delegate callback) { OnEvent -= callback; }
+    /// <summary>
+    /// An event used to trigger vignette shakes
+    /// </summary>
+    public struct MMDepthOfFieldShakeEvent
+    {
+        static private event Delegate OnEvent;
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)] private static void RuntimeInitialization() { OnEvent = null; }
+        static public void Register(Delegate callback) { OnEvent += callback; }
+        static public void Unregister(Delegate callback) { OnEvent -= callback; }
 
-		public delegate void Delegate(AnimationCurve focusDistance, float duration, float remapFocusDistanceMin, float remapFocusDistanceMax,
-			AnimationCurve aperture, float remapApertureMin, float remapApertureMax,
-			AnimationCurve focalLength, float remapFocalLengthMin, float remapFocalLengthMax,
-			bool relativeValues = false,
-			float feedbacksIntensity = 1.0f, MMChannelData channelData = null, bool resetShakerValuesAfterShake = true, bool resetTargetValuesAfterShake = true, 
-			bool forwardDirection = true, TimescaleModes timescaleMode = TimescaleModes.Scaled, bool stop = false, bool restore = false);
+        public delegate void Delegate(AnimationCurve focusDistance, float duration, float remapFocusDistanceMin, float remapFocusDistanceMax,
+            AnimationCurve aperture, float remapApertureMin, float remapApertureMax,
+            AnimationCurve focalLength, float remapFocalLengthMin, float remapFocalLengthMax,
+            bool relativeValues = false,
+            float feedbacksIntensity = 1.0f, MMChannelData channelData = null, bool resetShakerValuesAfterShake = true, bool resetTargetValuesAfterShake = true,
+            bool forwardDirection = true, TimescaleModes timescaleMode = TimescaleModes.Scaled, bool stop = false, bool restore = false);
 
-		static public void Trigger(AnimationCurve focusDistance, float duration, float remapFocusDistanceMin, float remapFocusDistanceMax,
-			AnimationCurve aperture, float remapApertureMin, float remapApertureMax, 
-			AnimationCurve focalLength, float remapFocalLengthMin, float remapFocalLengthMax,
-			bool relativeValues = false,
-			float feedbacksIntensity = 1.0f, MMChannelData channelData = null, bool resetShakerValuesAfterShake = true, bool resetTargetValuesAfterShake = true, 
-			bool forwardDirection = true, TimescaleModes timescaleMode = TimescaleModes.Scaled, bool stop = false, bool restore = false)
-		{
-			OnEvent?.Invoke(focusDistance, duration, remapFocusDistanceMin, remapFocusDistanceMax, 
-				aperture, remapApertureMin, remapApertureMax, 
-				focalLength, remapFocalLengthMin, remapFocalLengthMax, relativeValues,
-				feedbacksIntensity, channelData, resetShakerValuesAfterShake, resetTargetValuesAfterShake, forwardDirection, timescaleMode, stop, restore);
-		}
-	}
+        static public void Trigger(AnimationCurve focusDistance, float duration, float remapFocusDistanceMin, float remapFocusDistanceMax,
+            AnimationCurve aperture, float remapApertureMin, float remapApertureMax,
+            AnimationCurve focalLength, float remapFocalLengthMin, float remapFocalLengthMax,
+            bool relativeValues = false,
+            float feedbacksIntensity = 1.0f, MMChannelData channelData = null, bool resetShakerValuesAfterShake = true, bool resetTargetValuesAfterShake = true,
+            bool forwardDirection = true, TimescaleModes timescaleMode = TimescaleModes.Scaled, bool stop = false, bool restore = false)
+        {
+            OnEvent?.Invoke(focusDistance, duration, remapFocusDistanceMin, remapFocusDistanceMax,
+                aperture, remapApertureMin, remapApertureMax,
+                focalLength, remapFocalLengthMin, remapFocalLengthMax, relativeValues,
+                feedbacksIntensity, channelData, resetShakerValuesAfterShake, resetTargetValuesAfterShake, forwardDirection, timescaleMode, stop, restore);
+        }
+    }
 }

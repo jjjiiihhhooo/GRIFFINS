@@ -7,24 +7,22 @@
 //////////////////////////////////////////////////////
 
 #if UNITY_EDITOR
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEditor;
-using System.Linq;
 using System;
-using UnityEditor.Utils;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEditor;
 using UnityEditorInternal;
-using EditorHelper = MK.Toon.Editor.EditorHelper;
+using UnityEngine;
 
 namespace MK.Toon.Editor
 {
     internal sealed class ParticlesComponent : ShaderGUI
-    {   
+    {
         internal bool active { get { return _particlesBehavior != null; } }
 
         /////////////////////////////////////////////////////////////////////////////////////////////
-		// Properties                                                                              //
-		/////////////////////////////////////////////////////////////////////////////////////////////
+        // Properties                                                                              //
+        /////////////////////////////////////////////////////////////////////////////////////////////
         //Unity source based particle properties
         private static ReorderableList vertexStreamList;
         List<ParticleSystemRenderer> _renderersUsingThisMaterial = new List<ParticleSystemRenderer>();
@@ -58,9 +56,9 @@ namespace MK.Toon.Editor
         }
 
         /////////////////////////////////////////////////////////////////////////////////////////////
-		// Setup                                                                                   //
-		/////////////////////////////////////////////////////////////////////////////////////////////
-        
+        // Setup                                                                                   //
+        /////////////////////////////////////////////////////////////////////////////////////////////
+
         /// <summary>
         /// Find similar values from the changed shader
         /// </summary>
@@ -79,35 +77,35 @@ namespace MK.Toon.Editor
             MaterialProperty cameraFarFadeDistance = FindProperty("_CameraFarFadeDistance", propertiesSrc, false);
             MaterialProperty colorBlend = FindProperty("_ColorMode", propertiesSrc, false);
 
-            if(flipbook != null)
+            if (flipbook != null)
                 Properties.flipbook.SetValue(materialDst, flipbook.floatValue > 0 ? true : false);
-            if(flipbookBlending != null)
+            if (flipbookBlending != null)
                 Properties.flipbook.SetValue(materialDst, flipbookBlending.floatValue > 0 ? true : false);
-            if(softParticlesEnabled != null)
+            if (softParticlesEnabled != null)
                 Properties.softFade.SetValue(materialDst, softParticlesEnabled.floatValue > 0 ? true : false);
-            if(softParticlesNearFadeDistance != null)
+            if (softParticlesNearFadeDistance != null)
                 Properties.softFadeNearDistance.SetValue(materialDst, softParticlesNearFadeDistance.floatValue);
-            if(softParticlesFarFadeDistance != null)
+            if (softParticlesFarFadeDistance != null)
                 Properties.softFadeFarDistance.SetValue(materialDst, softParticlesFarFadeDistance.floatValue);
-            if(cameraFadingEnabled != null)
+            if (cameraFadingEnabled != null)
                 Properties.cameraFade.SetValue(materialDst, cameraFadingEnabled.floatValue > 0 ? true : false);
-            if(cameraNearFadeDistance != null)
+            if (cameraNearFadeDistance != null)
                 Properties.cameraFadeNearDistance.SetValue(materialDst, cameraNearFadeDistance.floatValue);
-            if(cameraFarFadeDistance != null)
+            if (cameraFarFadeDistance != null)
                 Properties.cameraFadeFarDistance.SetValue(materialDst, cameraFarFadeDistance.floatValue);
-            if(colorBlend != null)
-                Properties.colorBlend.SetValue(materialDst, (ColorBlend) colorBlend.floatValue);
+            if (colorBlend != null)
+                Properties.colorBlend.SetValue(materialDst, (ColorBlend)colorBlend.floatValue);
         }
 
         /////////////////////////////////////////////////////////////////////////////////////////////
-		// Draw                                                                                    //
-		/////////////////////////////////////////////////////////////////////////////////////////////
+        // Draw                                                                                    //
+        /////////////////////////////////////////////////////////////////////////////////////////////
 
-        internal void Initialize(MaterialEditor materialEditor) 
+        internal void Initialize(MaterialEditor materialEditor)
         {
             CacheRenderersUsingThisMaterial(materialEditor);
         }
-        
+
         //Cache function based on unity source
         private void CacheRenderersUsingThisMaterial(MaterialEditor materialEditor)
         {
@@ -115,13 +113,13 @@ namespace MK.Toon.Editor
 
             Material material = materialEditor.target as Material;
 
-            foreach (var obj in  materialEditor.targets)
+            foreach (var obj in materialEditor.targets)
             {
-                #if UNITY_2023_1_OR_NEWER
+#if UNITY_2023_1_OR_NEWER
                 ParticleSystemRenderer[] renderers = UnityEngine.Object.FindObjectsByType<ParticleSystemRenderer>(FindObjectsSortMode.InstanceID);
-                #else
+#else
                 ParticleSystemRenderer[] renderers = UnityEngine.Object.FindObjectsOfType(typeof(ParticleSystemRenderer)) as ParticleSystemRenderer[];
-                #endif
+#endif
                 foreach (ParticleSystemRenderer renderer in renderers)
                 {
                     if (renderer.sharedMaterial == material)
@@ -134,14 +132,14 @@ namespace MK.Toon.Editor
         {
             //All refraction properties needs to be available on the material
             //the refraction tab is used for check
-            if(_particlesBehavior != null)
+            if (_particlesBehavior != null)
             {
-                if(EditorHelper.HandleBehavior(UI.particlesTab.text, "", _particlesBehavior, null, materialEditor, false))
+                if (EditorHelper.HandleBehavior(UI.particlesTab.text, "", _particlesBehavior, null, materialEditor, false))
                 {
                     DrawColorBlend(materialEditor);
                     DrawFlipbookMode(materialEditor);
-                    DrawSoftFadeMode(materialEditor, (Surface) surface.floatValue);
-                    DrawCameraFadeMode(materialEditor, (Surface) surface.floatValue);
+                    DrawSoftFadeMode(materialEditor, (Surface)surface.floatValue);
+                    DrawCameraFadeMode(materialEditor, (Surface)surface.floatValue);
                     DrawVertexDataStream(materialEditor, shaderTemplate);
                 }
                 EditorHelper.DrawSplitter();
@@ -167,16 +165,16 @@ namespace MK.Toon.Editor
             // Display list of streams required to make this shader work
             bool useNormalMap = false;
             bool useFlipbookBlending = Properties.flipbook.GetValue(material);
-            if(useLighting)
+            if (useLighting)
                 useNormalMap = Properties.normalMap.GetValue(material) != null;
             bool useHeightMap = false;
-            if(isPBS)
+            if (isPBS)
                 useHeightMap = Properties.heightMap.GetValue(material) != null;
             bool useDetailNormalMap = false;
-            if(isPBS)
+            if (isPBS)
                 useDetailNormalMap = Properties.detailNormalMap.GetValue(material) != null && isPBS;
             bool useAnisotropicSpecular = false;
-            if(useLighting)
+            if (useLighting)
                 useAnisotropicSpecular = Properties.specular.GetValue(material) != Specular.Anisotropic && isPBS;
 
             // Build the list of expected vertex streams
@@ -212,7 +210,8 @@ namespace MK.Toon.Editor
 
             vertexStreamList = new ReorderableList(streamList, typeof(string), false, true, false, false);
 
-            vertexStreamList.drawHeaderCallback = (Rect rect) => {
+            vertexStreamList.drawHeaderCallback = (Rect rect) =>
+            {
                 EditorGUI.LabelField(rect, "Vertex Streams");
             };
 
@@ -253,29 +252,29 @@ namespace MK.Toon.Editor
 
         internal void DrawSoftFadeMode(MaterialEditor materialEditor, Surface surface)
         {
-            if(surface == Surface.Transparent)
+            if (surface == Surface.Transparent)
             {
                 materialEditor.ShaderProperty(_softFade, UI.softFade);
-                if(_softFade.floatValue > 0)
+                if (_softFade.floatValue > 0)
                 {
                     materialEditor.ShaderProperty(_softFadeNearDistance, UI.softFadeNearDistance);
                     materialEditor.ShaderProperty(_softFadeFarDistance, UI.softFadeFarDistance);
                 }
             }
-        }        
+        }
 
         internal void DrawCameraFadeMode(MaterialEditor materialEditor, Surface surface)
         {
-            if(surface == Surface.Transparent)
+            if (surface == Surface.Transparent)
             {
                 materialEditor.ShaderProperty(_cameraFade, UI.cameraFade);
-                if(_cameraFade.floatValue > 0)
+                if (_cameraFade.floatValue > 0)
                 {
                     materialEditor.ShaderProperty(_cameraFadeNearDistance, UI.cameraFadeNearDistance);
                     materialEditor.ShaderProperty(_cameraFadeFarDistance, UI.cameraFadeFarDistance);
                 }
             }
-        }   
+        }
 
         internal void DrawVertexDataStream(MaterialEditor materialEditor, ShaderTemplate shaderTemplate)
         {
@@ -291,11 +290,11 @@ namespace MK.Toon.Editor
         }
 
         /////////////////////////////////////////////////////////////////////////////////////////////
-		// Variants Setup                                                                          //
-		/////////////////////////////////////////////////////////////////////////////////////////////
+        // Variants Setup                                                                          //
+        /////////////////////////////////////////////////////////////////////////////////////////////
         internal void ManageKeywordsColorBlend(Material material)
         {
-            if(_particlesBehavior != null)
+            if (_particlesBehavior != null)
             {
                 //Color Mode
                 ColorBlend cm = Properties.colorBlend.GetValue(material);
@@ -312,7 +311,7 @@ namespace MK.Toon.Editor
 
         internal void ManageKeywordsFlipbook(Material material)
         {
-            if(_particlesBehavior != null)
+            if (_particlesBehavior != null)
             {
                 //Flipbook Mode
                 EditorHelper.SetKeyword(Properties.flipbook.GetValue(material), Keywords.flipbook, material);
@@ -321,7 +320,7 @@ namespace MK.Toon.Editor
 
         internal void ManageKeywordsSoftFade(Material material)
         {
-            if(_particlesBehavior != null)
+            if (_particlesBehavior != null)
             {
                 //Soft Fade Mode
                 EditorHelper.SetKeyword(Properties.surface.GetValue(material) == Surface.Transparent && Properties.softFade.GetValue(material), Keywords.softFade, material);
@@ -330,14 +329,14 @@ namespace MK.Toon.Editor
 
         internal void ManageKeywordsCameraFade(Material material)
         {
-            if(_particlesBehavior != null)
+            if (_particlesBehavior != null)
             {
                 //Camera Fade Mode
                 EditorHelper.SetKeyword(Properties.surface.GetValue(material) == Surface.Transparent && Properties.cameraFade.GetValue(material), Keywords.cameraFade, material);
             }
         }
 
-       internal void UpdateKeywords(Material material)
+        internal void UpdateKeywords(Material material)
         {
             ManageKeywordsColorBlend(material);
             ManageKeywordsFlipbook(material);

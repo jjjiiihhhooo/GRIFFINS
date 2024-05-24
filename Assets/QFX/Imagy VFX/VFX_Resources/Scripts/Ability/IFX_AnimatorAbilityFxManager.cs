@@ -5,116 +5,116 @@ using UnityEngine;
 // ReSharper disable once CheckNamespace
 namespace QFX.IFX
 {
-	[RequireComponent(typeof(Animator))]
-	public class IFX_AnimatorAbilityFxManager : MonoBehaviour
-	{
-		public IFX_AnimatorAbilityFx[] AnimatorAbilityFxs;
+    [RequireComponent(typeof(Animator))]
+    public class IFX_AnimatorAbilityFxManager : MonoBehaviour
+    {
+        public IFX_AnimatorAbilityFx[] AnimatorAbilityFxs;
 
-		private readonly Dictionary<string, GameObject> _spellNameToGameObjectMap = new Dictionary<string, GameObject>();
+        private readonly Dictionary<string, GameObject> _spellNameToGameObjectMap = new Dictionary<string, GameObject>();
 
-		private IFX_AbilityUiManager _ifxAbilityUiManager;
+        private IFX_AbilityUiManager _ifxAbilityUiManager;
 
-		private Animator _animator;
+        private Animator _animator;
 
-		public void PlayAbilityAnimation(string abilityName)
-		{
-			var abilityFx = AnimatorAbilityFxs
-				.SingleOrDefault(t => t.FxName == abilityName);
+        public void PlayAbilityAnimation(string abilityName)
+        {
+            var abilityFx = AnimatorAbilityFxs
+                .SingleOrDefault(t => t.FxName == abilityName);
 
-			if (abilityFx == default(IFX_AnimatorAbilityFx))
-				return;
+            if (abilityFx == default(IFX_AnimatorAbilityFx))
+                return;
 
-			_animator.Play(abilityFx.LaunchStateName);
-		}
+            _animator.Play(abilityFx.LaunchStateName);
+        }
 
-		//Will be called from animator
-		public void LaunchFx(string abilityName)
-		{
-			var abilityFx = AnimatorAbilityFxs
-				.SingleOrDefault(t => t.FxName == abilityName);
+        //Will be called from animator
+        public void LaunchFx(string abilityName)
+        {
+            var abilityFx = AnimatorAbilityFxs
+                .SingleOrDefault(t => t.FxName == abilityName);
 
-			if (abilityFx == default(IFX_AnimatorAbilityFx))
-				return;
+            if (abilityFx == default(IFX_AnimatorAbilityFx))
+                return;
 
-			var abilityGo = Instantiate(abilityFx.Fx);
-			abilityGo.transform.position = transform.position;
-			abilityGo.transform.rotation = transform.rotation;
+            var abilityGo = Instantiate(abilityFx.Fx);
+            abilityGo.transform.position = transform.position;
+            abilityGo.transform.rotation = transform.rotation;
 
-			if (abilityFx.AttachAnchor)
-			{
-				var anchor = IFX_TargetAttacher.FindChildByRecursion(transform.root, abilityFx.AnchorName);
-				if (anchor != null)
-				{
-					abilityGo.transform.rotation = Quaternion.Euler(abilityFx.RotationOffset);
-					abilityGo.transform.position = anchor.position;
-					if (abilityFx.UseAnchorRotation)
-						abilityGo.transform.rotation = anchor.rotation;
-				}
-			}
+            if (abilityFx.AttachAnchor)
+            {
+                var anchor = IFX_TargetAttacher.FindChildByRecursion(transform.root, abilityFx.AnchorName);
+                if (anchor != null)
+                {
+                    abilityGo.transform.rotation = Quaternion.Euler(abilityFx.RotationOffset);
+                    abilityGo.transform.position = anchor.position;
+                    if (abilityFx.UseAnchorRotation)
+                        abilityGo.transform.rotation = anchor.rotation;
+                }
+            }
 
-			var spellPs = abilityGo.GetComponent<ParticleSystem>();
-			if (spellPs != null)
-				spellPs.Play(true);
+            var spellPs = abilityGo.GetComponent<ParticleSystem>();
+            if (spellPs != null)
+                spellPs.Play(true);
 
-			if (abilityFx.IsActivationRequired)
-				_spellNameToGameObjectMap[abilityName] = abilityGo;
+            if (abilityFx.IsActivationRequired)
+                _spellNameToGameObjectMap[abilityName] = abilityGo;
 
-			var animatorAbility = abilityGo.GetComponent<IFX_IAnimatorAbility>();
-			if (animatorAbility != null)
-			{
-				animatorAbility.Emitter = transform;
-				animatorAbility.TargetPosition = _ifxAbilityUiManager.SelectedPosition;
+            var animatorAbility = abilityGo.GetComponent<IFX_IAnimatorAbility>();
+            if (animatorAbility != null)
+            {
+                animatorAbility.Emitter = transform;
+                animatorAbility.TargetPosition = _ifxAbilityUiManager.SelectedPosition;
 
-				var targets = _ifxAbilityUiManager.TargetObjects;
-				if (targets != null && targets.Any())
-					animatorAbility.Target = targets.First().transform;
+                var targets = _ifxAbilityUiManager.TargetObjects;
+                if (targets != null && targets.Any())
+                    animatorAbility.Target = targets.First().transform;
 
-				animatorAbility.Launch();
-			}
+                animatorAbility.Launch();
+            }
 
-			//if (abilityFx.LaunchAudioClip != null)
-			//{
-			//	var abilityAudioSource = abilityGo.GetComponent<AudioSource>();
-			//	if (abilityAudioSource != null)
-			//		abilityAudioSource.PlayOneShot(abilityFx.LaunchAudioClip);
-			//}
-		}
+            //if (abilityFx.LaunchAudioClip != null)
+            //{
+            //	var abilityAudioSource = abilityGo.GetComponent<AudioSource>();
+            //	if (abilityAudioSource != null)
+            //		abilityAudioSource.PlayOneShot(abilityFx.LaunchAudioClip);
+            //}
+        }
 
-		//Will be called from animator
-		public void ActivateFx(string abilityName)
-		{
-			var abilityFx = AnimatorAbilityFxs
-				.SingleOrDefault(t => t.FxName == abilityName);
+        //Will be called from animator
+        public void ActivateFx(string abilityName)
+        {
+            var abilityFx = AnimatorAbilityFxs
+                .SingleOrDefault(t => t.FxName == abilityName);
 
-			if (abilityFx == default(IFX_AnimatorAbilityFx))
-				return;
+            if (abilityFx == default(IFX_AnimatorAbilityFx))
+                return;
 
-			var abilityGo = _spellNameToGameObjectMap[abilityName];
+            var abilityGo = _spellNameToGameObjectMap[abilityName];
 
-			if (abilityGo == null)
-				return;
+            if (abilityGo == null)
+                return;
 
-			_spellNameToGameObjectMap.Remove(abilityName);
+            _spellNameToGameObjectMap.Remove(abilityName);
 
-			if (_ifxAbilityUiManager != null && !_ifxAbilityUiManager.IsPositionSelected)
-				return;
+            if (_ifxAbilityUiManager != null && !_ifxAbilityUiManager.IsPositionSelected)
+                return;
 
-			//if (abilityFx.ActivateAudioClip != null)
-			//{
-			//	var abilityAudioSource = abilityGo.GetComponent<AudioSource>();
-			//	if (abilityAudioSource != null)
-			//		abilityAudioSource.PlayOneShot(abilityFx.ActivateAudioClip);
-			//}
+            //if (abilityFx.ActivateAudioClip != null)
+            //{
+            //	var abilityAudioSource = abilityGo.GetComponent<AudioSource>();
+            //	if (abilityAudioSource != null)
+            //		abilityAudioSource.PlayOneShot(abilityFx.ActivateAudioClip);
+            //}
 
-			var animSpell = abilityGo.GetComponent<IFX_IActivableAnimatorAbility>();
-			if (animSpell != null)
-				animSpell.Activate();
-		}
+            var animSpell = abilityGo.GetComponent<IFX_IActivableAnimatorAbility>();
+            if (animSpell != null)
+                animSpell.Activate();
+        }
 
-		private void Awake()
-		{
-			_ifxAbilityUiManager = GetComponent<IFX_AbilityUiManager>();
-			_animator = GetComponent<Animator>();
-		}
-	}
+        private void Awake()
+        {
+            _ifxAbilityUiManager = GetComponent<IFX_AbilityUiManager>();
+            _animator = GetComponent<Animator>();
+        }
+    }
 }

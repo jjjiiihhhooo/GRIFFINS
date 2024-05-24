@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class White_Explosion : MonoBehaviour
@@ -15,7 +14,7 @@ public class White_Explosion : MonoBehaviour
     {
         Vector3 temp = Vector3.zero;
         col = GetComponent<SphereCollider>();
-        while(transform.localScale.x < 2)
+        while (transform.localScale.x < 2)
         {
             temp.x += 0.4f;
             temp.y += 0.4f;

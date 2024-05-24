@@ -1673,7 +1673,6 @@ GameObject:
   - component: {fileID: 1286800407452477072}
   - component: {fileID: 7533412214046001014}
   - component: {fileID: 1833862979}
-  - component: {fileID: 4415449867766384470}
   m_Layer: 7
   m_Name: Boss_Destroyer
   m_TagString: Enemy
@@ -1715,12 +1714,14 @@ MonoBehaviour:
     SerializedFormat: 2
     SerializedBytes: 
     ReferencedUnityObjects:
-    - {fileID: 2188065603492749504, guid: 988b5102af7126245adeee8292ae820c, type: 3}
-    - {fileID: 2188065603492749504, guid: 761de0d91a0f35347b6ff1980aafacc5, type: 3}
-    - {fileID: 6171197274101076587, guid: f4ad74c405fc0324681de79256d9be3c, type: 3}
-    - {fileID: 2520345074723323490, guid: cf365758cdc79a74bbdc4db0cead14e9, type: 3}
-    - {fileID: 6070255355878027171, guid: 005535e7860152b4ba74854e6b9934fe, type: 3}
-    - {fileID: 3113610907361116722, guid: d08324c0d68722b418f1403f5f7e26b8, type: 3}
+    - {fileID: 8399485849330257927, guid: 1926e776773eabd419e670a64a5280bf, type: 3}
+    - {fileID: 6351730822877811273, guid: 2e8ea703450df89489b417746ae6be1c, type: 3}
+    - {fileID: 2688149325524301820, guid: 8f91a07a3110e22498adcb8069dd0fad, type: 3}
+    - {fileID: 4802479445844807585, guid: d2366ebb933353544a18bd8a82531c35, type: 3}
+    - {fileID: 4109766477250180737, guid: 86a10a1fe96966b45acf983cfb2bc19e, type: 3}
+    - {fileID: 22982722015634649, guid: c6ba2af495d109d40954b09e02d110db, type: 3}
+    - {fileID: 7271007513988006020, guid: 941e5c5bb520f2546abdfe3eace67402, type: 3}
+    - {fileID: 6905147526874464253, guid: 1682348611557ab40a79f70b0a9b5d2c, type: 3}
     - {fileID: 1286800408482245758}
     SerializedBytesString: 
     Prefab: {fileID: 0}
@@ -1816,22 +1817,22 @@ MonoBehaviour:
       Data: 2
     - Name: bombingBulletCount
       Entry: 3
-      Data: 30
+      Data: 10
     - Name: attackDelay
       Entry: 4
-      Data: 3
+      Data: 4
     - Name: bombingArea
       Entry: 10
       Data: 0
+    - Name: pushingArea
+      Entry: 10
+      Data: 1
     - Name: fireWaveArea
       Entry: 7
       Data: 1|UnityEngine.GameObject[], UnityEngine.CoreModule
     - Name: 
       Entry: 12
       Data: 4
-    - Name: 
-      Entry: 10
-      Data: 1
     - Name: 
       Entry: 10
       Data: 2
@@ -1842,20 +1843,44 @@ MonoBehaviour:
       Entry: 10
       Data: 4
     - Name: 
+      Entry: 10
+      Data: 5
+    - Name: 
       Entry: 13
       Data: 
     - Name: 
       Entry: 8
       Data: 
     - Name: pizzaArea
-      Entry: 6
-      Data: 
-    - Name: trackingFireEffect
-      Entry: 10
-      Data: 5
-    - Name: firePos
+      Entry: 7
+      Data: 2|UnityEngine.GameObject[], UnityEngine.CoreModule
+    - Name: 
+      Entry: 12
+      Data: 4
+    - Name: 
       Entry: 10
       Data: 6
+    - Name: 
+      Entry: 10
+      Data: 7
+    - Name: 
+      Entry: 10
+      Data: 6
+    - Name: 
+      Entry: 10
+      Data: 7
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: trackingFireEffect
+      Entry: 6
+      Data: 
+    - Name: firePos
+      Entry: 10
+      Data: 8
     - Name: 
       Entry: 8
       Data: 
@@ -1900,22 +1925,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 3, y: 3, z: 3}
-  m_Center: {x: 0, y: 1.29, z: 0}
---- !u!136 &4415449867766384470
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1286800407452477075}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 3.03
-  m_Height: 7.11
-  m_Direction: 1
-  m_Center: {x: 0, y: 4.51, z: 0}
+  m_Size: {x: 5.8, y: 6, z: 5.8}
+  m_Center: {x: 0, y: 2.91, z: 0}
 --- !u!1 &1286800408482245729
 GameObject:
   m_ObjectHideFlags: 0
@@ -1940,7 +1951,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1286800408482245729}
   m_LocalRotation: {x: 0.7511509, y: 0.57805663, z: -0.29664332, w: -0.11672901}
-  m_LocalPosition: {x: -3.21, y: 5.13, z: 0.6462815}
+  m_LocalPosition: {x: 0.29, y: 5.13, z: 3.58}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5086,7 +5097,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -5900,7 +5911,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}

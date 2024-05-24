@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ParticleDestroy : MonoBehaviour
@@ -16,7 +14,7 @@ public class ParticleDestroy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
         if (curTime > 0) curTime -= Time.deltaTime;
         else this.gameObject.SetActive(false);
     }

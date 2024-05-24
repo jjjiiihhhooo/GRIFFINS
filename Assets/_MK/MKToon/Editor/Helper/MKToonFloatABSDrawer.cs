@@ -7,16 +7,16 @@
 //////////////////////////////////////////////////////
 
 #if UNITY_EDITOR
-using UnityEngine;
-using UnityEditor;
 using System;
+using UnityEditor;
+using UnityEngine;
 
 namespace MK.Toon.Editor
 {
     internal class MKToonFloatABSDrawer : MK.Toon.Editor.MaterialPropertyDrawer
     {
-        public MKToonFloatABSDrawer(GUIContent ui) : base(ui) {}
-        public MKToonFloatABSDrawer() : base() {}
+        public MKToonFloatABSDrawer(GUIContent ui) : base(ui) { }
+        public MKToonFloatABSDrawer() : base() { }
 
         public override void OnGUI(Rect position, MaterialProperty prop, String label, MaterialEditor editor)
         {
@@ -37,39 +37,39 @@ namespace MK.Toon.Editor
 
     internal class MKToonOutlineSizeDrawer : MKToonFloatABSDrawer
     {
-        public MKToonOutlineSizeDrawer() : base(UI.outlineMap) {}
+        public MKToonOutlineSizeDrawer() : base(UI.outlineMap) { }
     }
     internal class MKToonSpecularIntensityDrawer : MKToonFloatABSDrawer
     {
-        public MKToonSpecularIntensityDrawer() : base(UI.specularIntensity) {}
+        public MKToonSpecularIntensityDrawer() : base(UI.specularIntensity) { }
     }
     internal class MKToonTransmissionIntensityDrawer : MKToonFloatABSDrawer
     {
-        public MKToonTransmissionIntensityDrawer() : base(UI.lightTransmissionIntensity) {}
+        public MKToonTransmissionIntensityDrawer() : base(UI.lightTransmissionIntensity) { }
     }
     internal class MKToonSoftFadeNearDistanceDrawer : MKToonFloatABSDrawer
     {
-        public MKToonSoftFadeNearDistanceDrawer() : base(UI.softFadeNearDistance) {}
+        public MKToonSoftFadeNearDistanceDrawer() : base(UI.softFadeNearDistance) { }
     }
     internal class MKToonSoftFadeFarDistanceDrawer : MKToonFloatABSDrawer
     {
-        public MKToonSoftFadeFarDistanceDrawer() : base(UI.softFadeFarDistance) {}
+        public MKToonSoftFadeFarDistanceDrawer() : base(UI.softFadeFarDistance) { }
     }
     internal class MKToonCameraFadeFarDistanceDrawer : MKToonFloatABSDrawer
     {
-        public MKToonCameraFadeFarDistanceDrawer() : base(UI.cameraFadeFarDistance) {}
+        public MKToonCameraFadeFarDistanceDrawer() : base(UI.cameraFadeFarDistance) { }
     }
     internal class MKToonCameraFadeNearDistanceDrawer : MKToonFloatABSDrawer
     {
-        public MKToonCameraFadeNearDistanceDrawer() : base(UI.cameraFadeNearDistance) {}
+        public MKToonCameraFadeNearDistanceDrawer() : base(UI.cameraFadeNearDistance) { }
     }
     internal class MKToonBrightnessDrawer : MKToonFloatABSDrawer
     {
-        public MKToonBrightnessDrawer() : base(UI.brightness) {}
+        public MKToonBrightnessDrawer() : base(UI.brightness) { }
     }
     internal class MKToonSaturationDrawer : MKToonFloatABSDrawer
     {
-        public MKToonSaturationDrawer() : base(UI.saturation) {}
+        public MKToonSaturationDrawer() : base(UI.saturation) { }
     }
 }
 #endif

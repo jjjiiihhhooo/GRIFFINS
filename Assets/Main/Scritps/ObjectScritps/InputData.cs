@@ -36,13 +36,24 @@ public class InputData : MonoBehaviour
     {
         if (player == null) player = Player.Instance;
         if (GameManager.Instance.isCutScene) return;
+        MenuInput();
         KeyboardInput();
         MouseInput();
+    }
+
+    private void MenuInput()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            GameManager.Instance.Menu();
+        }
     }
 
     private void MouseInput()
     {
         if (player == null) return;
+        if (GameManager.Instance.isMenu) return;
+
         Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
         if (Physics.Raycast(ray, out RaycastHit raycastHit, 999f, aimColliderMask))
         {

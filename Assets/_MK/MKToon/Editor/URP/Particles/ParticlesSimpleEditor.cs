@@ -7,32 +7,26 @@
 //////////////////////////////////////////////////////
 
 #if UNITY_EDITOR
-using System.Collections.Generic;
-using UnityEngine;
 using UnityEditor;
-using System.Linq;
-using System;
-using UnityEditor.Utils;
-using UnityEditorInternal;
-using EditorHelper = MK.Toon.Editor.EditorHelper;
+using UnityEngine;
 
 namespace MK.Toon.Editor.URP
 {
     internal sealed class ParticlesSimpleEditor : MK.Toon.Editor.SimpleEditorBase
     {
-        public ParticlesSimpleEditor() : base(RenderPipeline.Universal) {}
+        public ParticlesSimpleEditor() : base(RenderPipeline.Universal) { }
 
         /////////////////////////////////////////////////////////////////////////////////////////////
-		// Properties                                                                              //
-		/////////////////////////////////////////////////////////////////////////////////////////////
+        // Properties                                                                              //
+        /////////////////////////////////////////////////////////////////////////////////////////////
 
         /////////////////
         // Particles   //
         /////////////////
 
         /////////////////////////////////////////////////////////////////////////////////////////////
-		// Draw                                                                                    //
-		/////////////////////////////////////////////////////////////////////////////////////////////
+        // Draw                                                                                    //
+        /////////////////////////////////////////////////////////////////////////////////////////////
 
         /////////////////
         // Options     //
@@ -41,20 +35,20 @@ namespace MK.Toon.Editor.URP
         {
 
         }
-        
+
         protected override void EmissionRealtimeSetup(Material material)
         {
-            if(Properties.emissionColor.GetValue(material).maxColorComponent <= 0)
+            if (Properties.emissionColor.GetValue(material).maxColorComponent <= 0)
                 material.globalIlluminationFlags |= MaterialGlobalIlluminationFlags.EmissiveIsBlack;
         }
-        
+
         /////////////////
         // Advanced    //
         /////////////////
 
         /////////////////////////////////////////////////////////////////////////////////////////////
-		// Variants Setup                                                                          //
-		/////////////////////////////////////////////////////////////////////////////////////////////
+        // Variants Setup                                                                          //
+        /////////////////////////////////////////////////////////////////////////////////////////////
     }
 }
 #endif

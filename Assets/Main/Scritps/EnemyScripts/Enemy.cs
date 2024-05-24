@@ -1,6 +1,4 @@
 using System.Collections;
-using System.Data;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -228,9 +226,9 @@ public class Normal_Enemy : Enemy
 
         enemyController.transform.LookAt(target.transform);
         enemyController.transform.eulerAngles = new Vector3(0f, enemyController.transform.eulerAngles.y, 0f);
-        
+
         //enemyController.rigid.AddForce(enemyController.transform.forward.normalized * moveSpeed , ForceMode.VelocityChange);
-        
+
         //enemyController.rigid.velocity = enemyController.transform.forward * moveSpeed;
         enemyController.transform.position = enemyController.transform.position + enemyController.transform.forward.normalized * moveSpeed * Time.deltaTime;
     }
@@ -348,6 +346,7 @@ public class Boss_Destroyer : Enemy
     [SerializeField] private int bombingBulletCount;
     [SerializeField] private float attackDelay;
     [SerializeField] private GameObject bombingArea;
+    [SerializeField] private GameObject pushingArea;
     [SerializeField] private GameObject[] fireWaveArea;
     [SerializeField] private GameObject[] pizzaArea;
     [SerializeField] private GameObject trackingFireEffect;
@@ -401,7 +400,7 @@ public class Boss_Destroyer : Enemy
 
     private void RandomPattern()
     {
-        if(attackCurDelay > 0)
+        if (attackCurDelay > 0)
         {
             attackCurDelay -= Time.deltaTime;
             if (!animator.GetCurrentAnimatorStateInfo(0).IsName("BossIdle")) animator.Play("BossIdle", 0, 0f);
@@ -409,6 +408,7 @@ public class Boss_Destroyer : Enemy
         }
 
         int rand = Random.Range(0, 101);
+
         if (rand <= 20)
         {
             TrackingBullet();
@@ -417,18 +417,34 @@ public class Boss_Destroyer : Enemy
         {
             Bombing();
         }
-        else if (40 < rand && rand <= 70)
+        else if (40 < rand && rand <= 60)
         {
             FireWave();
         }
-        else if (70 < rand && rand <= 100)
+        else if (60 < rand && rand <= 80)
         {
             ContinuousPizza();
         }
-        //ContinuousPizza();
+        else if (80 < rand && rand <= 100)
+        {
+            Pushing();
+        }
+
+        //if (rand <= 50)
+        //{
+        //    FireWave();
+        //}
+        //else if (50 < rand && rand <= 100)
+        //{
+        //    ContinuousPizza();
+        //}
+
+        //Pushing();
+
+        //FireWave();
     }
 
-    private void ContinuousPizza()
+    private void Pizza()
     {
         if (isAction) return;
         isAction = true;
@@ -436,6 +452,48 @@ public class Boss_Destroyer : Enemy
     }
 
     private IEnumerator PizzaCor()
+    {
+        yield return null;
+    }
+
+    private void Pushing()
+    {
+        if (isAction) return;
+        isAction = true;
+        target.GetComponent<Player>().CoroutineEvent(PushingCor());
+    }
+
+    private IEnumerator PushingCor()
+    {
+        GameObject temp = GameObject.Instantiate(pushingArea, enemyController.transform.position, Quaternion.identity);
+        SphereCollider col = temp.GetComponent<SphereCollider>();
+
+        if (Vector3.Distance(target.position, enemyController.transform.position) < 5f) target.GetComponent<Player>().GetDamage(3);
+
+        while (col.radius < 20)
+        {
+            yield return new WaitForEndOfFrame();
+            col.radius += 0.3f;
+        }
+
+        col.radius = 0;
+        GameObject.Destroy(col.gameObject);
+
+        if (animator != null)
+            animator.Play("BossIdle", 0, 0f);
+
+        isAction = false;
+        attackCurDelay = attackDelay;
+    }
+
+    private void ContinuousPizza()
+    {
+        if (isAction) return;
+        isAction = true;
+        target.GetComponent<Player>().CoroutineEvent(ContinuousPizzaCor());
+    }
+
+    private IEnumerator ContinuousPizzaCor()
     {
         for (int i = 0; i < pizzaArea.Length; i++)
         {
@@ -446,9 +504,11 @@ public class Boss_Destroyer : Enemy
             yield return new WaitForSeconds(1f);
         }
 
+        if (animator != null)
+            animator.Play("BossIdle", 0, 0f);
+
         isAction = false;
         attackCurDelay = attackDelay;
-        yield return null;
     }
 
     private void FireWave()
@@ -463,18 +523,18 @@ public class Boss_Destroyer : Enemy
         animator.Play("FireWave", 0, 0f);
         enemyController.transform.forward = target.transform.position - enemyController.transform.position;
         enemyController.transform.eulerAngles = new Vector3(0f, enemyController.transform.eulerAngles.y, 0f);
-        
+
 
         for (int i = 0; i < fireWaveArea.Length; i++)
         {
             if (animator == null) break;
-            
+
             GameObject obj = GameObject.Instantiate(fireWaveArea[i], enemyController.transform.position, Quaternion.identity);
             //obj.transform.forward = enemyController.transform.forward;
             yield return new WaitForSeconds(0.8f);
         }
-
-        animator.Play("BossIdle", 0, 0f);
+        if (animator != null)
+            animator.Play("BossIdle", 0, 0f);
         isAction = false;
         attackCurDelay = attackDelay;
     }
@@ -494,7 +554,7 @@ public class Boss_Destroyer : Enemy
 
         animator.Play("Tracking", 0, 0f);
 
-        while(time > 0)
+        while (time > 0)
         {
             if (target != null)
             {
@@ -507,22 +567,23 @@ public class Boss_Destroyer : Enemy
                 projectile.transform.forward = dir;
                 projectile.gameObject.SetActive(true);
             }
-            
+
             time -= 0.1f;
             yield return new WaitForSeconds(0.1f);
         }
         attackCurDelay = attackDelay;
         isAction = false;
-        
 
-        animator.Play("BossIdle", 0, 0f);
+
+        if (animator != null)
+            animator.Play("BossIdle", 0, 0f);
     }
 
     private void Bombing()
     {
         if (isAction) return;
         isAction = true;
-        
+
         target.GetComponent<Player>().CoroutineEvent(BombingCor());
 
     }
@@ -561,12 +622,13 @@ public class Boss_Destroyer : Enemy
 
         }
 
-        animator.Play("BossIdle", 0, 0f);
+        if (animator != null)
+            animator.Play("BossIdle", 0, 0f);
         isAction = false;
         attackCurDelay = attackDelay;
     }
 
-    
+
 
     public override void GetDamage(float damage)
     {

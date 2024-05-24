@@ -20,7 +20,7 @@ public class PlayerCharacter
     public AnimationClip E_Anim;
     public AnimationClip R_Anim;
     public AnimationClip followAnim;
-    
+
 
     public bool isGrappleReady;
     public bool followEnemy;
@@ -475,7 +475,7 @@ public class WhiteCharacter : PlayerCharacter
     {
         if (!GameManager.Instance.coolTimeManager.CoolCheck("White_E")) return;
         GameManager.Instance.coolTimeManager.GetCoolTime("White_E");
-        
+
         PsionicStorm();
     }
 
@@ -489,7 +489,7 @@ public class WhiteCharacter : PlayerCharacter
     {
         player.isAttack = false;
         GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["red_normalAttack1"], false);
-        if(target != null)
+        if (target != null)
         {
             Player.Instance.StartCoroutine(ProjectileCor());
         }
@@ -501,8 +501,8 @@ public class WhiteCharacter : PlayerCharacter
 
     private IEnumerator ProjectileCor()
     {
-        for(int i = 0; i < 3; i++)
-        {   
+        for (int i = 0; i < 3; i++)
+        {
             if (target != null)
             {
                 GameObject temp = GameObject.Instantiate(normal_projectile, fireTransform.position, Quaternion.identity);
@@ -655,7 +655,7 @@ public class WhiteCharacter : PlayerCharacter
         }
 
         if (player.currentCharacter.animator.GetCurrentAnimatorStateInfo(1).IsName("Idle") || player.currentCharacter.animator.GetCurrentAnimatorStateInfo(1).IsName("Throw")) return;
-        
+
 
         GameManager.Instance.staminaManager.staminaImage.transform.parent.GetComponent<RectTransform>().anchoredPosition = new Vector3(140f, 35.4f, 0f);
         //GameManager.Instance.staminaManager.staminaImage.rectTransform.anchoredPosition = new Vector3(140f, 35.4f, 0f);
@@ -826,7 +826,7 @@ public class GreenCharacter : PlayerCharacter
 
     public override void CharacterChange()
     {
-        
+
     }
 
     public override void Update()
@@ -859,7 +859,7 @@ public class GreenCharacter : PlayerCharacter
 
     private void DragonAnim()
     {
-        GameObject temp =  GameObject.Instantiate(cutScene, player.transform.position, Quaternion.identity);
+        GameObject temp = GameObject.Instantiate(cutScene, player.transform.position, Quaternion.identity);
         temp.SetActive(true);
     }
 
@@ -874,7 +874,7 @@ public class GreenCharacter : PlayerCharacter
     {
         player.movementStateMachine.ChangeState(player.movementStateMachine.IdlingState);
         player.Rigidbody.velocity = Vector3.zero;
-        
+
         player.transform.forward = Camera.main.transform.forward;
         player.transform.eulerAngles = new Vector3(0f, player.transform.eulerAngles.y, 0f);
         //OnlySingleton.Instance.green_E_cam.Priority = 11;
@@ -969,7 +969,7 @@ public class GreenCharacter : PlayerCharacter
 
             RaycastHit hit;
 
-            if(time < 0)
+            if (time < 0)
             {
                 FollowExit();
                 return;
@@ -1249,7 +1249,7 @@ public class RedCharacter : PlayerCharacter
         player.currentCharacter.animator.Play(Q_Anim.name, 3, 0f);
     }
 
-    
+
 
     public override void FollowEnemy()
     {
@@ -1273,7 +1273,7 @@ public class RedCharacter : PlayerCharacter
 
             RaycastHit hit;
 
-            if(time < 0)
+            if (time < 0)
             {
                 FollowExit();
                 return;

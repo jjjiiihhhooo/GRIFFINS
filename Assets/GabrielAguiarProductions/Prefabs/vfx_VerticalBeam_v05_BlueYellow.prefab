@@ -1,0 +1,489 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4656441583889713267
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6447660009010995845}
+  m_Layer: 0
+  m_Name: vfx_VerticalBeam_v05_BlueYellow
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6447660009010995845
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4656441583889713267}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 600468349261857485}
+  - {fileID: 6618521483397475554}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5600151767198727305
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 600468349261857485}
+  - component: {fileID: 3475446158397219556}
+  - component: {fileID: 3018021215254650261}
+  m_Layer: 0
+  m_Name: vfxgraph_VerticalBeam_v1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &600468349261857485
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5600151767198727305}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6447660009010995845}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!2083052967 &3475446158397219556
+VisualEffect:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5600151767198727305}
+  m_Enabled: 1
+  m_Asset: {fileID: 8926484042661614526, guid: 62717d0461950774e9a4bae3bd87786f, type: 3}
+  m_InitialEventName: OnPlay
+  m_InitialEventNameOverriden: 0
+  m_StartSeed: 0
+  m_ResetSeedOnPlay: 1
+  m_AllowInstancing: 1
+  m_ResourceVersion: 1
+  m_PropertySheet:
+    m_Float:
+      m_Array:
+      - m_Value: 96
+        m_Name: StretchParticlesRate
+        m_Overridden: 1
+      - m_Value: 5.9
+        m_Name: StretchParticlesCircleRadius
+        m_Overridden: 1
+      - m_Value: 1.85
+        m_Name: Delay
+        m_Overridden: 1
+      - m_Value: 19.67
+        m_Name: GroundCrackADDSize
+        m_Overridden: 1
+      - m_Value: 0.64
+        m_Name: CylinderCoreVoronoiClip
+        m_Overridden: 1
+      - m_Value: 0.708
+        m_Name: CylinderVoronoi2Clip
+        m_Overridden: 1
+      - m_Value: 2
+        m_Name: StretchParticlesSize
+        m_Overridden: 1
+      - m_Value: 1.5
+        m_Name: StretchedParticlesSize
+        m_Overridden: 1
+    m_Vector2f:
+      m_Array:
+      - m_Value: {x: -2.7, y: -0.5}
+        m_Name: CylinderVoronoiTiling
+        m_Overridden: 1
+      - m_Value: {x: 2.81, y: -0.69}
+        m_Name: CylinderCoreVoronoiTiling
+        m_Overridden: 1
+    m_Vector3f:
+      m_Array:
+      - m_Value: {x: 3.2, y: 3.2, z: 10.46}
+        m_Name: BaseImpactConeScale1
+        m_Overridden: 1
+      - m_Value: {x: 3.7, y: 3.7, z: 6.03}
+        m_Name: BaseImpactConeScale2
+        m_Overridden: 1
+      - m_Value: {x: 1.1, y: 1.1, z: 15}
+        m_Name: CylinderCoreVoronoiScale
+        m_Overridden: 1
+    m_Vector4f:
+      m_Array:
+      - m_Value: {x: 256, y: 141.31497, z: 9.4437, w: 1}
+        m_Name: CylinderCoreColor
+        m_Overridden: 1
+      - m_Value: {x: 0.05882411, y: 0.5696212, z: 2.306056, w: 1}
+        m_Name: CylinderBackColor
+        m_Overridden: 1
+      - m_Value: {x: 0, y: 6.231231, z: 26.953724, w: 1}
+        m_Name: CylinderFresnelColor
+        m_Overridden: 1
+      - m_Value: {x: 8.47419, y: 4.677851, z: 0.3126082, w: 1}
+        m_Name: CylinderVoronoiColor
+        m_Overridden: 1
+      - m_Value: {x: 8.47419, y: 4.677851, z: 0.3126082, w: 1}
+        m_Name: StretchParticlesColor
+        m_Overridden: 1
+      - m_Value: {x: 8.47419, y: 4.677851, z: 0.3126082, w: 1}
+        m_Name: StretchedParticlesColor
+        m_Overridden: 1
+      - m_Value: {x: 0.009712864, y: 5.5887184, z: 16.47737, w: 1}
+        m_Name: GroundCracksADDColor
+        m_Overridden: 1
+      - m_Value: {x: 0, y: 6.231231, z: 26.953724, w: 1}
+        m_Name: CylinderCoreVoronoiColor
+        m_Overridden: 1
+      - m_Value: {x: 0.009712864, y: 5.5887184, z: 16.47737, w: 1}
+        m_Name: CylinderVoronoi2Color
+        m_Overridden: 1
+      - m_Value: {x: 1.4980392, y: 0.82693505, z: 0.055261847, w: 1}
+        m_Name: BaseImpactConesColor
+        m_Overridden: 1
+    m_Uint:
+      m_Array: []
+    m_Int:
+      m_Array: []
+    m_Matrix4x4f:
+      m_Array: []
+    m_AnimationCurve:
+      m_Array: []
+    m_Gradient:
+      m_Array: []
+    m_NamedObject:
+      m_Array:
+      - m_Value: {fileID: -6193453781546041086, guid: eaa152d074be74044b450997e1a801b2, type: 3}
+        m_Name: CylinderCoreVoronoiMesh
+        m_Overridden: 1
+    m_Bool:
+      m_Array:
+      - m_Value: 1
+        m_Name: CylinderCoreVoronoiEnable
+        m_Overridden: 1
+      - m_Value: 1
+        m_Name: DebrisVerticalEnable
+        m_Overridden: 1
+      - m_Value: 1
+        m_Name: StretchParticlesBottomEnable
+        m_Overridden: 1
+      - m_Value: 1
+        m_Name: DebrisBottomEnable
+        m_Overridden: 1
+      - m_Value: 1
+        m_Name: BaseImpactConesEnable
+        m_Overridden: 1
+      - m_Value: 1
+        m_Name: GroundCracksEnable
+        m_Overridden: 1
+      - m_Value: 1
+        m_Name: GroundMarkEnable
+        m_Overridden: 1
+--- !u!73398921 &3018021215254650261
+VFXRenderer:
+  serializedVersion: 1
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5600151767198727305}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!1 &8185020208177565783
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6618521483397475554}
+  - component: {fileID: 5559816847250083309}
+  - component: {fileID: 3669553230748594235}
+  m_Layer: 0
+  m_Name: vfxgraph_Orb_v1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6618521483397475554
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8185020208177565783}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.84, y: 0.84, z: 0.84}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6447660009010995845}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!2083052967 &5559816847250083309
+VisualEffect:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8185020208177565783}
+  m_Enabled: 1
+  m_Asset: {fileID: 8926484042661614526, guid: cb2a1962f2a17384588ef0b96f474a40, type: 3}
+  m_InitialEventName: OnPlay
+  m_InitialEventNameOverriden: 0
+  m_StartSeed: 0
+  m_ResetSeedOnPlay: 1
+  m_AllowInstancing: 1
+  m_ResourceVersion: 1
+  m_PropertySheet:
+    m_Float:
+      m_Array:
+      - m_Value: 1.75
+        m_Name: OrbLifetime
+        m_Overridden: 1
+      - m_Value: 1.75
+        m_Name: ImpactDelay
+        m_Overridden: 1
+    m_Vector2f:
+      m_Array: []
+    m_Vector3f:
+      m_Array: []
+    m_Vector4f:
+      m_Array:
+      - m_Value: {x: 0.00143451, y: 0.82540774, z: 2.4335718, w: 1}
+        m_Name: OrbCircleColor
+        m_Overridden: 1
+      - m_Value: {x: 111.43049, y: 91.72345, z: 17.345314, w: 1}
+        m_Name: OrbInsideColor
+        m_Overridden: 1
+      - m_Value: {x: 4.5412054, y: 2.6962426, z: 0.1188797, w: 1}
+        m_Name: OrbInsideFlareColor
+        m_Overridden: 1
+      - m_Value: {x: 4.961052, y: 3.948096, z: 2.269915, w: 1}
+        m_Name: ImpactFlareColor
+        m_Overridden: 1
+      - m_Value: {x: 0.045940243, y: 0.37700137, z: 1.3913323, w: 1}
+        m_Name: ShockwaveColor
+        m_Overridden: 1
+      - m_Value: {x: 2.4805262, y: 1.9740481, z: 1.1349577, w: 1}
+        m_Name: ImpactFlashColor
+        m_Overridden: 1
+      - m_Value: {x: 0.054901958, y: 0.09588736, z: 0.14117648, w: 1}
+        m_Name: OrbBackColor
+        m_Overridden: 1
+      - m_Value: {x: 2.921088, y: 1.7343328, z: 0.07646825, w: 1}
+        m_Name: OrbElectricityColor
+        m_Overridden: 1
+    m_Uint:
+      m_Array: []
+    m_Int:
+      m_Array: []
+    m_Matrix4x4f:
+      m_Array: []
+    m_AnimationCurve:
+      m_Array:
+      - m_Value:
+          serializedVersion: 2
+          m_Curve:
+          - serializedVersion: 3
+            time: 0
+            value: 0
+            inSlope: 9.143813
+            outSlope: 9.143813
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0.06975228
+          - serializedVersion: 3
+            time: 0.38874513
+            value: 2.998222
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          - serializedVersion: 3
+            time: 0.8980083
+            value: 3.015331
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          - serializedVersion: 3
+            time: 1
+            value: 0
+            inSlope: -218.55376
+            outSlope: -218.55376
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
+        m_Name: OrbPositionCurve
+        m_Overridden: 1
+      - m_Value:
+          serializedVersion: 2
+          m_Curve:
+          - serializedVersion: 3
+            time: -0.022102356
+            value: 0.18024445
+            inSlope: 2.407548
+            outSlope: 2.407548
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0.051975608
+          - serializedVersion: 3
+            time: 0.6236607
+            value: 1.0100955
+            inSlope: -0.6723174
+            outSlope: -0.6723174
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          - serializedVersion: 3
+            time: 0.7017028
+            value: 0.9300821
+            inSlope: -1.392113
+            outSlope: -1.392113
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          - serializedVersion: 3
+            time: 0.8759452
+            value: 0.771976
+            inSlope: 2.6187258
+            outSlope: 2.6187258
+            tangentMode: 34
+            weightedMode: 0
+            inWeight: 0.33333334
+            outWeight: 0.33333334
+          - serializedVersion: 3
+            time: 0.9449401
+            value: 1.1959387
+            inSlope: -6.053621
+            outSlope: -6.053621
+            tangentMode: 34
+            weightedMode: 0
+            inWeight: 0.33333334
+            outWeight: 0.33333334
+          - serializedVersion: 3
+            time: 0.9990798
+            value: 0.20777571
+            inSlope: -24.850359
+            outSlope: -24.850359
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
+        m_Name: OrbSizeCurve
+        m_Overridden: 1
+    m_Gradient:
+      m_Array: []
+    m_NamedObject:
+      m_Array: []
+    m_Bool:
+      m_Array:
+      - m_Value: 1
+        m_Name: OrbEnable
+        m_Overridden: 0
+--- !u!73398921 &3669553230748594235
+VFXRenderer:
+  serializedVersion: 1
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8185020208177565783}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0

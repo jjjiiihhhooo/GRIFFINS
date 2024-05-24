@@ -4,98 +4,115 @@ using UnityEngine;
 
 namespace MoreMountains.Tools
 {
-	[CustomPropertyDrawer(typeof(MMReorderableAttributeAttribute))]
-	public class ReorderableDrawer : PropertyDrawer {
+    [CustomPropertyDrawer(typeof(MMReorderableAttributeAttribute))]
+    public class ReorderableDrawer : PropertyDrawer
+    {
 
-		private static Dictionary<int, MMReorderableList> lists = new Dictionary<int, MMReorderableList>();
+        private static Dictionary<int, MMReorderableList> lists = new Dictionary<int, MMReorderableList>();
 
-		public override float GetPropertyHeight(SerializedProperty property, GUIContent label) {
+        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+        {
 
-			MMReorderableList list = GetList(property, attribute as MMReorderableAttributeAttribute);
+            MMReorderableList list = GetList(property, attribute as MMReorderableAttributeAttribute);
 
-			return list != null ? list.GetHeight() : EditorGUIUtility.singleLineHeight;
-		}		
-		
-		#if  UNITY_EDITOR
-		public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
+            return list != null ? list.GetHeight() : EditorGUIUtility.singleLineHeight;
+        }
 
-			MMReorderableList list = GetList(property, attribute as MMReorderableAttributeAttribute);
+#if UNITY_EDITOR
+        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+        {
 
-			if (list != null) {
+            MMReorderableList list = GetList(property, attribute as MMReorderableAttributeAttribute);
 
-				list.DoList(EditorGUI.IndentedRect(position), label);
-			}
-			else {
+            if (list != null)
+            {
 
-				GUI.Label(position, "Array must extend from ReorderableArray", EditorStyles.label);
-			}
-		}
-		#endif
+                list.DoList(EditorGUI.IndentedRect(position), label);
+            }
+            else
+            {
 
-		public static int GetListId(SerializedProperty property) {
+                GUI.Label(position, "Array must extend from ReorderableArray", EditorStyles.label);
+            }
+        }
+#endif
 
-			if (property != null) {
+        public static int GetListId(SerializedProperty property)
+        {
 
-				int h1 = property.serializedObject.targetObject.GetHashCode();
-				int h2 = property.propertyPath.GetHashCode();
+            if (property != null)
+            {
 
-				return (((h1 << 5) + h1) ^ h2);
-			}
+                int h1 = property.serializedObject.targetObject.GetHashCode();
+                int h2 = property.propertyPath.GetHashCode();
 
-			return 0;
-		}
+                return (((h1 << 5) + h1) ^ h2);
+            }
 
-		public static MMReorderableList GetList(SerializedProperty property) {
+            return 0;
+        }
 
-			return GetList(property, null, GetListId(property));
-		}
+        public static MMReorderableList GetList(SerializedProperty property)
+        {
 
-		public static MMReorderableList GetList(SerializedProperty property, MMReorderableAttributeAttribute attrib) {
+            return GetList(property, null, GetListId(property));
+        }
 
-			return GetList(property, attrib, GetListId(property));
-		}
+        public static MMReorderableList GetList(SerializedProperty property, MMReorderableAttributeAttribute attrib)
+        {
 
-		public static MMReorderableList GetList(SerializedProperty property, int id) {
+            return GetList(property, attrib, GetListId(property));
+        }
 
-			return GetList(property, null, id);
-		}
+        public static MMReorderableList GetList(SerializedProperty property, int id)
+        {
 
-		public static MMReorderableList GetList(SerializedProperty property, MMReorderableAttributeAttribute attrib, int id) {
+            return GetList(property, null, id);
+        }
 
-			if (property == null) {
+        public static MMReorderableList GetList(SerializedProperty property, MMReorderableAttributeAttribute attrib, int id)
+        {
 
-				return null;
-			}
+            if (property == null)
+            {
 
-			MMReorderableList list = null;
-			SerializedProperty array = property.FindPropertyRelative("array");
+                return null;
+            }
 
-			if (array != null && array.isArray) {
+            MMReorderableList list = null;
+            SerializedProperty array = property.FindPropertyRelative("array");
 
-				if (!lists.TryGetValue(id, out list)) {
+            if (array != null && array.isArray)
+            {
 
-					if (attrib != null) {
+                if (!lists.TryGetValue(id, out list))
+                {
 
-						Texture icon = !string.IsNullOrEmpty(attrib.elementIconPath) ? AssetDatabase.GetCachedIcon(attrib.elementIconPath) : null;
+                    if (attrib != null)
+                    {
 
-						MMReorderableList.ElementDisplayType displayType = attrib.singleLine ? MMReorderableList.ElementDisplayType.SingleLine : MMReorderableList.ElementDisplayType.Auto;
+                        Texture icon = !string.IsNullOrEmpty(attrib.elementIconPath) ? AssetDatabase.GetCachedIcon(attrib.elementIconPath) : null;
 
-						list = new MMReorderableList(array, attrib.add, attrib.remove, attrib.draggable, displayType, attrib.elementNameProperty, attrib.elementNameOverride, icon);
-					}
-					else {
+                        MMReorderableList.ElementDisplayType displayType = attrib.singleLine ? MMReorderableList.ElementDisplayType.SingleLine : MMReorderableList.ElementDisplayType.Auto;
 
-						list = new MMReorderableList(array, true, true, true);
-					}
+                        list = new MMReorderableList(array, attrib.add, attrib.remove, attrib.draggable, displayType, attrib.elementNameProperty, attrib.elementNameOverride, icon);
+                    }
+                    else
+                    {
 
-					lists.Add(id, list);
-				}
-				else {
+                        list = new MMReorderableList(array, true, true, true);
+                    }
 
-					list.List = array;
-				}
-			}
+                    lists.Add(id, list);
+                }
+                else
+                {
 
-			return list;
-		}
-	}
+                    list.List = array;
+                }
+            }
+
+            return list;
+        }
+    }
 }

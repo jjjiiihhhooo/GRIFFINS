@@ -2,7 +2,7 @@
 
 // ReSharper disable once CheckNamespace
 namespace QFX.IFX
-{ 
+{
     public class IFX_AudioClipPlayer : IFX_ControlledObject
     {
         public AudioSource AudioSource;

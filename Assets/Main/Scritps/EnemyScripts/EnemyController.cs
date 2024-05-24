@@ -55,18 +55,18 @@ public class EnemyController : SerializedMonoBehaviour
 
     private void UIUpdate()
     {
-        
+
         hpSlider.value = Mathf.Lerp(hpSlider.value, enemy.curHp / enemy.maxHp, Time.deltaTime * 5f);
 
-        if (enemy.backHpHit)
-        {
-            backHpSlider.value = Mathf.Lerp(backHpSlider.value, hpSlider.value, Time.deltaTime * 6f);
-            if (hpSlider.value >= backHpSlider.value - 0.001f)
-            {
-                enemy.backHpHit = false;
-                backHpSlider.value = hpSlider.value;
-            }
-        }
+        //if (enemy.backHpHit)
+        //{
+        //    backHpSlider.value = Mathf.Lerp(backHpSlider.value, hpSlider.value, Time.deltaTime * 6f);
+        //    if (hpSlider.value >= backHpSlider.value - 0.001f)
+        //    {
+        //        enemy.backHpHit = false;
+        //        backHpSlider.value = hpSlider.value;
+        //    }
+        //}
         if (!isBoss)
             canvas.transform.LookAt(canvas.transform.position + Camera.main.transform.rotation * Vector3.forward, Camera.main.transform.rotation * Vector3.up);
     }

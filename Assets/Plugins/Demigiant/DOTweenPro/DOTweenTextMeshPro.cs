@@ -6,13 +6,13 @@
 
 
 #if true // MODULE_MARKER
-using System;
-using System.Globalization;
-using System.Collections.Generic;
 using DG.Tweening.Core;
 using DG.Tweening.Plugins.Options;
-using UnityEngine;
+using System;
+using System.Collections.Generic;
+using System.Globalization;
 using TMPro;
+using UnityEngine;
 using Object = UnityEngine.Object;
 
 namespace DG.Tweening
@@ -121,10 +121,12 @@ namespace DG.Tweening
         /// <param name="culture">The <see cref="CultureInfo"/> to use (InvariantCulture if NULL)</param>
         public static TweenerCore<int, int, NoOptions> DOCounter(
             this TMP_Text target, int fromValue, int endValue, float duration, bool addThousandsSeparator = true, CultureInfo culture = null
-        ){
+        )
+        {
             int v = fromValue;
             CultureInfo cInfo = !addThousandsSeparator ? null : culture ?? CultureInfo.InvariantCulture;
-            TweenerCore<int, int, NoOptions> t = DOTween.To(() => v, x => {
+            TweenerCore<int, int, NoOptions> t = DOTween.To(() => v, x =>
+            {
                 v = x;
                 target.text = addThousandsSeparator
                     ? v.ToString("N0", cInfo)
@@ -191,7 +193,7 @@ namespace DG.Tweening
     /// </summary>
     public class DOTweenTMPAnimator : IDisposable
     {
-        static readonly Dictionary<TMP_Text,DOTweenTMPAnimator> _targetToAnimator = new Dictionary<TMP_Text,DOTweenTMPAnimator>();
+        static readonly Dictionary<TMP_Text, DOTweenTMPAnimator> _targetToAnimator = new Dictionary<TMP_Text, DOTweenTMPAnimator>();
 
         /// <summary><see cref="TMP_Text"/> that this animator is linked to</summary>
         public TMP_Text target { get; private set; }
@@ -210,17 +212,21 @@ namespace DG.Tweening
         /// <param name="target">The <see cref="TMP_Text"/> that will be linked to this animator</param>
         public DOTweenTMPAnimator(TMP_Text target)
         {
-            if (target == null) {
+            if (target == null)
+            {
                 Debugger.LogError("DOTweenTMPAnimator target can't be null");
                 return;
             }
-            if (!target.gameObject.activeInHierarchy) {
+            if (!target.gameObject.activeInHierarchy)
+            {
                 Debugger.LogError("You can't create a DOTweenTMPAnimator if its target is disabled");
                 return;
             }
             // Verify that there's no other animators for the same target, and in case dispose them
-            if (_targetToAnimator.ContainsKey(target)) {
-                if (Debugger.logPriority >= 2) {
+            if (_targetToAnimator.ContainsKey(target))
+            {
+                if (Debugger.logPriority >= 2)
+                {
                     Debugger.Log(string.Format(
                         "A DOTweenTMPAnimator for \"{0}\" already exists: disposing it because you can't have more than one DOTweenTMPAnimator" +
                         " for the same TextMesh Pro object. If you have tweens running on the disposed DOTweenTMPAnimator you should kill them manually",
@@ -271,11 +277,13 @@ namespace DG.Tweening
             _cachedMeshInfos = textInfo.CopyMeshInfoVertexData();
             int totChars = textInfo.characterCount;
             int totCurrent = _charTransforms.Count;
-            if (totCurrent > totChars) {
+            if (totCurrent > totChars)
+            {
                 _charTransforms.RemoveRange(totChars, totCurrent - totChars);
                 totCurrent = totChars;
             }
-            for (int i = 0; i < totCurrent; ++i) {
+            for (int i = 0; i < totCurrent; ++i)
+            {
                 CharTransform c = _charTransforms[i];
                 c.ResetTransformationData();
                 c.Refresh(textInfo, _cachedMeshInfos);
@@ -302,18 +310,24 @@ namespace DG.Tweening
 
         bool ValidateChar(int charIndex, bool isTween = true)
         {
-            if (textInfo.characterCount <= charIndex) {
+            if (textInfo.characterCount <= charIndex)
+            {
                 Debugger.LogError(string.Format("CharIndex {0} doesn't exist", charIndex));
                 return false;
             }
-            if (!textInfo.characterInfo[charIndex].isVisible) {
-                if (Debugger.logPriority > 1) {
-                    if (isTween) {
+            if (!textInfo.characterInfo[charIndex].isVisible)
+            {
+                if (Debugger.logPriority > 1)
+                {
+                    if (isTween)
+                    {
                         Debugger.Log(string.Format(
                             "CharIndex {0} isn't visible, ignoring it and returning an empty tween (TextMesh Pro will behave weirdly if invisible chars are included in the animation)",
                             charIndex
                         ));
-                    } else {
+                    }
+                    else
+                    {
                         Debugger.Log(string.Format("CharIndex {0} isn't visible, ignoring it", charIndex));
                     }
                 }
@@ -329,13 +343,15 @@ namespace DG.Tweening
             int charCount = textInfo.characterCount;
             if (fromCharIndex >= charCount) return false;
             if (toCharIndex >= charCount) toCharIndex = charCount - 1;
-            for (int i = fromCharIndex; i < toCharIndex + 1; ++i) {
+            for (int i = fromCharIndex; i < toCharIndex + 1; ++i)
+            {
                 if (!_charTransforms[i].isVisible) continue;
                 firstVisibleCharIndex = i;
                 break;
             }
             if (firstVisibleCharIndex == -1) return false;
-            for (int i = toCharIndex; i > firstVisibleCharIndex - 1; --i) {
+            for (int i = toCharIndex; i > firstVisibleCharIndex - 1; --i)
+            {
                 if (!_charTransforms[i].isVisible) continue;
                 lastVisibleCharIndex = i;
                 break;
@@ -357,7 +373,8 @@ namespace DG.Tweening
         {
             int firstVisibleCharIndex, lastVisibleCharIndex;
             if (!ValidateSpan(fromCharIndex, toCharIndex, out firstVisibleCharIndex, out lastVisibleCharIndex)) return;
-            for (int i = firstVisibleCharIndex; i < lastVisibleCharIndex + 1; ++i) {
+            for (int i = firstVisibleCharIndex; i < lastVisibleCharIndex + 1; ++i)
+            {
                 if (!_charTransforms[i].isVisible) continue;
                 CharVertices v = _charTransforms[i].GetVertices();
                 float skew = SkewCharX(i, skewFactor, skewTop);
@@ -375,10 +392,12 @@ namespace DG.Tweening
         public void SkewSpanY(
             int fromCharIndex, int toCharIndex, float skewFactor,
             TMPSkewSpanMode mode = TMPSkewSpanMode.Default, bool skewRight = true
-        ){
+        )
+        {
             int firstVisibleCharIndex, lastVisibleCharIndex;
             if (!ValidateSpan(fromCharIndex, toCharIndex, out firstVisibleCharIndex, out lastVisibleCharIndex)) return;
-            if (mode == TMPSkewSpanMode.AsMaxSkewFactor) {
+            if (mode == TMPSkewSpanMode.AsMaxSkewFactor)
+            {
                 CharVertices firstVisibleCharVertices = _charTransforms[firstVisibleCharIndex].GetVertices();
                 CharVertices lastVisibleCharVertices = _charTransforms[lastVisibleCharIndex].GetVertices();
                 float spanW = Mathf.Abs(lastVisibleCharVertices.bottomRight.x - firstVisibleCharVertices.bottomLeft.x);
@@ -389,12 +408,15 @@ namespace DG.Tweening
             float offsetY = 0;
             CharVertices prevCharVertices = new CharVertices();
             float prevCharSkew = 0;
-            if (skewRight) {
-                for (int i = firstVisibleCharIndex; i < lastVisibleCharIndex + 1; ++i) {
+            if (skewRight)
+            {
+                for (int i = firstVisibleCharIndex; i < lastVisibleCharIndex + 1; ++i)
+                {
                     if (!_charTransforms[i].isVisible) continue;
                     CharVertices v = _charTransforms[i].GetVertices();
                     float skew = SkewCharY(i, skewFactor, skewRight);
-                    if (i > firstVisibleCharIndex) {
+                    if (i > firstVisibleCharIndex)
+                    {
                         float prevCharW = Mathf.Abs(prevCharVertices.bottomLeft.x - prevCharVertices.bottomRight.x);
                         float charsDist = Mathf.Abs(v.bottomLeft.x - prevCharVertices.bottomRight.x);
                         offsetY += prevCharSkew + (prevCharSkew * charsDist) / prevCharW;
@@ -403,12 +425,16 @@ namespace DG.Tweening
                     prevCharVertices = v;
                     prevCharSkew = skew;
                 }
-            } else {
-                for (int i = lastVisibleCharIndex; i > firstVisibleCharIndex - 1; --i) {
+            }
+            else
+            {
+                for (int i = lastVisibleCharIndex; i > firstVisibleCharIndex - 1; --i)
+                {
                     if (!_charTransforms[i].isVisible) continue;
                     CharVertices v = _charTransforms[i].GetVertices();
                     float skew = SkewCharY(i, skewFactor, skewRight);
-                    if (i < lastVisibleCharIndex) {
+                    if (i < lastVisibleCharIndex)
+                    {
                         float prevCharW = Mathf.Abs(prevCharVertices.bottomLeft.x - prevCharVertices.bottomRight.x);
                         float charsDist = Mathf.Abs(v.bottomRight.x - prevCharVertices.bottomLeft.x);
                         offsetY += prevCharSkew + (prevCharSkew * charsDist) / prevCharW;
@@ -602,7 +628,8 @@ namespace DG.Tweening
         public TweenerCore<Color, Color, ColorOptions> DOFadeChar(int charIndex, float endValue, float duration)
         {
             if (!ValidateChar(charIndex)) return null;
-            TweenerCore<Color, Color, ColorOptions> t = DOTween.ToAlpha(() => _charTransforms[charIndex].GetColor(textInfo.meshInfo), x => {
+            TweenerCore<Color, Color, ColorOptions> t = DOTween.ToAlpha(() => _charTransforms[charIndex].GetColor(textInfo.meshInfo), x =>
+            {
                 _charTransforms[charIndex].UpdateAlpha(target, x, textInfo.meshInfo);
             }, endValue, duration);
             return t;
@@ -615,7 +642,8 @@ namespace DG.Tweening
         public TweenerCore<Color, Color, ColorOptions> DOColorChar(int charIndex, Color endValue, float duration)
         {
             if (!ValidateChar(charIndex)) return null;
-            TweenerCore<Color, Color, ColorOptions> t = DOTween.To(() => _charTransforms[charIndex].GetColor(textInfo.meshInfo), x => {
+            TweenerCore<Color, Color, ColorOptions> t = DOTween.To(() => _charTransforms[charIndex].GetColor(textInfo.meshInfo), x =>
+            {
                 _charTransforms[charIndex].UpdateColor(target, x, textInfo.meshInfo);
             }, endValue, duration);
             return t;
@@ -628,7 +656,8 @@ namespace DG.Tweening
         public TweenerCore<Vector3, Vector3, VectorOptions> DOOffsetChar(int charIndex, Vector3 endValue, float duration)
         {
             if (!ValidateChar(charIndex)) return null;
-            TweenerCore<Vector3, Vector3, VectorOptions> t = DOTween.To(() => _charTransforms[charIndex].offset, x => {
+            TweenerCore<Vector3, Vector3, VectorOptions> t = DOTween.To(() => _charTransforms[charIndex].offset, x =>
+            {
                 CharTransform charT = _charTransforms[charIndex];
                 charT.UpdateGeometry(target, x, charT.rotation, charT.scale, _cachedMeshInfos);
                 _charTransforms[charIndex] = charT;
@@ -644,7 +673,8 @@ namespace DG.Tweening
         public TweenerCore<Quaternion, Vector3, QuaternionOptions> DORotateChar(int charIndex, Vector3 endValue, float duration, RotateMode mode = RotateMode.Fast)
         {
             if (!ValidateChar(charIndex)) return null;
-            TweenerCore<Quaternion, Vector3, QuaternionOptions> t = DOTween.To(() => _charTransforms[charIndex].rotation, x => {
+            TweenerCore<Quaternion, Vector3, QuaternionOptions> t = DOTween.To(() => _charTransforms[charIndex].rotation, x =>
+            {
                 CharTransform charT = _charTransforms[charIndex];
                 charT.UpdateGeometry(target, charT.offset, x, charT.scale, _cachedMeshInfos);
                 _charTransforms[charIndex] = charT;
@@ -668,7 +698,8 @@ namespace DG.Tweening
         public TweenerCore<Vector3, Vector3, VectorOptions> DOScaleChar(int charIndex, Vector3 endValue, float duration)
         {
             if (!ValidateChar(charIndex)) return null;
-            TweenerCore<Vector3, Vector3, VectorOptions> t = DOTween.To(() => _charTransforms[charIndex].scale, x => {
+            TweenerCore<Vector3, Vector3, VectorOptions> t = DOTween.To(() => _charTransforms[charIndex].scale, x =>
+            {
                 CharTransform charT = _charTransforms[charIndex];
                 charT.UpdateGeometry(target, charT.offset, charT.rotation, x, _cachedMeshInfos);
                 _charTransforms[charIndex] = charT;
@@ -688,11 +719,13 @@ namespace DG.Tweening
         public Tweener DOPunchCharOffset(int charIndex, Vector3 punch, float duration, int vibrato = 10, float elasticity = 1)
         {
             if (!ValidateChar(charIndex)) return null;
-            if (duration <= 0) {
+            if (duration <= 0)
+            {
                 if (Debugger.logPriority > 0) Debug.LogWarning("Duration can't be 0, returning NULL without creating a tween");
                 return null;
             }
-            return DOTween.Punch(() => _charTransforms[charIndex].offset, x => {
+            return DOTween.Punch(() => _charTransforms[charIndex].offset, x =>
+            {
                 CharTransform charT = _charTransforms[charIndex];
                 charT.UpdateGeometry(target, x, charT.rotation, charT.scale, _cachedMeshInfos);
                 _charTransforms[charIndex] = charT;
@@ -711,11 +744,13 @@ namespace DG.Tweening
         public Tweener DOPunchCharRotation(int charIndex, Vector3 punch, float duration, int vibrato = 10, float elasticity = 1)
         {
             if (!ValidateChar(charIndex)) return null;
-            if (duration <= 0) {
+            if (duration <= 0)
+            {
                 if (Debugger.logPriority > 0) Debug.LogWarning("Duration can't be 0, returning NULL without creating a tween");
                 return null;
             }
-            return DOTween.Punch(() => _charTransforms[charIndex].rotation.eulerAngles, x => {
+            return DOTween.Punch(() => _charTransforms[charIndex].rotation.eulerAngles, x =>
+            {
                 CharTransform charT = _charTransforms[charIndex];
                 charT.UpdateGeometry(target, charT.offset, Quaternion.Euler(x), charT.scale, _cachedMeshInfos);
                 _charTransforms[charIndex] = charT;
@@ -747,11 +782,13 @@ namespace DG.Tweening
         public Tweener DOPunchCharScale(int charIndex, Vector3 punch, float duration, int vibrato = 10, float elasticity = 1)
         {
             if (!ValidateChar(charIndex)) return null;
-            if (duration <= 0) {
+            if (duration <= 0)
+            {
                 if (Debugger.logPriority > 0) Debug.LogWarning("Duration can't be 0, returning NULL without creating a tween");
                 return null;
             }
-            return DOTween.Punch(() => _charTransforms[charIndex].scale, x => {
+            return DOTween.Punch(() => _charTransforms[charIndex].scale, x =>
+            {
                 CharTransform charT = _charTransforms[charIndex];
                 charT.UpdateGeometry(target, charT.offset, charT.rotation, x, _cachedMeshInfos);
                 _charTransforms[charIndex] = charT;
@@ -781,11 +818,13 @@ namespace DG.Tweening
         public Tweener DOShakeCharOffset(int charIndex, float duration, Vector3 strength, int vibrato = 10, float randomness = 90, bool fadeOut = true)
         {
             if (!ValidateChar(charIndex)) return null;
-            if (duration <= 0) {
+            if (duration <= 0)
+            {
                 if (Debugger.logPriority > 0) Debug.LogWarning("Duration can't be 0, returning NULL without creating a tween");
                 return null;
             }
-            return DOTween.Shake(() => _charTransforms[charIndex].offset, x => {
+            return DOTween.Shake(() => _charTransforms[charIndex].offset, x =>
+            {
                 CharTransform charT = _charTransforms[charIndex];
                 charT.UpdateGeometry(target, x, charT.rotation, charT.scale, _cachedMeshInfos);
                 _charTransforms[charIndex] = charT;
@@ -803,11 +842,13 @@ namespace DG.Tweening
         public Tweener DOShakeCharRotation(int charIndex, float duration, Vector3 strength, int vibrato = 10, float randomness = 90, bool fadeOut = true)
         {
             if (!ValidateChar(charIndex)) return null;
-            if (duration <= 0) {
+            if (duration <= 0)
+            {
                 if (Debugger.logPriority > 0) Debug.LogWarning("Duration can't be 0, returning NULL without creating a tween");
                 return null;
             }
-            return DOTween.Shake(() => _charTransforms[charIndex].rotation.eulerAngles, x => {
+            return DOTween.Shake(() => _charTransforms[charIndex].rotation.eulerAngles, x =>
+            {
                 CharTransform charT = _charTransforms[charIndex];
                 charT.UpdateGeometry(target, charT.offset, Quaternion.Euler(x), charT.scale, _cachedMeshInfos);
                 _charTransforms[charIndex] = charT;
@@ -837,11 +878,13 @@ namespace DG.Tweening
         public Tweener DOShakeCharScale(int charIndex, float duration, Vector3 strength, int vibrato = 10, float randomness = 90, bool fadeOut = true)
         {
             if (!ValidateChar(charIndex)) return null;
-            if (duration <= 0) {
+            if (duration <= 0)
+            {
                 if (Debugger.logPriority > 0) Debug.LogWarning("Duration can't be 0, returning NULL without creating a tween");
                 return null;
             }
-            return DOTween.Shake(() => _charTransforms[charIndex].scale, x => {
+            return DOTween.Shake(() => _charTransforms[charIndex].scale, x =>
+            {
                 CharTransform charT = _charTransforms[charIndex];
                 charT.UpdateGeometry(target, charT.offset, charT.rotation, x, _cachedMeshInfos);
                 _charTransforms[charIndex] = charT;

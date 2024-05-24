@@ -52,7 +52,7 @@ public class GuideManager : MonoBehaviour
 
     public IEnumerator NpcAnimCor()
     {
-        for(int i = 0; i < 2; i++)
+        for (int i = 0; i < 2; i++)
         {
             npc_face_delay.gameObject.SetActive(true);
             yield return new WaitForSeconds(0.1f);
@@ -78,14 +78,14 @@ public class GuideManager : MonoBehaviour
 
     private IEnumerator NoticeCor()
     {
-        for(int i = 0; i < curNotice.Length; i++)
+        for (int i = 0; i < curNotice.Length; i++)
         {
             notice_dialogue.text = "";
             npc_Image.sprite = curNotice[i].faces[0];
-            
-            
+
+
             notice_dialogue.gameObject.SetActive(true);
-            
+
             notice_dialogue.DOText(curNotice[i].text, 0.5f);
 
             for (int j = 0; j < curNotice[i].faces.Length; j++)

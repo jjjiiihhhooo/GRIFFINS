@@ -18,6 +18,7 @@ public class UIManager : MonoBehaviour
 
     public GameObject Q_Skill_Icon;
     public GameObject E_Skill_Icon;
+    public GameObject Option;
 
     [Header("DotweenAnimation")]
     public DOTweenAnimation playerHpDotween;
@@ -30,6 +31,7 @@ public class UIManager : MonoBehaviour
     public Image mainImage;
     public Image[] characterChangeAnim;
     public Image characterMainAnim;
+    public Image hitOutline;
 
     [Header("Sprite")]
     public Sprite[] nonColorCharacters;
@@ -40,10 +42,14 @@ public class UIManager : MonoBehaviour
     public Sprite characterChangeLogo;
     public Sprite characterChangeMainWhite;
     public Sprite characterChangeMainLogo;
+    public Sprite highOut;
+    public Sprite lowOut;
 
     private Player player;
 
+    
 
+    private float outlineAlpha;
 
     private void Update()
     {
@@ -51,8 +57,27 @@ public class UIManager : MonoBehaviour
         PlayerHPUpdate();
         CharacterCoolUpdate();
         SkillCoolUpdate();
+        OutlineUpdate();
         //CoolCheck();
     }
+
+    private void OutlineUpdate()
+    {
+        if (outlineAlpha > 0)
+        {
+            Color color = Color.red;
+            color.a = outlineAlpha;
+            hitOutline.color = color;
+            outlineAlpha -= 0.01f;
+        }
+    }
+
+    public void GamePause(bool _bool)
+    {
+        if (_bool) Option.SetActive(false);
+        else Option.SetActive(true);            
+    }
+
     private void PlayerHPUpdate()
     {
         if (player == null) player = Player.Instance;
@@ -86,8 +111,15 @@ public class UIManager : MonoBehaviour
         skillCools[3].fillAmount = player.currentCharacter.R_Cool();
     }
 
-    public void PlayerHitUI()
+    public void PlayerHitUI(bool _bool)
     {
+        outlineAlpha = 1.0f;
+
+        if (_bool)
+            hitOutline.sprite = highOut;
+        else
+            hitOutline.sprite = lowOut;
+
         playerHpDotween.DORestartById("Hit");
     }
 

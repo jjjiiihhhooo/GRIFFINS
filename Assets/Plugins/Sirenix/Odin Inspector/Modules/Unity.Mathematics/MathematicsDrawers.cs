@@ -7,12 +7,12 @@
 namespace Sirenix.OdinInspector.Modules.UnityMathematics.Editor
 {
 #if UNITY_EDITOR
-    using System;
-    using System.Collections.Generic;
-    using System.Reflection;
     using Sirenix.OdinInspector.Editor;
     using Sirenix.Utilities;
     using Sirenix.Utilities.Editor;
+    using System;
+    using System.Collections.Generic;
+    using System.Reflection;
     using Unity.Mathematics;
     using UnityEditor;
     using UnityEngine;

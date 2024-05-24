@@ -167,7 +167,7 @@ namespace MK.Toon
         SrcAlphaSaturate = 9,
         OneMinusSrcAlpha = 10
     };
-    
+
     public enum Blend
     {
         Alpha = 0,

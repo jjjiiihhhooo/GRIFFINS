@@ -7,16 +7,16 @@
 //////////////////////////////////////////////////////
 
 #if UNITY_EDITOR
-using UnityEngine;
-using UnityEditor;
 using System;
+using UnityEditor;
+using UnityEngine;
 
 namespace MK.Toon.Editor
 {
     internal class MKToonVector3Drawer : MK.Toon.Editor.MaterialPropertyDrawer
     {
-        public MKToonVector3Drawer(GUIContent ui) : base(ui) {}
-        public MKToonVector3Drawer() : base(GUIContent.none) {}
+        public MKToonVector3Drawer(GUIContent ui) : base(ui) { }
+        public MKToonVector3Drawer() : base(GUIContent.none) { }
 
         public override void OnGUI(Rect position, MaterialProperty prop, String label, MaterialEditor editor)
         {
@@ -35,7 +35,7 @@ namespace MK.Toon.Editor
     }
     internal class MKToonVertexAnimationFrequencyDrawer : MKToonVector3Drawer
     {
-        public MKToonVertexAnimationFrequencyDrawer() : base(UI.vertexAnimationFrequency) {}
+        public MKToonVertexAnimationFrequencyDrawer() : base(UI.vertexAnimationFrequency) { }
     }
 }
 #endif

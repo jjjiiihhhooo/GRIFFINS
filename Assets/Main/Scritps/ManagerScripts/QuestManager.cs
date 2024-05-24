@@ -1,10 +1,7 @@
 using DG.Tweening;
 using Sirenix.OdinInspector;
-using System.Collections.Generic;
 using System.Collections;
 using TMPro;
-using UnityEngine;
-using UnityEngine.Rendering.Universal;
 
 public class QuestManager : SerializedMonoBehaviour
 {
@@ -20,7 +17,7 @@ public class QuestManager : SerializedMonoBehaviour
 
     public void UpdateQuest()
     {
-        if (curQuest == null) 
+        if (curQuest == null)
         {
             curQuest = FindObjectOfType<CurrentQuest>().curQuest;
             titleText.text = FindObjectOfType<CurrentQuest>().QuestTitleText;
@@ -76,9 +73,9 @@ public class QuestManager : SerializedMonoBehaviour
                 return;
             }
         }
-        
 
-        
+
+
 
         //for (int i = 4; i >= 0; i++)
         //{
@@ -124,7 +121,7 @@ public class QuestManager : SerializedMonoBehaviour
             //questTexts[count].gameObject.SetActive(true);
             //questTexts[count].transform.parent.gameObject.SetActive(true);
             questUIdatas[count].gameObject.SetActive(true);
-            
+
             count++;
         }
     }
