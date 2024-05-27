@@ -1,10 +1,6 @@
 using DG.Tweening;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class DialogueManager : MonoBehaviour
@@ -72,12 +68,12 @@ public class DialogueManager : MonoBehaviour
         isChat = false;
         tempIndex = 0;
         curDialogues = null;
-        GameManager.Instance.questManager.ChatQuestCheck(questChatKey);
-        if (!string.IsNullOrEmpty(eventName))
-        {
-            // eventName이 비어있지 않은 경우에만 이벤트 호출
-            GameManager.Instance.event_dictionary[eventName]?.Invoke();
-        }
+        FindObjectOfType<QuestManager>().ChatQuestCheck(questChatKey);
+        //if (!string.IsNullOrEmpty(eventName))
+        //{
+        //    // eventName이 비어있지 않은 경우에만 이벤트 호출
+        //    GameManager.Instance.event_dictionary[eventName]?.Invoke();
+        //}
         dialogueDot.DORestartById("End");
     }
 

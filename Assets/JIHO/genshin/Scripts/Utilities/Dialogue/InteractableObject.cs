@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -11,7 +8,7 @@ public class InteractableObject : MonoBehaviour
     [SerializeField] private string interactorName;
     [SerializeField] private UnityEvent actionOnInteract;
     [SerializeField] private string[] eventNames;
-    
+
 
     [SerializeField] private bool oneTime;
     [SerializeField] private bool ready = true;
@@ -23,11 +20,11 @@ public class InteractableObject : MonoBehaviour
     {
         Debug.Log("interact");
         actionOnInteract?.Invoke();
-        
-        for(int i = 0; i < eventNames.Length; i++)
-        {
-            GameManager.Instance.event_dictionary[eventNames[i]]?.Invoke();
-        }
+
+        //for (int i = 0; i < eventNames.Length; i++)
+        //{
+        //    GameManager.Instance.event_dictionary[eventNames[i]]?.Invoke();
+        //}
 
         if (oneTime)
         {

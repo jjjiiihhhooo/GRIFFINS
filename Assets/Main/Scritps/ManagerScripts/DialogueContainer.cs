@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 [System.Serializable]
 public class Dialogue
@@ -24,7 +21,7 @@ public class DialogueContainer : MonoBehaviour
 
     public void StartEvent()
     {
-        
+
         SetDialogue();
         GameManager.Instance.dialogueManager.StartDialogue();
     }

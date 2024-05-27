@@ -1,6 +1,5 @@
 
 using UnityEngine;
-using UnityEngine.UI;
 
 public class SkillData : MonoBehaviour
 {
@@ -54,12 +53,12 @@ public class SkillData : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (grappling) lr.SetPosition(0, shoot_obj.position);
-        if (Player.Instance.skillData.isGHand)
-        {
-            Glr.SetPosition(0, Gshoot_obj.position);
-            Glr.SetPosition(1, GhandObj.transform.position);
-            Gjoint.connectedAnchor = transform.position;
-        }
+        //if (grappling) lr.SetPosition(0, shoot_obj.position);
+        //if (Player.Instance.skillData.isGHand)
+        //{
+        //    Glr.SetPosition(0, Gshoot_obj.position);
+        //    Glr.SetPosition(1, GhandObj.transform.position);
+        //    Gjoint.connectedAnchor = transform.position;
+        //}
     }
 }

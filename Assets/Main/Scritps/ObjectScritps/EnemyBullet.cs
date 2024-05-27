@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
 public class EnemyBullet : MonoBehaviour
@@ -18,7 +17,7 @@ public class EnemyBullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider collider)
     {
-        if(collider.tag == "Environment")
+        if (collider.tag == "Environment")
         {
             Destroy(this.gameObject);
         }
@@ -28,6 +27,6 @@ public class EnemyBullet : MonoBehaviour
             collider.GetComponent<Player>().GetDamage(1);
             Destroy(this.gameObject);
         }
-        
+
     }
 }

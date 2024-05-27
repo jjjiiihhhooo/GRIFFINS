@@ -1,8 +1,3 @@
-using Sirenix.Utilities.Editor;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.ShaderGraph;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -125,16 +120,18 @@ public class PlayerGroundedState : PlayerMovementState
         if (GameManager.Instance.dialogueManager.IsChat) return;
         if (stateMachine.Player.skillData.grappling) return;
         if (stateMachine.Player.swinging.swinging) return;
+        if (stateMachine.Player.isAttack) return;
 
         GameManager.Instance.staminaManager.MinusStamina(20f);
-
+        
         stateMachine.ChangeState(stateMachine.DashingState);
     }
 
     protected virtual void OnJumpStarted(InputAction.CallbackContext context)
     {
         if (stateMachine.CurStateName() == "PlayerDashingState") return;
-
+        if (stateMachine.Player.currentCharacter.animator.GetCurrentAnimatorStateInfo(3).IsTag("Attack")) return;
+        if (stateMachine.Player.currentCharacter.animator.GetCurrentAnimatorStateInfo(0).IsTag("Airborne")) return;
         if (stateMachine.Player.skillData.grappling) return;
         if (GameManager.Instance.dialogueManager.IsChat) return;
         if (stateMachine.Player.swinging.swinging) return;

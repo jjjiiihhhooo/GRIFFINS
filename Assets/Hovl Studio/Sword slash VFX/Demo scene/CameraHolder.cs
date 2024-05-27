@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.Serialization.Formatters;
-using System;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraHolder : MonoBehaviour

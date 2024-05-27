@@ -1,46 +1,46 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using UnityEngine;
 
 namespace EpicToonFX
 {
-	public class ETFXLoopScript : MonoBehaviour
-	{
-		public GameObject chosenEffect;
-		public float loopTimeLimit = 2.0f;
-	
-		[Header("Spawn without")]
-	
-		public bool disableLights = true;
-		public bool disableSound = true;
+    public class ETFXLoopScript : MonoBehaviour
+    {
+        public GameObject chosenEffect;
+        public float loopTimeLimit = 2.0f;
 
-		void Start ()
-		{	
-			PlayEffect();
-		}
+        [Header("Spawn without")]
 
-		public void PlayEffect()
-		{
-			StartCoroutine("EffectLoop");
-		}
+        public bool disableLights = true;
+        public bool disableSound = true;
 
-		IEnumerator EffectLoop()
-		{
-			GameObject effectPlayer = (GameObject) Instantiate(chosenEffect, transform.position, transform.rotation);
-		
-			if (disableLights && effectPlayer.GetComponent<Light>())
-			{
-				effectPlayer.GetComponent<Light>().enabled = false;
-			}
+        void Start()
+        {
+            PlayEffect();
+        }
 
-			if (disableSound && effectPlayer.GetComponent<AudioSource>())
-			{
-				effectPlayer.GetComponent<AudioSource>().enabled = false;
-			}
-			
-			yield return new WaitForSeconds(loopTimeLimit);
+        public void PlayEffect()
+        {
+            StartCoroutine("EffectLoop");
+        }
 
-			Destroy (effectPlayer);
-			PlayEffect();
-		}
-	}
+        IEnumerator EffectLoop()
+        {
+            GameObject effectPlayer = (GameObject)Instantiate(chosenEffect, transform.position, transform.rotation);
+
+            if (disableLights && effectPlayer.GetComponent<Light>())
+            {
+                effectPlayer.GetComponent<Light>().enabled = false;
+            }
+
+            if (disableSound && effectPlayer.GetComponent<AudioSource>())
+            {
+                effectPlayer.GetComponent<AudioSource>().enabled = false;
+            }
+
+            yield return new WaitForSeconds(loopTimeLimit);
+
+            Destroy(effectPlayer);
+            PlayEffect();
+        }
+    }
 }
