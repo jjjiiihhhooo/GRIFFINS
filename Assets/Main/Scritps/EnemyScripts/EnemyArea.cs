@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyArea : MonoBehaviour
 {
-    [SerializeField] private GameObject obj;
+    [SerializeField] private GameObject[] objs;
 
     public float time;
 
@@ -13,7 +13,8 @@ public class EnemyArea : MonoBehaviour
         if (time > 0) time -= Time.deltaTime;
         else
         {
-            Instantiate(obj, transform.position, Quaternion.identity);
+            for(int i = 0; i < objs.Length; i++)
+                Instantiate(objs[i], transform.position, Quaternion.identity);
             Destroy(this.gameObject);
         }
     }
