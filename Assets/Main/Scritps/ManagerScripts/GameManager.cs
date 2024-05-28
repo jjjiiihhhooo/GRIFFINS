@@ -17,6 +17,7 @@ public class GameManager : SerializedMonoBehaviour
     public CoolTimeManager coolTimeManager;
     public QuestManager questManager;
     public MiniMapManager miniMapManager;
+    public EnemyManager enemyManager;
 
     public bool gameStart;
     public bool isMouseLock;

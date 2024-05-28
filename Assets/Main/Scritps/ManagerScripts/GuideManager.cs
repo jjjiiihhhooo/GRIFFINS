@@ -70,6 +70,14 @@ public class GuideManager : MonoBehaviour
         StartCoroutine(NoticeCor());
     }
 
+    public void PlayerDead()
+    {
+        if(Player.Instance.isDead)
+        {
+            Player.Instance.DeadNotice();
+        }
+    }
+
     private void EndNotice()
     {
         npc_Image.sprite = default_faces[0];

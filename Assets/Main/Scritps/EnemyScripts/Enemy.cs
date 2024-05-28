@@ -430,18 +430,7 @@ public class Boss_Destroyer : Enemy
             Pushing();
         }
 
-        //if (rand <= 50)
-        //{
-        //    FireWave();
-        //}
-        //else if (50 < rand && rand <= 100)
-        //{
-        //    ContinuousPizza();
-        //}
 
-        //Pushing();
-
-        //FireWave();
     }
 
     private void Pizza()

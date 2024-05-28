@@ -54,8 +54,12 @@ public class QuestManager : SerializedMonoBehaviour
         }
 
         if (curQuest.clear_event != null) curQuest.clear_event.Invoke();
-
         GameManager.Instance.guideManager.SetMessage("퀘스트 클리어");
+        QuestDestoryEvent();
+    }
+
+    public void QuestDestoryEvent()
+    {
         QuestDestroy();
         QuestExit();
     }

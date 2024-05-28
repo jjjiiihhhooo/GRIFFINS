@@ -1,7 +1,7 @@
 
 using UnityEngine;
 using UnityEngine.InputSystem;
-
+using UnityEngine.Rendering;
 
 public class InputData : MonoBehaviour
 {
@@ -36,6 +36,7 @@ public class InputData : MonoBehaviour
     {
         if (player == null) player = Player.Instance;
         if (GameManager.Instance.isCutScene) return;
+        if (player.isDead) return;
         MenuInput();
         KeyboardInput();
         MouseInput();

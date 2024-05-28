@@ -32,6 +32,7 @@ public class UIManager : MonoBehaviour
     public Image[] characterChangeAnim;
     public Image characterMainAnim;
     public Image hitOutline;
+    public Image fade;
 
     [Header("Sprite")]
     public Sprite[] nonColorCharacters;
@@ -141,6 +142,34 @@ public class UIManager : MonoBehaviour
     public void Init()
     {
         //ChangeCharacterUI(0);
+    }
+
+    public void FadeInOut()
+    {
+        StartCoroutine(FadeInOutCor());
+    }
+
+    private IEnumerator FadeInOutCor()
+    {
+        yield return null;
+        float alpha = 0f;
+        Color temp = fade.color;
+
+        while(alpha < 1)
+        {
+            temp.a = alpha;
+            fade.color = temp;
+            alpha += 0.15f;
+            yield return new WaitForEndOfFrame();
+        }
+
+        while(alpha > 0)
+        {
+            temp.a = alpha;
+            fade.color = temp;
+            alpha -= 0.007f;
+            yield return new WaitForEndOfFrame();
+        }
     }
 
     public void ChangeAnim()

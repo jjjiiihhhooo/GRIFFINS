@@ -37,6 +37,7 @@ public class Player : MonoBehaviour
     public SkillData skillData;
     public Swinging swinging;
     public SpawnPoint spawn;
+    public ObjectTrigger curTrigger;
     public PlayerMovementStateMachine movementStateMachine;
 
 
@@ -91,6 +92,8 @@ public class Player : MonoBehaviour
 
     public bool freeze;
     public bool playerHit;
+
+    public bool isDead;
 
     public float maxHitCool;
     public float curHitCool;
@@ -151,6 +154,7 @@ public class Player : MonoBehaviour
     {
         if (GameManager.Instance.dialogueManager.IsChat) return;
         if (GameManager.Instance.isCutScene) return;
+        if (isDead) return;
 
         if (playerHit)
         {
@@ -241,7 +245,23 @@ public class Player : MonoBehaviour
 
     public void PlayerDead()
     {
+        isDead = true;
+        currentCharacter.animator.Play("Die", 3, 0f);
+        GameManager.Instance.uiManager.fade.GetComponent<NoticeContainer>().StartNotice();
+        
+        
+    }
 
+    public void DeadNotice()
+    {
+        isDead = false;
+        Destroy(GameManager.Instance.enemyManager.curWaveObject);
+        GameManager.Instance.questManager.QuestDestoryEvent();
+        if (curTrigger != null) curTrigger.GetComponent<Collider>().enabled = true;
+        curHp = maxHp;
+        GameManager.Instance.uiManager.FadeInOut();
+        currentCharacter.animator.Play("Up", 3, 0f);
+        PlayerSpawn();
     }
 
     public void PlayerSpawn()
