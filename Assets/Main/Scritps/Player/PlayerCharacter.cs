@@ -226,6 +226,7 @@ public class PlayerCharacter
         {
 
             player.isAttack = false;
+            player.isNormalAttack = false;
             player.Invoke("EndCombo", 0.5f);
         }
     }
@@ -421,12 +422,12 @@ public class WhiteCharacter : PlayerCharacter
 
     public override void AttackMotion()
     {
-        if (Time.time - lastComboEnd > 0.1f && comboCounter < attackAnim.Length && !player.isAttack)
+        if (Time.time - lastComboEnd > 0.1f && comboCounter < attackAnim.Length && !player.isAttack && !player.isNormalAttack)
         {
             player.CancelInvoke("EndCombo");
             if (Time.time - lastClickedTime >= 0.4f)
             {
-                player.isAttack = true;
+                player.isNormalAttack = true;
                 player.currentCharacter.animator.Play(attackAnim[comboCounter].name, 3, 0f);
                 curParticle = normalAttackEffects[comboCounter];
                 curKnockback = knockbacks[comboCounter];
@@ -487,7 +488,7 @@ public class WhiteCharacter : PlayerCharacter
 
     public override void NormalAttackExit()
     {
-        player.isAttack = false;
+        player.isNormalAttack = false;
         GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["red_normalAttack1"], false);
         if (target != null)
         {
@@ -912,14 +913,14 @@ public class GreenCharacter : PlayerCharacter
 
     public override void NormalAttackExit()
     {
-        player.isAttack = false;
+        player.isNormalAttack = false;
         GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["red_normalAttack1"], false);
         normalAttackCol.gameObject.SetActive(true);
     }
 
     public override void StrongAttackExit()
     {
-        player.isAttack = false;
+        player.isNormalAttack = false;
         OnlySingleton.Instance.camShake.ShakeCamera(7f, 0.1f);
         GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["red_normalAttack2"], false);
         normalAttackCol_2.gameObject.SetActive(true);
@@ -998,7 +999,7 @@ public class GreenCharacter : PlayerCharacter
 
     public override void FollowAttack()
     {
-        player.isAttack = true;
+        player.isNormalAttack = true;
         curParticle = normalAttackEffects[2];
         curKnockback = knockbacks[2];
         curKnockbackDir = knockbackDirs[2];
@@ -1031,12 +1032,12 @@ public class GreenCharacter : PlayerCharacter
 
     public override void AttackMotion()
     {
-        if (Time.time - lastComboEnd > 0.1f && comboCounter < attackAnim.Length && !player.isAttack)
+        if (Time.time - lastComboEnd > 0.1f && comboCounter < attackAnim.Length && !player.isNormalAttack && !player.isAttack)
         {
             player.CancelInvoke("EndCombo");
             if (Time.time - lastClickedTime >= 0.4f)
             {
-                player.isAttack = true;
+                player.isNormalAttack = true;
                 player.currentCharacter.animator.Play(attackAnim[comboCounter].name, 3, 0f);
                 curParticle = normalAttackEffects[comboCounter];
                 curKnockback = knockbacks[comboCounter];
@@ -1304,7 +1305,7 @@ public class RedCharacter : PlayerCharacter
 
     public override void FollowAttack()
     {
-        player.isAttack = true;
+        player.isNormalAttack = true;
         handParticle[2].SetActive(true);
         curParticle = normalAttackEffects[2];
         curKnockback = knockbacks[2];
@@ -1318,14 +1319,14 @@ public class RedCharacter : PlayerCharacter
 
     public override void NormalAttackExit()
     {
-        player.isAttack = false;
+        player.isNormalAttack = false;
         GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["red_normalAttack1"], false);
         normalAttackCol.gameObject.SetActive(true);
     }
 
     public override void StrongAttackExit()
     {
-        player.isAttack = false;
+        player.isNormalAttack = false;
         OnlySingleton.Instance.camShake.ShakeCamera(7f, 0.1f);
         GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["red_normalAttack2"], false);
         normalAttackCol_2.gameObject.SetActive(true);
@@ -1353,12 +1354,12 @@ public class RedCharacter : PlayerCharacter
 
     public override void AttackMotion()
     {
-        if (Time.time - lastComboEnd > 0.1f && comboCounter < attackAnim.Length && !player.isAttack)
+        if (Time.time - lastComboEnd > 0.1f && comboCounter < attackAnim.Length && !player.isAttack && !player.isNormalAttack)
         {
             player.CancelInvoke("EndCombo");
             if (Time.time - lastClickedTime >= 0.4f)
             {
-                player.isAttack = true;
+                player.isNormalAttack = true;
                 player.currentCharacter.animator.Play(attackAnim[comboCounter].name, 3, 0f);
                 handParticle[comboCounter].SetActive(true);
                 //GameObject temp = GameObject.Instantiate(handParticle[comboCounter], handTransform[comboCounter].transform);

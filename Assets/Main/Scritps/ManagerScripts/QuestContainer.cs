@@ -9,4 +9,9 @@ public class QuestContainer : MonoBehaviour
     {
         GameManager.Instance.questManager.QuestInput(curQuest);
     }
+
+    public void CurWaveDestroy()
+    {
+        GameManager.Instance.enemyManager.curWaveObject.transform.GetComponentInChildren<BattleArea>().DestroyAnim();
+    }
 }

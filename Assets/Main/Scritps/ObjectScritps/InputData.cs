@@ -76,6 +76,7 @@ public class InputData : MonoBehaviour
         if (Player.Instance.currentCharacter.isGrappleReady) return;
         if (!Player.Instance.isGround) return;
         if (Player.Instance.isAttack) return;
+        if (Player.Instance.isNormalAttack) return;
 
 
         if (Input.GetKeyDown(LeftAction))
@@ -139,6 +140,7 @@ public class InputData : MonoBehaviour
         //if (!GameManager.Instance.tutorialManager.characterChange) return;
         if (Player.Instance.currentCharacter.isGrappleReady) return;
         if (Player.Instance.isAttack) return;
+        if (Player.Instance.isNormalAttack) return;
 
         if (Input.GetKeyDown(WhiteKey))
         {

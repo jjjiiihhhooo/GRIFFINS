@@ -85,6 +85,8 @@ public class Player : MonoBehaviour
     public bool isGround; //땅에 있는 상태인지
 
     public bool isAttack; //공격 상태인지
+    public bool isNormalAttack;
+
 
     public bool isItemSave;
 

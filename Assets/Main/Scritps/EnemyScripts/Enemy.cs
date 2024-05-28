@@ -350,6 +350,7 @@ public class Boss_Destroyer : Enemy
     [SerializeField] private GameObject[] fireWaveArea;
     [SerializeField] private GameObject[] pizzaArea;
     [SerializeField] private GameObject trackingFireEffect;
+    [SerializeField] private GameObject swingArea;
     [SerializeField] private Transform firePos;
 
     private float attackCurDelay;
@@ -409,40 +410,59 @@ public class Boss_Destroyer : Enemy
 
         int rand = Random.Range(0, 101);
 
-        if (rand <= 20)
+        if (rand <= 25)
         {
             TrackingBullet();
         }
-        else if (20 < rand && rand <= 40)
+        else if (25 < rand && rand <= 40)
         {
             Bombing();
         }
-        else if (40 < rand && rand <= 60)
+        else if (40 < rand && rand <= 55)
         {
             FireWave();
         }
-        else if (60 < rand && rand <= 80)
+        else if (55 < rand && rand <= 70)
         {
             ContinuousPizza();
         }
-        else if (80 < rand && rand <= 100)
+        else if (70 < rand && rand <= 85)
         {
             Pushing();
         }
-
+        else if (85 < rand && rand <= 100)
+        {
+            RightSwing();
+        }
+        
 
     }
 
-    private void Pizza()
+    private void RightSwing()
     {
         if (isAction) return;
         isAction = true;
-        target.GetComponent<Player>().CoroutineEvent(PizzaCor());
+        target.GetComponent<Player>().CoroutineEvent(SwingCor());
     }
 
-    private IEnumerator PizzaCor()
+    private IEnumerator SwingCor()
     {
-        yield return null;
+        
+        //animator.Play("FireWave", 0, 0f);
+        enemyController.transform.forward = target.transform.position - enemyController.transform.position;
+        enemyController.transform.eulerAngles = new Vector3(0f, enemyController.transform.eulerAngles.y, 0f);
+
+
+        GameObject.Instantiate(swingArea, enemyController.transform.position, enemyController.transform.rotation);
+
+        yield return new WaitForSeconds(0.5f);
+        
+        if (animator != null)
+            animator.Play("Boss_Idle", 0, 0f);
+
+        isAction = false;
+        attackCurDelay = attackDelay;
+
     }
 
     private void Pushing()
@@ -469,7 +489,7 @@ public class Boss_Destroyer : Enemy
         GameObject.Destroy(col.gameObject);
 
         if (animator != null)
-            animator.Play("BossIdle", 0, 0f);
+            animator.Play("Boss_Idle", 0, 0f);
 
         isAction = false;
         attackCurDelay = attackDelay;
@@ -494,7 +514,7 @@ public class Boss_Destroyer : Enemy
         }
 
         if (animator != null)
-            animator.Play("BossIdle", 0, 0f);
+            animator.Play("Boss_Idle", 0, 0f);
 
         isAction = false;
         attackCurDelay = attackDelay;
@@ -523,7 +543,7 @@ public class Boss_Destroyer : Enemy
             yield return new WaitForSeconds(0.8f);
         }
         if (animator != null)
-            animator.Play("BossIdle", 0, 0f);
+            animator.Play("Boss_Idle", 0, 0f);
         isAction = false;
         attackCurDelay = attackDelay;
     }
@@ -565,7 +585,7 @@ public class Boss_Destroyer : Enemy
 
 
         if (animator != null)
-            animator.Play("BossIdle", 0, 0f);
+            animator.Play("Boss_Idle", 0, 0f);
     }
 
     private void Bombing()
@@ -612,7 +632,7 @@ public class Boss_Destroyer : Enemy
         }
 
         if (animator != null)
-            animator.Play("BossIdle", 0, 0f);
+            animator.Play("Boss_Idle", 0, 0f);
         isAction = false;
         attackCurDelay = attackDelay;
     }

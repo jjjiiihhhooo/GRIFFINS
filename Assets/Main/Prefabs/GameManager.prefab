@@ -345,6 +345,7 @@ GameObject:
   - component: {fileID: 100099351}
   - component: {fileID: 100099353}
   - component: {fileID: 100099352}
+  - component: {fileID: 100099354}
   m_Layer: 0
   m_Name: Fade
   m_TagString: Untagged
@@ -410,6 +411,22 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &100099354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100099350}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c104437b86bba094d98a568e07f497eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notices:
+  - faces:
+    - {fileID: 21300000, guid: 2bd590aa28af0e04c90fbd71115becec, type: 3}
+    text: "\uC800\uC7A5\uB41C \uC704\uCE58\uB85C \uC7AC\uC774\uB3D9\uD569\uB2C8\uB2E4."
 --- !u!1 &159768171
 GameObject:
   m_ObjectHideFlags: 0
@@ -2637,14 +2654,14 @@ MonoBehaviour:
   - {fileID: 21300000, guid: dc81968c2f43c3d4eb957e102011f4e4, type: 3}
   - {fileID: 21300000, guid: b0124364e262b90488127d052884f457, type: 3}
   mainSprites:
-  - {fileID: 21300000, guid: e0639e7120035eb448d32b71fe55eb8d, type: 3}
-  - {fileID: 21300000, guid: 0615002b2d54ea74195240912c03feb6, type: 3}
-  - {fileID: 21300000, guid: e6f3ea37df2630c49b9bc5fd65f21bed, type: 3}
+  - {fileID: 21300000, guid: ea4b27319fb1f6c4d93dfbbe20aa2cd1, type: 3}
+  - {fileID: 21300000, guid: b1e28ed06338a384a996683d9efe0b04, type: 3}
+  - {fileID: 21300000, guid: 6d01ca3e201e48b4e858eebcb7ccdf9e, type: 3}
   characterChangeWhite: {fileID: 21300000, guid: 005c4e6b16b81d94ca99c3cea1aad5fe, type: 3}
   characterChangeLogo: {fileID: 21300000, guid: 0f460eea3f84e6d42a8924fbadb887e5, type: 3}
   characterChangeMainWhite: {fileID: 21300000, guid: a6fccc9d9f768784896157b8e8934527, type: 3}
   characterChangeMainLogo: {fileID: 21300000, guid: e0fbf8d9878526c489808dfc0023d5bd, type: 3}
-  highOut: {fileID: 21300000, guid: 63da953354cfadb4081ad3b42312fd62, type: 3}
+  highOut: {fileID: 21300000, guid: ddc540a84f01b6a479050b010fed2f1e, type: 3}
   lowOut: {fileID: 21300000, guid: 0773c59a06f12644f9aae561ce0df00a, type: 3}
 --- !u!1 &515426201516186198
 GameObject:
@@ -6904,14 +6921,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0, b: 0, a: 0}
+  m_Color: {r: 0.6226415, g: 0.22027412, b: 0.22027412, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 82aa8a341cf547848b046ff2d8ae4d69, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ddc540a84f01b6a479050b010fed2f1e, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -7800,6 +7817,18 @@ MonoBehaviour:
           m_StringArgument: End
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 5864163523459068683}
+        m_TargetAssemblyTypeName: GuideManager, Assembly-CSharp
+        m_MethodName: PlayerDead
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onTweenCreated:
     m_PersistentCalls:
       m_Calls: []
@@ -8594,7 +8623,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyWaves:
-  - position: {x: 3.3, y: 0, z: 0.3}
+  - position: {x: -17.30002, y: 0, z: -73.66002}
     wave: {fileID: 3810200069147874893, guid: 7b3cb801e6f3ff440b0c83eb7fad7b57, type: 3}
   - position: {x: -16.3, y: 0, z: 47}
     wave: {fileID: 501592056176664318, guid: 9103debd73f7bd8428c1c95c364f3de7, type: 3}
@@ -8943,7 +8972,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: e0639e7120035eb448d32b71fe55eb8d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ea4b27319fb1f6c4d93dfbbe20aa2cd1, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
