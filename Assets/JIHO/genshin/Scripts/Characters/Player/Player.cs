@@ -95,6 +95,8 @@ public class Player : MonoBehaviour
     public bool freeze;
     public bool playerHit;
 
+    public bool isSuperAttack;
+
     public bool isDead;
 
     public float maxHitCool;
@@ -312,7 +314,7 @@ public class Player : MonoBehaviour
         if (!GameManager.Instance.coolTimeManager.CoolCheck("CharacterChange")) return;
 
         GameManager.Instance.coolTimeManager.GetCoolTime("CharacterChange");
-
+        isSuperAttack = true;
         GameManager.Instance.uiManager.CharacterCharacter(index);
         currentCharacter.CharacterChange();
         //GameManager.Instance.uiManager.ChangeCharacterUI(index);

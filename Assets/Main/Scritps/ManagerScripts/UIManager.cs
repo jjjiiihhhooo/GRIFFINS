@@ -19,6 +19,7 @@ public class UIManager : MonoBehaviour
     public GameObject Q_Skill_Icon;
     public GameObject E_Skill_Icon;
     public GameObject Option;
+    public GameObject[] changeAttackAnimator_obj;
 
     [Header("DotweenAnimation")]
     public DOTweenAnimation playerHpDotween;
@@ -236,6 +237,11 @@ public class UIManager : MonoBehaviour
         a.a = 1f;
         characterMainAnim.color = a;
 
+    }
+
+    public void ChangeAttack(int index)
+    {
+        changeAttackAnimator_obj[index].gameObject.SetActive(true);
     }
 
     public IEnumerator ChangeUICor(int index)

@@ -114,10 +114,19 @@ public class GameManager : SerializedMonoBehaviour
         Time.timeScale = 0.6f;
         StartCoroutine(PauseCor(time));
     }
+
+    public void SuperPause(float time)
+    {
+        Time.timeScale = 0.05f;
+        StartCoroutine(PauseCor(time));
+    }
+
     private IEnumerator PauseCor(float time)
     {
         yield return new WaitForSecondsRealtime(time);
         Time.timeScale = 1f;
     }
+
+    
 
 }

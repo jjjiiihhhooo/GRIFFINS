@@ -1,9 +1,12 @@
+
 using System.Collections;
 using UnityEngine;
 
 public class White_Explosion : MonoBehaviour
 {
     private SphereCollider col;
+
+    [SerializeField] private float speed;
 
     private void OnEnable()
     {
@@ -12,28 +15,16 @@ public class White_Explosion : MonoBehaviour
 
     private IEnumerator EnableCor()
     {
-        Vector3 temp = Vector3.zero;
-        col = GetComponent<SphereCollider>();
-        while (transform.localScale.x < 2)
-        {
-            temp.x += 0.4f;
-            temp.y += 0.4f;
-            temp.z += 0.4f;
-            transform.localScale = temp;
-            yield return new WaitForFixedUpdate();
-        }
-        col.enabled = true;
-        yield return new WaitForSeconds(0.5f);
+        Vector3 finalPos = Player.Instance.transform.position + Player.Instance.transform.forward * 10f;
+        transform.position = finalPos;
+        yield return new WaitForEndOfFrame();
 
-        while (transform.localScale.x > 0)
-        {
-            temp.x -= 0.4f;
-            temp.y -= 0.4f;
-            temp.z -= 0.4f;
-            transform.localScale = temp;
-            yield return new WaitForFixedUpdate();
-        }
+        //while(Vector3.Distance(transform.position, finalPos) > 0.1f)
+        //{
+        //    transform.position += finalPos - transform.position * speed * Time.deltaTime;
+        //    yield return new WaitForEndOfFrame();
+        //}
 
-        Destroy(this.gameObject);
+        //Destroy(this.gameObject);
     }
 }

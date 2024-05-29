@@ -28,11 +28,12 @@ public class InteractableObject : MonoBehaviour
 
         if (oneTime)
         {
-            GetComponent<Collider>().enabled = false;
             Player.Instance.SetActiveInteraction(false);
+            GetComponent<Collider>().enabled = false;
             actionOnInteract = null;
         }
     }
+    
 
     public bool GetReady()
     {
