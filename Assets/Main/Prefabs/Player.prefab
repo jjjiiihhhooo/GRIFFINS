@@ -84,6 +84,37 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &28007903
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 28007904}
+  m_Layer: 0
+  m_Name: White_ExplosionEndTransform
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &28007904
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 28007903}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 22.63}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4943424079398178705}
+  m_RootOrder: 15
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &62289246
 GameObject:
   m_ObjectHideFlags: 0
@@ -53132,6 +53163,7 @@ Transform:
   - {fileID: 6786805432400480841}
   - {fileID: 20827426}
   - {fileID: 894050328}
+  - {fileID: 28007904}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -53227,7 +53259,7 @@ MonoBehaviour:
     player: {fileID: 4943424079398178706}
     target: {fileID: 0}
     model: {fileID: 311569915311873479}
-    cutScene: {fileID: 0}
+    cutScene: {fileID: 5710341215651641858, guid: ecc493967891ba14abbabbc67b69a439, type: 3}
     handParticle: []
     handTransform: []
     attackAnim:
@@ -53287,8 +53319,9 @@ MonoBehaviour:
     fireTransform: {fileID: 2014009241}
     fireEffect: {fileID: 1347330118340980, guid: 42eec05d614490a4487bc722ec0d9aea, type: 3}
     psionicStormEffect: {fileID: 3157896834441741635, guid: 4e6b25c3fbfc7aa47a89ba65162abb5c, type: 3}
-    explosionEffect: {fileID: 4549978591083210952, guid: 2487cb595507e8f4d93094602ef17bb0, type: 3}
+    explosionEffect: {fileID: 1572896463749475100, guid: e4fbe3424db1a354984e822a01f2829a, type: 3}
     explosionTransform: {fileID: 894050328}
+    explosionEndTransform: {fileID: 28007904}
   greenCharacter:
     animator: {fileID: 7416860150122619575}
     player: {fileID: 4943424079398178706}

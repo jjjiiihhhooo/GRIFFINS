@@ -276,6 +276,7 @@ public class Player : MonoBehaviour
     public void GetDamage(float damage)
     {
         if (playerHit) return;
+        if (GameManager.Instance.isCutScene) return;
         playerHit = true;
         curHitCool = maxHitCool;
         curHp -= damage;

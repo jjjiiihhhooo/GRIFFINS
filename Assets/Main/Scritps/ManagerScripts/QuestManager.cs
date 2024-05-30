@@ -2,6 +2,7 @@ using DG.Tweening;
 using Sirenix.OdinInspector;
 using System.Collections;
 using TMPro;
+using UnityEngine;
 
 public class QuestManager : SerializedMonoBehaviour
 {
@@ -68,18 +69,8 @@ public class QuestManager : SerializedMonoBehaviour
     {
         //UpdateQuest();
 
-        for (int i = 4; i >= 0; i--)
-        {
-            if (questUIdatas[i].gameObject.activeSelf)
-            {
-                questUIdatas[i].QuestEnd();
 
-                return;
-            }
-        }
-
-
-
+        StartCoroutine(ClearCor());
 
         //for (int i = 4; i >= 0; i++)
         //{
@@ -87,6 +78,20 @@ public class QuestManager : SerializedMonoBehaviour
         //    //questTexts[i].transform.parent.gameObject.SetActive(false);
         //    questUIdatas[i].QuestEnd();
         //}
+    }
+
+    private IEnumerator ClearCor()
+    {
+        float time = 0.2f;
+        for (int i = 4; i >= 0; i--)
+        {
+            if (questUIdatas[i].gameObject.activeSelf)
+            {
+                yield return new WaitForSeconds(time);
+                questUIdatas[i].QuestEnd();
+
+            }
+        }
     }
 
     public void QuestDelete()

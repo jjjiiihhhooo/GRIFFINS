@@ -94,7 +94,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c565dfedcd4a3742856263974ee9b71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0
+  speed: 0.5
+  explosion_boom: {fileID: 4549978591083210952, guid: 8bdf0e7a807d1bd4f907896b233c7cf1, type: 3}
+  finalPos: {x: 0, y: 0, z: 0}
 --- !u!135 &1952909401222549329
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -106,7 +108,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 5
+  m_Radius: 6
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6752214606533723413
 GameObject:
@@ -158,20 +160,26 @@ VisualEffect:
   m_PropertySheet:
     m_Float:
       m_Array:
-      - m_Value: 5
+      - m_Value: 3
         m_Name: Duration
         m_Overridden: 1
       - m_Value: 0
         m_Name: WobbleAmount
         m_Overridden: 1
-      - m_Value: 5
+      - m_Value: 1
         m_Name: WobbleIntensity
         m_Overridden: 1
-      - m_Value: 50
+      - m_Value: 2
         m_Name: WobbleSpeed
         m_Overridden: 1
-      - m_Value: 0.68
+      - m_Value: 0.7
         m_Name: Dissolve
+        m_Overridden: 1
+      - m_Value: 0
+        m_Name: WobbleFrequency
+        m_Overridden: 1
+      - m_Value: 30
+        m_Name: SphereSize
         m_Overridden: 1
     m_Vector2f:
       m_Array: []
@@ -216,6 +224,67 @@ VisualEffect:
           m_RotationOrder: 4
         m_Name: ExplosionCurve
         m_Overridden: 0
+      - m_Value:
+          serializedVersion: 2
+          m_Curve:
+          - serializedVersion: 3
+            time: 0.0110321045
+            value: 0.009056091
+            inSlope: 0.9730886
+            outSlope: 0.9730886
+            tangentMode: 34
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0.33333334
+          - serializedVersion: 3
+            time: 0.98104763
+            value: 0.95296717
+            inSlope: -0.28122842
+            outSlope: -0.28122842
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0.33333334
+            outWeight: 0.33333334
+          - serializedVersion: 3
+            time: 0.9929478
+            value: 0.91994786
+            inSlope: -11.82734
+            outSlope: -11.82734
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
+        m_Name: SphereSizeOverLife
+        m_Overridden: 1
+      - m_Value:
+          serializedVersion: 2
+          m_Curve:
+          - serializedVersion: 3
+            time: 0.0013580322
+            value: 1.0020485
+            inSlope: 0.09233519
+            outSlope: 0.09233519
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          - serializedVersion: 3
+            time: 0.8898498
+            value: 1.0771942
+            inSlope: 0.027579194
+            outSlope: 0.027579194
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
+        m_Name: DissolveCurve
+        m_Overridden: 1
     m_Gradient:
       m_Array:
       - m_Value:

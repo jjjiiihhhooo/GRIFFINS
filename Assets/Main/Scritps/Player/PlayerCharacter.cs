@@ -397,6 +397,7 @@ public class WhiteCharacter : PlayerCharacter
     [SerializeField] private GameObject psionicStormEffect;
     [SerializeField] private GameObject explosionEffect;
     [SerializeField] private Transform explosionTransform;
+    [SerializeField] private Transform explosionEndTransform;
 
     public override void Init(Player playerController)
     {
@@ -475,7 +476,13 @@ public class WhiteCharacter : PlayerCharacter
         if (!GameManager.Instance.coolTimeManager.CoolCheck("White_Q")) return;
         GameManager.Instance.coolTimeManager.GetCoolTime("White_Q");
         player.isAttack = true;
-        Explosion();
+        ExplosionAnim();
+    }
+
+    private void ExplosionAnim()
+    {
+        GameObject temp = GameObject.Instantiate(cutScene, player.transform.position, Quaternion.identity);
+        temp.SetActive(true);
     }
 
     private void Explosion()
@@ -498,6 +505,13 @@ public class WhiteCharacter : PlayerCharacter
 
         PsionicStorm();
     }
+
+    public override void CutSceneEvent(GameObject cut)
+    {
+        GameObject.Destroy(cut);
+        Explosion();
+    }
+
 
     private void PsionicStorm()
     {
@@ -552,7 +566,7 @@ public class WhiteCharacter : PlayerCharacter
 
         //Vector3 pos = player.transform.position + player.transform.forward * 10f;
         //OnlySingleton.Instance.camShake.ShakeCamera(7f, 0.1f);
-        GameObject temp = GameObject.Instantiate(explosionEffect, explosionTransform.position , Quaternion.identity);
+        GameObject temp = GameObject.Instantiate(explosionEffect, explosionEndTransform.position , Quaternion.identity);
         temp.SetActive(true);
     }
 

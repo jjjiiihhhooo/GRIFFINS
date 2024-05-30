@@ -8,6 +8,7 @@ public class Dragon_Projectile : MonoBehaviour
     public GameObject dragon_boom;
     public SphereCollider col;
     public bool isFirst;
+    public bool isBoom = false;
 
     private void OnEnable()
     {
@@ -56,8 +57,9 @@ public class Dragon_Projectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Enemy" && isFirst)
+        if(other.tag == "Enemy" && isFirst && !isBoom)
         {
+            isBoom = true;
             GameObject temp = Instantiate(dragon_boom, new Vector3(other.transform.position.x, transform.position.y, other.transform.position.z), Quaternion.identity);
             temp.gameObject.SetActive(true);
             Destroy(this.gameObject);
