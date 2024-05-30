@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8853884089605773865}
   - component: {fileID: 5580113037477565836}
   - component: {fileID: 7679900118462538054}
-  - component: {fileID: 9031381733459770828}
+  - component: {fileID: 4834121233091284647}
   m_Layer: 0
   m_Name: SM_building_glass_large_01
   m_TagString: Untagged
@@ -29,6 +29,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -93,8 +94,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &9031381733459770828
-MeshCollider:
+--- !u!65 &4834121233091284647
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -103,7 +104,6 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -2944274584186131172, guid: 03f3cfbb3c477f444bb6a22de0ad876f, type: 3}
+  serializedVersion: 2
+  m_Size: {x: 20.709072, y: 34.894505, z: 10.121921}
+  m_Center: {x: 0.0100569725, y: 17.413195, z: 0}

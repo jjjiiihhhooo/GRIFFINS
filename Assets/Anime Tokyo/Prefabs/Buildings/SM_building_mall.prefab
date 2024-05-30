@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5105222435091190846}
   - component: {fileID: 8175932544407575451}
   - component: {fileID: 6238127723838500689}
-  - component: {fileID: 4707349839087301579}
+  - component: {fileID: 5298597029585125686}
   m_Layer: 0
   m_Name: SM_building_mall
   m_TagString: Untagged
@@ -29,6 +29,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -90,8 +91,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &4707349839087301579
-MeshCollider:
+--- !u!65 &5298597029585125686
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -100,7 +101,6 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 5414596886634328309, guid: ec1cebe4431494342bf8b8046fdde6a6, type: 3}
+  serializedVersion: 2
+  m_Size: {x: 32.699272, y: 24.181969, z: 19.690233}
+  m_Center: {x: -0.000009536743, y: 12.078293, z: -0.343915}
