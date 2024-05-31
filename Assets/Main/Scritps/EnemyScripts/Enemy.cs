@@ -410,27 +410,23 @@ public class Boss_Destroyer : Enemy
 
         int rand = Random.Range(0, 101);
 
-        if (rand <= 25)
+        if (rand <= 20)
         {
             TrackingBullet();
         }
-        else if (25 < rand && rand <= 40)
+        else if (20 < rand && rand <= 40)
         {
             Bombing();
         }
-        else if (40 < rand && rand <= 55)
+        else if (40 < rand && rand <= 60)
         {
             FireWave();
         }
-        else if (55 < rand && rand <= 70)
+        else if (60 < rand && rand <= 80)
         {
             ContinuousPizza();
         }
-        else if (70 < rand && rand <= 85)
-        {
-            Pushing();
-        }
-        else if (85 < rand && rand <= 100)
+        else if (80 < rand && rand <= 100)
         {
             RightSwing();
         }
