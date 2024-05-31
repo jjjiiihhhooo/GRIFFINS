@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -19,7 +16,7 @@ public class PlayerSprintingState : PlayerMovingState
 
     public override void Enter()
     {
-        stateMachine.Player.skillFunction.isSprint = true;
+        stateMachine.Player.skillData.isSprint = true;
         stateMachine.ReusableData.MovementSpeedModifier = groundedData.SprintData.SpeedModifier;
         base.Enter();
 
@@ -39,7 +36,7 @@ public class PlayerSprintingState : PlayerMovingState
 
     public override void Exit()
     {
-        stateMachine.Player.skillFunction.isSprint = false;
+        stateMachine.Player.skillData.isSprint = false;
         base.Exit();
 
         StopAnimation(stateMachine.Player.AnimationData.SprintParameterHash);

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -15,8 +13,12 @@ public abstract class StateMachine
 
         currentState = newState;
 
-        Debug.Log(currentState);
         currentState.Enter();
+    }
+
+    public string CurStateName()
+    {
+        return currentState.ToString();
     }
 
 
@@ -59,6 +61,7 @@ public abstract class StateMachine
     {
         currentState?.OnAnimationTransitionEvent();
     }
+
 }
 
 

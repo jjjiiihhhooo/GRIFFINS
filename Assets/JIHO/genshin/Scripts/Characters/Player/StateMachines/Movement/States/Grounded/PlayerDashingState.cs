@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -20,16 +18,19 @@ public class PlayerDashingState : PlayerGroundedState
     public override void Enter()
     {
         stateMachine.ReusableData.MovementSpeedModifier = groundedData.DashData.SpeedModifier;
-
+        
         base.Enter();
 
         EffectActive(stateMachine.Player.dashEffect, true);
 
         StartAnimation(stateMachine.Player.AnimationData.DashParameterHash);
-
+        stateMachine.Player.currentCharacter.animator.SetLayerWeight(3, 0);
+        stateMachine.Player.currentCharacter.animator.Play("None", 3, 0f);
         stateMachine.ReusableData.CurrentJumpForce = airborneData.JumpData.StrongForce;
 
         stateMachine.ReusableData.RotationData = groundedData.DashData.RotationData;
+
+        stateMachine.Player.isNormalAttack = false;
 
         Dash();
 
@@ -42,6 +43,7 @@ public class PlayerDashingState : PlayerGroundedState
 
     public override void Exit()
     {
+        stateMachine.Player.currentCharacter.animator.SetLayerWeight(3, 1);
         base.Exit();
 
         EffectActive(stateMachine.Player.dashEffect, false);
@@ -53,14 +55,62 @@ public class PlayerDashingState : PlayerGroundedState
 
     public override void PhysicsUpdate()
     {
-        base.PhysicsUpdate();
+        //base.PhysicsUpdate();
 
-        if (!shouldKeepRotating)
+        //if (!shouldKeepRotating)
+        //{
+        //    return;
+        //}
+
+        Float();
+
+        //RotateTowardsTargetRotation();
+    }
+
+    private float SetSlopeSpeedModifierOnAngle(float angle)
+    {
+        float slopeSpeedModifier = groundedData.SlopeSpeedAngles.Evaluate(angle);
+
+        if (stateMachine.ReusableData.MovementOnSlopesSpeedModifier != slopeSpeedModifier)
         {
-            return;
+            stateMachine.ReusableData.MovementOnSlopesSpeedModifier = slopeSpeedModifier;
+
+            UpdateCameraRecenteringState(stateMachine.ReusableData.MovementInput);
         }
 
-        RotateTowardsTargetRotation();
+        return slopeSpeedModifier;
+    }
+
+    private void Float()
+    {
+        Vector3 capsuleColliderCenterInWorldSpace = stateMachine.Player.ResizableCapsuleCollider.CapsuleColliderData.Collider.bounds.center;
+
+        Ray downwardsRayFromCapsuleCenter = new Ray(capsuleColliderCenterInWorldSpace, Vector3.down);
+
+        if (Physics.Raycast(downwardsRayFromCapsuleCenter, out RaycastHit hit, stateMachine.Player.ResizableCapsuleCollider.SlopeData.FloatRayDistance, stateMachine.Player.LayerData.GroundLayer, QueryTriggerInteraction.Ignore))
+        {
+            float groundAngle = Vector3.Angle(hit.normal, -downwardsRayFromCapsuleCenter.direction);
+
+            float slopeSpeedModifier = SetSlopeSpeedModifierOnAngle(groundAngle);
+
+            if (slopeSpeedModifier == 0f)
+            {
+                return;
+            }
+
+            float distanceToFloatingPoint = stateMachine.Player.ResizableCapsuleCollider.CapsuleColliderData.ColliderCenterInLocalSpace.y * stateMachine.Player.transform.localScale.y - hit.distance;
+
+            if (distanceToFloatingPoint == 0f)
+            {
+                return;
+            }
+
+            float amountToLift = distanceToFloatingPoint * stateMachine.Player.ResizableCapsuleCollider.SlopeData.StepReachForce - GetPlayerVerticalVelocity().y;
+
+            Vector3 liftForce = new Vector3(0f, amountToLift, 0f);
+
+            stateMachine.Player.Rigidbody.AddForce(liftForce, ForceMode.VelocityChange);
+        }
     }
 
     public override void OnAnimationTransitionEvent()
@@ -99,6 +149,10 @@ public class PlayerDashingState : PlayerGroundedState
 
     private void Dash()
     {
+        stateMachine.Player.isDead = false;
+        stateMachine.Player.isAttack = false;
+        stateMachine.Player.isNormalAttack = false;
+        stateMachine.Player.isSuperAttacking = false;
         Vector3 dashDirection = stateMachine.Player.transform.forward;
 
         dashDirection.y = 0f;
@@ -113,6 +167,7 @@ public class PlayerDashingState : PlayerGroundedState
         }
 
         stateMachine.Player.Rigidbody.velocity = dashDirection * GetMovementSpeed(false);
+        stateMachine.Player.transform.forward = stateMachine.Player.Rigidbody.velocity.normalized;
     }
 
     private void UpdateConsecutiveDashes()

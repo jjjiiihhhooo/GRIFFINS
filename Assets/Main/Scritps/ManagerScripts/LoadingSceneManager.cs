@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -7,10 +6,20 @@ using UnityEngine.UI;
 public class LoadingSceneManager : MonoBehaviour
 {
     public static string nextScene;
-    [SerializeField] Image progressBar;
+    [SerializeField] Slider progressSlider;
 
     private void Start()
     {
+        if(GameManager.Instance != null)
+        {
+            if (GameManager.Instance.isDestroy)
+            {
+                Destroy(Player.Instance.gameObject);
+                Destroy(OnlySingleton.Instance.gameObject);
+                Destroy(GameManager.Instance.gameObject);
+            }
+        }
+        
         StartCoroutine(LoadScene());
     }
 
@@ -32,16 +41,16 @@ public class LoadingSceneManager : MonoBehaviour
             timer += Time.deltaTime;
             if (op.progress < 0.9f)
             {
-                progressBar.fillAmount = Mathf.Lerp(progressBar.fillAmount, op.progress, timer);
-                if (progressBar.fillAmount >= op.progress)
+                progressSlider.value = Mathf.Lerp(progressSlider.value, op.progress, timer);
+                if (progressSlider.value >= op.progress)
                 {
                     timer = 0f;
                 }
             }
             else
             {
-                progressBar.fillAmount = Mathf.Lerp(progressBar.fillAmount, 1f, timer);
-                if (progressBar.fillAmount == 1.0f)
+                progressSlider.value = Mathf.Lerp(progressSlider.value, 1f, timer);
+                if (progressSlider.value == 1.0f)
                 {
                     op.allowSceneActivation = true;
                     yield break;

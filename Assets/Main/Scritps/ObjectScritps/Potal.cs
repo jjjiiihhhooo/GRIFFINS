@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 
 public class Potal : MonoBehaviour
@@ -14,13 +11,20 @@ public class Potal : MonoBehaviour
         LoadingSceneManager.LoadScene(sceneName);
     }
 
+    public void SceneLoadEvent()
+    {
+        LoadingSceneManager.LoadScene(sceneName);
+    }
+
     private void DataSave()
     {
-        Player.Instance.targetSet.Targets.Clear(); //타겟범위에 들어와있는 오브젝트들 삭제
+        Player.Instance.spawn = null;
+        //Player.Instance.targetSet.Targets.Clear(); 
+        //타겟범위에 들어와있는 오브젝트들 삭제
     }
     private void OnTriggerEnter(Collider collider)
     {
-        if(collider.tag == "Player")
+        if (collider.tag == "Player")
         {
             SceneLoad();
         }

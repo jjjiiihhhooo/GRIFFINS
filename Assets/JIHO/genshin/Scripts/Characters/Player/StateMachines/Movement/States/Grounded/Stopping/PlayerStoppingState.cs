@@ -1,8 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using TMPro.EditorUtilities;
-using UnityEngine;
 using UnityEngine.InputSystem;
 
 
@@ -16,7 +11,6 @@ public class PlayerStoppingState : PlayerGroundedState
     public override void Enter()
     {
         stateMachine.ReusableData.MovementSpeedModifier = 0f;
-
         SetBaseCameraRecenteringData();
 
         base.Enter();
@@ -35,7 +29,8 @@ public class PlayerStoppingState : PlayerGroundedState
     {
         base.PhysicsUpdate();
 
-        RotateTowardsTargetRotation();
+        if (!stateMachine.Player.isAttack)
+            RotateTowardsTargetRotation();
 
         if (!IsMovingHorizontally())
         {

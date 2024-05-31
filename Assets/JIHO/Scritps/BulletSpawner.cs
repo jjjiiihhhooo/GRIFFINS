@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,7 +18,7 @@ public class BulletSpawner : MonoBehaviour
     {
         bullet_Queue = new Queue<GameObject>();
 
-        for(int i = 0; i < initCount; i++)
+        for (int i = 0; i < initCount; i++)
         {
             InsertQueue(bulletPrefab);
         }

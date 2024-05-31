@@ -1,11 +1,6 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
-using UnityEngine.UIElements;
-using UnityEngine.UI;
-
-
 
 [RequireComponent(typeof(PlayerInput))]
 [RequireComponent(typeof(PlayerResizableCapsuleCollider))]
@@ -17,6 +12,8 @@ public class Player : MonoBehaviour
     [field: SerializeField] public PlayerSO Data { get; private set; }
 
     [field: Header("Collisions")]
+    public AttackCol normalAttackCol;
+    public AttackCol normalAttackCol_2;
     [field: SerializeField] public PlayerLayerData LayerData { get; private set; }
     [field: Header("Camera")]
     [field: SerializeField] public PlayerCameraUtility CameraRecenteringUtility { get; private set; }
@@ -24,9 +21,8 @@ public class Player : MonoBehaviour
     [field: Header("Animations")]
     [field: SerializeField] public PlayerAnimationData AnimationData { get; private set; }
 
-    public GameObject jumpEffect;
-    public GameObject dashEffect;
-    public GameObject landEffect;
+    public TextMeshProUGUI text;
+
 
 
     public Rigidbody Rigidbody { get; private set; }
@@ -39,32 +35,112 @@ public class Player : MonoBehaviour
 
     public TargetSet targetSet;
     public SkillData skillData;
-    public SkillFunction skillFunction;
-
-    public Canvas playerCanvas;
-    public UnityEngine.UI.Image staminaFill;
+    public Swinging swinging;
+    public SpawnPoint spawn;
+    public ObjectTrigger curTrigger;
     public PlayerMovementStateMachine movementStateMachine;
 
-    public bool isGround;
+
+    [Header("GameObject")]
+    public GameObject jumpEffect;
+    public GameObject dashEffect;
+    public GameObject landEffect;
+    public GameObject saveItem;
+
+    [Header("UI")]
+    public Canvas playerCanvas;
+    public UnityEngine.UI.Image staminaFill;
+    public UnityEngine.UI.Image interactionImage;
+    public TextMeshProUGUI interactionText;
+
+    [Header("Character")]
+    public PlayerCharacter currentCharacter;
+    public PlayerCharacter[] characters;
+
+    [Header("WhiteCharacter")]
+    public WhiteCharacter whiteCharacter;
+
+    [Header("GreenCharacter")]
+    public GreenCharacter greenCharacter;
+
+    [Header("RedCharacter")]
+    public RedCharacter redCharacter;
+
+    public Vector3 orginPos;
+
+    public float maxHp;
+    public float curHp;
+
+
+
+    //1: white
+    //2: green
+    //3: blue
+    //4: red
+
+
+    public Vector3 dir;
+    public Ray ray;
+    public Ray camRay;
+
+    public bool isGround; //땅에 있는 상태인지
+
+    public bool isAttack; //공격 상태인지
+    public bool isNormalAttack;
+
+
+    public bool isItemSave;
+
+    public bool backHpHit;
+
+    public bool freeze;
+    public bool playerHit;
+
+    public bool isSuperAttack;
+    public bool isSuperAttacking;
+
+    public bool isDead;
+
+    public float maxHitCool;
+    public float curHitCool;
+    public float testHp;
+
 
     private void Awake()
     {
         if (Instance == null)
         {
+            movementStateMachine = new PlayerMovementStateMachine(this);
             if (playerCanvas.worldCamera == null) playerCanvas.worldCamera = Camera.main;
             Instance = this;
             CameraRecenteringUtility.Initialize();
             AnimationData.Initialize();
-
+            swinging = GetComponent<Swinging>();
             Rigidbody = GetComponent<Rigidbody>();
-            Animator = GetComponentInChildren<Animator>();
+            curHp = maxHp;
+            characters = new PlayerCharacter[3];
+            characters[0] = whiteCharacter;
+            characters[1] = greenCharacter;
+            characters[2] = redCharacter;
+
+            for (int i = 0; i < characters.Length; i++)
+            {
+                characters[i].Init(this);
+            }
+
+            currentCharacter = characters[0];
+            currentCharacter.model.SetActive(true);
+
+            Animator = currentCharacter.animator;
+
+
 
             Input = GetComponent<PlayerInput>();
             ResizableCapsuleCollider = GetComponent<PlayerResizableCapsuleCollider>();
 
             MainCameraTransform = Camera.main.transform;
 
-            movementStateMachine = new PlayerMovementStateMachine(this);
+
 
             DontDestroyOnLoad(this.gameObject);
         }
@@ -82,10 +158,29 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        if (skillFunction.touch) return;
-        if (Animator.GetCurrentAnimatorStateInfo(1).IsName("White_Idle") || Animator.GetCurrentAnimatorStateInfo(1).IsName("White_Throw"))
+        if (GameManager.Instance.dialogueManager.IsChat) return;
+        if (GameManager.Instance.isCutScene) return;
+        if (isDead) return;
+
+        if (playerHit)
         {
-            Debug.Log("anim");
+            curHitCool -= Time.deltaTime;
+            if (curHitCool < 0)
+            {
+                playerHit = false;
+            }
+        }
+
+        currentCharacter.Update();
+        //UIUpdate();
+        dir = MainCameraTransform.forward;
+        ray = new Ray(new Vector3(transform.position.x, transform.position.y + 2f, transform.position.z), dir);
+        camRay = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
+
+        //if (skillData.touch) return;
+        //if (swinging.swinging) return;
+        if (currentCharacter.animator.GetCurrentAnimatorStateInfo(1).IsName("Idle") || currentCharacter.animator.GetCurrentAnimatorStateInfo(1).IsName("Throw"))
+        {
             transform.rotation = CameraRecenteringUtility.VirtualCamera.transform.rotation;
             transform.rotation = new Quaternion(0f, CameraRecenteringUtility.VirtualCamera.transform.rotation.y, 0f, transform.rotation.w);
         }
@@ -95,31 +190,53 @@ public class Player : MonoBehaviour
         movementStateMachine.Update();
     }
 
+
     private void FixedUpdate()
     {
-        if (skillFunction.touch) return;
+        //if (skillData.touch) return;
+        //if (swinging.swinging) return;
         movementStateMachine.PhysicsUpdate();
     }
 
     private void OnTriggerEnter(Collider collider)
     {
-        if (skillFunction.touch)
+        //if (skillData.touch)
+        //{
+        //    skillData.touch = false;
+
+        //    currentCharacter.StopGrapple();
+        //    //skillData.StopGrapple();
+        //}
+
+        //if (swinging.swinging)
+        //{
+        //    swinging.swinging = false;
+        //    swinging.StopSwing();
+        //}
+
+        if (collider.tag == "EnemyAttackCol")
         {
-            skillFunction.touch = false;
-            skillData.StopGrapple();
+            //if (movementStateMachine.CurStateName() == "PlayerDashingState") return;
+            GetDamage(collider.GetComponent<AttackCol>().damage);
         }
+
+        if (collider.tag == "Spawn")
+        {
+            collider.GetComponent<SpawnPoint>().SetSpawn();
+        }
+
         movementStateMachine.OnTriggerEnter(collider);
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (skillFunction.touch)
-        {
-            skillFunction.touch = false;
-            skillData.StopGrapple();
-        }
-    }
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    if (skillData.touch)
+    //    {
+    //        skillData.touch = false;
+    //        currentCharacter.StopGrapple();
+    //    }
 
+    //}
 
     private void OnTriggerStay(Collider collider)
     {
@@ -130,6 +247,58 @@ public class Player : MonoBehaviour
     {
         if (isGround) isGround = false;
         movementStateMachine.OnTriggerExit(collider);
+    }
+
+    public void PlayerDead()
+    {
+        isDead = true;
+        currentCharacter.animator.Play("Die", 3, 0f);
+        GameManager.Instance.uiManager.fade.GetComponent<NoticeContainer>().StartNotice();
+        
+        
+    }
+
+    public void DeadNotice()
+    {
+        isDead = false;
+        isAttack = false;
+        isNormalAttack = false;
+        isSuperAttacking = false;
+        isSuperAttack = false;
+        playerHit = false;
+        Destroy(GameManager.Instance.enemyManager.curWaveObject);
+        GameManager.Instance.questManager.QuestDestoryEvent();
+        if (curTrigger != null) curTrigger.GetComponent<Collider>().enabled = true;
+        curHp = maxHp;
+        GameManager.Instance.uiManager.FadeInOut();
+        currentCharacter.animator.Play("Up", 3, 0f);
+        PlayerSpawn();
+    }
+
+    public void PlayerSpawn()
+    {
+        spawn.Spawn();
+    }
+
+    public void GetDamage(float damage)
+    {
+        if (playerHit) return;
+        if (GameManager.Instance.isCutScene) return;
+        playerHit = true;
+        curHitCool = maxHitCool;
+        curHp -= damage;
+        if (curHp > 30)
+            GameManager.Instance.uiManager.PlayerHitUI(true);
+        else
+            GameManager.Instance.uiManager.PlayerHitUI(false);
+        backHpHit = false;
+        if (curHp <= 0) PlayerDead();
+        Invoke("BackHpMessage", 0.6f);
+    }
+
+    private void BackHpMessage()
+    {
+        backHpHit = true;
     }
 
     public void OnMovementStateAnimationEnterEvent()
@@ -146,6 +315,88 @@ public class Player : MonoBehaviour
     {
         movementStateMachine.OnAnimationTransitionEvent();
     }
+
+    public void ChangeCharacter(int index)
+    {
+        if (index == currentCharacter.index) return;
+        if (!GameManager.Instance.coolTimeManager.CoolCheck("CharacterChange")) return;
+
+        GameManager.Instance.coolTimeManager.GetCoolTime("CharacterChange");
+        isSuperAttack = true;
+        GameManager.Instance.uiManager.CharacterCharacter(index);
+        currentCharacter.CharacterChange();
+        //GameManager.Instance.uiManager.ChangeCharacterUI(index);
+
+        characters[index].model.SetActive(true);
+        foreach (AnimatorControllerParameter paramA in currentCharacter.animator.parameters)
+        {
+            switch (paramA.type)
+            {
+                case AnimatorControllerParameterType.Bool:
+                    characters[index].animator.SetBool(paramA.name, currentCharacter.animator.GetBool(paramA.name));
+                    break;
+                case AnimatorControllerParameterType.Float:
+                    characters[index].animator.SetFloat(paramA.name, currentCharacter.animator.GetFloat(paramA.name));
+                    break;
+                case AnimatorControllerParameterType.Int:
+                    characters[index].animator.SetInteger(paramA.name, currentCharacter.animator.GetInteger(paramA.name));
+                    break;
+                case AnimatorControllerParameterType.Trigger:
+                    if (currentCharacter.animator.GetBool(paramA.name))
+                    {
+                        characters[index].animator.SetTrigger(paramA.name);
+                    }
+                    break;
+            }
+        }
+        currentCharacter.model.SetActive(false);
+        currentCharacter = characters[index];
+        Animator = currentCharacter.animator;
+
+    }
+
+    public void CoroutineEvent(IEnumerator enumerator)
+    {
+        StopCoroutine(enumerator);
+        StartCoroutine(enumerator);
+    }
+
+    public void CoroutineExit(IEnumerator enumerator)
+    {
+        StopCoroutine(enumerator);
+    }
+
+    public void DestroyEvent(UnityEngine.Object obj, float delay = 0f)
+    {
+        Destroy(obj, delay);
+    }
+
+    public void EndCombo()
+    {
+        currentCharacter.comboCounter = 0;
+        currentCharacter.lastComboEnd = Time.time;
+
+
+    }
+
+    public void SetActiveInteraction(bool _bool, string text = "")
+    {
+        if (_bool)
+        {
+            interactionText.text = text;
+            interactionImage.gameObject.SetActive(true);
+        }
+        else
+        {
+            interactionImage.gameObject.SetActive(false);
+        }
+    }
+
+    public GameObject InstantiateEvent(GameObject obj, Vector3 transform, Quaternion quaternion)
+    {
+        return Instantiate(obj, transform, quaternion);
+    }
+
 }
 
 

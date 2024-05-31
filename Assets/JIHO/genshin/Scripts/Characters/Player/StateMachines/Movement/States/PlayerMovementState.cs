@@ -1,13 +1,10 @@
-
-using MoreMountains.Feedbacks;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-
 public class PlayerMovementState : IState
 {
+
     protected PlayerMovementStateMachine stateMachine;
 
     protected readonly PlayerGroundedData groundedData;
@@ -25,6 +22,8 @@ public class PlayerMovementState : IState
 
     public virtual void Enter()
     {
+        Debug.Log("State: " + GetType().Name);
+        //stateMachine.Player.text.text = GetType().Name;
         AddInputActionsCallbacks();
     }
 
@@ -49,7 +48,7 @@ public class PlayerMovementState : IState
 
     public virtual void OnTriggerEnter(Collider collider)
     {
-        if (stateMachine.Player.LayerData.IsGroundLayer(collider.gameObject.layer) || stateMachine.Player.LayerData.IsUseObjectLayer(collider.gameObject.layer))
+        if (stateMachine.Player.LayerData.IsGroundLayer(collider.gameObject.layer))
         {
             OnContactWithGround(collider);
 
@@ -59,7 +58,7 @@ public class PlayerMovementState : IState
 
     public virtual void OnTriggerExit(Collider collider)
     {
-        if (stateMachine.Player.LayerData.IsGroundLayer(collider.gameObject.layer) || stateMachine.Player.LayerData.IsUseObjectLayer(collider.gameObject.layer))
+        if (stateMachine.Player.LayerData.IsGroundLayer(collider.gameObject.layer))
         {
             OnContactWithGroundExited(collider);
 
@@ -116,6 +115,8 @@ public class PlayerMovementState : IState
 
     protected virtual void AddInputActionsCallbacks()
     {
+        if (stateMachine.Player.freeze) return;
+        if (GameManager.Instance.dialogueManager.IsChat) return;
         stateMachine.Player.Input.PlayerActions.WalkToggle.started += OnWalkToggleStarted;
 
         stateMachine.Player.Input.PlayerActions.Look.started += OnMouseMovementStarted;
@@ -126,6 +127,8 @@ public class PlayerMovementState : IState
 
     protected virtual void RemoveInputActionsCallbacks()
     {
+        if (stateMachine.Player.freeze) return;
+        if (GameManager.Instance.dialogueManager.IsChat) return;
         stateMachine.Player.Input.PlayerActions.WalkToggle.started -= OnWalkToggleStarted;
 
         stateMachine.Player.Input.PlayerActions.Look.started -= OnMouseMovementStarted;
@@ -137,7 +140,6 @@ public class PlayerMovementState : IState
     protected virtual void OnWalkToggleStarted(InputAction.CallbackContext context)
     {
         if (stateMachine.Player.skillData.isHand) return;
-        Debug.Log("dd");
         stateMachine.ReusableData.ShouldWalk = !stateMachine.ReusableData.ShouldWalk;
     }
 
@@ -158,11 +160,24 @@ public class PlayerMovementState : IState
 
     private void ReadMovementInput()
     {
+        if (stateMachine.Player.currentCharacter.followEnemy) { stateMachine.ReusableData.MovementInput = Vector2.zero; return; }
         stateMachine.ReusableData.MovementInput = stateMachine.Player.Input.PlayerActions.Movement.ReadValue<Vector2>();
     }
 
     private void Move()
     {
+        if (stateMachine.Player.isAttack) return;
+        if (stateMachine.Player.isNormalAttack) return;
+        if (stateMachine.Player.currentCharacter.followEnemy) return;
+        if (stateMachine.Player.currentCharacter.animator.GetCurrentAnimatorStateInfo(3).IsTag("Attack")) return;
+        if (GameManager.Instance.dialogueManager.IsChat) return;
+        if (GameManager.Instance.isCutScene) return;
+        if (Player.Instance.isDead) 
+        {
+            stateMachine.Player.Rigidbody.velocity = Vector3.zero;
+            return; 
+        }
+
         if (stateMachine.ReusableData.MovementInput == Vector2.zero || stateMachine.ReusableData.MovementSpeedModifier == 0f)
         {
             return;
@@ -178,9 +193,10 @@ public class PlayerMovementState : IState
 
         Vector3 currentPlayerHorizontalVelocity = GetPlayerHorizontalVelocity();
 
-
-        stateMachine.Player.Rigidbody.AddForce(targetRotationDirection * movementSpeed - currentPlayerHorizontalVelocity, ForceMode.VelocityChange);
-
+        if (!stateMachine.Player.currentCharacter.followEnemy)
+        {
+            stateMachine.Player.Rigidbody.AddForce(targetRotationDirection * movementSpeed - currentPlayerHorizontalVelocity, ForceMode.VelocityChange);
+        }
     }
 
     protected Vector3 GetMovementInputDirection()
@@ -259,7 +275,6 @@ public class PlayerMovementState : IState
         stateMachine.ReusableData.DampedTargetRotationPassedTime.y += Time.deltaTime;
 
         Quaternion targetRotation = Quaternion.Euler(0f, smoothedYAngle, 0f);
-
 
         stateMachine.Player.Rigidbody.MoveRotation(targetRotation);
     }

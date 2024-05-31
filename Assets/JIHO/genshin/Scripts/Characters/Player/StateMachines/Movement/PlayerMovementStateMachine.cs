@@ -1,9 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-
-
 public class PlayerMovementStateMachine : StateMachine
 {
     public Player Player { get; }
@@ -26,6 +20,7 @@ public class PlayerMovementStateMachine : StateMachine
 
     public PlayerJumpingState JumpingState { get; }
     public PlayerFallingState FallingState { get; }
+    public PlayerAirDashingState AirDashingState { get; }
 
     public PlayerMovementStateMachine(Player player)
     {
@@ -49,6 +44,7 @@ public class PlayerMovementStateMachine : StateMachine
 
         JumpingState = new PlayerJumpingState(this);
         FallingState = new PlayerFallingState(this);
+        AirDashingState = new PlayerAirDashingState(this);
     }
 }
 

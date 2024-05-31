@@ -1,7 +1,7 @@
 ﻿//MJQStudioWorks
 
-using UnityEditor;
 using System.IO;
+using UnityEditor;
 
 namespace RealToon.Editor.Welcome
 {
@@ -51,8 +51,8 @@ namespace RealToon.Editor.Welcome
 
                ,
 
-               "Ok") )
-               //
+               "Ok"))
+            //
             {
 
                 File.WriteAllText(rt_welcome_settings, "1");

@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.Serialization.Formatters;
-using System;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class HS_CameraHolder : MonoBehaviour
@@ -26,7 +23,7 @@ public class HS_CameraHolder : MonoBehaviour
     private float StartColor;
     private float HueColor;
     public Texture HueTexture;
-    public bool disableHue = false; 
+    public bool disableHue = false;
 
     void Start()
     {

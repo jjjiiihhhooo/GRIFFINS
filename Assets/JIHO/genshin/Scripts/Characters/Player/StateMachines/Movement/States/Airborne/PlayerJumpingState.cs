@@ -1,6 +1,3 @@
-using MoreMountains.Feedbacks;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -15,11 +12,12 @@ public class PlayerJumpingState : PlayerAirborneState
     {
     }
 
+
     public override void Enter()
     {
         base.Enter();
 
-        EffectActive(stateMachine.Player.jumpEffect, true);
+        stateMachine.Player.currentCharacter.Sound("jump");
 
         stateMachine.ReusableData.MovementSpeedModifier = 0f;
 
@@ -35,8 +33,6 @@ public class PlayerJumpingState : PlayerAirborneState
     public override void Exit()
     {
         base.Exit();
-
-        EffectActive(stateMachine.Player.jumpEffect, false);
 
         SetBaseRotationData();
 
@@ -56,9 +52,8 @@ public class PlayerJumpingState : PlayerAirborneState
         {
             return;
         }
-        if (stateMachine.Player.skillFunction.grappling) stateMachine.Player.skillData.ExecuteGrapple();
-        else stateMachine.ChangeState(stateMachine.FallingState);
 
+        stateMachine.ChangeState(stateMachine.FallingState);
     }
 
     public override void PhysicsUpdate()
@@ -126,6 +121,11 @@ public class PlayerJumpingState : PlayerAirborneState
         }
 
         return jumpForce;
+    }
+
+    protected override void OnContactWithGround(Collider collider)
+    {
+
     }
 
     protected override void ResetSprintState()

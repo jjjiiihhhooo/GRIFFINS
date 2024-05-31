@@ -1,21 +1,48 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
 
-[RequireComponent(typeof(Collider))]
+
 public class InteractableObject : MonoBehaviour
 {
     [SerializeField] private string interactorName;
-    public string InteractorName { get { return interactorName; } }
     [SerializeField] private UnityEvent actionOnInteract;
-    [SerializeField] private Transform namePosition;
-    public Transform NamePosition { get { return namePosition; } }
+    [SerializeField] private string[] eventNames;
+
+
+    [SerializeField] private bool oneTime;
+    [SerializeField] private bool ready = true;
+
+    public string InteractorName { get { return interactorName; } }
+
 
     public void OnInteract()
     {
+        Debug.Log("interact");
         actionOnInteract?.Invoke();
+
+        //for (int i = 0; i < eventNames.Length; i++)
+        //{
+        //    GameManager.Instance.event_dictionary[eventNames[i]]?.Invoke();
+        //}
+
+        if (oneTime)
+        {
+            Player.Instance.SetActiveInteraction(false);
+            GetComponent<Collider>().enabled = false;
+            actionOnInteract = null;
+        }
+    }
+    
+
+    public bool GetReady()
+    {
+        return ready;
+    }
+
+    public void SetReady(bool _bool)
+    {
+        ready = _bool;
     }
 }
 

@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,17 +18,14 @@ public class SoundManager : MonoBehaviour
 
     [SerializeField] private AudioSource[] audioSources;
     //Manager.Instance.soundManager.Play(Manager.Instance.soundManager.audioDictionary["¿Ã∏ß"], false);
-    private void Awake()
+
+
+    public void Init()
     {
         audioDictionary = new Dictionary<string, AudioClip>();
-        AudioDataInit();
-    }
-
-    private void AudioDataInit()
-    {
         for (int i = 0; i < audioDatas.Length; i++) audioDictionary.Add(audioDatas[i].audioName, audioDatas[i].audio);
 
-        //Play(audioDictionary["MainBGM"], true);
+        Play(audioDictionary["Stage_1"], true);
     }
 
     public void Play(AudioClip audioClip, bool _isBgm, float pitch = 1.0f)

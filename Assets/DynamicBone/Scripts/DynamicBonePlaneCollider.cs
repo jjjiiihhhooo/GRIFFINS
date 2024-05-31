@@ -51,24 +51,24 @@ public class DynamicBonePlaneCollider : DynamicBoneColliderBase
             }
         }
 
-/*        // consider particleRadius
-        if (m_Bound == Bound.Outside)
-        {
-            if (d < particleRadius)
-            {
-                particlePosition += m_Plane.normal * (particleRadius - d);
-                return true;
-            }
-        }
-        else
-        {
-            if (d > -particleRadius)
-            {
-                particlePosition -= m_Plane.normal * (particleRadius + d);
-                return true;
-            }
-        }
-*/
+        /*        // consider particleRadius
+                if (m_Bound == Bound.Outside)
+                {
+                    if (d < particleRadius)
+                    {
+                        particlePosition += m_Plane.normal * (particleRadius - d);
+                        return true;
+                    }
+                }
+                else
+                {
+                    if (d > -particleRadius)
+                    {
+                        particlePosition -= m_Plane.normal * (particleRadius + d);
+                        return true;
+                    }
+                }
+        */
         return false;
     }
 

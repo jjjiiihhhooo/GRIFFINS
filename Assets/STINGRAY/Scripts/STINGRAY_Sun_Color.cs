@@ -1,7 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using Unity.Mathematics;
+using UnityEngine;
 
 [ExecuteInEditMode]
 public class STINGRAY_Sun_Color : MonoBehaviour
@@ -15,7 +13,7 @@ public class STINGRAY_Sun_Color : MonoBehaviour
 
     void Update()
     {
-        if(_light == null)
+        if (_light == null)
         {
             _light = GetComponent<Light>();
         }
@@ -30,7 +28,7 @@ public class STINGRAY_Sun_Color : MonoBehaviour
         _light.intensity = Mathf.Lerp(0.1f, sunIntensity, Mathf.Pow(clampedDot, 5));
         _light.color = Color.Lerp(dayColour, eveningColour, topDot + bottomDot);
 
-        if(transform.localEulerAngles.x == -90)
+        if (transform.localEulerAngles.x == -90)
         {
             transform.localEulerAngles = new Vector3(-89.9f, transform.eulerAngles.y, transform.eulerAngles.z);
         }
