@@ -121,9 +121,10 @@ public class PlayerGroundedState : PlayerMovementState
         if (stateMachine.Player.skillData.grappling) return;
         if (stateMachine.Player.swinging.swinging) return;
         if (stateMachine.Player.isAttack) return;
+        if (stateMachine.Player.isSuperAttacking) return;
 
         GameManager.Instance.staminaManager.MinusStamina(20f);
-        
+
         stateMachine.ChangeState(stateMachine.DashingState);
     }
 

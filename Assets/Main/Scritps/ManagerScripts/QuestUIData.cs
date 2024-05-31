@@ -1,6 +1,4 @@
 using DG.Tweening;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,27 +11,28 @@ public class QuestUIData : MonoBehaviour
     public DOTweenAnimation quest_Dot;
     public DOTweenAnimation logo_Dot;
     public DOTweenAnimation background_Dot;
-    
+
 
     public void Create()
     {
-        quest_Dot.DORestartById("Start");
+        this.quest_Dot.DORestartById("Start");
     }
 
     public void Exit()
     {
-        Logo.color = Color.white;
+        this.Logo.color = Color.white;
     }
 
     public void QuestClear()
     {
-        Logo.color = Color.green;
-        logo_Dot.DORestartById("Clear");
+        this.Logo.color = Color.green;
+        this.logo_Dot.DORestartById("Clear");
     }
 
     public void QuestEnd()
     {
-        quest_Dot.DORestartById("End");
+        this.text.gameObject.SetActive(false);
+        this.quest_Dot.DORestartById("End");
     }
 
 }

@@ -18,16 +18,19 @@ public class PlayerDashingState : PlayerGroundedState
     public override void Enter()
     {
         stateMachine.ReusableData.MovementSpeedModifier = groundedData.DashData.SpeedModifier;
-        stateMachine.Player.currentCharacter.animator.SetLayerWeight(3, 0);
+        
         base.Enter();
 
         EffectActive(stateMachine.Player.dashEffect, true);
 
         StartAnimation(stateMachine.Player.AnimationData.DashParameterHash);
-
+        stateMachine.Player.currentCharacter.animator.SetLayerWeight(3, 0);
+        stateMachine.Player.currentCharacter.animator.Play("None", 3, 0f);
         stateMachine.ReusableData.CurrentJumpForce = airborneData.JumpData.StrongForce;
 
         stateMachine.ReusableData.RotationData = groundedData.DashData.RotationData;
+
+        stateMachine.Player.isNormalAttack = false;
 
         Dash();
 
@@ -61,7 +64,7 @@ public class PlayerDashingState : PlayerGroundedState
 
         Float();
 
-        RotateTowardsTargetRotation();
+        //RotateTowardsTargetRotation();
     }
 
     private float SetSlopeSpeedModifierOnAngle(float angle)
@@ -160,6 +163,7 @@ public class PlayerDashingState : PlayerGroundedState
         }
 
         stateMachine.Player.Rigidbody.velocity = dashDirection * GetMovementSpeed(false);
+        stateMachine.Player.transform.forward = stateMachine.Player.Rigidbody.velocity.normalized;
     }
 
     private void UpdateConsecutiveDashes()

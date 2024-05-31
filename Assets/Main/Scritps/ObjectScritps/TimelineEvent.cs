@@ -9,7 +9,7 @@ public class TimelineEvent : MonoBehaviour
 
     public void SetTimeline()
     {
-       // GameManager.Instance.timelineManager.TimelineChange(director);
+        // GameManager.Instance.timelineManager.TimelineChange(director);
     }
 
     public void TimelineStart()
@@ -20,7 +20,7 @@ public class TimelineEvent : MonoBehaviour
 
     public void PauseToStart()
     {
-       // GameManager.Instance.timelineManager.TimelinePauseToStart();
+        // GameManager.Instance.timelineManager.TimelinePauseToStart();
     }
 
     public void TimelineEnd()

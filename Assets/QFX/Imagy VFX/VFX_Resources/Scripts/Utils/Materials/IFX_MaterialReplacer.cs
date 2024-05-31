@@ -14,7 +14,7 @@ namespace QFX.IFX
         public override void Setup()
         {
             base.Setup();
-            
+
             _originalMaterials = IFX_MaterialUtil.GetOriginalMaterials(gameObject);
             IFX_MaterialUtil.ReplaceMaterial(gameObject, Material);
         }
@@ -22,7 +22,7 @@ namespace QFX.IFX
         public override void Run()
         {
             base.Run();
-            
+
             //Revert
             IFX_InvokeUtil.RunLater(this, delegate
             {

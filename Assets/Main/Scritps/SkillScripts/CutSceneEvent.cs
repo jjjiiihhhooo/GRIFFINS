@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CutSceneEvent : MonoBehaviour
@@ -18,6 +17,6 @@ public class CutSceneEvent : MonoBehaviour
         GameManager.Instance.isCutScene = false;
         //Time.timeScale = 1f;
         Player.Instance.currentCharacter.CutSceneEvent(this.gameObject);
-        
+
     }
 }

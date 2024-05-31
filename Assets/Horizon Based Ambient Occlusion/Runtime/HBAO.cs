@@ -1566,7 +1566,7 @@ namespace HorizonBasedAmbientOcclusion
             {
                 var projMatrix = viewIndex == 0 ? hbaoCamera.projectionMatrix : hbaoCamera.GetStereoProjectionMatrix(Camera.StereoscopicEye.Right);
                 float invTanHalfFOVxAR = projMatrix.m00; // m00 => 1.0f / (tanHalfFOV * aspectRatio)
-                float invTanHalfFOV    = projMatrix.m11; // m11 => 1.0f / tanHalfFOV
+                float invTanHalfFOV = projMatrix.m11; // m11 => 1.0f / tanHalfFOV
                 m_UVToViewPerEye[viewIndex == 0 ? xrActiveEye : viewIndex] = new Vector4(2.0f / invTanHalfFOVxAR, -2.0f / invTanHalfFOV, -1.0f / invTanHalfFOVxAR, 1.0f / invTanHalfFOV);
                 m_RadiusPerEye[viewIndex == 0 ? xrActiveEye : viewIndex] = aoSettings.radius * 0.5f * (screenHeight / (generalSettings.deinterleaving == Deinterleaving.x4 ? 4 : 1) / (2.0f / invTanHalfFOV));
             }

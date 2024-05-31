@@ -56,9 +56,19 @@ public class PlayerAnimationEventTrigger : MonoBehaviour
         player.currentCharacter.NormalAttackExit();
     }
 
+    public void SuperAttackExit()
+    {
+        player.currentCharacter.ExitSuperAttack();
+    }
+
     public void PauseCorEvent(float time)
     {
         GameManager.Instance.Pause(time);
+    }
+
+    public void SuperPauseCor(float time)
+    {
+        GameManager.Instance.SuperPause(time);
     }
 
     public void PauseCorEventT(float time)

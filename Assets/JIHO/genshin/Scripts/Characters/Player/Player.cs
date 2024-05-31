@@ -37,6 +37,7 @@ public class Player : MonoBehaviour
     public SkillData skillData;
     public Swinging swinging;
     public SpawnPoint spawn;
+    public ObjectTrigger curTrigger;
     public PlayerMovementStateMachine movementStateMachine;
 
 
@@ -65,6 +66,7 @@ public class Player : MonoBehaviour
     [Header("RedCharacter")]
     public RedCharacter redCharacter;
 
+    public Vector3 orginPos;
 
     public float maxHp;
     public float curHp;
@@ -84,13 +86,23 @@ public class Player : MonoBehaviour
     public bool isGround; //땅에 있는 상태인지
 
     public bool isAttack; //공격 상태인지
+    public bool isNormalAttack;
+
 
     public bool isItemSave;
 
     public bool backHpHit;
 
     public bool freeze;
+    public bool playerHit;
 
+    public bool isSuperAttack;
+    public bool isSuperAttacking;
+
+    public bool isDead;
+
+    public float maxHitCool;
+    public float curHitCool;
     public float testHp;
 
 
@@ -148,6 +160,16 @@ public class Player : MonoBehaviour
     {
         if (GameManager.Instance.dialogueManager.IsChat) return;
         if (GameManager.Instance.isCutScene) return;
+        if (isDead) return;
+
+        if (playerHit)
+        {
+            curHitCool -= Time.deltaTime;
+            if (curHitCool < 0)
+            {
+                playerHit = false;
+            }
+        }
 
         currentCharacter.Update();
         //UIUpdate();
@@ -229,7 +251,28 @@ public class Player : MonoBehaviour
 
     public void PlayerDead()
     {
+        isDead = true;
+        currentCharacter.animator.Play("Die", 3, 0f);
+        GameManager.Instance.uiManager.fade.GetComponent<NoticeContainer>().StartNotice();
+        
+        
+    }
 
+    public void DeadNotice()
+    {
+        isDead = false;
+        isAttack = false;
+        isNormalAttack = false;
+        isSuperAttack = false;
+        isSuperAttacking = false;
+        playerHit = false;
+        Destroy(GameManager.Instance.enemyManager.curWaveObject);
+        GameManager.Instance.questManager.QuestDestoryEvent();
+        if (curTrigger != null) curTrigger.GetComponent<Collider>().enabled = true;
+        curHp = maxHp;
+        GameManager.Instance.uiManager.FadeInOut();
+        currentCharacter.animator.Play("Up", 3, 0f);
+        PlayerSpawn();
     }
 
     public void PlayerSpawn()
@@ -239,8 +282,15 @@ public class Player : MonoBehaviour
 
     public void GetDamage(float damage)
     {
+        if (playerHit) return;
+        if (GameManager.Instance.isCutScene) return;
+        playerHit = true;
+        curHitCool = maxHitCool;
         curHp -= damage;
-        GameManager.Instance.uiManager.PlayerHitUI();
+        if (curHp > 30)
+            GameManager.Instance.uiManager.PlayerHitUI(true);
+        else
+            GameManager.Instance.uiManager.PlayerHitUI(false);
         backHpHit = false;
         if (curHp <= 0) PlayerDead();
         Invoke("BackHpMessage", 0.6f);
@@ -272,7 +322,7 @@ public class Player : MonoBehaviour
         if (!GameManager.Instance.coolTimeManager.CoolCheck("CharacterChange")) return;
 
         GameManager.Instance.coolTimeManager.GetCoolTime("CharacterChange");
-
+        isSuperAttack = true;
         GameManager.Instance.uiManager.CharacterCharacter(index);
         currentCharacter.CharacterChange();
         //GameManager.Instance.uiManager.ChangeCharacterUI(index);
