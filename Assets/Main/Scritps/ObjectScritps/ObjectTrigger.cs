@@ -18,7 +18,7 @@ public class ObjectTrigger : MonoBehaviour
         {
             //if (event_key != "") GameManager.Instance.event_dictionary[event_key]?.Invoke();
             enter_event?.Invoke();
-
+            PlayerTrigger();
             if (oneTime) GetComponent<Collider>().enabled = false;
         }
     }
@@ -61,8 +61,18 @@ public class ObjectTrigger : MonoBehaviour
         Player.Instance.PlayerSpawn();
     }
 
+    public void PlayerTrigger()
+    {
+        Player.Instance.curTrigger = this;
+    }
+
     public void WarningMessage()
     {
         GameManager.Instance.guideManager.WarningSetMessage();
+    }
+
+    public void EnemyWave(int index)
+    {
+        GameManager.Instance.enemyManager.SpawnWave(index);
     }
 }

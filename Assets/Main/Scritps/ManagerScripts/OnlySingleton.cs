@@ -11,7 +11,7 @@ public class OnlySingleton : MonoBehaviour
     public CinemachineVirtualCamera green_E_cam;
     public CinemachineVirtualCamera white_Q_cam;
     public Transform miniMapCam;
-    
+
 
 
     private void Awake()

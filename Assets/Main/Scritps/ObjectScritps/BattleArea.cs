@@ -67,6 +67,6 @@ public class BattleArea : MonoBehaviour
         }
 
         Destroy(transform.parent.gameObject);
-        
+
     }
 }

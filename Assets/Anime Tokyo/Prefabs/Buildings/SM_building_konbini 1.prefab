@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4821974037815731331}
   - component: {fileID: 8450103391910538022}
   - component: {fileID: 5953823622663921644}
-  - component: {fileID: 4999469113346933610}
+  - component: {fileID: 261065979302490975}
   m_Layer: 0
   m_Name: SM_building_konbini 1
   m_TagString: Untagged
@@ -29,6 +29,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -91,8 +92,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &4999469113346933610
-MeshCollider:
+--- !u!65 &261065979302490975
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -101,7 +102,6 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -5086248237291812182, guid: 0b3b32a14f187f54d94767051fc6dfc1, type: 3}
+  serializedVersion: 2
+  m_Size: {x: 6.1000757, y: 16.800957, z: 6.060319}
+  m_Center: {x: 0.000020503998, y: 8.38394, z: -0.19217956}

@@ -1,5 +1,4 @@
 using System;
-using UnityEngine.Serialization;
 
 // ReSharper disable once CheckNamespace
 namespace QFX.IFX

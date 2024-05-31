@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 174263982315835018}
   - component: {fileID: 3874441200133701935}
   - component: {fileID: 1306097731618174437}
-  - component: {fileID: 423801630172506467}
+  - component: {fileID: 6990861143827651839}
+  - component: {fileID: 7564071103122616770}
   m_Layer: 0
   m_Name: SM_building_corner_03
   m_TagString: Untagged
@@ -29,6 +30,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -90,8 +92,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &423801630172506467
-MeshCollider:
+--- !u!65 &6990861143827651839
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -100,7 +102,19 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 5535314161620627256, guid: 40285480e25b5fc48aa528bd77a2d02f, type: 3}
+  serializedVersion: 2
+  m_Size: {x: 8.042671, y: 14.261557, z: 4.2943377}
+  m_Center: {x: 0.0000104904175, y: 7.0564117, z: -2.1899102}
+--- !u!65 &7564071103122616770
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 657750428769113136}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3.7610533, y: 14.261557, z: 8.674158}
+  m_Center: {x: 2.1408195, y: 7.0564117, z: 0}

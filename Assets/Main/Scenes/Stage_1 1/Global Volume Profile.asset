@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-5503732532113938477
+--- !u!114 &-3389168111209702380
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
@@ -89,7 +89,7 @@ MonoBehaviour:
   active: 1
   shadows:
     m_OverrideState: 1
-    m_Value: {x: 1, y: 0.9693434, z: 0.88924056, w: -0.40170527}
+    m_Value: {x: 1, y: 0.9693434, z: 0.88924056, w: -0.16253202}
   midtones:
     m_OverrideState: 1
     m_Value: {x: 1, y: 0.9512833, z: 0.9322232, w: 0.038670756}
@@ -122,32 +122,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   components:
   - {fileID: 6595625929656415189}
-  - {fileID: 6182020198925383073}
   - {fileID: -1125283623933678748}
   - {fileID: -2786390872942248550}
-  - {fileID: -5503732532113938477}
---- !u!114 &6182020198925383073
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5485954d14dfb9a4c8ead8edb0ded5b1, type: 3}
-  m_Name: LiftGammaGain
-  m_EditorClassIdentifier: 
-  active: 1
-  lift:
-    m_OverrideState: 1
-    m_Value: {x: 1, y: 1, z: 1, w: -0.022805018}
-  gamma:
-    m_OverrideState: 1
-    m_Value: {x: 1, y: 1, z: 1, w: 0.037624694}
-  gain:
-    m_OverrideState: 1
-    m_Value: {x: 1, y: 1, z: 1, w: -0.11041011}
+  - {fileID: -3389168111209702380}
 --- !u!114 &6595625929656415189
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -175,7 +152,7 @@ MonoBehaviour:
     m_Value: 65472
   tint:
     m_OverrideState: 1
-    m_Value: {r: 0.53333336, g: 0.58137774, b: 0.9529412, a: 1}
+    m_Value: {r: 0.7133204, g: 0.7028302, b: 1, a: 1}
   highQualityFiltering:
     m_OverrideState: 0
     m_Value: 0

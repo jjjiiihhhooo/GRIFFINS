@@ -1,9 +1,8 @@
-﻿using UnityEngine;
-using UnityEditor;
-using UnityEditor.Rendering;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using UnityEditor;
+using UnityEngine;
 
 namespace HorizonBasedAmbientOcclusion
 {

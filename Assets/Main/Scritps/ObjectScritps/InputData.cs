@@ -1,7 +1,7 @@
 
 using UnityEngine;
 using UnityEngine.InputSystem;
-
+using UnityEngine.Rendering;
 
 public class InputData : MonoBehaviour
 {
@@ -36,13 +36,25 @@ public class InputData : MonoBehaviour
     {
         if (player == null) player = Player.Instance;
         if (GameManager.Instance.isCutScene) return;
+        if (player.isDead) return;
+        MenuInput();
         KeyboardInput();
         MouseInput();
+    }
+
+    private void MenuInput()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            GameManager.Instance.Menu();
+        }
     }
 
     private void MouseInput()
     {
         if (player == null) return;
+        if (GameManager.Instance.isMenu) return;
+
         Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
         if (Physics.Raycast(ray, out RaycastHit raycastHit, 999f, aimColliderMask))
         {
@@ -64,26 +76,12 @@ public class InputData : MonoBehaviour
         if (Player.Instance.currentCharacter.isGrappleReady) return;
         if (!Player.Instance.isGround) return;
         if (Player.Instance.isAttack) return;
-
+        if (Player.Instance.isNormalAttack) return;
 
         if (Input.GetKeyDown(LeftAction))
         {
             player.currentCharacter.LeftAction();
         }
-
-        //if (Input.GetKeyDown(RightAction) && player.currentCharacter.GetType() != typeof(GreenCharacter))
-        //{
-        //    player.currentCharacter.RightAction();
-        //}
-        //else if (Input.GetKeyDown(RightAction) && player.currentCharacter.GetType() == typeof(GreenCharacter))
-        //{
-        //    player.swinging.StartSwing();
-        //}
-
-        //if (Input.GetKeyUp(RightAction) && player.currentCharacter.GetType() == typeof(GreenCharacter))
-        //{
-        //    player.swinging.StopSwing();
-        //}
 
         if (Input.GetKeyDown(itemSaveKey))
         {
@@ -127,6 +125,7 @@ public class InputData : MonoBehaviour
         //if (!GameManager.Instance.tutorialManager.characterChange) return;
         if (Player.Instance.currentCharacter.isGrappleReady) return;
         if (Player.Instance.isAttack) return;
+        if (Player.Instance.isNormalAttack) return;
 
         if (Input.GetKeyDown(WhiteKey))
         {

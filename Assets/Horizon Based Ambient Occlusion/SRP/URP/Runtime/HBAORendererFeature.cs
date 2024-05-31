@@ -767,7 +767,7 @@ namespace HorizonBasedAmbientOcclusion.Universal
                 {
                     var projMatrix = cameraData.GetProjectionMatrix(viewIndex);
                     float invTanHalfFOVxAR = projMatrix.m00; // m00 => 1.0f / (tanHalfFOV * aspectRatio)
-                    float invTanHalfFOV    = projMatrix.m11; // m11 => 1.0f / tanHalfFOV
+                    float invTanHalfFOV = projMatrix.m11; // m11 => 1.0f / tanHalfFOV
                     m_UVToViewPerEye[viewIndex] = new Vector4(2.0f / invTanHalfFOVxAR, -2.0f / invTanHalfFOV, -1.0f / invTanHalfFOVxAR, 1.0f / invTanHalfFOV);
                     m_RadiusPerEye[viewIndex] = hbao.radius.value * 0.5f * (sourceHeight / (hbao.deinterleaving.value == HBAO.Deinterleaving.x4 ? 4 : 1) / (2.0f / invTanHalfFOV));
                 }
@@ -876,7 +876,7 @@ namespace HorizonBasedAmbientOcclusion.Universal
 
                 return desc;
             }
-            
+
             public void BlitFullscreenMesh(CommandBuffer cmd, RenderTargetIdentifier source, RenderTargetIdentifier destination, Material material, int passIndex = 0)
             {
                 cmd.SetGlobalTexture(ShaderProperties.mainTex, source);

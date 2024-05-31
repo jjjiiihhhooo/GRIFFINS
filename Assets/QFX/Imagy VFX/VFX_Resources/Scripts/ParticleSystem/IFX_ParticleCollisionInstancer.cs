@@ -22,13 +22,13 @@ namespace QFX.IFX
 
         private void OnParticleCollision(GameObject other)
         {
-            
+
 
             int collisionEventsCount = _mainPs.GetCollisionEvents(other, _collisionEvents);
 
 
             if (collisionEventsCount <= 0)
-                 return;
+                return;
 
             var collisionFx = Instantiate(CollisionFx, _collisionEvents[0].intersection, Quaternion.identity);
 

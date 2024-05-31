@@ -1,6 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class White_PsionicStorm : MonoBehaviour
@@ -36,11 +34,11 @@ public class White_PsionicStorm : MonoBehaviour
         transform.localScale = Vector3.zero;
         while (time > 0)
         {
-            if(transform.localScale.x < 1.5f)
+            if (transform.localScale.x < 1.5f)
             {
                 transform.localScale += temp;
             }
-            else if(transform.localScale.x != 1.5f)
+            else if (transform.localScale.x != 1.5f)
             {
                 transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
             }
@@ -51,7 +49,7 @@ public class White_PsionicStorm : MonoBehaviour
             yield return new WaitForFixedUpdate();
         }
 
-        while(transform.localScale.x > 0)
+        while (transform.localScale.x > 0)
         {
             transform.localScale -= temp;
             transform.position = player.transform.position + Vector3.up;

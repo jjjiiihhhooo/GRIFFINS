@@ -5,6 +5,11 @@ public class Dialogue
 {
     public string name;
     public string text;
+    public Sprite leftImage;
+    public Sprite rightImage;
+    public int teamIndex;
+    public bool isLeft;
+
 }
 
 public class DialogueContainer : MonoBehaviour
@@ -16,7 +21,7 @@ public class DialogueContainer : MonoBehaviour
     public void SetDialogue()
     {
         Debug.Log("SetDialogue");
-        GameManager.Instance.dialogueManager.ChangeDialogue(dialogues, eventName, chatKey);
+        GameManager.Instance.dialogueManager.ChangeDialogue(dialogues, chatKey);
     }
 
     public void StartEvent()

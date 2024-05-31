@@ -1,10 +1,8 @@
 using DG.Tweening;
 using Sirenix.OdinInspector;
-using System.Collections.Generic;
 using System.Collections;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
 
 public class QuestManager : SerializedMonoBehaviour
 {
@@ -20,7 +18,7 @@ public class QuestManager : SerializedMonoBehaviour
 
     public void UpdateQuest()
     {
-        if (curQuest == null) 
+        if (curQuest == null)
         {
             curQuest = FindObjectOfType<CurrentQuest>().curQuest;
             titleText.text = FindObjectOfType<CurrentQuest>().QuestTitleText;
@@ -57,8 +55,12 @@ public class QuestManager : SerializedMonoBehaviour
         }
 
         if (curQuest.clear_event != null) curQuest.clear_event.Invoke();
-
         GameManager.Instance.guideManager.SetMessage("퀘스트 클리어");
+        QuestDestoryEvent();
+    }
+
+    public void QuestDestoryEvent()
+    {
         QuestDestroy();
         QuestExit();
     }
@@ -67,18 +69,8 @@ public class QuestManager : SerializedMonoBehaviour
     {
         //UpdateQuest();
 
-        for (int i = 4; i >= 0; i--)
-        {
-            if (questUIdatas[i].gameObject.activeSelf)
-            {
-                questUIdatas[i].QuestEnd();
 
-                return;
-            }
-        }
-        
-
-        
+        StartCoroutine(ClearCor());
 
         //for (int i = 4; i >= 0; i++)
         //{
@@ -86,6 +78,20 @@ public class QuestManager : SerializedMonoBehaviour
         //    //questTexts[i].transform.parent.gameObject.SetActive(false);
         //    questUIdatas[i].QuestEnd();
         //}
+    }
+
+    private IEnumerator ClearCor()
+    {
+        float time = 0.2f;
+        for (int i = 4; i >= 0; i--)
+        {
+            if (questUIdatas[i].gameObject.activeSelf)
+            {
+                yield return new WaitForSeconds(time);
+                questUIdatas[i].QuestEnd();
+
+            }
+        }
     }
 
     public void QuestDelete()
@@ -124,7 +130,7 @@ public class QuestManager : SerializedMonoBehaviour
             //questTexts[count].gameObject.SetActive(true);
             //questTexts[count].transform.parent.gameObject.SetActive(true);
             questUIdatas[count].gameObject.SetActive(true);
-            
+
             count++;
         }
     }

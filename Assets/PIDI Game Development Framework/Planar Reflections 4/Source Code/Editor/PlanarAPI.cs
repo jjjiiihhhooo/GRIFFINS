@@ -17,37 +17,47 @@
 
 using UnityEditor;
 
-class PlanarAPI{
+class PlanarAPI
+{
     [UnityEditor.Callbacks.DidReloadScripts]
-    public static void ModifyDefines() {
-        var defines = PlayerSettings.GetScriptingDefineSymbolsForGroup( EditorUserBuildSettings.selectedBuildTargetGroup );
-        if ( AssetDatabase.FindAssets( "PlanarReflectionsRenderer" ).Length > 0 ) {
-            if ( !defines.Contains( "UPDATE_PLANAR3" ) ) {
-                PlayerSettings.SetScriptingDefineSymbolsForGroup( EditorUserBuildSettings.selectedBuildTargetGroup, defines + ";UPDATE_PLANAR3" );
+    public static void ModifyDefines()
+    {
+        var defines = PlayerSettings.GetScriptingDefineSymbolsForGroup(EditorUserBuildSettings.selectedBuildTargetGroup);
+        if (AssetDatabase.FindAssets("PlanarReflectionsRenderer").Length > 0)
+        {
+            if (!defines.Contains("UPDATE_PLANAR3"))
+            {
+                PlayerSettings.SetScriptingDefineSymbolsForGroup(EditorUserBuildSettings.selectedBuildTargetGroup, defines + ";UPDATE_PLANAR3");
             }
         }
-        else {
+        else
+        {
 
-           
 
-            if ( defines.Contains( "UPDATE_PLANAR3" ) ) {
-                PlayerSettings.SetScriptingDefineSymbolsForGroup( EditorUserBuildSettings.selectedBuildTargetGroup, defines.Replace( "UPDATE_PLANAR3", "" ) );
+
+            if (defines.Contains("UPDATE_PLANAR3"))
+            {
+                PlayerSettings.SetScriptingDefineSymbolsForGroup(EditorUserBuildSettings.selectedBuildTargetGroup, defines.Replace("UPDATE_PLANAR3", ""));
             }
 
-            if ( defines.Contains( "PLANAR3_PRO" ) ) {
-                PlayerSettings.SetScriptingDefineSymbolsForGroup( EditorUserBuildSettings.selectedBuildTargetGroup, defines.Replace( "PLANAR3_PRO", "" ) );
+            if (defines.Contains("PLANAR3_PRO"))
+            {
+                PlayerSettings.SetScriptingDefineSymbolsForGroup(EditorUserBuildSettings.selectedBuildTargetGroup, defines.Replace("PLANAR3_PRO", ""));
             }
 
-            if ( defines.Contains( "PLANAR3_HDRP" ) ) {
-                PlayerSettings.SetScriptingDefineSymbolsForGroup( EditorUserBuildSettings.selectedBuildTargetGroup, defines.Replace( "PLANAR3_HDRP", "" ) );
+            if (defines.Contains("PLANAR3_HDRP"))
+            {
+                PlayerSettings.SetScriptingDefineSymbolsForGroup(EditorUserBuildSettings.selectedBuildTargetGroup, defines.Replace("PLANAR3_HDRP", ""));
             }
 
-            if ( defines.Contains( "PLANAR3_LWRP" ) ) {
-                PlayerSettings.SetScriptingDefineSymbolsForGroup( EditorUserBuildSettings.selectedBuildTargetGroup, defines.Replace( "PLANAR3_LWRP", "" ) );
+            if (defines.Contains("PLANAR3_LWRP"))
+            {
+                PlayerSettings.SetScriptingDefineSymbolsForGroup(EditorUserBuildSettings.selectedBuildTargetGroup, defines.Replace("PLANAR3_LWRP", ""));
             }
 
-            if ( defines.Contains( "PLANAR3_URP" ) ) {
-                PlayerSettings.SetScriptingDefineSymbolsForGroup( EditorUserBuildSettings.selectedBuildTargetGroup, defines.Replace( "PLANAR3_URP", "" ) );
+            if (defines.Contains("PLANAR3_URP"))
+            {
+                PlayerSettings.SetScriptingDefineSymbolsForGroup(EditorUserBuildSettings.selectedBuildTargetGroup, defines.Replace("PLANAR3_URP", ""));
             }
         }
     }

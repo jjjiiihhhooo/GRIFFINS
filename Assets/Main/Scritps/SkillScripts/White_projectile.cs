@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class White_projectile : MonoBehaviour
@@ -22,7 +20,7 @@ public class White_projectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Enemy" || other.tag == "Environment")
+        if (other.tag == "Enemy" || other.tag == "Environment")
             Invoke("DestroyEvent", 0.5f);
     }
 }

@@ -4,9 +4,9 @@
 
 #if UNITY_EDITOR
 
-using UnityEngine;
-using UnityEditor;
 using System;
+using UnityEditor;
+using UnityEngine;
 
 namespace RealToon.GUIInspector
 {
@@ -48,23 +48,23 @@ namespace RealToon.GUIInspector
 
         #region Variables
 
-string shader_type = "Default";
-string srp_mode = "URP";
-bool del_skw = false;
-static bool aruskw = false;
+        string shader_type = "Default";
+        string srp_mode = "URP";
+        bool del_skw = false;
+        static bool aruskw = false;
 
-static bool UseSSOL = true;
-static string UseSSOLStat = "Use Screen Space Outline";
-static string OLType = "Traditional";
+        static bool UseSSOL = true;
+        static string UseSSOLStat = "Use Screen Space Outline";
+        static string OLType = "Traditional";
 
-static bool remoout = true;
-static string remooutstat = "Remove Outline";
+        static bool remoout = true;
+        static string remooutstat = "Remove Outline";
 
-static bool twofourfive_target = false;
-static string twofourfive_target_string = "Change shader compilation target to 4.5";
+        static bool twofourfive_target = false;
+        static string twofourfive_target_string = "Change shader compilation target to 4.5";
 
-static bool dots_lbs_cd = false;
-static string dots_lbs_cd_string = "DOTS|HR - Use Compute Deformation";
+        static bool dots_lbs_cd = false;
+        static string dots_lbs_cd_string = "DOTS|HR - Use Compute Deformation";
 
         #endregion
 

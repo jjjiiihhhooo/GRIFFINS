@@ -20,7 +20,7 @@ public class PlayerCharacter
     public AnimationClip E_Anim;
     public AnimationClip R_Anim;
     public AnimationClip followAnim;
-    
+
 
     public bool isGrappleReady;
     public bool followEnemy;
@@ -205,6 +205,11 @@ public class PlayerCharacter
 
     }
 
+    public virtual void SuperAttack()
+    {
+
+    }
+
     public virtual void AttackMotion()
     {
 
@@ -226,10 +231,12 @@ public class PlayerCharacter
         {
 
             player.isAttack = false;
+            player.isNormalAttack = false;
             player.Invoke("EndCombo", 0.5f);
         }
     }
 
+    
     public virtual void Sound(string name)
     {
         if (name == "jump")
@@ -242,6 +249,12 @@ public class PlayerCharacter
     {
 
     }
+
+    public virtual void ExitSuperAttack()
+    {
+       
+    }
+
 
     public virtual void StrongAttackExit()
     {
@@ -290,6 +303,12 @@ public class PlayerCharacter
 
     public void RotationZero()
     {
+        if(player.isSuperAttacking)
+        {
+            player.transform.position = player.orginPos;
+            player.Rigidbody.velocity = Vector3.zero;
+        }
+
         float x = model.transform.localEulerAngles.x;
         float y = model.transform.localEulerAngles.y;
         float z = model.transform.localEulerAngles.z;
@@ -306,7 +325,7 @@ public class PlayerCharacter
 
             RaycastHit hit;
 
-            if (Physics.Raycast(player.transform.position, player.transform.forward, out hit, 5f, animCheckLayer))
+            if (Physics.Raycast(player.transform.position + Vector3.up, player.transform.forward, out hit, 5f, animCheckLayer))
             {
                 model.transform.localPosition = new Vector3(0f, model.transform.localPosition.y, 0f);
             }
@@ -314,6 +333,18 @@ public class PlayerCharacter
             player.transform.position = model.transform.position;
             model.transform.localPosition = Vector3.zero;
         }
+        else
+        {
+            model.transform.localPosition = Vector3.zero;
+
+        }
+    }
+
+    public void AnimToPos()
+    {
+        Debug.LogError("d");
+        //player.transform.position = model.transform.position;
+        model.transform.localPosition = new Vector3(0, 0, 0);
     }
 
     public virtual void SkillCoolTimeResetAnim(int index)
@@ -359,6 +390,7 @@ public class PlayerCharacter
 
         return (velocityXZ + velocityY);
     }
+
 }
 
 [System.Serializable]
@@ -366,10 +398,13 @@ public class WhiteCharacter : PlayerCharacter
 {
 
     [SerializeField] private GameObject normal_projectile;
+    [SerializeField] private GameObject super_laser;
     [SerializeField] private Transform fireTransform;
     [SerializeField] private GameObject fireEffect;
     [SerializeField] private GameObject psionicStormEffect;
     [SerializeField] private GameObject explosionEffect;
+    [SerializeField] private Transform explosionTransform;
+    [SerializeField] private Transform explosionEndTransform;
 
     public override void Init(Player playerController)
     {
@@ -404,17 +439,48 @@ public class WhiteCharacter : PlayerCharacter
         if (player.targetSet.targetEnemy != null)
             target = player.targetSet.targetEnemy;
         player.movementStateMachine.ChangeState(player.movementStateMachine.IdlingState);
-        AttackMotion();
+
+        if (player.isSuperAttack && target != null)
+            SuperAttack();
+        else
+            AttackMotion();
+    }
+
+    public override void SuperAttack()
+    {
+        player.isNormalAttack = true;
+        player.isSuperAttacking = true;
+        player.orginPos = player.transform.position;
+        //handParticle[2].SetActive(true);
+        curParticle = normalAttackEffects[2];
+        curKnockback = knockbacks[2];
+        curKnockbackDir = knockbackDirs[2];
+        player.Rigidbody.velocity = Vector3.zero;
+
+        if (target != null)
+        {
+            player.transform.forward = target.transform.position - player.transform.position;
+            player.transform.eulerAngles = new Vector3(0f, player.transform.eulerAngles.y, 0f);
+        }
+        else
+        {
+            player.transform.forward = Camera.main.transform.forward;
+            player.transform.eulerAngles = new Vector3(0f, player.transform.eulerAngles.y, 0f);
+        }
+        player.currentCharacter.animator.Play("White_SuperAttack", 3, 0f);
+        GameManager.Instance.uiManager.ChangeAttack(0);
+        followEnemy = false;
+        comboCounter = 0;
     }
 
     public override void AttackMotion()
     {
-        if (Time.time - lastComboEnd > 0.1f && comboCounter < attackAnim.Length && !player.isAttack)
+        if (Time.time - lastComboEnd > 0.1f && comboCounter < attackAnim.Length && !player.isAttack && !player.isNormalAttack)
         {
             player.CancelInvoke("EndCombo");
             if (Time.time - lastClickedTime >= 0.4f)
             {
-                player.isAttack = true;
+                player.isNormalAttack = true;
                 player.currentCharacter.animator.Play(attackAnim[comboCounter].name, 3, 0f);
                 curParticle = normalAttackEffects[comboCounter];
                 curKnockback = knockbacks[comboCounter];
@@ -443,7 +509,13 @@ public class WhiteCharacter : PlayerCharacter
         if (!GameManager.Instance.coolTimeManager.CoolCheck("White_Q")) return;
         GameManager.Instance.coolTimeManager.GetCoolTime("White_Q");
         player.isAttack = true;
-        Explosion();
+        ExplosionAnim();
+    }
+
+    private void ExplosionAnim()
+    {
+        GameObject temp = GameObject.Instantiate(cutScene, player.transform.position, Quaternion.identity);
+        temp.SetActive(true);
     }
 
     private void Explosion()
@@ -451,7 +523,7 @@ public class WhiteCharacter : PlayerCharacter
         player.Rigidbody.velocity = Vector3.zero;
         player.transform.forward = Camera.main.transform.forward;
         player.transform.eulerAngles = new Vector3(0f, player.transform.eulerAngles.y, 0f);
-        OnlySingleton.Instance.white_Q_cam.Priority = 11;
+        //OnlySingleton.Instance.white_Q_cam.Priority = 11;
         curParticle = normalAttackEffects[2];
         curKnockback = knockbacks[4];
         curKnockbackDir = knockbackDirs[4];
@@ -463,9 +535,16 @@ public class WhiteCharacter : PlayerCharacter
     {
         if (!GameManager.Instance.coolTimeManager.CoolCheck("White_E")) return;
         GameManager.Instance.coolTimeManager.GetCoolTime("White_E");
-        
+
         PsionicStorm();
     }
+
+    public override void CutSceneEvent(GameObject cut)
+    {
+        GameObject.Destroy(cut);
+        Explosion();
+    }
+
 
     private void PsionicStorm()
     {
@@ -475,9 +554,9 @@ public class WhiteCharacter : PlayerCharacter
 
     public override void NormalAttackExit()
     {
-        player.isAttack = false;
+        player.isNormalAttack = false;
         GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["red_normalAttack1"], false);
-        if(target != null)
+        if (target != null)
         {
             Player.Instance.StartCoroutine(ProjectileCor());
         }
@@ -487,10 +566,37 @@ public class WhiteCharacter : PlayerCharacter
 
     }
 
+    public override void ExitSuperAttack()
+    {
+        player.isNormalAttack = false;
+        player.isSuperAttacking = false;
+        GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["red_normalAttack1"], false);
+        if (target != null)
+        {
+            SuperProjectile();
+        }
+
+        GameObject temp_2 = GameObject.Instantiate(fireEffect, fireTransform.position, Quaternion.identity);
+        temp_2.transform.forward = player.transform.forward;
+        player.isSuperAttack = false;
+    }
+
+    private void SuperProjectile()
+    {
+        if (target != null)
+        {
+            player.transform.forward = target.transform.position - player.transform.position;
+            player.transform.eulerAngles = new Vector3(0f, player.transform.eulerAngles.y, 0f);
+            GameObject temp = GameObject.Instantiate(super_laser, fireTransform.position, Quaternion.identity);
+            temp.GetComponent<White_projectile>().target = target.transform;
+            temp.gameObject.SetActive(true);
+        }
+    }
+
     private IEnumerator ProjectileCor()
     {
-        for(int i = 0; i < 3; i++)
-        {   
+        for (int i = 0; i < 3; i++)
+        {
             if (target != null)
             {
                 GameObject temp = GameObject.Instantiate(normal_projectile, fireTransform.position, Quaternion.identity);
@@ -508,10 +614,12 @@ public class WhiteCharacter : PlayerCharacter
 
     public override void Q_AnimExit()
     {
-        OnlySingleton.Instance.white_Q_cam.Priority = 9;
-        Vector3 pos = player.transform.position + player.transform.forward * 20f;
-        OnlySingleton.Instance.camShake.ShakeCamera(7f, 0.1f);
-        GameObject temp = GameObject.Instantiate(explosionEffect, pos, Quaternion.identity);
+        //OnlySingleton.Instance.white_Q_cam.Priority = 9;
+
+        //Vector3 pos = player.transform.position + player.transform.forward * 10f;
+        //OnlySingleton.Instance.camShake.ShakeCamera(7f, 0.1f);
+        GameObject temp = GameObject.Instantiate(explosionEffect, explosionEndTransform.position , Quaternion.identity);
+        GameManager.Instance.coolTimeManager.GetCoolTime("CharacterChange");
         temp.SetActive(true);
     }
 
@@ -643,7 +751,7 @@ public class WhiteCharacter : PlayerCharacter
         }
 
         if (player.currentCharacter.animator.GetCurrentAnimatorStateInfo(1).IsName("Idle") || player.currentCharacter.animator.GetCurrentAnimatorStateInfo(1).IsName("Throw")) return;
-        
+
 
         GameManager.Instance.staminaManager.staminaImage.transform.parent.GetComponent<RectTransform>().anchoredPosition = new Vector3(140f, 35.4f, 0f);
         //GameManager.Instance.staminaManager.staminaImage.rectTransform.anchoredPosition = new Vector3(140f, 35.4f, 0f);
@@ -814,7 +922,7 @@ public class GreenCharacter : PlayerCharacter
 
     public override void CharacterChange()
     {
-        
+
     }
 
     public override void Update()
@@ -847,7 +955,7 @@ public class GreenCharacter : PlayerCharacter
 
     private void DragonAnim()
     {
-        GameObject temp =  GameObject.Instantiate(cutScene, player.transform.position, Quaternion.identity);
+        GameObject temp = GameObject.Instantiate(cutScene, player.transform.position, Quaternion.identity);
         temp.SetActive(true);
     }
 
@@ -862,7 +970,7 @@ public class GreenCharacter : PlayerCharacter
     {
         player.movementStateMachine.ChangeState(player.movementStateMachine.IdlingState);
         player.Rigidbody.velocity = Vector3.zero;
-        
+
         player.transform.forward = Camera.main.transform.forward;
         player.transform.eulerAngles = new Vector3(0f, player.transform.eulerAngles.y, 0f);
         //OnlySingleton.Instance.green_E_cam.Priority = 11;
@@ -900,14 +1008,14 @@ public class GreenCharacter : PlayerCharacter
 
     public override void NormalAttackExit()
     {
-        player.isAttack = false;
+        player.isNormalAttack = false;
         GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["red_normalAttack1"], false);
         normalAttackCol.gameObject.SetActive(true);
     }
 
     public override void StrongAttackExit()
     {
-        player.isAttack = false;
+        player.isNormalAttack = false;
         OnlySingleton.Instance.camShake.ShakeCamera(7f, 0.1f);
         GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["red_normalAttack2"], false);
         normalAttackCol_2.gameObject.SetActive(true);
@@ -921,6 +1029,7 @@ public class GreenCharacter : PlayerCharacter
         player.Rigidbody.useGravity = true;
         GameObject temp = GameObject.Instantiate(dragon_projectile, model.transform.position + Vector3.up, Quaternion.identity);
         temp.transform.forward = player.transform.forward;
+        GameManager.Instance.coolTimeManager.GetCoolTime("CharacterChange");
         temp.gameObject.SetActive(true);
     }
 
@@ -937,6 +1046,7 @@ public class GreenCharacter : PlayerCharacter
 
     public override void FollowEnemy()
     {
+        
         if (!followEnemy) return;
 
         if (target == null) { followEnemy = false; return; };
@@ -957,7 +1067,7 @@ public class GreenCharacter : PlayerCharacter
 
             RaycastHit hit;
 
-            if(time < 0)
+            if (time < 0)
             {
                 FollowExit();
                 return;
@@ -968,6 +1078,8 @@ public class GreenCharacter : PlayerCharacter
                 FollowExit();
                 return;
             }
+
+
 
             player.Rigidbody.velocity = Vector3.zero;
             player.Rigidbody.AddForce(player.transform.forward * followSpeed, ForceMode.VelocityChange);
@@ -981,19 +1093,33 @@ public class GreenCharacter : PlayerCharacter
     public override void FollowExit()
     {
         //AttackMotion = null;
-        FollowAttack();
+        if (player.isSuperAttack)
+            SuperAttack();
+        else
+            FollowAttack();
     }
 
     public override void FollowAttack()
     {
-        player.isAttack = true;
+        player.isNormalAttack = true;
         curParticle = normalAttackEffects[2];
         curKnockback = knockbacks[2];
         curKnockbackDir = knockbackDirs[2];
+        player.Rigidbody.velocity = Vector3.zero;
         player.transform.forward = target.transform.position - player.transform.position;
         player.currentCharacter.animator.Play(attackAnim[2].name, 3, 0f);
         followEnemy = false;
         comboCounter = 0;
+
+    }
+
+    public override void ExitSuperAttack()
+    {
+        player.isNormalAttack = false;
+        player.isSuperAttack = false;
+        GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["red_normalAttack1"], false);
+        normalAttackCol.gameObject.SetActive(true);
+        player.isSuperAttacking = false;
     }
 
     public override void NormalAttack()
@@ -1009,22 +1135,50 @@ public class GreenCharacter : PlayerCharacter
                 followEnemy = true;
                 time = 0.5f;
             }
-            else AttackMotion();
+            else
+            {
+                if (player.isSuperAttack && target != null) SuperAttack();
+                else
+                    AttackMotion();
+            }
+
         }
         else
         {
-            AttackMotion();
+            if (player.isSuperAttack && target != null) SuperAttack();
+            else
+                AttackMotion();
         }
+    }
+
+    public override void SuperAttack()
+    {
+        player.isNormalAttack = true;
+        player.isSuperAttacking = true;
+        player.orginPos = player.transform.position;
+        //handParticle[2].SetActive(true);
+        curParticle = normalAttackEffects[2];
+        curKnockback = knockbacks[2];
+        curKnockbackDir = knockbackDirs[2];
+        player.Rigidbody.velocity = Vector3.zero;
+        
+        player.transform.forward = target.transform.position - player.transform.position;
+        player.transform.eulerAngles = new Vector3(0f, player.transform.eulerAngles.y, 0f);
+        
+        player.currentCharacter.animator.Play("Green_SuperAttack", 3, 0f);
+        GameManager.Instance.uiManager.ChangeAttack(1);
+        followEnemy = false;
+        comboCounter = 0;
     }
 
     public override void AttackMotion()
     {
-        if (Time.time - lastComboEnd > 0.1f && comboCounter < attackAnim.Length && !player.isAttack)
+        if (Time.time - lastComboEnd > 0.1f && comboCounter < attackAnim.Length && !player.isNormalAttack && !player.isAttack)
         {
             player.CancelInvoke("EndCombo");
             if (Time.time - lastClickedTime >= 0.4f)
             {
-                player.isAttack = true;
+                player.isNormalAttack = true;
                 player.currentCharacter.animator.Play(attackAnim[comboCounter].name, 3, 0f);
                 curParticle = normalAttackEffects[comboCounter];
                 curKnockback = knockbacks[comboCounter];
@@ -1078,7 +1232,7 @@ public class GreenCharacter : PlayerCharacter
         if (index == 2)
         {
             GameManager.Instance.uiManager.Q_Skill_Icon.SetActive(true);
-            GameManager.Instance.uiManager.Q_Skill_Icon.GetComponent<Animator>().Play("QEffect", 0);
+            GameManager.Instance.uiManager.Q_Skill_Icon.GetComponent<Animator>().Play("Effect", 0);
         }
         else if (index == 3)
         {
@@ -1180,6 +1334,8 @@ public class RedCharacter : PlayerCharacter
         NormalAttack();
     }
 
+   
+
     public override void Q_Action()
     {
         if (!GameManager.Instance.coolTimeManager.CoolCheck("Red_Q")) return;
@@ -1237,7 +1393,7 @@ public class RedCharacter : PlayerCharacter
         player.currentCharacter.animator.Play(Q_Anim.name, 3, 0f);
     }
 
-    
+
 
     public override void FollowEnemy()
     {
@@ -1261,7 +1417,7 @@ public class RedCharacter : PlayerCharacter
 
             RaycastHit hit;
 
-            if(time < 0)
+            if (time < 0)
             {
                 FollowExit();
                 return;
@@ -1287,12 +1443,16 @@ public class RedCharacter : PlayerCharacter
     public override void FollowExit()
     {
         //AttackMotion = null;
-        FollowAttack();
+        if (player.isSuperAttack)
+            SuperAttack();
+        else
+            FollowAttack();
     }
 
     public override void FollowAttack()
     {
-        player.isAttack = true;
+
+        player.isNormalAttack = true;
         handParticle[2].SetActive(true);
         curParticle = normalAttackEffects[2];
         curKnockback = knockbacks[2];
@@ -1306,14 +1466,23 @@ public class RedCharacter : PlayerCharacter
 
     public override void NormalAttackExit()
     {
-        player.isAttack = false;
+        player.isNormalAttack = false;
         GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["red_normalAttack1"], false);
         normalAttackCol.gameObject.SetActive(true);
     }
 
+    public override void ExitSuperAttack()
+    {
+        player.isNormalAttack = false;
+        player.isSuperAttack = false;
+        GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["red_normalAttack1"], false);
+        normalAttackCol.gameObject.SetActive(true);
+        player.isSuperAttacking = false;
+    }
+
     public override void StrongAttackExit()
     {
-        player.isAttack = false;
+        player.isNormalAttack = false;
         OnlySingleton.Instance.camShake.ShakeCamera(7f, 0.1f);
         GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["red_normalAttack2"], false);
         normalAttackCol_2.gameObject.SetActive(true);
@@ -1325,6 +1494,7 @@ public class RedCharacter : PlayerCharacter
         GameObject temp = GameObject.Instantiate(Q_Particle.gameObject, model.transform.position, Quaternion.identity);
         temp.transform.forward = player.transform.forward;
         player.isAttack = false;
+        GameManager.Instance.coolTimeManager.GetCoolTime("CharacterChange");
         Q_AttackCol.gameObject.SetActive(true);
     }
 
@@ -1341,12 +1511,12 @@ public class RedCharacter : PlayerCharacter
 
     public override void AttackMotion()
     {
-        if (Time.time - lastComboEnd > 0.1f && comboCounter < attackAnim.Length && !player.isAttack)
+        if (Time.time - lastComboEnd > 0.1f && comboCounter < attackAnim.Length && !player.isAttack && !player.isNormalAttack)
         {
             player.CancelInvoke("EndCombo");
             if (Time.time - lastClickedTime >= 0.4f)
             {
-                player.isAttack = true;
+                player.isNormalAttack = true;
                 player.currentCharacter.animator.Play(attackAnim[comboCounter].name, 3, 0f);
                 handParticle[comboCounter].SetActive(true);
                 //GameObject temp = GameObject.Instantiate(handParticle[comboCounter], handTransform[comboCounter].transform);
@@ -1390,13 +1560,44 @@ public class RedCharacter : PlayerCharacter
                 followEnemy = true;
                 time = 0.5f;
             }
-            else AttackMotion();
+            else
+            {
+                if (player.isSuperAttack && target != null) SuperAttack();
+                else
+                    AttackMotion(); 
+            }
         }
         else
         {
-            AttackMotion();
+            if (player.isSuperAttack && target != null) SuperAttack();
+            else
+                AttackMotion();
         }
     }
+
+    public override void SuperAttack()
+    {
+
+        player.isNormalAttack = true;
+        player.isSuperAttacking = true;
+        player.orginPos = player.transform.position;
+        handParticle[2].SetActive(true);
+        curParticle = normalAttackEffects[2];
+        curKnockback = knockbacks[2];
+        curKnockbackDir = knockbackDirs[2];
+        player.Rigidbody.velocity = Vector3.zero;
+        
+        player.transform.forward = target.transform.position - player.transform.position;
+        player.transform.eulerAngles = new Vector3(0f, player.transform.eulerAngles.y, 0f);
+        
+
+        player.currentCharacter.animator.Play("Red_SuperAttack", 3, 0f);
+        GameManager.Instance.uiManager.ChangeAttack(2);
+        followEnemy = false;
+        comboCounter = 0;
+    }
+
+
 
     public override float Q_Cool()
     {
