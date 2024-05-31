@@ -149,6 +149,10 @@ public class PlayerDashingState : PlayerGroundedState
 
     private void Dash()
     {
+        stateMachine.Player.isDead = false;
+        stateMachine.Player.isAttack = false;
+        stateMachine.Player.isNormalAttack = false;
+        stateMachine.Player.isSuperAttacking = false;
         Vector3 dashDirection = stateMachine.Player.transform.forward;
 
         dashDirection.y = 0f;

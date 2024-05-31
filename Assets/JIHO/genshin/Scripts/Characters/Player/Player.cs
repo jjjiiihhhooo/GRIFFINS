@@ -263,8 +263,8 @@ public class Player : MonoBehaviour
         isDead = false;
         isAttack = false;
         isNormalAttack = false;
-        isSuperAttack = false;
         isSuperAttacking = false;
+        isSuperAttack = false;
         playerHit = false;
         Destroy(GameManager.Instance.enemyManager.curWaveObject);
         GameManager.Instance.questManager.QuestDestoryEvent();
