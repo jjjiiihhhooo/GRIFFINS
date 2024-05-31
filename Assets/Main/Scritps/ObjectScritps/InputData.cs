@@ -78,25 +78,10 @@ public class InputData : MonoBehaviour
         if (Player.Instance.isAttack) return;
         if (Player.Instance.isNormalAttack) return;
 
-
         if (Input.GetKeyDown(LeftAction))
         {
             player.currentCharacter.LeftAction();
         }
-
-        //if (Input.GetKeyDown(RightAction) && player.currentCharacter.GetType() != typeof(GreenCharacter))
-        //{
-        //    player.currentCharacter.RightAction();
-        //}
-        //else if (Input.GetKeyDown(RightAction) && player.currentCharacter.GetType() == typeof(GreenCharacter))
-        //{
-        //    player.swinging.StartSwing();
-        //}
-
-        //if (Input.GetKeyUp(RightAction) && player.currentCharacter.GetType() == typeof(GreenCharacter))
-        //{
-        //    player.swinging.StopSwing();
-        //}
 
         if (Input.GetKeyDown(itemSaveKey))
         {

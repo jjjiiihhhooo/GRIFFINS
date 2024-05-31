@@ -1,130 +1,110 @@
+using UnityEngine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace MoreMountains.Tools
 {
-    [Serializable]
-    public abstract class MMReorderableArray<T> : ICloneable, IList<T>, ICollection<T>, IEnumerable<T>
-    {
+	[Serializable]
+	public abstract class MMReorderableArray<T> : ICloneable, IList<T>, ICollection<T>, IEnumerable<T> {
 
-        [SerializeField]
-        private List<T> array = new List<T>();
+		[SerializeField]
+		private List<T> array = new List<T>();
 
-        public MMReorderableArray()
-            : this(0)
-        {
-        }
+		public MMReorderableArray()
+			: this(0) {
+		}
 
-        public MMReorderableArray(int length)
-        {
+		public MMReorderableArray(int length) {
 
-            array = new List<T>(length);
-        }
+			array = new List<T>(length);
+		}
 
-        public T this[int index]
-        {
+		public T this[int index] {
 
-            get { return array[index]; }
-            set { array[index] = value; }
-        }
+			get { return array[index]; }
+			set { array[index] = value; }
+		}
+		
+		public int Length {
+			
+			get { return array.Count; }
+		}
 
-        public int Length
-        {
+		public bool IsReadOnly {
 
-            get { return array.Count; }
-        }
+			get { return false; }
+		}
 
-        public bool IsReadOnly
-        {
+		public int Count {
 
-            get { return false; }
-        }
+			get { return array.Count; }
+		}
 
-        public int Count
-        {
+		public object Clone() {
 
-            get { return array.Count; }
-        }
+			return new List<T>(array);
+		}
 
-        public object Clone()
-        {
+		public void CopyFrom(IEnumerable<T> value) {
 
-            return new List<T>(array);
-        }
+			array.Clear();
+			array.AddRange(value);
+		}
 
-        public void CopyFrom(IEnumerable<T> value)
-        {
+		public bool Contains(T value) {
 
-            array.Clear();
-            array.AddRange(value);
-        }
+			return array.Contains(value);
+		}
 
-        public bool Contains(T value)
-        {
+		public int IndexOf(T value) {
 
-            return array.Contains(value);
-        }
+			return array.IndexOf(value);
+		}
 
-        public int IndexOf(T value)
-        {
+		public void Insert(int index, T item) {
 
-            return array.IndexOf(value);
-        }
+			array.Insert(index, item);
+		}
 
-        public void Insert(int index, T item)
-        {
+		public void RemoveAt(int index) {
 
-            array.Insert(index, item);
-        }
+			array.RemoveAt(index);
+		}
 
-        public void RemoveAt(int index)
-        {
+		public void Add(T item) {
 
-            array.RemoveAt(index);
-        }
+			array.Add(item);
+		}
 
-        public void Add(T item)
-        {
+		public void Clear() {
 
-            array.Add(item);
-        }
+			array.Clear();
+		}
 
-        public void Clear()
-        {
+		public void CopyTo(T[] array, int arrayIndex) {
 
-            array.Clear();
-        }
+			this.array.CopyTo(array, arrayIndex);
+		}
 
-        public void CopyTo(T[] array, int arrayIndex)
-        {
+		public bool Remove(T item) {
 
-            this.array.CopyTo(array, arrayIndex);
-        }
+			return array.Remove(item);
+		}
 
-        public bool Remove(T item)
-        {
+		public T[] ToArray() {
 
-            return array.Remove(item);
-        }
+			return array.ToArray();
+		}
 
-        public T[] ToArray()
-        {
+		public IEnumerator<T> GetEnumerator() {
 
-            return array.ToArray();
-        }
+			return array.GetEnumerator();
+		}
 
-        public IEnumerator<T> GetEnumerator()
-        {
+		IEnumerator IEnumerable.GetEnumerator() {
 
-            return array.GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-
-            return array.GetEnumerator();
-        }
-    }
+			return array.GetEnumerator();
+		}
+	}
 }

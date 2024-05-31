@@ -7,16 +7,16 @@
 //////////////////////////////////////////////////////
 
 #if UNITY_EDITOR
-using System;
-using UnityEditor;
 using UnityEngine;
+using UnityEditor;
+using System;
 
 namespace MK.Toon.Editor
 {
     internal class MKToonColorRGBDrawer : MK.Toon.Editor.MaterialPropertyDrawer
     {
-        public MKToonColorRGBDrawer(GUIContent ui) : base(ui) { }
-        public MKToonColorRGBDrawer() : base(GUIContent.none) { }
+        public MKToonColorRGBDrawer(GUIContent ui) : base(ui) {}
+        public MKToonColorRGBDrawer() : base(GUIContent.none) {}
 
         public override void OnGUI(Rect position, MaterialProperty prop, String label, MaterialEditor editor)
         {

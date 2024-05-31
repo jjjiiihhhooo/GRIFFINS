@@ -7,8 +7,9 @@
 //////////////////////////////////////////////////////
 
 #if UNITY_EDITOR
-using System.Collections.Generic;
 using UnityEditor;
+using System;
+using System.Collections.Generic;
 
 namespace MK.Toon.Editor
 {
@@ -33,19 +34,19 @@ namespace MK.Toon.Editor
 
         public abstract void DrawInspector();
 
-        public System.Enum modeEnum { get { return (System.Enum)System.Enum.ToObject(typeof(DynamicEnum), mode); } }
+        public System.Enum modeEnum { get{ return (System.Enum) System.Enum.ToObject(typeof(DynamicEnum), mode); } }
 
         protected void DrawProperty<T>() where T : System.Enum
         {
-            T convertedEnum = (T)System.Enum.ToObject(typeof(T), mode);
+            T convertedEnum = (T) System.Enum.ToObject(typeof(T) , mode);
             EditorGUI.BeginChangeCheck();
-            convertedEnum = (T)EditorGUILayout.EnumPopup(new UnityEngine.GUIContent(name, tooltip), convertedEnum);
-            if (EditorGUI.EndChangeCheck())
+            convertedEnum = (T) EditorGUILayout.EnumPopup(new UnityEngine.GUIContent(name, tooltip), convertedEnum);
+            if(EditorGUI.EndChangeCheck())
             {
                 mode = System.Convert.ToInt32(convertedEnum);
             }
         }
-
+        
         public GlobalShaderFeatureBase(System.Enum mode, List<string> identifiers, List<string> compileDirectives, string name, string tooltip)
         {
             this._name = name;
@@ -75,7 +76,7 @@ namespace MK.Toon.Editor
     [System.Serializable]
     public class GlobalShaderFeature : GlobalShaderFeatureBase
     {
-        public GlobalShaderFeature(System.Enum mode, List<string> identifiers, List<string> compileDirectives, string name, string tooltip) : base(mode, identifiers, compileDirectives, name, tooltip) { }
+        public GlobalShaderFeature(System.Enum mode, List<string> identifiers, List<string> compileDirectives, string name, string tooltip) : base(mode, identifiers, compileDirectives, name, tooltip){}
 
         public override void DrawInspector()
         {
@@ -86,7 +87,7 @@ namespace MK.Toon.Editor
     [System.Serializable]
     public class GlobalShaderFeatureOutlineFading : GlobalShaderFeatureBase
     {
-        public GlobalShaderFeatureOutlineFading(System.Enum mode, List<string> identifiers, List<string> compileDirectives, string name, string tooltip) : base(mode, identifiers, compileDirectives, name, tooltip) { }
+        public GlobalShaderFeatureOutlineFading(System.Enum mode, List<string> identifiers, List<string> compileDirectives, string name, string tooltip) : base(mode, identifiers, compileDirectives, name, tooltip){}
 
         public override void DrawInspector()
         {

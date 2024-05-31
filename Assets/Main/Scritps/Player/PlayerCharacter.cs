@@ -303,6 +303,12 @@ public class PlayerCharacter
 
     public void RotationZero()
     {
+        if(player.isSuperAttacking)
+        {
+            player.transform.position = player.orginPos;
+            player.Rigidbody.velocity = Vector3.zero;
+        }
+
         float x = model.transform.localEulerAngles.x;
         float y = model.transform.localEulerAngles.y;
         float z = model.transform.localEulerAngles.z;
@@ -443,6 +449,8 @@ public class WhiteCharacter : PlayerCharacter
     public override void SuperAttack()
     {
         player.isNormalAttack = true;
+        player.isSuperAttacking = true;
+        player.orginPos = player.transform.position;
         //handParticle[2].SetActive(true);
         curParticle = normalAttackEffects[2];
         curKnockback = knockbacks[2];
@@ -561,7 +569,7 @@ public class WhiteCharacter : PlayerCharacter
     public override void ExitSuperAttack()
     {
         player.isNormalAttack = false;
-        player.isSuperAttack = false;
+        player.isSuperAttacking = false;
         GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["red_normalAttack1"], false);
         if (target != null)
         {
@@ -570,12 +578,15 @@ public class WhiteCharacter : PlayerCharacter
 
         GameObject temp_2 = GameObject.Instantiate(fireEffect, fireTransform.position, Quaternion.identity);
         temp_2.transform.forward = player.transform.forward;
+        player.isSuperAttack = false;
     }
 
     private void SuperProjectile()
     {
         if (target != null)
         {
+            player.transform.forward = target.transform.position - player.transform.position;
+            player.transform.eulerAngles = new Vector3(0f, player.transform.eulerAngles.y, 0f);
             GameObject temp = GameObject.Instantiate(super_laser, fireTransform.position, Quaternion.identity);
             temp.GetComponent<White_projectile>().target = target.transform;
             temp.gameObject.SetActive(true);
@@ -608,6 +619,7 @@ public class WhiteCharacter : PlayerCharacter
         //Vector3 pos = player.transform.position + player.transform.forward * 10f;
         //OnlySingleton.Instance.camShake.ShakeCamera(7f, 0.1f);
         GameObject temp = GameObject.Instantiate(explosionEffect, explosionEndTransform.position , Quaternion.identity);
+        GameManager.Instance.coolTimeManager.GetCoolTime("CharacterChange");
         temp.SetActive(true);
     }
 
@@ -1017,6 +1029,7 @@ public class GreenCharacter : PlayerCharacter
         player.Rigidbody.useGravity = true;
         GameObject temp = GameObject.Instantiate(dragon_projectile, model.transform.position + Vector3.up, Quaternion.identity);
         temp.transform.forward = player.transform.forward;
+        GameManager.Instance.coolTimeManager.GetCoolTime("CharacterChange");
         temp.gameObject.SetActive(true);
     }
 
@@ -1106,6 +1119,7 @@ public class GreenCharacter : PlayerCharacter
         player.isSuperAttack = false;
         GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["red_normalAttack1"], false);
         normalAttackCol.gameObject.SetActive(true);
+        player.isSuperAttacking = false;
     }
 
     public override void NormalAttack()
@@ -1140,6 +1154,8 @@ public class GreenCharacter : PlayerCharacter
     public override void SuperAttack()
     {
         player.isNormalAttack = true;
+        player.isSuperAttacking = true;
+        player.orginPos = player.transform.position;
         //handParticle[2].SetActive(true);
         curParticle = normalAttackEffects[2];
         curKnockback = knockbacks[2];
@@ -1461,6 +1477,7 @@ public class RedCharacter : PlayerCharacter
         player.isSuperAttack = false;
         GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["red_normalAttack1"], false);
         normalAttackCol.gameObject.SetActive(true);
+        player.isSuperAttacking = false;
     }
 
     public override void StrongAttackExit()
@@ -1477,6 +1494,7 @@ public class RedCharacter : PlayerCharacter
         GameObject temp = GameObject.Instantiate(Q_Particle.gameObject, model.transform.position, Quaternion.identity);
         temp.transform.forward = player.transform.forward;
         player.isAttack = false;
+        GameManager.Instance.coolTimeManager.GetCoolTime("CharacterChange");
         Q_AttackCol.gameObject.SetActive(true);
     }
 
@@ -1561,6 +1579,8 @@ public class RedCharacter : PlayerCharacter
     {
 
         player.isNormalAttack = true;
+        player.isSuperAttacking = true;
+        player.orginPos = player.transform.position;
         handParticle[2].SetActive(true);
         curParticle = normalAttackEffects[2];
         curKnockback = knockbacks[2];

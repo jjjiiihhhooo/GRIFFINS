@@ -13,12 +13,12 @@ namespace MK.Toon
         protected string _name;
         public string name
         {
-            get { return _name; }
+            get{ return _name; }
         }
         protected int _id;
         public int id
         {
-            get { return _id; }
+            get{ return _id; }
         }
         public Uniform(string name)
         {

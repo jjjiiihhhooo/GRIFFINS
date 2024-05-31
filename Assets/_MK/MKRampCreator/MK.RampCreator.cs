@@ -1,8 +1,9 @@
 ﻿#if UNITY_EDITOR
 
-using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
+using UnityEditor;
+using System.Collections.Generic;
+using System;
 
 namespace MK.RampCreator
 {
@@ -31,9 +32,9 @@ namespace MK.RampCreator
         private enum TextureFormat
         {
             PNG = 0,
-#if UNITY_2018_3_OR_NEWER
+            #if UNITY_2018_3_OR_NEWER
             TGA = 1,
-#endif
+            #endif
             JPG = 2
         };
 
@@ -93,56 +94,56 @@ namespace MK.RampCreator
 
             EditorGUILayout.BeginHorizontal();
             _filePath = EditorGUILayout.TextField("Output Folder", _filePath);
-            if (GUILayout.Button("Select"))
+            if(GUILayout.Button("Select"))
                 _filePath = EditorUtility.SaveFolderPanel("Output Folder", _filePath, "");
-            if (_filePath == "")
+            if(_filePath == "")
                 _filePath = _defaultFilePath;
             EditorGUILayout.EndHorizontal();
-            _filename = EditorGUILayout.TextField("Filename", _filename);
+             _filename = EditorGUILayout.TextField("Filename", _filename);
             Divider();
 
             serializedObject.ApplyModifiedProperties();
 
-            if (_filename != "")
-                if (GUILayout.Button("Create Ramp"))
+            if(_filename != "")
+            if(GUILayout.Button("Create Ramp"))
+            {
+                EditorUtility.DisplayProgressBar("Texture progress", "Creating new texture...", 0.5f);
+                Texture2D _outputTexture = new Texture2D((int)_outputWidth, 4);
+
+                for(int i = 0; i < (int)_outputWidth; i++)
                 {
-                    EditorUtility.DisplayProgressBar("Texture progress", "Creating new texture...", 0.5f);
-                    Texture2D _outputTexture = new Texture2D((int)_outputWidth, 4);
-
-                    for (int i = 0; i < (int)_outputWidth; i++)
-                    {
-                        float pPos = (float)i / (float)_outputWidth;
-                        Color pixelColor = _outputGradient.Evaluate(pPos);
-                        _outputTexture.SetPixel(i, 0, pixelColor);
-                        _outputTexture.SetPixel(i, 1, pixelColor);
-                        _outputTexture.SetPixel(i, 2, pixelColor);
-                        _outputTexture.SetPixel(i, 3, pixelColor);
-                    }
-
-                    _outputTexture.Apply();
-                    SaveOutputTexture(_outputTexture, _filePath, FilterFilename(_filename), _outputFormat, _outputWidth);
-                    EditorUtility.ClearProgressBar();
+                    float pPos = (float)i / (float)_outputWidth;
+                    Color pixelColor = _outputGradient.Evaluate(pPos);
+                    _outputTexture.SetPixel(i, 0, pixelColor);
+                    _outputTexture.SetPixel(i, 1, pixelColor);
+                    _outputTexture.SetPixel(i, 2, pixelColor);
+                    _outputTexture.SetPixel(i, 3, pixelColor);
                 }
+
+                _outputTexture.Apply();
+                SaveOutputTexture(_outputTexture, _filePath, FilterFilename(_filename), _outputFormat, _outputWidth);
+                EditorUtility.ClearProgressBar();
+            }
         }
 
         private static void Divider()
         {
             GUILayout.Box("", new GUILayoutOption[] { GUILayout.ExpandWidth(true), GUILayout.Height(2) });
         }
-
+        
         private static string FilterFilename(string name)
-        {
-            List<char> notAllowedFilenameChars = new List<char>(System.IO.Path.GetInvalidFileNameChars());
+		{
+			List<char> notAllowedFilenameChars = new List<char>(System.IO.Path.GetInvalidFileNameChars());
             List<char> filename = new List<char>();
 
-            foreach (char c in name)
-            {
-                if (!notAllowedFilenameChars.Contains(c))
-                    filename.Add(c);
-            }
+            foreach(char c in name)
+			{
+				if(!notAllowedFilenameChars.Contains(c))
+					filename.Add(c);
+			}
 
-            return new string(filename.ToArray());
-        }
+			return new string(filename.ToArray());
+		}
 
         private static void SaveOutputTexture(Texture2D tex, string path, string name, TextureFormat format, TextureWidth width)
         {
@@ -151,21 +152,21 @@ namespace MK.RampCreator
             path += "/";
 
             string fileSuffix;
-            if (format == TextureFormat.PNG)
+            if(format == TextureFormat.PNG)
                 fileSuffix = ".png";
-#if UNITY_2018_3_OR_NEWER
-            else if (format == TextureFormat.TGA)
+            #if UNITY_2018_3_OR_NEWER
+            else if(format == TextureFormat.TGA)
                 fileSuffix = ".tga";
-#endif
+            #endif
             else
                 fileSuffix = ".jpg";
 
-            if (format == TextureFormat.PNG)
+            if(format == TextureFormat.PNG)
                 System.IO.File.WriteAllBytes(path + name + fileSuffix, tex.EncodeToPNG());
-#if UNITY_2018_3_OR_NEWER
-            else if (format == TextureFormat.TGA)
+            #if UNITY_2018_3_OR_NEWER
+            else if(format == TextureFormat.TGA)
                 System.IO.File.WriteAllBytes(path + name + fileSuffix, tex.EncodeToTGA());
-#endif
+            #endif
             else
                 System.IO.File.WriteAllBytes(path + name + fileSuffix, tex.EncodeToJPG());
 
@@ -174,7 +175,7 @@ namespace MK.RampCreator
             string texturePath = path + name + fileSuffix;
             TextureImporter textureImporter = (TextureImporter)TextureImporter.GetAtPath(texturePath);
             textureImporter.wrapMode = TextureWrapMode.Clamp;
-            textureImporter.maxTextureSize = (int)width;
+            textureImporter.maxTextureSize = (int) width;
             textureImporter.alphaSource = TextureImporterAlphaSource.None;
             textureImporter.textureCompression = TextureImporterCompression.CompressedHQ;
             textureImporter.mipmapEnabled = true;

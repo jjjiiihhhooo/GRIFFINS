@@ -152,6 +152,7 @@ public class EnemyController : SerializedMonoBehaviour
     {
         if (particle == null) return;
         enemy.damageEffect = Instantiate(particle);
+        enemy.damageEffect.transform.forward = Player.Instance.transform.position - transform.position;
         enemy.damageEffect.transform.position = targetPos;
         enemy.damageEffect.Play();
         enemy.damageEffect = null;

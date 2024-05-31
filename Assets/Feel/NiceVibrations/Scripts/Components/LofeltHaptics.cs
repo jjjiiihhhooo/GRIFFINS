@@ -1,5 +1,8 @@
 // Copyright (c) Meta Platforms, Inc. and affiliates. 
 
+using UnityEngine;
+using System;
+
 #if (UNITY_ANDROID && !UNITY_EDITOR)
 using System.Text;
 using System.Runtime.InteropServices;

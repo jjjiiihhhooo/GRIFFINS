@@ -7,14 +7,20 @@
 //////////////////////////////////////////////////////
 
 #if UNITY_EDITOR
-using UnityEditor;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
+using System.Linq;
+using System;
+using UnityEditor.Utils;
+using UnityEditorInternal;
+using EditorHelper = MK.Toon.Editor.EditorHelper;
 
 namespace MK.Toon.Editor.URP
 {
-    internal class StandardSimpleEditor : MK.Toon.Editor.SimpleEditorBase
+    internal class StandardSimpleEditor : MK.Toon.Editor.SimpleEditorBase 
     {
-        public StandardSimpleEditor() : base(RenderPipeline.Universal) { }
+        public StandardSimpleEditor() : base(RenderPipeline.Universal) {}
 
         protected override void DrawEmissionFlags(MaterialEditor materialEditor)
         {
@@ -23,10 +29,10 @@ namespace MK.Toon.Editor.URP
 
         protected override void EmissionRealtimeSetup(Material material)
         {
-            if (Properties.emissionColor.GetValue(material).maxColorComponent <= 0)
+            if(Properties.emissionColor.GetValue(material).maxColorComponent <= 0)
                 material.globalIlluminationFlags |= MaterialGlobalIlluminationFlags.EmissiveIsBlack;
         }
-
+        
         protected override void DrawPipeline(MaterialEditor materialEditor)
         {
             DrawPipelineHeader();

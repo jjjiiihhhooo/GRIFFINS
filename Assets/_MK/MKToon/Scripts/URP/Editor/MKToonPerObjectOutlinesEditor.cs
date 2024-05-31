@@ -1,7 +1,9 @@
 #if UNITY_EDITOR
 #if MK_URP
-using UnityEditor;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 namespace MK.Toon.URP.Editor
 {
@@ -19,7 +21,7 @@ namespace MK.Toon.URP.Editor
         private void UpdateInstallWizard()
         {
             MK.Toon.Editor.InstallWizard.InstallWizard installWizard = MK.Toon.Editor.InstallWizard.InstallWizard.instance;
-            if (installWizard != null)
+            if(installWizard != null)
                 MK.Toon.Editor.InstallWizard.InstallWizard.instance.Repaint();
         }
 
@@ -41,7 +43,7 @@ namespace MK.Toon.URP.Editor
         public override void OnInspectorGUI()
         {
             FindProperties();
-
+            
             EditorGUILayout.PropertyField(_layerMask, _layerMaskUI);
             //DrawDefaultInspector();
 

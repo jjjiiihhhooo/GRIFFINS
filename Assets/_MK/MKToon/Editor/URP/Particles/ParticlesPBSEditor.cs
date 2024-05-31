@@ -7,22 +7,28 @@
 //////////////////////////////////////////////////////
 
 #if UNITY_EDITOR
-using UnityEditor;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
+using System.Linq;
+using System;
+using UnityEditor.Utils;
+using UnityEditorInternal;
+using EditorHelper = MK.Toon.Editor.EditorHelper;
 
 namespace MK.Toon.Editor.URP
 {
     internal sealed class ParticlesPBSEditor : MK.Toon.Editor.PhysicallyBasedEditorBase
     {
-        public ParticlesPBSEditor() : base(RenderPipeline.Universal) { }
+        public ParticlesPBSEditor() : base(RenderPipeline.Universal) {}
+        
+        /////////////////////////////////////////////////////////////////////////////////////////////
+		// Properties                                                                              //
+		/////////////////////////////////////////////////////////////////////////////////////////////
 
         /////////////////////////////////////////////////////////////////////////////////////////////
-        // Properties                                                                              //
-        /////////////////////////////////////////////////////////////////////////////////////////////
-
-        /////////////////////////////////////////////////////////////////////////////////////////////
-        // Draw                                                                                    //
-        /////////////////////////////////////////////////////////////////////////////////////////////
+		// Draw                                                                                    //
+		/////////////////////////////////////////////////////////////////////////////////////////////
 
         /////////////////
         // Options     //
@@ -31,10 +37,10 @@ namespace MK.Toon.Editor.URP
         {
 
         }
-
+        
         protected override void EmissionRealtimeSetup(Material material)
         {
-            if (Properties.emissionColor.GetValue(material).maxColorComponent <= 0)
+            if(Properties.emissionColor.GetValue(material).maxColorComponent <= 0)
                 material.globalIlluminationFlags |= MaterialGlobalIlluminationFlags.EmissiveIsBlack;
         }
 
@@ -43,8 +49,8 @@ namespace MK.Toon.Editor.URP
         /////////////////
 
         /////////////////////////////////////////////////////////////////////////////////////////////
-        // Variants Setup                                                                          //
-        /////////////////////////////////////////////////////////////////////////////////////////////
+		// Variants Setup                                                                          //
+		/////////////////////////////////////////////////////////////////////////////////////////////
     }
 }
 #endif

@@ -66,6 +66,7 @@ public class Player : MonoBehaviour
     [Header("RedCharacter")]
     public RedCharacter redCharacter;
 
+    public Vector3 orginPos;
 
     public float maxHp;
     public float curHp;
@@ -96,6 +97,7 @@ public class Player : MonoBehaviour
     public bool playerHit;
 
     public bool isSuperAttack;
+    public bool isSuperAttacking;
 
     public bool isDead;
 
@@ -259,6 +261,11 @@ public class Player : MonoBehaviour
     public void DeadNotice()
     {
         isDead = false;
+        isAttack = false;
+        isNormalAttack = false;
+        isSuperAttack = false;
+        isSuperAttacking = false;
+        playerHit = false;
         Destroy(GameManager.Instance.enemyManager.curWaveObject);
         GameManager.Instance.questManager.QuestDestoryEvent();
         if (curTrigger != null) curTrigger.GetComponent<Collider>().enabled = true;

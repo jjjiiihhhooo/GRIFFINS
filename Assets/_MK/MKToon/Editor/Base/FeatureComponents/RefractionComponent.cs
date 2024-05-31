@@ -7,16 +7,22 @@
 //////////////////////////////////////////////////////
 
 #if UNITY_EDITOR
-using UnityEditor;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
+using System.Linq;
+using System;
+using UnityEditor.Utils;
+using UnityEditorInternal;
+using EditorHelper = MK.Toon.Editor.EditorHelper;
 
 namespace MK.Toon.Editor
 {
     internal sealed class RefractionComponent : ShaderGUI
     {
         /////////////////////////////////////////////////////////////////////////////////////////////
-        // Properties                                                                              //
-        /////////////////////////////////////////////////////////////////////////////////////////////
+		// Properties                                                                              //
+		/////////////////////////////////////////////////////////////////////////////////////////////
         private MaterialProperty _refractionDistortionMapScale;
         private MaterialProperty _refractionDistortionMap;
         private MaterialProperty _refractionDistortion;
@@ -38,9 +44,9 @@ namespace MK.Toon.Editor
         }
 
         /////////////////////////////////////////////////////////////////////////////////////////////
-        // Setup                                                                                   //
-        /////////////////////////////////////////////////////////////////////////////////////////////
-
+		// Setup                                                                                   //
+		/////////////////////////////////////////////////////////////////////////////////////////////
+        
         /// <summary>
         /// Find similar values from the changed shader
         /// </summary>
@@ -50,24 +56,24 @@ namespace MK.Toon.Editor
         internal void ConvertSimilarValues(MaterialProperty[] propertiesSrc, Material materialSrc, Material materialDst)
         {
             MaterialProperty bumpMap = FindProperty("_BumpMap", propertiesSrc, false);
-
+            
             _refractionDistortionMap.textureValue = bumpMap.textureValue != null ? bumpMap.textureValue : _refractionDistortionMap.textureValue;
         }
 
         /////////////////////////////////////////////////////////////////////////////////////////////
-        // Draw                                                                                    //
-        /////////////////////////////////////////////////////////////////////////////////////////////
+		// Draw                                                                                    //
+		/////////////////////////////////////////////////////////////////////////////////////////////
         internal void DrawRefraction(MaterialEditor materialEditor, MaterialProperty[] properties)
         {
             //All refraction properties needs to be available on the material
             //the refraction tab is used for check
-            if (_refractionBehavior != null)
+            if(_refractionBehavior != null)
             {
-                if (EditorHelper.HandleBehavior(UI.refractionTab.text, "", _refractionBehavior, null, materialEditor, false))
+                if(EditorHelper.HandleBehavior(UI.refractionTab.text, "", _refractionBehavior, null, materialEditor, false))
                 {
                     FindProperties(properties);
                     materialEditor.ShaderProperty(_indexOfRefraction, UI.indexOfRefraction);
-                    if (_refractionDistortionMap.textureValue != null)
+                    if(_refractionDistortionMap.textureValue != null)
                     {
                         materialEditor.TexturePropertySingleLine(UI.refractionDistortionMap, _refractionDistortionMap, _refractionDistortionMapScale);
                         materialEditor.ShaderProperty(_refractionDistortion, UI.refractionDistortion);
@@ -83,7 +89,7 @@ namespace MK.Toon.Editor
 
         internal void ManageKeywordsRefractionMap(Material material)
         {
-            if (_refractionBehavior != null)
+            if(_refractionBehavior != null)
             {
                 material.SetShaderPassEnabled("Always", true);
                 EditorHelper.SetKeyword(Properties.refractionDistortionMap.GetValue(material) != null, Keywords.refractionDistortionMap, material);
@@ -93,7 +99,7 @@ namespace MK.Toon.Editor
 
         internal void ManageKeywordsIndexOfRefraction(Material material)
         {
-            if (_refractionBehavior != null)
+            if(_refractionBehavior != null)
             {
                 EditorHelper.SetKeyword(Properties.indexOfRefraction.GetValue(material) != 0, Keywords.indexOfRefraction, material);
             }

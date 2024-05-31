@@ -1,8 +1,8 @@
 // Copyright (c) Meta Platforms, Inc. and affiliates. 
 
 using System;
-using System.Globalization;
 using UnityEngine;
+using System.Globalization;
 
 namespace Lofelt.NiceVibrations
 {

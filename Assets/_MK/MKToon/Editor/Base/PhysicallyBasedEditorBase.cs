@@ -7,8 +7,15 @@
 //////////////////////////////////////////////////////
 
 #if UNITY_EDITOR
-using UnityEditor;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
+using System.Linq;
+using System;
+using UnityEditor.Utils;
+using UnityEditorInternal;
+using EditorHelper = MK.Toon.Editor.EditorHelper;
+using MK.Toon;
 
 namespace MK.Toon.Editor
 {
@@ -24,8 +31,8 @@ namespace MK.Toon.Editor
         }
 
         /////////////////////////////////////////////////////////////////////////////////////////////
-        // Properties                                                                              //
-        /////////////////////////////////////////////////////////////////////////////////////////////     
+		// Properties                                                                              //
+		/////////////////////////////////////////////////////////////////////////////////////////////     
 
         /////////////////
         // Options     //
@@ -66,7 +73,7 @@ namespace MK.Toon.Editor
         private MaterialProperty _lightTransmissionThresholdOffset;
         private MaterialProperty _goochBrightMap;
         private MaterialProperty _goochDarkMap;
-
+        
         /////////////////
         // Advanced    //
         /////////////////
@@ -99,7 +106,7 @@ namespace MK.Toon.Editor
             _detailMap = FindProperty(Properties.detailMap.uniform.name, props);
             _detailNormalMapIntensity = FindProperty(Properties.detailNormalMapIntensity.uniform.name, props);
             _detailNormalMap = FindProperty(Properties.detailNormalMap.uniform.name, props);
-
+            
             _lightTransmissionRamp = FindProperty(Properties.lightTransmissionRamp.uniform.name, props);
             _lightTransmissionSmoothness = FindProperty(Properties.lightTransmissionSmoothness.uniform.name, props);
             _lightTransmissionThresholdOffset = FindProperty(Properties.lightTransmissionThresholdOffset.uniform.name, props);
@@ -113,8 +120,8 @@ namespace MK.Toon.Editor
         }
 
         /////////////////////////////////////////////////////////////////////////////////////////////
-        // Draw                                                                                    //
-        /////////////////////////////////////////////////////////////////////////////////////////////
+		// Draw                                                                                    //
+		/////////////////////////////////////////////////////////////////////////////////////////////
 
         protected override void ConvertSimilarValues(MaterialProperty[] propertiesSrc, Material materialSrc, Material materialDst)
         {
@@ -143,128 +150,128 @@ namespace MK.Toon.Editor
 
             bool srcIsMKLit = materialSrc.shader.name.Contains("MK/Toon/") && !materialSrc.shader.name.Contains("Unlit");
 
-            if (!materialSrc.shader.name.Contains("MK/Toon/"))
+            if(!materialSrc.shader.name.Contains("MK/Toon/"))
             {
-                switch (materialSrc.shader.name)
+                switch(materialSrc.shader.name)
                 {
                     //Legacy
                     case "Standard":
                         Properties.workflow.SetValue(materialDst, Workflow.Metallic);
-                        if (metallicGlossMap != null)
+                        if(metallicGlossMap != null)
                             Properties.metallicMap.SetValue(materialDst, metallicGlossMap.textureValue);
-                        if (metallic != null)
+                        if(metallic != null)
                             Properties.metallic.SetValue(materialDst, metallic.floatValue);
-                        if (glossMapScale != null && glossiness != null)
+                        if(glossMapScale != null && glossiness != null)
                             Properties.smoothness.SetValue(materialDst, Properties.metallicMap.GetValue(materialDst) ? glossMapScale.floatValue : glossiness.floatValue);
                         Properties.fresnelHighlights.SetValue(materialDst, true);
-                        break;
+                    break;
                     case "Standard (Specular setup)":
                         Properties.workflow.SetValue(materialDst, Workflow.Specular);
-                        if (specGlossMap != null)
+                        if(specGlossMap != null)
                             Properties.specularMap.SetValue(materialDst, specGlossMap.textureValue);
-                        if (specColor != null)
+                        if(specColor != null)
                             Properties.specularColor.SetValue(materialDst, specColor.colorValue);
-                        if (glossMapScale != null && glossiness != null)
+                        if(glossMapScale != null && glossiness != null)
                             Properties.smoothness.SetValue(materialDst, Properties.specularMap.GetValue(materialDst) ? glossMapScale.floatValue : glossiness.floatValue);
                         Properties.fresnelHighlights.SetValue(materialDst, true);
-                        break;
+                    break;
                     case "Autodesk Interactive":
                         Properties.workflow.SetValue(materialDst, Workflow.Roughness);
-                        if (metallicGlossMap != null)
+                        if(metallicGlossMap != null)
                             Properties.metallicMap.SetValue(materialDst, metallicGlossMap.textureValue);
-                        if (specGlossMap != null)
+                        if(specGlossMap != null)
                             Properties.roughnessMap.SetValue(materialDst, specGlossMap.textureValue);
-                        if (metallic != null)
+                        if(metallic != null)
                             Properties.metallic.SetValue(materialDst, metallic.floatValue);
-                        if (glossiness != null)
+                        if(glossiness != null)
                             Properties.roughness.SetValue(materialDst, glossiness.floatValue);
                         Properties.fresnelHighlights.SetValue(materialDst, true);
-                        break;
+                    break;
 
                     //URP
                     case "Universal Render Pipeline/Baked Lit":
                     case "Universal Render Pipeline/Simple Lit":
                     case "Universal Render Pipeline/Lit":
-                        if (workflowMode != null)
+                        if(workflowMode != null)
                             Properties.workflow.SetValue(materialDst, workflowMode.floatValue > 0 ? Workflow.Metallic : Workflow.Specular);
                         else
                             Properties.workflow.SetValue(materialDst, Workflow.Metallic);
 
-                        switch (Properties.workflow.GetValue(materialDst))
+                        switch(Properties.workflow.GetValue(materialDst))
                         {
                             case Workflow.Specular:
-                                if (specGlossMap != null)
+                                if(specGlossMap != null)
                                     Properties.specularMap.SetValue(materialDst, specGlossMap.textureValue);
-                                if (specColor != null)
+                                if(specColor != null)
                                     Properties.specularColor.SetValue(materialDst, specColor.colorValue);
-                                if (glossMapScale != null)
+                                if(glossMapScale != null)
                                     Properties.smoothness.SetValue(materialDst, Properties.metallicMap.GetValue(materialDst) ? glossMapScale.floatValue : smoothness.floatValue);
-                                break;
+                            break;
                             //Metallic
                             default:
-                                if (metallicGlossMap != null)
+                                if(metallicGlossMap != null)
                                     Properties.metallicMap.SetValue(materialDst, metallicGlossMap.textureValue);
-                                if (metallic != null)
+                                if(metallic != null)
                                     Properties.metallic.SetValue(materialDst, metallic.floatValue);
-                                if (glossMapScale != null)
+                                if(glossMapScale != null)
                                     Properties.smoothness.SetValue(materialDst, Properties.metallicMap.GetValue(materialDst) ? glossMapScale.floatValue : smoothness.floatValue);
-                                break;
+                            break;
                         }
                         Properties.fresnelHighlights.SetValue(materialDst, true);
-                        break;
+                    break;
                     case "Universal Render Pipeline/Autodesk Interactive":
                     case "Universal Render Pipeline/Autodesk Interactive Masked":
                     case "Universal Render Pipeline/Autodesk Interactive Transparent":
                         Properties.workflow.SetValue(materialDst, Workflow.Roughness);
-                        if (metallicGlossMap != null)
+                        if(metallicGlossMap != null)
                             Properties.metallicMap.SetValue(materialDst, metallicGlossMap.textureValue);
-                        if (specGlossMap != null)
+                        if(specGlossMap != null)
                             Properties.roughnessMap.SetValue(materialDst, specGlossMap.textureValue);
-                        if (metallic != null)
+                        if(metallic != null)
                             Properties.metallic.SetValue(materialDst, metallic.floatValue);
-                        if (glossiness != null)
+                        if(glossiness != null)
                             Properties.roughness.SetValue(materialDst, glossiness.floatValue);
                         Properties.fresnelHighlights.SetValue(materialDst, true);
-                        break;
+                    break;
 
                     //Default Fallback Setup
                     default:
                         Properties.workflow.SetValue(materialDst, Workflow.Metallic);
-                        break;
+                    break;
                 }
 
                 //Inverted Toggle
-                if (specularHighlights != null)
+                if(specularHighlights != null)
                     Properties.specular.SetValue(materialDst, specularHighlights.floatValue > 0 ? Specular.Isotropic : Specular.Off);
-                if (parallax != null)
+                if(parallax != null)
                     Properties.parallax.SetValue(materialDst, parallax.floatValue);
-                if (parallaxMap != null)
+                if(parallaxMap != null)
                     Properties.heightMap.SetValue(materialDst, parallaxMap.textureValue);
-                if (occlusionStrength != null)
+                if(occlusionStrength != null)
                     Properties.occlusionMapIntensity.SetValue(materialDst, occlusionStrength.floatValue);
-                if (occlusionMap != null)
+                if(occlusionMap != null)
                     Properties.occlusionMap.SetValue(materialDst, occlusionMap.textureValue);
-                if (detailAlbedoMap != null)
+                if(detailAlbedoMap != null)
                     Properties.detailMap.SetValue(materialDst, detailAlbedoMap.textureValue);
-                if (detailNormalMap != null)
+                if(detailNormalMap != null)
                     Properties.detailNormalMap.SetValue(materialDst, detailNormalMap.textureValue);
-                if (detailAlbedoMap != null || detailNormalMap != null)
+                if(detailAlbedoMap != null || detailNormalMap != null)
                 {
                     Properties.detailTiling.SetValue(materialDst, materialSrc.GetTextureScale(detailAlbedoMap.name));
                     Properties.detailOffset.SetValue(materialDst, materialSrc.GetTextureOffset(detailAlbedoMap.name));
                 }
-                if (detailNormalMapScale != null)
+                if(detailNormalMapScale != null)
                     Properties.detailNormalMapIntensity.SetValue(materialDst, detailNormalMapScale.floatValue);
-                if (glossyReflections != null)
+                if(glossyReflections != null)
                     Properties.environmentReflections.SetValue(materialDst, glossyReflections.floatValue > 0 ? EnvironmentReflection.Advanced : EnvironmentReflection.Ambient);
-                if (environmentReflections != null)
+                if(environmentReflections != null)
                     Properties.environmentReflections.SetValue(materialDst, environmentReflections.floatValue > 0 ? EnvironmentReflection.Advanced : EnvironmentReflection.Ambient);
             }
         }
         /////////////////
         // Options     //
         /////////////////
-
+        
         protected virtual void DrawWorkflow(MaterialEditor materialEditor)
         {
             materialEditor.ShaderProperty(_workflow, UI.workflow);
@@ -286,12 +293,12 @@ namespace MK.Toon.Editor
 
         protected virtual void DrawPBSProperties(MaterialEditor materialEditor)
         {
-            if (_workflow.floatValue == (int)MK.Toon.Workflow.Specular)
+            if(_workflow.floatValue == (int)MK.Toon.Workflow.Specular)
             {
                 materialEditor.TexturePropertySingleLine(UI.specularMap, _specularMap, _specularMap.textureValue == null ? _specularColor : null);
                 materialEditor.ShaderProperty(_smoothness, UI.smoothness, 2);
             }
-            else if (_workflow.floatValue == (int)MK.Toon.Workflow.Roughness)
+            else if(_workflow.floatValue == (int)MK.Toon.Workflow.Roughness)
             {
                 materialEditor.TexturePropertySingleLine(UI.metallicMap, _metallicMap, _metallicMap.textureValue == null ? _metallic : null);
                 materialEditor.TexturePropertySingleLine(UI.roughnessMap, _roughnessMap, _roughnessMap.textureValue == null ? _roughness : null);
@@ -313,13 +320,13 @@ namespace MK.Toon.Editor
 
         protected virtual void DrawLightTransmission(MaterialEditor materialEditor)
         {
-            if (_lightTransmission.floatValue != (int)LightTransmission.Off)
+            if (_lightTransmission.floatValue != (int) LightTransmission.Off)
                 materialEditor.TexturePropertySingleLine(UI.thicknessMap, _thicknessMap, _lightTransmissionColor, _lightTransmissionDistortion);
         }
 
         protected virtual void DrawOcclusionMap(MaterialEditor materialEditor)
         {
-            if (_occlusionMap.textureValue == null)
+            if(_occlusionMap.textureValue == null)
                 materialEditor.TexturePropertySingleLine(UI.occlusionMap, _occlusionMap);
             else
             {
@@ -339,7 +346,7 @@ namespace MK.Toon.Editor
 
         protected virtual void DrawDetailMap(MaterialEditor materialEditor)
         {
-            if (_detailMap.textureValue != null)
+            if(_detailMap.textureValue != null)
                 materialEditor.TexturePropertySingleLine(UI.detailMap, _detailMap, _detailColor, _detailBlend);
             else
                 materialEditor.TexturePropertySingleLine(UI.detailMap, _detailMap);
@@ -347,13 +354,13 @@ namespace MK.Toon.Editor
 
         protected virtual void DrawDetailBlend(MaterialEditor materialEditor)
         {
-            if (_detailMap.textureValue != null)
+            if(_detailMap.textureValue != null)
                 materialEditor.ShaderProperty(_detailMix, UI.detailMix, 2);
         }
 
         protected virtual void DrawDetailNormalMap(MaterialEditor materialEditor)
         {
-            if (_detailNormalMap.textureValue == null)
+            if(_detailNormalMap.textureValue == null)
             {
                 materialEditor.TexturePropertySingleLine(UI.detailNormalMap, _detailNormalMap);
             }
@@ -389,14 +396,14 @@ namespace MK.Toon.Editor
         protected override void DrawLightingThreshold(MaterialEditor materialEditor)
         {
             base.DrawLightingThreshold(materialEditor);
-            if (_thresholdMap.textureValue != null && _lightTransmission.floatValue != (int)LightTransmission.Off)
+            if(_thresholdMap.textureValue != null && _lightTransmission.floatValue != (int) LightTransmission.Off)
                 materialEditor.ShaderProperty(_lightTransmissionThresholdOffset, UI.lightTransmissionThresholdOffset);
         }
 
         protected override void DrawLightingSmoothness(MaterialEditor materialEditor)
         {
             base.DrawLightingSmoothness(materialEditor);
-            if (_lightTransmission.floatValue != (int)LightTransmission.Off)
+            if(_lightTransmission.floatValue != (int) LightTransmission.Off)
                 materialEditor.ShaderProperty(_lightTransmissionSmoothness, UI.lightTransmissionSmoothness);
         }
 
@@ -405,31 +412,31 @@ namespace MK.Toon.Editor
             //This override could be optimized some day, see base implementation
             bool displayWarning = false;
             bool d = _diffuseRamp.textureValue == null;
-            bool s = (Specular)_specular.floatValue != Specular.Off && _specularRamp.textureValue == null;
-            bool r = (Rim)_rim.floatValue != Rim.Off && _rimRamp.textureValue == null;
-            bool lt = (LightTransmission)_lightTransmission.floatValue != LightTransmission.Off && _lightTransmissionRamp.textureValue == null;
+            bool s = (Specular) _specular.floatValue != Specular.Off && _specularRamp.textureValue == null;
+            bool r = (Rim) _rim.floatValue != Rim.Off && _rimRamp.textureValue == null;
+            bool lt = (LightTransmission) _lightTransmission.floatValue != LightTransmission.Off && _lightTransmissionRamp.textureValue == null;
 
-            if ((Light)_light.floatValue == Light.Ramp)
+            if((Light) _light.floatValue == Light.Ramp)
             {
-                if (d || s || r || lt)
+                if(d || s || r || lt)
                     displayWarning = true;
             }
 
-            if (displayWarning)
+            if(displayWarning)
                 DrawLightingRampWarningHeader();
         }
 
         protected override void DrawLightingRamp(MaterialEditor materialEditor)
         {
             base.DrawLightingRamp(materialEditor);
-            if ((LightTransmission)_lightTransmission.floatValue != LightTransmission.Off)
+            if((LightTransmission) _lightTransmission.floatValue != LightTransmission.Off)
                 materialEditor.TexturePropertySingleLine(UI.lightTransmissionRamp, _lightTransmissionRamp);
         }
 
         protected override void DrawGooch(MaterialEditor materialEditor)
         {
             DrawGoochHeader();
-            if (_goochRamp.textureValue != null)
+            if(_goochRamp.textureValue != null)
                 materialEditor.TexturePropertySingleLine(UI.goochRamp, _goochRamp, _goochRampIntensity);
             else
                 materialEditor.TexturePropertySingleLine(UI.goochRamp, _goochRamp);
@@ -452,7 +459,7 @@ namespace MK.Toon.Editor
 
         protected virtual void DrawAnisotrophy(MaterialEditor materialEditor)
         {
-            if (_specular.floatValue == (int)Specular.Anisotropic)
+            if(_specular.floatValue == (int)Specular.Anisotropic)
             {
                 materialEditor.ShaderProperty(_specularAnisotrophy, UI.anisotropy, 1);
             }
@@ -460,7 +467,7 @@ namespace MK.Toon.Editor
 
         protected virtual void DrawLightTransmissionIntensity(MaterialEditor materialEditor)
         {
-            if (_lightTransmission.floatValue != (int)LightTransmission.Off)
+            if(_lightTransmission.floatValue != (int) LightTransmission.Off)
             {
                 materialEditor.ShaderProperty(_lightTransmissionIntensity, UI.lightTransmissionIntensity, 1);
             }
@@ -468,7 +475,7 @@ namespace MK.Toon.Editor
 
         protected virtual void DrawFresnelHighlights(MaterialEditor materialEditor)
         {
-            if (_environmentReflections.floatValue != (int)EnvironmentReflection.Off)
+            if(_environmentReflections.floatValue != (int)EnvironmentReflection.Off)
             {
                 materialEditor.ShaderProperty(_fresnelHighlights, UI.fresnelHighlights);
             }
@@ -500,8 +507,8 @@ namespace MK.Toon.Editor
         }
 
         /////////////////////////////////////////////////////////////////////////////////////////////
-        // Variants Setup                                                                          //
-        /////////////////////////////////////////////////////////////////////////////////////////////
+		// Variants Setup                                                                          //
+		/////////////////////////////////////////////////////////////////////////////////////////////
 
         private void ManageKeywordsWorkflow(Material material)
         {

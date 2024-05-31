@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7903530559210489843}
   - component: {fileID: 6485500940871829590}
   - component: {fileID: 9071894482700500124}
-  - component: {fileID: 7648311005450264602}
+  - component: {fileID: 2357876306659636776}
   m_Layer: 0
   m_Name: SM_building_standard_05
   m_TagString: Untagged
@@ -29,6 +29,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -89,8 +90,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &7648311005450264602
-MeshCollider:
+--- !u!65 &2357876306659636776
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -99,7 +100,6 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -7228237000444761813, guid: 60574b4b80addfc4d8e60f13f23c11f1, type: 3}
+  serializedVersion: 2
+  m_Size: {x: 11.074833, y: 23.735338, z: 8.109083}
+  m_Center: {x: -0.000015974045, y: 11.670211, z: 0}

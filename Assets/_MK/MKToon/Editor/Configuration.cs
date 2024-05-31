@@ -19,20 +19,21 @@ using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 #endif
 
+using Configuration = MK.Toon.Editor.InstallWizard.Configuration;
 namespace MK.Toon.Editor.InstallWizard
 {
     //[CreateAssetMenu(fileName = "Configuration", menuName = "MK/Install Wizard/Create Configuration Asset")]
     public sealed class Configuration : ScriptableObject
     {
-#pragma warning disable CS0414
-        internal static bool isReady
-        {
+        #pragma warning disable CS0414
+        internal static bool isReady 
+        { 
             get
-            {
-                if (_instance == null)
+            { 
+                if(_instance == null)
                     TryGetInstance();
-                return _instance != null;
-            }
+                return _instance != null; 
+            } 
         }
 
         [SerializeField]
@@ -43,22 +44,18 @@ namespace MK.Toon.Editor.InstallWizard
         [SerializeField]
         internal bool disablePerObjectOutlinesWarning = false;
 
-        [SerializeField]
-        [Space]
+        [SerializeField][Space]
         private Texture2D _titleImage = null;
 
-        [SerializeField]
-        [Space]
+        [SerializeField][Space]
         private Object _readMe = null;
 
-        [SerializeField]
-        [Space]
+        [SerializeField][Space]
         private Object _basePackageBuiltin = null;
         [SerializeField]
         private Object _basePackageURP = null;
 
-        [SerializeField]
-        [Space]
+        [SerializeField][Space]
         private Object _examplesPackageInc = null;
         [SerializeField]
         private Object _examplesPackageBuiltin = null;
@@ -67,17 +64,15 @@ namespace MK.Toon.Editor.InstallWizard
         [SerializeField]
         private Object _examplesPackageURP_2023_2_Or_Newer = null;
 
-        [SerializeField]
-        [Space]
+        [SerializeField][Space]
         private ExampleContainer[] _examples = null;
 
-        [Space]
-        [Header("Global Shader Features")]
+        [Space][Header("Global Shader Features")]
         [SerializeField]
         private UnityEngine.Object _globalShaderFeaturesFile = null;
         public static void ConfigureGlobalShaderFeatures()
         {
-            if (isReady)
+            if(isReady)
             {
                 List<string> content = new List<string>();
                 string projectPath = Application.dataPath;
@@ -85,12 +80,12 @@ namespace MK.Toon.Editor.InstallWizard
                 string filePath = projectPath + AssetDatabase.GetAssetPath(_instance._globalShaderFeaturesFile);
 
                 //Read
-                using (MemoryStream dataStream = new MemoryStream(File.ReadAllBytes(filePath)))
+                using(MemoryStream dataStream = new MemoryStream(File.ReadAllBytes(filePath)))
                 {
                     using (StreamReader dataReader = new StreamReader(dataStream, System.Text.Encoding.UTF8))
                     {
                         string line;
-                        while ((line = dataReader.ReadLine()) != null)
+                        while((line = dataReader.ReadLine()) != null)
                         {
                             content.Add(line);
                         }
@@ -100,30 +95,30 @@ namespace MK.Toon.Editor.InstallWizard
                 const string detectFeature = "//%%";
                 bool updated = false;
                 //Modify
-                for (int i = 0; i < content.Count; i++)
+                for(int i = 0; i < content.Count; i++)
                 {
-                    for (int f = 0; f < _instance._globalShaderFeatures.Count; f++)
+                    for(int f = 0; f < _instance._globalShaderFeatures.Count; f++)
                     {
-                        for (int id = 0; id < _instance._globalShaderFeatures[f].identifiers.Count; id++)
+                        for(int id = 0; id < _instance._globalShaderFeatures[f].identifiers.Count; id++)
                         {
-                            if (content[i].Contains(detectFeature + _instance._globalShaderFeatures[f].identifiers[id]))
+                            if(content[i].Contains(detectFeature + _instance._globalShaderFeatures[f].identifiers[id]))
                             {
-                                if (ParseFeature(content, i, _instance._globalShaderFeatures[f].mode == id))
+                                if(ParseFeature(content, i, _instance._globalShaderFeatures[f].mode == id))
                                     updated = true;
                             }
                         }
                     }
                 }
 
-                if (!updated)
+                if(!updated)
                     return;
 
                 //Write
-                using (MemoryStream dataStream = new MemoryStream())
+                using(MemoryStream dataStream = new MemoryStream())
                 {
                     using (StreamWriter streamWriter = new StreamWriter(dataStream, System.Text.Encoding.UTF8))
                     {
-                        while (content.Count > 0)
+                        while(content.Count > 0)
                         {
                             streamWriter.WriteLine(content[0]);
                             content.RemoveAt(0);
@@ -141,11 +136,11 @@ namespace MK.Toon.Editor.InstallWizard
         {
             int featureEnd = startIndex + 5;
             bool updated = false;
-            if (enable)
+            if(enable)
             {
-                for (int i = startIndex; i <= featureEnd; i++)
+                for(int i = startIndex; i <= featureEnd; i++)
                 {
-                    if (content[i] == null)
+                    if(content[i] == null)
                         break;
 
                     string s = content[i];
@@ -156,9 +151,9 @@ namespace MK.Toon.Editor.InstallWizard
             }
             else
             {
-                for (int i = startIndex; i <= featureEnd; i++)
+                for(int i = startIndex; i <= featureEnd; i++)
                 {
-                    if (content[i] == null)
+                    if(content[i] == null)
                         break;
 
                     string s = content[i];
@@ -170,7 +165,7 @@ namespace MK.Toon.Editor.InstallWizard
 
             return updated;
         }
-
+        
         private readonly static List<GlobalShaderFeatureBase> _globalShaderFeaturesTemplate = new List<GlobalShaderFeatureBase>()
         {
             //keep features in sync with the shader files
@@ -189,24 +184,23 @@ namespace MK.Toon.Editor.InstallWizard
 
         [UnityEngine.SerializeReference]
         private List<GlobalShaderFeatureBase> _globalShaderFeatures = new List<GlobalShaderFeatureBase>();
-        [UnityEngine.SerializeReference]
-        [HideInInspector]
+        [UnityEngine.SerializeReference][HideInInspector]
         private List<GlobalShaderFeatureBase> _globalShaderFeaturesTemp = new List<GlobalShaderFeatureBase>();
 
         public static void BeginRegisterChangesOnGlobalShaderFeatures()
         {
-            if (isReady)
+            if(isReady)
             {
                 _instance._globalShaderFeaturesTemp = new List<GlobalShaderFeatureBase>();
-                for (int i = 0; i < _instance._globalShaderFeatures.Count; i++)
+                for(int i = 0; i < _instance._globalShaderFeatures.Count; i++)
                 {
                     List<string> identifiers = new List<string>();
-                    for (int id = 0; id < _instance._globalShaderFeatures[i].identifiers.Count; id++)
+                    for(int id = 0; id < _instance._globalShaderFeatures[i].identifiers.Count; id++)
                     {
                         identifiers.Add(_instance._globalShaderFeatures[i].identifiers[id]);
                     }
                     List<string> compileDirectives = new List<string>();
-                    for (int id = 0; id < _instance._globalShaderFeatures[i].compileDirectives.Count; id++)
+                    for(int id = 0; id < _instance._globalShaderFeatures[i].compileDirectives.Count; id++)
                     {
                         compileDirectives.Add(_instance._globalShaderFeatures[i].compileDirectives[id]);
                     }
@@ -218,12 +212,12 @@ namespace MK.Toon.Editor.InstallWizard
 
         public static bool CheckGlobalShaderFeaturesChanges()
         {
-            if (isReady)
+            if(isReady)
             {
                 bool hasChanged = false;
-                for (int i = 0; i < _instance._globalShaderFeatures.Count; i++)
+                for(int i = 0; i < _instance._globalShaderFeatures.Count; i++)
                 {
-                    if (_instance._globalShaderFeaturesTemp[i].mode != _instance._globalShaderFeatures[i].mode)
+                    if(_instance._globalShaderFeaturesTemp[i].mode != _instance._globalShaderFeatures[i].mode)
                         hasChanged = true;
                 }
                 return hasChanged;
@@ -238,7 +232,7 @@ namespace MK.Toon.Editor.InstallWizard
         //[MenuItem("MK/Install Wizard/Update Global Shader Features List")]
         private static void UpdateGlobalShaderFeatures()
         {
-            if (isReady)
+            if(isReady)
             {
                 _instance._globalShaderFeatures = new List<GlobalShaderFeatureBase>(_globalShaderFeaturesTemplate);
                 SaveInstance();
@@ -249,16 +243,16 @@ namespace MK.Toon.Editor.InstallWizard
 
         public static void DrawGlobalShaderFeaturesInspector()
         {
-            if (isReady)
-            {
+            if(isReady)
+            {   
                 //linear atten is only for URP
-                for (int i = 0; i < _instance._globalShaderFeatures.Count - 2; i++)
+                for(int i = 0; i < _instance._globalShaderFeatures.Count - 2; i++)
                 {
                     _instance._globalShaderFeatures[i].DrawInspector();
                 }
-                if ((int)(System.Object)_instance._globalShaderFeatures[_instance._globalShaderFeatures.Count - 3].modeEnum < 1)
+                if((int) (System.Object) _instance._globalShaderFeatures[_instance._globalShaderFeatures.Count - 3].modeEnum < 1)
                     _instance._globalShaderFeatures[_instance._globalShaderFeatures.Count - 2].DrawInspector();
-                if (_instance._renderPipeline == RenderPipeline.Universal)
+                if(_instance._renderPipeline == RenderPipeline.Universal)
                     _instance._globalShaderFeatures[_instance._globalShaderFeatures.Count - 1].DrawInspector();
             }
         }
@@ -269,16 +263,16 @@ namespace MK.Toon.Editor.InstallWizard
         }
 
         private static Configuration _instance = null;
-
+        
         internal static Configuration TryGetInstance()
         {
-            if (_instance == null)
+            if(_instance == null)
             {
                 string[] _guids = AssetDatabase.FindAssets("t:" + typeof(Configuration).Namespace + ".Configuration", null);
-                if (_guids.Length > 0)
+                if(_guids.Length > 0)
                 {
                     _instance = AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(_guids[0]), typeof(Configuration)) as Configuration;
-                    if (_instance != null)
+                    if(_instance != null)
                         return _instance;
                     else
                     {
@@ -298,7 +292,7 @@ namespace MK.Toon.Editor.InstallWizard
 
         internal static string TryGetPath()
         {
-            if (isReady)
+            if(isReady)
             {
                 return AssetDatabase.GetAssetPath(_instance);
             }
@@ -310,7 +304,7 @@ namespace MK.Toon.Editor.InstallWizard
 
         internal static Texture2D TryGetTitleImage()
         {
-            if (isReady)
+            if(isReady)
             {
                 return _instance._titleImage;
             }
@@ -322,7 +316,7 @@ namespace MK.Toon.Editor.InstallWizard
 
         internal static ExampleContainer[] TryGetExamples()
         {
-            if (isReady)
+            if(isReady)
             {
                 return _instance._examples;
             }
@@ -334,7 +328,7 @@ namespace MK.Toon.Editor.InstallWizard
 
         internal static bool TryGetDisablePerOutlinesWarning()
         {
-            if (isReady)
+            if(isReady)
             {
                 return _instance.disablePerObjectOutlinesWarning;
             }
@@ -345,7 +339,7 @@ namespace MK.Toon.Editor.InstallWizard
         }
         internal static void TrySetDisablePerOutlinesWarning(bool v)
         {
-            if (isReady)
+            if(isReady)
             {
                 _instance.disablePerObjectOutlinesWarning = v;
                 SaveInstance();
@@ -354,7 +348,7 @@ namespace MK.Toon.Editor.InstallWizard
 
         internal static bool TryGetShowInstallerOnReload()
         {
-            if (isReady)
+            if(isReady)
             {
                 return _instance.showInstallerOnReload;
             }
@@ -365,7 +359,7 @@ namespace MK.Toon.Editor.InstallWizard
         }
         internal static void TrySetShowInstallerOnReload(bool v)
         {
-            if (isReady)
+            if(isReady)
             {
                 _instance.showInstallerOnReload = v;
                 SaveInstance();
@@ -373,7 +367,7 @@ namespace MK.Toon.Editor.InstallWizard
         }
         internal static RenderPipeline TryGetRenderPipeline()
         {
-            if (isReady)
+            if(isReady)
             {
                 return _instance._renderPipeline;
             }
@@ -384,7 +378,7 @@ namespace MK.Toon.Editor.InstallWizard
         }
         internal static void TrySetRenderPipeline(RenderPipeline v)
         {
-            if (isReady)
+            if(isReady)
             {
                 _instance._renderPipeline = v;
 
@@ -394,7 +388,7 @@ namespace MK.Toon.Editor.InstallWizard
 
         internal static void SaveInstance()
         {
-            if (isReady)
+            if(isReady)
             {
                 EditorUtility.SetDirty(_instance);
                 AssetDatabase.SaveAssets();
@@ -404,22 +398,22 @@ namespace MK.Toon.Editor.InstallWizard
 
         internal static void ImportShaders(RenderPipeline renderPipeline)
         {
-            if (isReady)
+            if(isReady)
             {
-                switch (renderPipeline)
+                switch(renderPipeline)
                 {
                     case RenderPipeline.Built_in:
                         AssetDatabase.ImportPackage(AssetDatabase.GetAssetPath(_instance._basePackageBuiltin), false);
-                        break;
+                    break;
                     //case RenderPipeline.Lightweight:
                     //    AssetDatabase.ImportPackage(AssetDatabase.GetAssetPath(_instance._basePackageLWRP), false);
                     //break;
                     case RenderPipeline.Universal:
                         AssetDatabase.ImportPackage(AssetDatabase.GetAssetPath(_instance._basePackageURP), false);
-                        break;
+                    break;
                     default:
-                        //All cases should be handled
-                        break;
+                    //All cases should be handled
+                    break;
                 }
                 TrySetShowInstallerOnReload(false);
             }
@@ -427,24 +421,24 @@ namespace MK.Toon.Editor.InstallWizard
 
         internal static void ImportExamples(RenderPipeline renderPipeline)
         {
-            if (isReady)
+            if(isReady)
             {
                 AssetDatabase.ImportPackage(AssetDatabase.GetAssetPath(_instance._examplesPackageInc), false);
-                switch (renderPipeline)
+                switch(renderPipeline)
                 {
                     case RenderPipeline.Built_in:
                         AssetDatabase.ImportPackage(AssetDatabase.GetAssetPath(_instance._examplesPackageBuiltin), false);
-                        break;
+                    break;
                     case RenderPipeline.Universal:
-#if UNITY_2023_2_OR_NEWER
+                        #if UNITY_2023_2_OR_NEWER
                             AssetDatabase.ImportPackage(AssetDatabase.GetAssetPath(_instance._examplesPackageURP_2023_2_Or_Newer), false);
-#else
-                        AssetDatabase.ImportPackage(AssetDatabase.GetAssetPath(_instance._examplesPackageURP), false);
-#endif
-                        break;
+                        #else
+                            AssetDatabase.ImportPackage(AssetDatabase.GetAssetPath(_instance._examplesPackageURP), false);
+                        #endif
+                    break;
                     default:
-                        //All cases should be handled
-                        break;
+                    //All cases should be handled
+                    break;
                 }
             }
         }
@@ -454,10 +448,10 @@ namespace MK.Toon.Editor.InstallWizard
             AssetDatabase.OpenAsset(_instance._readMe);
         }
 
-#if UNITY_2021_2_OR_NEWER
+        #if UNITY_2021_2_OR_NEWER
         public static void SetCompileDirectives()
         {
-            if (isReady)
+            if(isReady)
             {
                 IEnumerable<BuildTargetGroup> buildTargetsGroups = System.Enum.GetValues(typeof(BuildTargetGroup)).Cast<BuildTargetGroup>().Where(b => b != BuildTargetGroup.Unknown).Where(b => !CheckIfObsolete(b));
 
@@ -465,26 +459,26 @@ namespace MK.Toon.Editor.InstallWizard
                 {
                     //string defines = PlayerSettings.GetScriptingDefineSymbolsForGroup(buildTargetGroup).Trim();
                     string[] defines;
-
+                    
                     UnityEditor.Build.NamedBuildTarget namedBuildTarget = UnityEditor.Build.NamedBuildTarget.FromBuildTargetGroup(buildTargetGroup);
                     PlayerSettings.GetScriptingDefineSymbols(namedBuildTarget, out defines);
 
                     List<string> definesList = defines.Where(b => !string.IsNullOrEmpty(b)).ToList();
 
-                    for (int i = 0; i < _instance._globalShaderFeatures.Count; i++)
+                    for(int i = 0; i < _instance._globalShaderFeatures.Count; i++)
                     {
                         GlobalShaderFeatureBase gsfb = _instance._globalShaderFeatures[i];
-                        for (int cd = 0; cd < gsfb.compileDirectives.Count; cd++)
+                        for(int cd = 0; cd < gsfb.compileDirectives.Count; cd++)
                         {
-                            if (gsfb.compileDirectives.Count > 0)
+                            if(gsfb.compileDirectives.Count > 0)
                             {
                                 if (gsfb.compileDirectives[gsfb.mode] == null)
                                     continue;
 
                                 if (definesList.Contains(gsfb.compileDirectives[cd]))
                                     definesList.Remove(gsfb.compileDirectives[cd]);
-
-                                if (gsfb.mode > 0 && gsfb.mode == cd)
+                                
+                                if(gsfb.mode > 0 && gsfb.mode == cd)
                                 {
                                     definesList.Add(gsfb.compileDirectives[gsfb.mode]);
                                 }
@@ -502,7 +496,7 @@ namespace MK.Toon.Editor.InstallWizard
             return attribute != null && attribute.Length > 0;
         }
 
-#else
+        #else
         public static void SetCompileDirectives()
         {
             if(isReady)
@@ -550,12 +544,12 @@ namespace MK.Toon.Editor.InstallWizard
             System.Object[] attribute = typeof(BuildTargetGroup).GetField(buildTargetGroup.ToString()).GetCustomAttributes(typeof(System.ObsoleteAttribute), false);
             return attribute != null && attribute.Length > 0;
         }
-#endif
+        #endif
 
-#if MK_URP
+        #if MK_URP
         public static void ShowURPOutlineWarning()
-        {
-            if (Configuration.TryGetDisablePerOutlinesWarning() || GraphicsSettings.currentRenderPipeline == null)
+        {   
+            if(Configuration.TryGetDisablePerOutlinesWarning() || GraphicsSettings.currentRenderPipeline == null)
                 return;
 
             bool MKToonPerObjectOutlinesRendererFeatureFound = false;
@@ -567,19 +561,19 @@ namespace MK.Toon.Editor.InstallWizard
 
                 var scriptableRendererFeaturesProperty = typeof(ScriptableRenderer).GetProperty("rendererFeatures", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
                 System.Collections.Generic.List<ScriptableRendererFeature> defaultScriptableRendererFeatures = scriptableRendererFeaturesProperty.GetValue(defaultRenderer) as System.Collections.Generic.List<ScriptableRendererFeature>;
-
-                foreach (ScriptableRendererFeature srf in defaultScriptableRendererFeatures)
+                
+                foreach(ScriptableRendererFeature srf in defaultScriptableRendererFeatures)
                 {
-                    if (srf.GetType() == typeof(MK.Toon.URP.MKToonPerObjectOutlines))
+                    if(srf.GetType() == typeof(MK.Toon.URP.MKToonPerObjectOutlines))
                     {
                         MKToonPerObjectOutlinesRendererFeatureFound = true;
                         break;
                     }
                 }
             }
-            catch { }
+            catch {}
 
-            if (!MKToonPerObjectOutlinesRendererFeatureFound)
+            if(!MKToonPerObjectOutlinesRendererFeatureFound)
             {
                 System.Text.StringBuilder warning = new System.Text.StringBuilder("Could not find the MK Toon Per Object Outlines Renderer Feature on your default renderer asset.");
                 warning.Append(System.Environment.NewLine);
@@ -589,11 +583,11 @@ namespace MK.Toon.Editor.InstallWizard
                 warning.Append("It's recommend to attach the MK Toon Per Object Outlines Renderer Feature to every of your renderer assets that should render the per object outlines of MK Toon. Otherwise outlines can't be rendered.");
                 EditorGUILayout.HelpBox(warning.ToString(), MessageType.Warning);
 
-                if (GUILayout.Button("Find all Renderer Assets in Project Window"))
+                if(GUILayout.Button("Find all Renderer Assets in Project Window"))
                 {
                     FindAllURPRendererAssetsInProjectWindow();
                 }
-                if (GUILayout.Button("Select active default Renderer Asset"))
+                if(GUILayout.Button("Select active default Renderer Asset"))
                 {
                     SelectDefaultRendererAsset();
                 }
@@ -608,13 +602,13 @@ namespace MK.Toon.Editor.InstallWizard
                 RenderPipelineAsset renderPipelineAsset = GraphicsSettings.currentRenderPipeline;
                 UniversalRenderPipelineAsset universalRenderPipelineAsset = renderPipelineAsset as UniversalRenderPipelineAsset;
                 var defaultScriptableRendererIndexField = typeof(UniversalRenderPipelineAsset).GetField("m_DefaultRendererIndex", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-                int defaultRendererIndex = (int)defaultScriptableRendererIndexField.GetValue(universalRenderPipelineAsset);
+                int defaultRendererIndex = (int) defaultScriptableRendererIndexField.GetValue(universalRenderPipelineAsset);
                 var scriptableRendererDataList = typeof(UniversalRenderPipelineAsset).GetField("m_RendererDataList", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
                 ScriptableRendererData[] scriptableRenderers = scriptableRendererDataList.GetValue(universalRenderPipelineAsset) as ScriptableRendererData[];
                 Selection.objects = new UnityEngine.Object[] { scriptableRenderers[defaultRendererIndex] };
                 EditorGUIUtility.PingObject(scriptableRenderers[defaultRendererIndex]);
             }
-            catch
+            catch 
             {
                 Debug.LogWarning("Could not find your default URP Renderer Asset");
             }
@@ -635,9 +629,9 @@ namespace MK.Toon.Editor.InstallWizard
                 Debug.LogWarning("Unable to find your URP Renderer Assets");
             }
         }
-#endif
+        #endif
 
-#pragma warning restore CS0414
+        #pragma warning restore CS0414
     }
 }
 #endif
