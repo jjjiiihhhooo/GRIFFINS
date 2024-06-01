@@ -18,7 +18,8 @@ public class PlayerDashingState : PlayerGroundedState
     public override void Enter()
     {
         stateMachine.ReusableData.MovementSpeedModifier = groundedData.DashData.SpeedModifier;
-        
+        if (GameManager.Instance.questManager.isInput) GameManager.Instance.questManager.InputQuestCheck(KeyCode.LeftShift);
+
         base.Enter();
 
         EffectActive(stateMachine.Player.dashEffect, true);

@@ -2,6 +2,7 @@ using DG.Tweening;
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 [System.Serializable]
@@ -26,6 +27,8 @@ public class GuideManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI notice_dialogue;
     [SerializeField] private Sprite[] default_faces;
 
+    public UnityEvent _event;
+
     private Notice[] curNotice;
 
     public void SetMessage(string text)
@@ -39,8 +42,9 @@ public class GuideManager : MonoBehaviour
         warningAnim.DORestartById("Start");
     }
 
-    public void SetNotice(Notice[] notices)
+    public void SetNotice(Notice[] notices, UnityEvent __event)
     {
+        _event = __event;
         curNotice = notices;
         noticeAnim.DORestartById("Start");
     }
@@ -82,6 +86,11 @@ public class GuideManager : MonoBehaviour
     {
         npc_Image.sprite = default_faces[0];
         notice_dialogueAnim.DORestartById("End");
+    }
+
+    public void EndNoticeEvent()
+    {
+        _event?.Invoke();
     }
 
     private IEnumerator NoticeCor()

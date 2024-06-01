@@ -11,6 +11,11 @@ public class ObjectTrigger : MonoBehaviour
     //[SerializeField] private string event_key = "";
     //[SerializeField] private string exit_event_key = "";
 
+    public Transform target;
+    public GameObject destroyObj;
+
+    public bool fade;
+    public bool onlyObj;
 
     private void OnTriggerEnter(Collider collider)
     {
@@ -74,5 +79,23 @@ public class ObjectTrigger : MonoBehaviour
     public void EnemyWave(int index)
     {
         GameManager.Instance.enemyManager.SpawnWave(index);
+    }
+
+    public void PlayerToTransform()
+    {
+        if (fade) GameManager.Instance.uiManager.FadeInOut();
+
+        if(target != null)
+            Player.Instance.transform.position = target.position;
+
+        if (destroyObj != null) 
+        { 
+            Destroy(destroyObj);
+            
+            if(!onlyObj)
+            {
+                Destroy(this.transform.parent.gameObject);
+            }
+        }
     }
 }

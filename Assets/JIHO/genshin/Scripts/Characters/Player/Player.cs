@@ -321,6 +321,9 @@ public class Player : MonoBehaviour
         if (index == currentCharacter.index) return;
         if (!GameManager.Instance.coolTimeManager.CoolCheck("CharacterChange")) return;
 
+        if(index == 1 && GameManager.Instance.questManager.isInput) GameManager.Instance.questManager.InputQuestCheck(KeyCode.Alpha1);
+        else GameManager.Instance.questManager.InputQuestCheck(KeyCode.Alpha2);
+
         GameManager.Instance.coolTimeManager.GetCoolTime("CharacterChange");
         isSuperAttack = true;
         GameManager.Instance.uiManager.CharacterCharacter(index);

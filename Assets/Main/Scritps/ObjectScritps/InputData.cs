@@ -129,6 +129,7 @@ public class InputData : MonoBehaviour
 
         if (Input.GetKeyDown(WhiteKey))
         {
+            
             Debug.Log("whiteChange");
 
             player.ChangeCharacter(0);
@@ -136,6 +137,7 @@ public class InputData : MonoBehaviour
         }
         else if (Input.GetKeyDown(GreenKey))
         {
+            
             Debug.Log("greenChange");
 
             player.ChangeCharacter(1);
@@ -143,7 +145,6 @@ public class InputData : MonoBehaviour
         else if (Input.GetKeyDown(RedKey))
         {
             Debug.Log("redChange");
-
             player.ChangeCharacter(2);
         }
 

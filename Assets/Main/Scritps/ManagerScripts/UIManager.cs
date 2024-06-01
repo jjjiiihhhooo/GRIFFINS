@@ -19,6 +19,8 @@ public class UIManager : MonoBehaviour
     public GameObject Q_Skill_Icon;
     public GameObject E_Skill_Icon;
     public GameObject Option;
+    public GameObject leftVectorImage;
+    public GameObject rightVectorImage;
     public GameObject[] changeAttackAnimator_obj;
 
     [Header("DotweenAnimation")]
@@ -34,6 +36,7 @@ public class UIManager : MonoBehaviour
     public Image characterMainAnim;
     public Image hitOutline;
     public Image fade;
+    
 
     [Header("Sprite")]
     public Sprite[] nonColorCharacters;

@@ -429,6 +429,8 @@ public class WhiteCharacter : PlayerCharacter
     {
         if (player.Animator.GetBool("isDashing")) return;
         if (!player.isGround) return;
+        if(GameManager.Instance.questManager.isInput)
+            GameManager.Instance.questManager.InputQuestCheck(KeyCode.Mouse0);
         NormalAttack();
     }
 
@@ -940,6 +942,8 @@ public class GreenCharacter : PlayerCharacter
 
         if (player.Animator.GetBool("isDashing")) return;
         if (!player.isGround) return;
+        if (GameManager.Instance.questManager.isInput)
+            GameManager.Instance.questManager.InputQuestCheck(KeyCode.Mouse0);
         NormalAttack();
     }
 
@@ -1331,6 +1335,8 @@ public class RedCharacter : PlayerCharacter
     {
         if (player.Animator.GetBool("isDashing")) return;
         if (!player.isGround) return;
+        if (GameManager.Instance.questManager.isInput)
+            GameManager.Instance.questManager.InputQuestCheck(KeyCode.Mouse0);
         NormalAttack();
     }
 

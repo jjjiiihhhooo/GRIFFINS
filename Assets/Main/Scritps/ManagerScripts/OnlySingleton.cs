@@ -11,7 +11,8 @@ public class OnlySingleton : MonoBehaviour
     public CinemachineVirtualCamera green_E_cam;
     public CinemachineVirtualCamera white_Q_cam;
     public Transform miniMapCam;
-
+    public Transform mainCam;
+    public Transform destinationTransform;
 
 
     private void Awake()
@@ -25,6 +26,11 @@ public class OnlySingleton : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+    }
+
+    private void Update()
+    {
+        destinationTransform.position = mainCam.position;
     }
 
     public void BackToNormal()

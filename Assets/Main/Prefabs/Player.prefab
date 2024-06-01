@@ -1244,6 +1244,7 @@ MonoBehaviour:
   time: 0.1
   damage: 200
   otherTag: Enemy
+  isParticle: 0
 --- !u!65 &540552090
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7751,6 +7752,7 @@ MonoBehaviour:
   time: 0.1
   damage: 80
   otherTag: Enemy
+  isParticle: 0
 --- !u!1 &1259116658967909038
 GameObject:
   m_ObjectHideFlags: 0
@@ -10850,6 +10852,7 @@ MonoBehaviour:
   time: 0.1
   damage: 40
   otherTag: Enemy
+  isParticle: 0
 --- !u!65 &3153878664666623340
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11627,7 +11630,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3673163122896199736}
   m_LocalRotation: {x: -0.50000036, y: 0.49999967, z: 0.49999967, w: 0.5000004}
-  m_LocalPosition: {x: -0.00075531006, y: 0.76156294, z: -0.056632996}
+  m_LocalPosition: {x: -0.00075531006, y: 0.7615629, z: -0.056634903}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -53368,9 +53371,9 @@ MonoBehaviour:
     Q_Particle: {fileID: 310365506411822839, guid: 944664efe22f6ae428cf357a30d78284, type: 3}
     Chasing_Particle: {fileID: 1107324212316225835, guid: 15c637eff0bed914eaea2a1a7953a57a, type: 3}
     normalAttackEffects:
-    - {fileID: 172729094580288441, guid: 7416fef74936c2143b7f3da3118078c7, type: 3}
-    - {fileID: 4491862266691707059, guid: bb979f7168279864ca6ead18eba53c33, type: 3}
-    - {fileID: 310365506411822839, guid: 944664efe22f6ae428cf357a30d78284, type: 3}
+    - {fileID: 198259089502633732, guid: 6f83211a64ad01240ab7f4aaddd89960, type: 3}
+    - {fileID: 198259089502633732, guid: 6f83211a64ad01240ab7f4aaddd89960, type: 3}
+    - {fileID: 198259089502633732, guid: 6f83211a64ad01240ab7f4aaddd89960, type: 3}
     Q_Transform: {fileID: 0}
     E_Transform: {fileID: 0}
     animCheckLayer:
@@ -68238,6 +68241,7 @@ MonoBehaviour:
   time: 0.1
   damage: 40
   otherTag: Enemy
+  isParticle: 0
 --- !u!1 &4943424079945503237
 GameObject:
   m_ObjectHideFlags: 0
@@ -82667,6 +82671,7 @@ MonoBehaviour:
   time: 0.2
   damage: 0
   otherTag: 
+  isParticle: 0
 --- !u!1 &4948284602594137212
 GameObject:
   m_ObjectHideFlags: 0
@@ -84019,7 +84024,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5856864529913215066}
   m_LocalRotation: {x: -0.6626474, y: 0.29004842, z: 0.6392401, w: 0.2610409}
-  m_LocalPosition: {x: -0.03874973, y: 0.026077215, z: -0.009838104}
+  m_LocalPosition: {x: -0.038753543, y: 0.026077215, z: -0.009838045}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -85595,6 +85600,7 @@ MonoBehaviour:
   time: 0.1
   damage: 30
   otherTag: Enemy
+  isParticle: 0
 --- !u!1 &6610457469773913422
 GameObject:
   m_ObjectHideFlags: 0
@@ -86353,6 +86359,7 @@ MonoBehaviour:
   time: 0.1
   damage: 400
   otherTag: Enemy
+  isParticle: 0
 --- !u!65 &3819662498641541598
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -86633,6 +86640,7 @@ MonoBehaviour:
   time: 0.1
   damage: 200
   otherTag: Enemy
+  isParticle: 0
 --- !u!135 &833045322774676634
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -86803,6 +86811,7 @@ MonoBehaviour:
   time: 0.1
   damage: 80
   otherTag: Enemy
+  isParticle: 0
 --- !u!1 &6966870738063518621
 GameObject:
   m_ObjectHideFlags: 0

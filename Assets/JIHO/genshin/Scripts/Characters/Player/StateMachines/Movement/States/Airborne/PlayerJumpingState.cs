@@ -15,6 +15,8 @@ public class PlayerJumpingState : PlayerAirborneState
 
     public override void Enter()
     {
+        if (GameManager.Instance.questManager.isInput) GameManager.Instance.questManager.InputQuestCheck(KeyCode.Space);
+
         base.Enter();
 
         stateMachine.Player.currentCharacter.Sound("jump");

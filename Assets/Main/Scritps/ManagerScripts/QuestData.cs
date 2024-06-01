@@ -4,7 +4,7 @@ using UnityEngine.Events;
 
 public enum QuestType
 {
-    Chat, Item, Position, Enemy, Interaction
+    Chat, Item, Position, Enemy, Interaction, Input
 }
 
 
@@ -62,6 +62,10 @@ public class QuestData
     [TabGroup("상호작용 퀘스트")]
     [Header("상호작용 이름")]
     public string interactionName;
+
+    [TabGroup("키 입력 퀘스트")]
+    [Header("키 이름")]
+    public KeyCode keyCode;
 
     [Header("퀘스트 설명")]
     public string questString;

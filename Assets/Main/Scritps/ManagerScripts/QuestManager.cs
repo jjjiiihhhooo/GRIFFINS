@@ -14,6 +14,7 @@ public class QuestManager : SerializedMonoBehaviour
 
     public QuestUIData[] questUIdatas;
 
+    public bool isInput;
 
 
     public void UpdateQuest()
@@ -56,6 +57,7 @@ public class QuestManager : SerializedMonoBehaviour
 
         if (curQuest.clear_event != null) curQuest.clear_event.Invoke();
         GameManager.Instance.guideManager.SetMessage("퀘스트 클리어");
+        if (isInput) isInput = false;
         QuestDestoryEvent();
     }
 
@@ -108,9 +110,34 @@ public class QuestManager : SerializedMonoBehaviour
         //UpdateQuest();
         titleText.text = quest.QuestTitleText;
         curQuest = quest;
+        for(int i = 0; i < curQuest.QuestDatas.Length; i++)
+        {
+            if (curQuest.QuestDatas[i].type == QuestType.Input) isInput = true;
+        }
         titleLogo.DORestartById("Start");
         QuestSetText();
         questUIdatas[0].GetComponent<DOTweenAnimation>().DORestartById("Start");
+    }
+
+    private void Update()
+    {
+        if(isInput)
+        {
+            if (Input.GetKeyDown(KeyCode.W))
+                InputQuestCheck(KeyCode.W);
+
+            if (Input.GetKeyDown(KeyCode.A))
+                InputQuestCheck(KeyCode.A);
+
+            if (Input.GetKeyDown(KeyCode.S))
+                InputQuestCheck(KeyCode.S);
+
+            if (Input.GetKeyDown(KeyCode.D))
+                InputQuestCheck(KeyCode.D);
+
+            
+
+        }
     }
 
     private void QuestSetText()
@@ -120,7 +147,7 @@ public class QuestManager : SerializedMonoBehaviour
         while (curQuest != null && count < curQuest.QuestDatas.Length)
         {
             int temp = count + 1;
-            if (curQuest.QuestDatas[count].type == QuestType.Chat || curQuest.QuestDatas[count].type == QuestType.Interaction || curQuest.QuestDatas[count].type == QuestType.Position)
+            if (curQuest.QuestDatas[count].type == QuestType.Chat || curQuest.QuestDatas[count].type == QuestType.Interaction || curQuest.QuestDatas[count].type == QuestType.Position || curQuest.QuestDatas[count].type == QuestType.Input)
                 questUIdatas[count].text.text = curQuest.QuestDatas[count].questString;
             else if (curQuest.QuestDatas[count].type == QuestType.Enemy)
                 questUIdatas[count].text.text = curQuest.QuestDatas[count].questString + "(" + curQuest.QuestDatas[count].enemyCurCount.ToString() + " / " + curQuest.QuestDatas[count].enemyCompleteCount.ToString() + ")";
@@ -278,6 +305,25 @@ public class QuestManager : SerializedMonoBehaviour
         //    count++;
         //}
 
+
+    }
+
+    public void InputQuestCheck(KeyCode code)
+    {
+        if (curQuest == null) return;
+        int count = 0;
+
+        while (curQuest != null && count < curQuest.QuestDatas.Length)
+        {
+            if (curQuest.QuestDatas[count].type == QuestType.Input)
+            {
+                if (!curQuest.QuestDatas[count].clear && code == curQuest.QuestDatas[count].keyCode)
+                {
+                    QuestClear(curQuest.QuestDatas[count], count);
+                }
+            }
+            count++;
+        }
 
     }
 
