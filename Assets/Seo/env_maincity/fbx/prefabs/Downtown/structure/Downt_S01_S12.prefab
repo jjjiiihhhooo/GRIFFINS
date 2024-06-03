@@ -9,9 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7684934098706342071}
+  - component: {fileID: 6256256145172528469}
   - component: {fileID: 879736228644511844}
-  - component: {fileID: 4959608712289979203}
-  m_Layer: 0
+  - component: {fileID: 6076147526223925751}
+  m_Layer: 11
   m_Name: Downt_S01_S12
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7885704896847093489}
   m_LocalRotation: {x: -0, y: -1, z: -0, w: -0.0000002682209}
-  m_LocalPosition: {x: 192.10999, y: 0, z: -347.71008}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -34,6 +35,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &6256256145172528469
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7885704896847093489}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 4.223528
+  m_Height: 32.866173
+  m_Direction: 1
+  m_Center: {x: -1.0927572, y: 11.66996, z: 1.281702}
 --- !u!65 &879736228644511844
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -45,9 +60,9 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.0991073, y: 24.377798, z: 10.8550415}
-  m_Center: {x: 4.5243187, y: 11.688899, z: -0.16063309}
---- !u!65 &4959608712289979203
+  m_Size: {x: 6.5494385, y: 24.377798, z: 11.043914}
+  m_Center: {x: 2.149921, y: 11.688899, z: -0.012242794}
+--- !u!65 &6076147526223925751
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -58,8 +73,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 10.393129, y: 24.377798, z: 7.270447}
-  m_Center: {x: -0.12269211, y: 11.688899, z: -1.9529305}
+  m_Size: {x: 10.731629, y: 24.377798, z: 6.8347483}
+  m_Center: {x: 0.058825493, y: 11.688899, z: -2.1168256}
 --- !u!1 &9068344523251582015
 GameObject:
   m_ObjectHideFlags: 0
@@ -71,7 +86,7 @@ GameObject:
   - component: {fileID: 8544150793131220613}
   - component: {fileID: 4700966868972359968}
   - component: {fileID: 7411173722593863146}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Downt_S01_S12_001
   m_TagString: Untagged
   m_Icon: {fileID: 0}

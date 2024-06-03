@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6762671280238913110}
   - component: {fileID: 7671334579049818611}
   - component: {fileID: 5589804339762797881}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Downt_S01_S06_001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -100,7 +100,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4753663456714863534}
   - component: {fileID: 7364168810367187987}
-  m_Layer: 0
+  - component: {fileID: 264121196214499620}
+  - component: {fileID: 5092225272821830004}
+  m_Layer: 11
   m_Name: Downt_S01_S06
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -133,7 +135,33 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 6.23
-  m_Height: 24
+  m_Radius: 2.6112185
+  m_Height: 18.190336
   m_Direction: 1
-  m_Center: {x: -2.69, y: 0.85, z: 2.9}
+  m_Center: {x: 0.47737503, y: 4.67435, z: -0.7199478}
+--- !u!65 &264121196214499620
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6525610847460855802}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 6.186481, y: 13.744005, z: 3.9739215}
+  m_Center: {x: -0.008850813, y: 6.3720026, z: 1.2745386}
+--- !u!65 &5092225272821830004
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6525610847460855802}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3.5489872, y: 13.735003, z: 6.593726}
+  m_Center: {x: -1.3275977, y: 6.3675017, z: -0.035363674}
