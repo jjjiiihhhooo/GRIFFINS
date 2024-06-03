@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8688716160267644254}
   - component: {fileID: 9019440867371753841}
   - component: {fileID: 4630194134676646272}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Resid_S01_B15
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,7 +101,8 @@ GameObject:
   - component: {fileID: 7382646819133902511}
   - component: {fileID: 5898507971107471626}
   - component: {fileID: 8520602646094755264}
-  m_Layer: 0
+  - component: {fileID: 4275523243141065153}
+  m_Layer: 11
   m_Name: Resid_S01_B15_001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -183,3 +184,27 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!205 &4275523243141065153
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7872220157980218389}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0, y: 0, z: 0}
+  m_Size: 1
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.6
+    fadeTransitionWidth: 0
+    renderers: []
+  - screenRelativeHeight: 0.3
+    fadeTransitionWidth: 0
+    renderers: []
+  - screenRelativeHeight: 0.1
+    fadeTransitionWidth: 0
+    renderers: []
+  m_Enabled: 1
