@@ -826,7 +826,7 @@ MonoBehaviour:
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
   m_RenderPostProcessing: 1
-  m_Antialiasing: 1
+  m_Antialiasing: 2
   m_AntialiasingQuality: 2
   m_StopNaN: 0
   m_Dithering: 0
@@ -884,7 +884,7 @@ MonoBehaviour:
   m_IsGlobal: 1
   priority: 0
   blendDistance: 0
-  weight: 0.902
+  weight: 1
   sharedProfile: {fileID: 11400000, guid: bab4644836fa24845a8401147f48917f, type: 2}
 --- !u!1 &3912300993202486189
 GameObject:
@@ -1019,9 +1019,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc037e5a8663acb4a91b81a122997ab8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultDistance: 5
-  minimumDistance: 0.5
-  maximumDistance: 5.4
+  defaultDistance: 4
+  minimumDistance: 1
+  maximumDistance: 4
   smoothing: 4
   zoomSensitivity: 1
   virtualCamera: {fileID: 3912300993202486194}
@@ -1171,8 +1171,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6427527055385150765}
-  m_LocalRotation: {x: 0.05966294, y: -0.010407409, z: 0.0006220786, w: 0.9981641}
-  m_LocalPosition: {x: 64.676125, y: 2.6680233, z: 21.449808}
+  m_LocalRotation: {x: 0.05966287, y: -0.010408451, z: 0.00062214024, w: 0.9981641}
+  m_LocalPosition: {x: 64.67613, y: 2.6680233, z: 21.449808}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

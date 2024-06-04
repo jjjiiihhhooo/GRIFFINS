@@ -1,7 +1,6 @@
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class DialogueManager : MonoBehaviour
@@ -13,7 +12,6 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI nameText;
     [SerializeField] private TextMeshProUGUI dialogueText;
     [SerializeField] private DOTweenAnimation dialogueDot;
-    public UnityEvent exit_event;
 
     private Dialogue[] curDialogues;
 
@@ -62,12 +60,12 @@ public class DialogueManager : MonoBehaviour
         for (int i = 0; i < 3; i++)
             teamName[i].gameObject.SetActive(false);
 
-        if (curDialogues[tempIndex].teamIndex != -1)
+        if(curDialogues[tempIndex].teamIndex != -1)
             teamName[curDialogues[tempIndex].teamIndex].gameObject.SetActive(true);
 
         isDialogue = true;
 
-        if (curDialogues[tempIndex].isLeft)
+        if(curDialogues[tempIndex].isLeft)
         {
             leftImage.transform.localScale = new Vector3(0.85f, 0.85f, 0.85f);
             rightImage.transform.localScale = new Vector3(0.7f, 0.7f, 0.7f);
@@ -105,8 +103,6 @@ public class DialogueManager : MonoBehaviour
         tempIndex = 0;
         curDialogues = null;
         GameManager.Instance.questManager.ChatQuestCheck(questChatKey);
-
-        if (exit_event != null) exit_event.Invoke();
         //if (!string.IsNullOrEmpty(eventName))
         //{
         //    // eventName이 비어있지 않은 경우에만 이벤트 호출

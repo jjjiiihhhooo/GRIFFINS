@@ -10,7 +10,6 @@ Material:
   m_Name: red_face
   m_Shader: {fileID: 4800000, guid: 6459b2db96a08ca41b0f9b39dc7ad59e, type: 3}
   m_ValidKeywords:
-  - N_F_CLD_ON
   - N_F_EAL_ON
   - N_F_O_ON
   - N_F_RDC_ON
@@ -92,7 +91,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 1d39d43281106294a9d88fe517125193, type: 3}
+        m_Texture: {fileID: 2800000, guid: 90ca81294fb1af74badc50a3588ad02e, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MaskGloss:
@@ -178,7 +177,7 @@ Material:
     - _Cull: 2
     - _Culling: 2
     - _CustomLightDirectionFollowObjectRotation: 0
-    - _CustomLightDirectionIntensity: 0.105
+    - _CustomLightDirectionIntensity: 0
     - _Cutoff: 0.5
     - _Cutout: 0
     - _DepthThreshold: 900
@@ -221,7 +220,7 @@ Material:
     - _MinFadDistance: 0
     - _MixMainTexToOutline: 0
     - _N_F_CA: 0
-    - _N_F_CLD: 1
+    - _N_F_CLD: 0
     - _N_F_CO: 0
     - _N_F_COEDGL: 0
     - _N_F_DCS: 0
@@ -257,7 +256,7 @@ Material:
     - _Opacity: 1
     - _Oper: 0
     - _OutlineExtrudeMethod: 0
-    - _OutlineWidth: 0.05
+    - _OutlineWidth: 0
     - _OutlineWidthAffectedByViewDistance: 0
     - _OutlineZPostionInCamera: 0
     - _OverallShadowColorPower: 1
