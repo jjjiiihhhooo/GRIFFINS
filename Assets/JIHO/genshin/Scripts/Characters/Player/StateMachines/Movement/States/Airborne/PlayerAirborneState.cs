@@ -41,8 +41,9 @@ public class PlayerAirborneState : PlayerMovementState
     {
         if (Player.Instance.skillData.isHand) return;
         if (!GameManager.Instance.staminaManager.ChechStamina(20f)) return;
-
+        if (!GameManager.Instance.coolTimeManager.CoolCheck("Dash")) return;
         GameManager.Instance.staminaManager.MinusStamina(20f);
+        GameManager.Instance.coolTimeManager.GetCoolTime("Dash");
         stateMachine.ChangeState(stateMachine.AirDashingState);
     }
 
