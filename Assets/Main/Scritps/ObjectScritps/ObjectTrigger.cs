@@ -13,7 +13,6 @@ public class ObjectTrigger : MonoBehaviour
 
     public Transform target;
     public GameObject destroyObj;
-    public SpawnPoint spawnSet;
 
     public bool fade;
     public bool onlyObj;
@@ -86,27 +85,17 @@ public class ObjectTrigger : MonoBehaviour
     {
         if (fade) GameManager.Instance.uiManager.FadeInOut();
 
-        if (target != null)
+        if(target != null)
             Player.Instance.transform.position = target.position;
 
-        if (destroyObj != null)
-        {
+        if (destroyObj != null) 
+        { 
             Destroy(destroyObj);
-
-            if (!onlyObj)
+            
+            if(!onlyObj)
             {
                 Destroy(this.transform.parent.gameObject);
             }
         }
-    }
-
-    public void PlayerSpawnSet()
-    {
-        spawnSet.SetSpawn();
-    }
-
-    public void BossIsStart()
-    {
-        GameManager.Instance.enemyManager.curWaveObject.GetComponentInChildren<EnemyController>().isBossStart = true;
     }
 }

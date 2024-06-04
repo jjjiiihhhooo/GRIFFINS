@@ -91,7 +91,7 @@ public class StaminaManager : MonoBehaviour
         }
         else
         {
-            curStamina += Time.deltaTime * 30f;
+            curStamina += Time.deltaTime * 10f;
         }
     }
 
