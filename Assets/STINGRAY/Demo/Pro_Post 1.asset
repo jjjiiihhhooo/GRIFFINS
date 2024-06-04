@@ -109,10 +109,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 558a8e2b6826cf840aae193990ba9f2e, type: 3}
   m_Name: ShadowsMidtonesHighlights
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   shadows:
     m_OverrideState: 1
-    m_Value: {x: 0.86991644, y: 0.91369903, z: 1, w: -0.38873237}
+    m_Value: {x: 0.86991644, y: 0.91369903, z: 1, w: -0.23664112}
   midtones:
     m_OverrideState: 1
     m_Value: {x: 1, y: 1, z: 1, w: 0}
@@ -209,7 +209,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 899c54efeace73346a0a16faa3afe726, type: 3}
   m_Name: Vignette
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   color:
     m_OverrideState: 1
     m_Value: {r: 0, g: 0, b: 0, a: 1}
@@ -218,10 +218,10 @@ MonoBehaviour:
     m_Value: {x: 0.5, y: 0.5}
   intensity:
     m_OverrideState: 1
-    m_Value: 0.1
+    m_Value: 0.135
   smoothness:
     m_OverrideState: 1
-    m_Value: 0.5
+    m_Value: 0.529
   rounded:
     m_OverrideState: 1
     m_Value: 0
@@ -288,17 +288,17 @@ MonoBehaviour:
     m_OverrideState: 0
     m_Value: 0
   radius:
-    m_OverrideState: 0
-    m_Value: 0.56
+    m_OverrideState: 1
+    m_Value: 0.9
   maxRadiusPixels:
     m_OverrideState: 0
     m_Value: 128
   bias:
-    m_OverrideState: 0
-    m_Value: 0.05
+    m_OverrideState: 1
+    m_Value: 0.224
   intensity:
     m_OverrideState: 1
-    m_Value: 1.62
+    m_Value: 2.09
   useMultiBounce:
     m_OverrideState: 0
     m_Value: 0
@@ -384,7 +384,7 @@ MonoBehaviour:
   active: 0
   mode:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 2
 --- !u!114 &6549711806299125720
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -397,16 +397,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b2db86121404754db890f4c8dfe81b2, type: 3}
   m_Name: Bloom
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   threshold:
     m_OverrideState: 1
-    m_Value: 0.62
+    m_Value: 0.51
   intensity:
     m_OverrideState: 1
-    m_Value: 0.63
+    m_Value: 0.47
   scatter:
     m_OverrideState: 1
-    m_Value: 0.7
+    m_Value: 0.111
   clamp:
     m_OverrideState: 1
     m_Value: 65472
@@ -420,11 +420,11 @@ MonoBehaviour:
     m_OverrideState: 0
     m_Value: 0
   dirtTexture:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: {fileID: 2800000, guid: b17c561edbff85241b3044226dcbf5bb, type: 3}
     dimension: 1
   dirtIntensity:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 3
 --- !u!114 &7620968687822978861
 MonoBehaviour:

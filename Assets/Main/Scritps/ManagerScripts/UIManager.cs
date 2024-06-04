@@ -1,5 +1,6 @@
 using DG.Tweening;
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -36,7 +37,7 @@ public class UIManager : MonoBehaviour
     public Image characterMainAnim;
     public Image hitOutline;
     public Image fade;
-    
+
 
     [Header("Sprite")]
     public Sprite[] nonColorCharacters;
@@ -50,9 +51,12 @@ public class UIManager : MonoBehaviour
     public Sprite highOut;
     public Sprite lowOut;
 
+    public TextMeshProUGUI right_text;
+    public TextMeshProUGUI left_text;
+
     private Player player;
 
-    
+
 
     private float outlineAlpha;
 
@@ -80,7 +84,7 @@ public class UIManager : MonoBehaviour
     public void GamePause(bool _bool)
     {
         if (_bool) Option.SetActive(false);
-        else Option.SetActive(true);            
+        else Option.SetActive(true);
     }
 
     private void PlayerHPUpdate()
@@ -159,7 +163,7 @@ public class UIManager : MonoBehaviour
         float alpha = 0f;
         Color temp = fade.color;
 
-        while(alpha < 1)
+        while (alpha < 1)
         {
             temp.a = alpha;
             fade.color = temp;
@@ -167,7 +171,7 @@ public class UIManager : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
 
-        while(alpha > 0)
+        while (alpha > 0)
         {
             temp.a = alpha;
             fade.color = temp;

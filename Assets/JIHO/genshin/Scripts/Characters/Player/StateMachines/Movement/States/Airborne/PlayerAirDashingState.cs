@@ -17,7 +17,7 @@ public class PlayerAirDashingState : PlayerAirborneState
     public override void Enter()
     {
         stateMachine.ReusableData.MovementSpeedModifier = airborneData.AirDashData.SpeedModifier;
-
+        if (GameManager.Instance.questManager.isInput) GameManager.Instance.questManager.InputQuestCheck(KeyCode.LeftShift);
         base.Enter();
 
         EffectActive(stateMachine.Player.dashEffect, true);

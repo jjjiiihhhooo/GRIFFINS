@@ -1,5 +1,3 @@
-
-using TMPro;
 using UnityEngine;
 
 public class DestinationManager : MonoBehaviour
@@ -24,9 +22,10 @@ public class DestinationManager : MonoBehaviour
     {
         if (Point == null) return;
 
+
         targetPos = Point.transform.position;
 
-        if (Point.isCheck)
+        if (Point.isCheck || !Point.gameObject.activeSelf)
         {
             GameManager.Instance.uiManager.leftVectorImage.gameObject.SetActive(false);
             GameManager.Instance.uiManager.rightVectorImage.gameObject.SetActive(false);

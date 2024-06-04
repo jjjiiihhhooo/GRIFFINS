@@ -25,6 +25,7 @@ public class EnemyController : SerializedMonoBehaviour
 
     public bool isHit;
     public bool isBoss;
+    public bool isBossStart;
 
     public float maxHitCool;
 
@@ -47,6 +48,14 @@ public class EnemyController : SerializedMonoBehaviour
     private void Update()
     {
         if (GameManager.Instance.isCutScene) return;
+        if (isBoss)
+        {
+            transform.forward = Player.Instance.transform.position - transform.position;
+            transform.eulerAngles = new Vector3(0f, transform.eulerAngles.y, 0f);
+            if (!isBossStart)
+                return;
+        }
+
         enemy.EnemyUpdate();
         UIUpdate();
 
@@ -196,6 +205,12 @@ public class EnemyController : SerializedMonoBehaviour
     }
 
     public void BossNormalAttackAnim()
+    {
+        enemy.isAction = false;
+        attackCol.gameObject.SetActive(true);
+    }
+
+    public void NormalAttackAnim()
     {
         enemy.isAction = false;
         attackCol.gameObject.SetActive(true);

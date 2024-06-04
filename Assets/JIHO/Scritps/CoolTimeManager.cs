@@ -7,7 +7,7 @@ public class CoolTimeManager : MonoBehaviour
 {
     public class CoolData
     {
-        public CoolData(int max, int cur, int index)
+        public CoolData(float max, float cur, int index)
         {
             this.maxCoolTime = max;
             this.curCoolTime = cur;
@@ -38,6 +38,7 @@ public class CoolTimeManager : MonoBehaviour
         coolDic.Add("Red_Q", new CoolData(15, 0, 4));
         coolDic.Add("Red_E", new CoolData(8, 0, 5));
         coolDic.Add("Red_R", new CoolData(1, 0, 0));
+        coolDic.Add("Dash", new CoolData(0.6f, 0, -1));
 
     }
 

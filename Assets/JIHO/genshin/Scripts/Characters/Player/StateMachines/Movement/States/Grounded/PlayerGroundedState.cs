@@ -115,14 +115,13 @@ public class PlayerGroundedState : PlayerMovementState
 
     protected virtual void OnDashStarted(InputAction.CallbackContext context)
     {
-        if (Player.Instance.skillData.isHand) return;
         if (!GameManager.Instance.staminaManager.ChechStamina(20f)) return;
+        if (!GameManager.Instance.coolTimeManager.CoolCheck("Dash")) return;
         if (GameManager.Instance.dialogueManager.IsChat) return;
-        if (stateMachine.Player.skillData.grappling) return;
-        if (stateMachine.Player.swinging.swinging) return;
         if (stateMachine.Player.isAttack) return;
         if (stateMachine.Player.isSuperAttacking) return;
 
+        GameManager.Instance.coolTimeManager.GetCoolTime("Dash");
         GameManager.Instance.staminaManager.MinusStamina(20f);
 
         stateMachine.ChangeState(stateMachine.DashingState);

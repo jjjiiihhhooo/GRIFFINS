@@ -3,16 +3,26 @@ using UnityEngine;
 
 public class EnemyAnimationEvent : MonoBehaviour
 {
-    private EnemyController enemy;
+    private EnemyController _enemy;
 
     private void Awake()
     {
-        enemy = transform.parent.GetComponent<EnemyController>();
+        _enemy = transform.parent.GetComponent<EnemyController>();
     }
 
     public void NormalAttack()
     {
-        enemy.BossNormalAttackAnim();
+        _enemy.NormalAttackAnim();
+    }
+
+    public void BombingExit()
+    {
+        _enemy.enemy.BombingAnimExit();
+    }
+
+    public void TrackingExit()
+    {
+        _enemy.enemy.TrackingAnimExit();
     }
 
 }

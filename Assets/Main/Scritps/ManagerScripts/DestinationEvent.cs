@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -27,8 +25,10 @@ public class DestinationEvent : MonoBehaviour
         float temp;
 
 
-        float tempA = Vector3.Distance(Player.Instance.transform.position, transform.position);
+        float tempA = Vector3.Distance(Player.Instance.transform.position, transform.position) - 2f;
         text.text = tempA.ToString("F1") + "m";
+        GameManager.Instance.uiManager.right_text.text = text.text;
+        GameManager.Instance.uiManager.left_text.text = text.text;
 
         if (Vector3.Distance(transform.position, Player.Instance.transform.position) > 10)
         {
@@ -38,7 +38,7 @@ public class DestinationEvent : MonoBehaviour
         {
             temp = 1f;
         }
-       
+
         transform.localScale = new Vector3(temp, temp, temp);
 
         if (IsVisibleCamera(Camera.main, Srenderer)) isCheck = true;

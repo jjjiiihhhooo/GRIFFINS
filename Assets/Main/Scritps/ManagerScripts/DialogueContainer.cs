@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 [System.Serializable]
 public class Dialogue
@@ -17,11 +18,13 @@ public class DialogueContainer : MonoBehaviour
     public Dialogue[] dialogues;
     public string eventName;
     public string chatKey = "";
+    public UnityEvent _event;
 
     public void SetDialogue()
     {
         Debug.Log("SetDialogue");
         GameManager.Instance.dialogueManager.ChangeDialogue(dialogues, chatKey);
+        GameManager.Instance.dialogueManager.exit_event = _event;
     }
 
     public void StartEvent()

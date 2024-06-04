@@ -18,6 +18,7 @@ public class InteractableObject : MonoBehaviour
 
     public void OnInteract()
     {
+        if (!ready) return;
         Debug.Log("interact");
         actionOnInteract?.Invoke();
 
@@ -33,7 +34,14 @@ public class InteractableObject : MonoBehaviour
             actionOnInteract = null;
         }
     }
-    
+
+    public void F_TO_Quest()
+    {
+        GameManager.Instance.questManager.InputQuestCheck(KeyCode.F);
+        if (oneTime)
+            Destroy(this.gameObject);
+    }
+
 
     public bool GetReady()
     {
