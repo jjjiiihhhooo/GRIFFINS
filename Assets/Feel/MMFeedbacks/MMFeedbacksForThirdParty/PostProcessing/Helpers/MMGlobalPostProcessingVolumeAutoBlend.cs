@@ -1,8 +1,8 @@
-﻿using UnityEngine;
-using MoreMountains.Feedbacks;
+﻿using MoreMountains.Feedbacks;
+using UnityEngine;
 #if MM_POSTPROCESSING
 using UnityEngine.Rendering.PostProcessing;
-#endif 
+#endif
 
 namespace MoreMountains.FeedbacksForThirdParty
 {
@@ -10,9 +10,9 @@ namespace MoreMountains.FeedbacksForThirdParty
 	/// Use this class to have a global PP volume auto blend its weight on cue, between a start and end values
 	/// </summary>
 	[AddComponentMenu("More Mountains/Feedbacks/Shakers/PostProcessing/MMGlobalPostProcessingVolumeAutoBlend")]
-	#if MM_POSTPROCESSING
+#if MM_POSTPROCESSING
 	[RequireComponent(typeof(PostProcessVolume))]
-	#endif
+#endif
 	public class MMGlobalPostProcessingVolumeAutoBlend : MonoBehaviour
 	{
 		/// the possible timescales this blend can operate on
@@ -85,7 +85,7 @@ namespace MoreMountains.FeedbacksForThirdParty
 		protected float _destination;
 		protected float _startTime;
 		protected bool _blending = false;
-		#if MM_POSTPROCESSING
+#if MM_POSTPROCESSING
 		protected PostProcessVolume _volume;
 		
 		/// <summary>
@@ -93,10 +93,10 @@ namespace MoreMountains.FeedbacksForThirdParty
 		/// </summary>
 		protected virtual void Awake()
 		{
-			#if MM_POSTPROCESSING
+#if MM_POSTPROCESSING
 			_volume = this.gameObject.GetComponent<PostProcessVolume>();
 			_volume.weight = InitialWeight;
-			#endif
+#endif
 		}
 
 		/// <summary>
@@ -197,6 +197,6 @@ namespace MoreMountains.FeedbacksForThirdParty
 			_volume.weight = _initial;
 		}
 		
-		#endif
+#endif
 	}
 }

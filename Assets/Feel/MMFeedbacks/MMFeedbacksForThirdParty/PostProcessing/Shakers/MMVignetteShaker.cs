@@ -11,9 +11,9 @@ namespace MoreMountains.FeedbacksForThirdParty
 	/// Add this class to a Camera with a vignette post processing and it'll be able to "shake" its values by getting events
 	/// </summary>
 	[AddComponentMenu("More Mountains/Feedbacks/Shakers/PostProcessing/MMVignetteShaker")]
-	#if MM_POSTPROCESSING
+#if MM_POSTPROCESSING
 	[RequireComponent(typeof(PostProcessVolume))]
-	#endif
+#endif
 	public class MMVignetteShaker : MMShaker
 	{
 		[MMInspectorGroup("Vignette Intensity", true, 53)]
@@ -52,7 +52,7 @@ namespace MoreMountains.FeedbacksForThirdParty
 		public Color TargetColor = Color.red;
 
 
-		#if MM_POSTPROCESSING
+#if MM_POSTPROCESSING
 		protected PostProcessVolume _volume;
 		protected Vignette _vignette;
 		protected float _initialIntensity;
@@ -217,7 +217,7 @@ namespace MoreMountains.FeedbacksForThirdParty
 			base.StopListening();
 			MMVignetteShakeEvent.Unregister(OnVignetteShakeEvent);
 		}
-		#endif
+#endif
 	}
 
 	/// <summary>
@@ -231,16 +231,16 @@ namespace MoreMountains.FeedbacksForThirdParty
 		static public void Unregister(Delegate callback) { OnEvent -= callback; }
 
 		public delegate void Delegate(AnimationCurve intensity, float duration, float remapMin, float remapMax, bool relativeIntensity = false,
-			float feedbacksIntensity = 1.0f, MMChannelData channelData = null, bool resetShakerValuesAfterShake = true, bool resetTargetValuesAfterShake = true, 
-			bool forwardDirection = true, TimescaleModes timescaleMode = TimescaleModes.Scaled, bool stop = false, bool restore = false, 
+			float feedbacksIntensity = 1.0f, MMChannelData channelData = null, bool resetShakerValuesAfterShake = true, bool resetTargetValuesAfterShake = true,
+			bool forwardDirection = true, TimescaleModes timescaleMode = TimescaleModes.Scaled, bool stop = false, bool restore = false,
 			bool interpolateColor = false, AnimationCurve colorCurve = null, float remapColorZero = 0f, float remapColorOne = 1f, Color targetColor = default(Color));
-		
+
 		static public void Trigger(AnimationCurve intensity, float duration, float remapMin, float remapMax, bool relativeIntensity = false,
-			float feedbacksIntensity = 1.0f, MMChannelData channelData = null, bool resetShakerValuesAfterShake = true, bool resetTargetValuesAfterShake = true, 
-			bool forwardDirection = true, TimescaleModes timescaleMode = TimescaleModes.Scaled, bool stop = false, bool restore = false, 
+			float feedbacksIntensity = 1.0f, MMChannelData channelData = null, bool resetShakerValuesAfterShake = true, bool resetTargetValuesAfterShake = true,
+			bool forwardDirection = true, TimescaleModes timescaleMode = TimescaleModes.Scaled, bool stop = false, bool restore = false,
 			bool interpolateColor = false, AnimationCurve colorCurve = null, float remapColorZero = 0f, float remapColorOne = 1f, Color targetColor = default(Color))
 		{
-			OnEvent?.Invoke(intensity, duration, remapMin, remapMax, relativeIntensity, feedbacksIntensity, channelData, resetShakerValuesAfterShake, 
+			OnEvent?.Invoke(intensity, duration, remapMin, remapMax, relativeIntensity, feedbacksIntensity, channelData, resetShakerValuesAfterShake,
 				resetTargetValuesAfterShake, forwardDirection, timescaleMode, stop, restore,
 				interpolateColor, colorCurve, remapColorZero, remapColorOne, targetColor);
 		}

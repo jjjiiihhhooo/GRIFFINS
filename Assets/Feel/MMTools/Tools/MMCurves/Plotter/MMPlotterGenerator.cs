@@ -1,108 +1,103 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
-using System.Collections;
-using System;
-using System.Reflection;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Reflection;
+using UnityEngine;
 
 namespace MoreMountains.Tools
 {
-	public class MMPlotterGenerator : MonoBehaviour
-	{
-		public MMPlotter PlotterPrefab;
-        
-		public Vector2 Spacing;
-		public float VerticalOddSpacing;
-		public int RowLength;
+    public class MMPlotterGenerator : MonoBehaviour
+    {
+        public MMPlotter PlotterPrefab;
 
-		[Header("Materials")]
+        public Vector2 Spacing;
+        public float VerticalOddSpacing;
+        public int RowLength;
 
-		public Material LinearMaterial;
-		public Material QuadraticMaterial;
-		public Material CubicMaterial;
-		public Material QuarticMaterial;
-		public Material QuinticMaterial;
-		public Material SinusoidalMaterial;
-		public Material BounceMaterial;
-		public Material OverheadMaterial;
-		public Material ExponentialMaterial;
-		public Material ElasticMaterial;
-		public Material CircularMaterial;
+        [Header("Materials")]
 
-		protected Vector2 _position;
+        public Material LinearMaterial;
+        public Material QuadraticMaterial;
+        public Material CubicMaterial;
+        public Material QuarticMaterial;
+        public Material QuinticMaterial;
+        public Material SinusoidalMaterial;
+        public Material BounceMaterial;
+        public Material OverheadMaterial;
+        public Material ExponentialMaterial;
+        public Material ElasticMaterial;
+        public Material CircularMaterial;
 
-		[MMInspectorButton("GeneratePlotters")]
-		public bool GeneratePlottersButton;
+        protected Vector2 _position;
 
-		protected virtual void Awake()
-		{
-			Time.timeScale = 0f;
+        [MMInspectorButton("GeneratePlotters")]
+        public bool GeneratePlottersButton;
 
-			GeneratePlotters();
-		}
+        protected virtual void Awake()
+        {
+            Time.timeScale = 0f;
 
-		protected virtual void GeneratePlotters()
-		{
-			this.transform.MMDestroyAllChildren();
+            GeneratePlotters();
+        }
 
-			BindingFlags flags = BindingFlags.Public | BindingFlags.Static;
-			MethodInfo[] methods = typeof(MMTweenDefinitions).GetMethods(flags);
+        protected virtual void GeneratePlotters()
+        {
+            this.transform.MMDestroyAllChildren();
 
-			int row = 0;
-			int column = 0;
-			float yCoordinate = 0;
+            BindingFlags flags = BindingFlags.Public | BindingFlags.Static;
+            MethodInfo[] methods = typeof(MMTweenDefinitions).GetMethods(flags);
 
-			for (int i=0; i < methods.Length; i++)
-			{
-				_position.x = column * Spacing.x;
-                
+            int row = 0;
+            int column = 0;
+            float yCoordinate = 0;
 
-				_position.y = yCoordinate;
-                
-				MMPlotter plotter = Instantiate(PlotterPrefab);
-				plotter.transform.SetParent(this.transform);
-				plotter.transform.localPosition = _position;
-				plotter.TweenMethodIndex = i;
-				string tweenName = plotter.TweenName(plotter.TweenMethodIndex);
-				plotter.gameObject.name = tweenName;
+            for (int i = 0; i < methods.Length; i++)
+            {
+                _position.x = column * Spacing.x;
 
-				Material newMaterial = LinearMaterial;
-				if (tweenName.Contains("Linear")) { newMaterial = LinearMaterial; }
-				if (tweenName.Contains("Quadratic")) { newMaterial = QuadraticMaterial; }
-				if (tweenName.Contains("Cubic")) { newMaterial = CubicMaterial; }
-				if (tweenName.Contains("Quartic")) { newMaterial = QuarticMaterial; }
-				if (tweenName.Contains("Quintic")) { newMaterial = QuinticMaterial; }
-				if (tweenName.Contains("Sinusoidal")) { newMaterial = SinusoidalMaterial; }
-				if (tweenName.Contains("Bounce")) { newMaterial = BounceMaterial; }
-				if (tweenName.Contains("Overhead")) { newMaterial = OverheadMaterial; }
-				if (tweenName.Contains("Exponential")) { newMaterial = ExponentialMaterial; }
-				if (tweenName.Contains("Elastic")) { newMaterial = ElasticMaterial; }
-				if (tweenName.Contains("Circular")) { newMaterial = CircularMaterial; }
 
-				plotter.SetMaterial(newMaterial);
-				plotter.GetMethodsList();
-				plotter.DrawGraph();
+                _position.y = yCoordinate;
 
-				if (column >= RowLength - 1)
-				{
-					column = 0;                    
-					row++;
-					if (row % 2 == 0)
-					{
-						yCoordinate += Spacing.y + VerticalOddSpacing;
-					}
-					else
-					{
-						yCoordinate += Spacing.y;
-					}
-				}
-				else
-				{
-					column++;
-				}
-			}
-		}
+                MMPlotter plotter = Instantiate(PlotterPrefab);
+                plotter.transform.SetParent(this.transform);
+                plotter.transform.localPosition = _position;
+                plotter.TweenMethodIndex = i;
+                string tweenName = plotter.TweenName(plotter.TweenMethodIndex);
+                plotter.gameObject.name = tweenName;
 
-	}
+                Material newMaterial = LinearMaterial;
+                if (tweenName.Contains("Linear")) { newMaterial = LinearMaterial; }
+                if (tweenName.Contains("Quadratic")) { newMaterial = QuadraticMaterial; }
+                if (tweenName.Contains("Cubic")) { newMaterial = CubicMaterial; }
+                if (tweenName.Contains("Quartic")) { newMaterial = QuarticMaterial; }
+                if (tweenName.Contains("Quintic")) { newMaterial = QuinticMaterial; }
+                if (tweenName.Contains("Sinusoidal")) { newMaterial = SinusoidalMaterial; }
+                if (tweenName.Contains("Bounce")) { newMaterial = BounceMaterial; }
+                if (tweenName.Contains("Overhead")) { newMaterial = OverheadMaterial; }
+                if (tweenName.Contains("Exponential")) { newMaterial = ExponentialMaterial; }
+                if (tweenName.Contains("Elastic")) { newMaterial = ElasticMaterial; }
+                if (tweenName.Contains("Circular")) { newMaterial = CircularMaterial; }
+
+                plotter.SetMaterial(newMaterial);
+                plotter.GetMethodsList();
+                plotter.DrawGraph();
+
+                if (column >= RowLength - 1)
+                {
+                    column = 0;
+                    row++;
+                    if (row % 2 == 0)
+                    {
+                        yCoordinate += Spacing.y + VerticalOddSpacing;
+                    }
+                    else
+                    {
+                        yCoordinate += Spacing.y;
+                    }
+                }
+                else
+                {
+                    column++;
+                }
+            }
+        }
+
+    }
 }

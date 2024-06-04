@@ -1,7 +1,6 @@
 
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Rendering;
 
 public class InputData : MonoBehaviour
 {
@@ -129,7 +128,7 @@ public class InputData : MonoBehaviour
 
         if (Input.GetKeyDown(WhiteKey))
         {
-            
+
             Debug.Log("whiteChange");
 
             player.ChangeCharacter(0);
@@ -137,7 +136,7 @@ public class InputData : MonoBehaviour
         }
         else if (Input.GetKeyDown(GreenKey))
         {
-            
+
             Debug.Log("greenChange");
 
             player.ChangeCharacter(1);

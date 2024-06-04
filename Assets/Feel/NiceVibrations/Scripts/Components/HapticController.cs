@@ -1,8 +1,8 @@
 // Copyright (c) Meta Platforms, Inc. and affiliates. 
 
-using UnityEngine;
 using System;
 using System.Timers;
+using UnityEngine;
 
 #if (UNITY_ANDROID && !UNITY_EDITOR)
 using System.Text;
@@ -205,10 +205,10 @@ namespace Lofelt.NiceVibrations
         // GamepadRumbler
         private static void ApplyLevelsToGamepadRumbler()
         {
-            #if ((!UNITY_ANDROID && !UNITY_IOS) || UNITY_EDITOR) && NICE_VIBRATIONS_INPUTSYSTEM_INSTALLED && ENABLE_INPUT_SYSTEM && !NICE_VIBRATIONS_DISABLE_GAMEPAD_SUPPORT
-                            GamepadRumbler.lowFrequencyMotorSpeedMultiplication = _outputLevel * _clipLevel;
-                            GamepadRumbler.highFrequencyMotorSpeedMultiplication = _outputLevel * _clipLevel;
-            #endif
+#if ((!UNITY_ANDROID && !UNITY_IOS) || UNITY_EDITOR) && NICE_VIBRATIONS_INPUTSYSTEM_INSTALLED && ENABLE_INPUT_SYSTEM && !NICE_VIBRATIONS_DISABLE_GAMEPAD_SUPPORT
+            GamepadRumbler.lowFrequencyMotorSpeedMultiplication = _outputLevel * _clipLevel;
+            GamepadRumbler.highFrequencyMotorSpeedMultiplication = _outputLevel * _clipLevel;
+#endif
         }
 
         /// <summary>

@@ -236,7 +236,7 @@ public class PlayerCharacter
         }
     }
 
-    
+
     public virtual void Sound(string name)
     {
         if (name == "jump")
@@ -252,7 +252,7 @@ public class PlayerCharacter
 
     public virtual void ExitSuperAttack()
     {
-       
+
     }
 
 
@@ -303,7 +303,7 @@ public class PlayerCharacter
 
     public void RotationZero()
     {
-        if(player.isSuperAttacking)
+        if (player.isSuperAttacking)
         {
             player.transform.position = player.orginPos;
             player.Rigidbody.velocity = Vector3.zero;
@@ -429,7 +429,7 @@ public class WhiteCharacter : PlayerCharacter
     {
         if (player.Animator.GetBool("isDashing")) return;
         if (!player.isGround) return;
-        if(GameManager.Instance.questManager.isInput)
+        if (GameManager.Instance.questManager.isInput)
             GameManager.Instance.questManager.InputQuestCheck(KeyCode.Mouse0);
         NormalAttack();
     }
@@ -620,7 +620,7 @@ public class WhiteCharacter : PlayerCharacter
 
         //Vector3 pos = player.transform.position + player.transform.forward * 10f;
         //OnlySingleton.Instance.camShake.ShakeCamera(7f, 0.1f);
-        GameObject temp = GameObject.Instantiate(explosionEffect, explosionEndTransform.position , Quaternion.identity);
+        GameObject temp = GameObject.Instantiate(explosionEffect, explosionEndTransform.position, Quaternion.identity);
         GameManager.Instance.coolTimeManager.GetCoolTime("CharacterChange");
         temp.SetActive(true);
     }
@@ -1050,7 +1050,7 @@ public class GreenCharacter : PlayerCharacter
 
     public override void FollowEnemy()
     {
-        
+
         if (!followEnemy) return;
 
         if (target == null) { followEnemy = false; return; };
@@ -1165,10 +1165,10 @@ public class GreenCharacter : PlayerCharacter
         curKnockback = knockbacks[2];
         curKnockbackDir = knockbackDirs[2];
         player.Rigidbody.velocity = Vector3.zero;
-        
+
         player.transform.forward = target.transform.position - player.transform.position;
         player.transform.eulerAngles = new Vector3(0f, player.transform.eulerAngles.y, 0f);
-        
+
         player.currentCharacter.animator.Play("Green_SuperAttack", 3, 0f);
         GameManager.Instance.uiManager.ChangeAttack(1);
         followEnemy = false;
@@ -1340,7 +1340,7 @@ public class RedCharacter : PlayerCharacter
         NormalAttack();
     }
 
-   
+
 
     public override void Q_Action()
     {
@@ -1570,7 +1570,7 @@ public class RedCharacter : PlayerCharacter
             {
                 if (player.isSuperAttack && target != null) SuperAttack();
                 else
-                    AttackMotion(); 
+                    AttackMotion();
             }
         }
         else
@@ -1592,10 +1592,10 @@ public class RedCharacter : PlayerCharacter
         curKnockback = knockbacks[2];
         curKnockbackDir = knockbackDirs[2];
         player.Rigidbody.velocity = Vector3.zero;
-        
+
         player.transform.forward = target.transform.position - player.transform.position;
         player.transform.eulerAngles = new Vector3(0f, player.transform.eulerAngles.y, 0f);
-        
+
 
         player.currentCharacter.animator.Play("Red_SuperAttack", 3, 0f);
         GameManager.Instance.uiManager.ChangeAttack(2);

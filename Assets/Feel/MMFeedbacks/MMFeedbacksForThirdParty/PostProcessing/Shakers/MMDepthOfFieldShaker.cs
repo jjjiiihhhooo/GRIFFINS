@@ -11,9 +11,9 @@ namespace MoreMountains.FeedbacksForThirdParty
 	/// Add this class to a Camera with a depth of field post processing and it'll be able to "shake" its values by getting events
 	/// </summary>
 	[AddComponentMenu("More Mountains/Feedbacks/Shakers/PostProcessing/MMDepthOfFieldShaker")]
-	#if MM_POSTPROCESSING
+#if MM_POSTPROCESSING
 	[RequireComponent(typeof(PostProcessVolume))]
-	#endif
+#endif
 	public class MMDepthOfFieldShaker : MMShaker
 	{
 		/// whether or not to add to the initial value
@@ -55,8 +55,8 @@ namespace MoreMountains.FeedbacksForThirdParty
 		[Tooltip("the value to remap the curve's 1 to")]
 		[Range(0f, 300f)]
 		public float RemapFocalLengthOne = 0f;
-        
-		#if MM_POSTPROCESSING
+
+#if MM_POSTPROCESSING
 		protected PostProcessVolume _volume;
 		protected DepthOfField _depthOfField;
 		protected float _initialFocusDistance;
@@ -245,7 +245,7 @@ namespace MoreMountains.FeedbacksForThirdParty
 			base.StopListening();
 			MMDepthOfFieldShakeEvent.Unregister(OnDepthOfFieldShakeEvent);
 		}
-		#endif
+#endif
 	}
 
 	/// <summary>
@@ -262,18 +262,18 @@ namespace MoreMountains.FeedbacksForThirdParty
 			AnimationCurve aperture, float remapApertureMin, float remapApertureMax,
 			AnimationCurve focalLength, float remapFocalLengthMin, float remapFocalLengthMax,
 			bool relativeValues = false,
-			float feedbacksIntensity = 1.0f, MMChannelData channelData = null, bool resetShakerValuesAfterShake = true, bool resetTargetValuesAfterShake = true, 
+			float feedbacksIntensity = 1.0f, MMChannelData channelData = null, bool resetShakerValuesAfterShake = true, bool resetTargetValuesAfterShake = true,
 			bool forwardDirection = true, TimescaleModes timescaleMode = TimescaleModes.Scaled, bool stop = false, bool restore = false);
 
 		static public void Trigger(AnimationCurve focusDistance, float duration, float remapFocusDistanceMin, float remapFocusDistanceMax,
-			AnimationCurve aperture, float remapApertureMin, float remapApertureMax, 
+			AnimationCurve aperture, float remapApertureMin, float remapApertureMax,
 			AnimationCurve focalLength, float remapFocalLengthMin, float remapFocalLengthMax,
 			bool relativeValues = false,
-			float feedbacksIntensity = 1.0f, MMChannelData channelData = null, bool resetShakerValuesAfterShake = true, bool resetTargetValuesAfterShake = true, 
+			float feedbacksIntensity = 1.0f, MMChannelData channelData = null, bool resetShakerValuesAfterShake = true, bool resetTargetValuesAfterShake = true,
 			bool forwardDirection = true, TimescaleModes timescaleMode = TimescaleModes.Scaled, bool stop = false, bool restore = false)
 		{
-			OnEvent?.Invoke(focusDistance, duration, remapFocusDistanceMin, remapFocusDistanceMax, 
-				aperture, remapApertureMin, remapApertureMax, 
+			OnEvent?.Invoke(focusDistance, duration, remapFocusDistanceMin, remapFocusDistanceMax,
+				aperture, remapApertureMin, remapApertureMax,
 				focalLength, remapFocalLengthMin, remapFocalLengthMax, relativeValues,
 				feedbacksIntensity, channelData, resetShakerValuesAfterShake, resetTargetValuesAfterShake, forwardDirection, timescaleMode, stop, restore);
 		}

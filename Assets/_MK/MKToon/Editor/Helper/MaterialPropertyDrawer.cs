@@ -7,7 +7,6 @@
 //////////////////////////////////////////////////////
 
 #if UNITY_EDITOR
-using UnityEditor;
 using UnityEngine;
 
 namespace MK.Toon.Editor

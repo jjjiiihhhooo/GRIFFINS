@@ -16,7 +16,7 @@ namespace DG.Tweening
     /// </summary>
     public static class ShortcutExtensionsTk2d
     {
-        #region Sprite
+#region Sprite
 
         /// <summary>Tweens a 2D Toolkit Sprite's dimensions to the given value.
         /// Also stores the Sprite as the tween's target so it can be used for filtered operations</summary>
@@ -102,9 +102,9 @@ namespace DG.Tweening
             return s;
         }
 
-        #endregion
+#endregion
 
-        #region tk2dSlicedSprite
+#region tk2dSlicedSprite
 
         /// <summary>Tweens a 2D Toolkit SlicedSprite's dimensions to the given value.
         /// Also stores the SlicedSprite as the tween's target so it can be used for filtered operations</summary>
@@ -136,9 +136,9 @@ namespace DG.Tweening
             return t;
         }
 
-        #endregion
+#endregion
 
-        #region TextMesh
+#region TextMesh
 
         /// <summary>Tweens a 2D Toolkit TextMesh's dimensions to the given value.
         /// Also stores the TextMesh as the tween's target so it can be used for filtered operations</summary>
@@ -241,7 +241,7 @@ namespace DG.Tweening
             return t;
         }
 
-        #endregion
+#endregion
     }
 }
 #endif

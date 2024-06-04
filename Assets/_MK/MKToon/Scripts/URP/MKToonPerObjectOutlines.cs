@@ -1,6 +1,5 @@
 #if MK_URP
 using UnityEngine;
-using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 
 namespace MK.Toon.URP
