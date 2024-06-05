@@ -63,6 +63,8 @@ namespace MK.Toon.Editor.InstallWizard
         private Object _examplesPackageURP = null;
         [SerializeField]
         private Object _examplesPackageURP_2023_2_Or_Newer = null;
+        [SerializeField]
+        private Object _examplesPackageBuiltin_2023_2_Or_Newer = null;
 
         [SerializeField][Space]
         private ExampleContainer[] _examples = null;
@@ -174,8 +176,9 @@ namespace MK.Toon.Editor.InstallWizard
             new GlobalShaderFeature(GlobalShaderFeatureMode.Off, new List<string>() { "MK_POINT_FILTERING_OFF", "MK_POINT_FILTERING" }, new List<string>() {}, "Force Point Filtering", "Forces point filtering on textures."),
             new GlobalShaderFeature(GlobalShaderFeatureMode.Off, new List<string>() { "MK_DISSOLVE_PROJECTION_SCREEN_SPACE_OFF", "MK_DISSOLVE_PROJECTION_SCREEN_SPACE" }, new List<string>() {}, "Dissolve Projection Screen Space", "Forces dissolve projection into screen space."),
             new GlobalShaderFeature(GlobalShaderFeatureMode.On, new List<string>() { "MK_LOCAL_ANTIALIASING_OFF", "MK_LOCAL_ANTIALIASING" }, new List<string>() {}, "Enable Local Antialiasing", "Enables local antialiasing except for mobile devices."),
-            new GlobalShaderFeature(GlobalShaderFeatureMode.Off, new List<string>() { "MK_STYLIZE_SYSTEM_SHADOWS_OFF", "MK_STYLIZE_SYSTEM_SHADOWS" }, new List<string>() {}, "Stylize System Shadows", "Stylizes the system shadows like the lighting. Be careful with the thresholds!"),
+            new GlobalShaderFeature(GlobalShaderFeatureMode.Off, new List<string>() { "MK_STYLIZE_SYSTEM_SHADOWS_OFF", "MK_STYLIZE_SYSTEM_SHADOWS" }, new List<string>() { "MK_NULL", "MK_TOON_STYLIZE_SYSTEM_SHADOWS" }, "Stylize System Shadows", "Stylizes the system shadows like the lighting. Be careful with the thresholds!"),
             new GlobalShaderFeature(GlobalShaderFeatureMode.Off, new List<string>() { "MK_LEGACY_NOISE_OFF", "MK_LEGACY_NOISE" }, new List<string>() {}, "Legacy Noise", "Enables the legacy noise calculation for animation and outline noise."),
+            new GlobalShaderFeature(GlobalShaderFeatureMode.Off, new List<string>() { "MK_REGULAR_SCREEN_SPACE_OFF", "MK_REGULAR_SCREEN_SPACE" }, new List<string>() {}, "Regular Screen Space UV", "Enables the regular screen space uv for screen spaced effects instead MK Toons customized screen space uv."),
             //Conditional features
             new GlobalShaderFeature(GlobalShaderFeatureMode.Off, new List<string>() { "MK_LEGACY_SCREEN_SCALING_OFF", "MK_LEGACY_SCREEN_SCALING" }, new List<string>() {}, "Legacy Screen Scaling", "Enables legacy screen spaced scaling for artistic textures and outlines in clip space."),
             new GlobalShaderFeature(GlobalShaderFeatureMode.Off, new List<string>() { "MK_MULTI_PASS_STEREO_SCALING_OFF", "MK_MULTI_PASS_STEREO_SCALING" }, new List<string>() {}, "Multi Pass Scaling", "Enables correct scaling for artistic textures and outlines in clip space. \n\n This should only be enabled if your XR Render Mode is set to \"Multi Pass\". \n\n This is required because there is no workaround to detect the \"Multi Pass\" rendering mode, when using XR."),
@@ -259,7 +262,7 @@ namespace MK.Toon.Editor.InstallWizard
 
         private static void LogAssetNotFoundError()
         {
-            Debug.LogError("Could not find Install Wizard Configuration Asset, please try to import the package again.");
+            Debug.LogError("Could not find Install Wizard Configuration Asset, please try to import the package again, if this issue persists.");
         }
 
         private static Configuration _instance = null;
@@ -427,7 +430,11 @@ namespace MK.Toon.Editor.InstallWizard
                 switch(renderPipeline)
                 {
                     case RenderPipeline.Built_in:
-                        AssetDatabase.ImportPackage(AssetDatabase.GetAssetPath(_instance._examplesPackageBuiltin), false);
+                        #if UNITY_2023_2_OR_NEWER
+                            AssetDatabase.ImportPackage(AssetDatabase.GetAssetPath(_instance._examplesPackageBuiltin_2023_2_Or_Newer), false);
+                        #else
+                            AssetDatabase.ImportPackage(AssetDatabase.GetAssetPath(_instance._examplesPackageBuiltin), false);
+                        #endif
                     break;
                     case RenderPipeline.Universal:
                         #if UNITY_2023_2_OR_NEWER

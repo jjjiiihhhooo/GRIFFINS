@@ -58,6 +58,11 @@ public class QuestManager : SerializedMonoBehaviour
         if (curQuest.clear_event != null) curQuest.clear_event.Invoke();
         GameManager.Instance.guideManager.SetMessage("퀘스트 클리어");
         if (isInput) isInput = false;
+
+        Player.Instance.curHp += 100;
+
+        if (Player.Instance.curHp > Player.Instance.maxHp) Player.Instance.curHp = Player.Instance.maxHp;
+
         QuestDestoryEvent();
     }
 

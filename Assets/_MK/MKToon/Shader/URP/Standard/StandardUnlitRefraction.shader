@@ -66,6 +66,7 @@ Shader "MK/Toon/URP/Standard/Unlit + Refraction"
 		[Enum(MK.Toon.StencilOperation)] _StencilPass ("", Int) = 0
 		[Enum(MK.Toon.StencilOperation)] _StencilFail ("", Int) = 0
 		[Enum(MK.Toon.StencilOperation)] _StencilZFail ("", Int) = 0
+		[HideInInspector] _AddPrecomputedVelocity("_AddPrecomputedVelocity", Float) = 0.0
 
 		/////////////////
 		// Refraction  //
@@ -89,6 +90,7 @@ Shader "MK/Toon/URP/Standard/Unlit + Refraction"
 		/////////////////
 		// System	   //
 		/////////////////
+		[HideInInspector] [Toggle] _AlembicMotionVectors("_AlembicMotionVectors", Float) = 0.0
 		[HideInInspector] _Cutoff ("", Range(0, 1)) = 0.5
 		[HideInInspector] _MainTex ("", 2D) = "white" {}
 		[HideInInspector] _Color ("", Color) = (1,1,1,1)
@@ -144,6 +146,10 @@ Shader "MK/Toon/URP/Standard/Unlit + Refraction"
 			#pragma shader_feature_local __ _MK_INDEX_OF_REFRACTION
 			#if UNITY_VERSION >= 202120
 				#pragma multi_compile_fragment _ _DBUFFER_MRT1 _DBUFFER_MRT2 _DBUFFER_MRT3
+			#endif
+
+			#if UNITY_VERSION >= 202320
+				#include_with_pragmas "Packages/com.unity.render-pipelines.core/ShaderLibrary/FoveatedRenderingKeywords.hlsl"
 			#endif
 
 			#if UNITY_VERSION >= 202220
@@ -214,6 +220,10 @@ Shader "MK/Toon/URP/Standard/Unlit + Refraction"
 			#pragma shader_feature_local __ _MK_INDEX_OF_REFRACTION
 			#if UNITY_VERSION >= 202120
 				#pragma multi_compile_fragment _ _DBUFFER_MRT1 _DBUFFER_MRT2 _DBUFFER_MRT3
+			#endif
+
+			#if UNITY_VERSION >= 202320
+				#include_with_pragmas "Packages/com.unity.render-pipelines.core/ShaderLibrary/FoveatedRenderingKeywords.hlsl"
 			#endif
 
 			#if UNITY_VERSION >= 202220
@@ -513,6 +523,10 @@ Shader "MK/Toon/URP/Standard/Unlit + Refraction"
 				#pragma multi_compile_fragment _ _DBUFFER_MRT1 _DBUFFER_MRT2 _DBUFFER_MRT3
 			#endif
 
+			#if UNITY_VERSION >= 202320
+				#include_with_pragmas "Packages/com.unity.render-pipelines.core/ShaderLibrary/FoveatedRenderingKeywords.hlsl"
+			#endif
+
 			#if UNITY_VERSION >= 202220
 				#if UNITY_VERSION >= 202310
 					#include_with_pragmas "Packages/com.unity.render-pipelines.universal/ShaderLibrary/RenderingLayers.hlsl"
@@ -581,6 +595,10 @@ Shader "MK/Toon/URP/Standard/Unlit + Refraction"
 			#pragma shader_feature_local __ _MK_INDEX_OF_REFRACTION
 			#if UNITY_VERSION >= 202120
 				#pragma multi_compile_fragment _ _DBUFFER_MRT1 _DBUFFER_MRT2 _DBUFFER_MRT3
+			#endif
+
+			#if UNITY_VERSION >= 202320
+				#include_with_pragmas "Packages/com.unity.render-pipelines.core/ShaderLibrary/FoveatedRenderingKeywords.hlsl"
 			#endif
 
 			#if UNITY_VERSION >= 202220
@@ -875,6 +893,10 @@ Shader "MK/Toon/URP/Standard/Unlit + Refraction"
 			#pragma shader_feature_local __ _MK_REFRACTION_DISTORTION_MAP
 			#pragma shader_feature_local __ _MK_INDEX_OF_REFRACTION
 
+			#if UNITY_VERSION >= 202320
+				#include_with_pragmas "Packages/com.unity.render-pipelines.core/ShaderLibrary/FoveatedRenderingKeywords.hlsl"
+			#endif
+
 			#if UNITY_VERSION >= 202220
 				#pragma multi_compile_fragment _ LOD_FADE_CROSSFADE
 			#endif
@@ -936,6 +958,10 @@ Shader "MK/Toon/URP/Standard/Unlit + Refraction"
 			#pragma shader_feature_local __ _MK_REFRACTION_DISTORTION_MAP
 			#pragma shader_feature_local __ _MK_INDEX_OF_REFRACTION
 
+			#if UNITY_VERSION >= 202320
+				#include_with_pragmas "Packages/com.unity.render-pipelines.core/ShaderLibrary/FoveatedRenderingKeywords.hlsl"
+			#endif
+			
 			#if UNITY_VERSION >= 202220
 				#pragma multi_compile_fragment _ LOD_FADE_CROSSFADE
 			#endif

@@ -96,6 +96,7 @@ Shader "MK/Toon/URP/Particles/Simple + Refraction"
 		_HatchingDarkMap ("", 2D) = "Black" {}
 		_SketchMapScale ("", Float) = 1
 		_SketchMap ("", 2D) = "black" {}
+		_ArtisticShadowFilter ("", Range(0.0, 0.5)) = 0.0
 
 		/////////////////
 		// Advanced    //
@@ -252,6 +253,9 @@ Shader "MK/Toon/URP/Particles/Simple + Refraction"
 			#pragma multi_compile __ _ADDITIONAL_LIGHTS_VERTEX _ADDITIONAL_LIGHTS
 			#pragma multi_compile __ DIRLIGHTMAP_COMBINED
 			#pragma multi_compile __ LIGHTMAP_ON
+			#if UNITY_VERSION >= 202330
+			#pragma multi_compile _ USE_LEGACY_LIGHTMAPS
+			#endif
 			#if UNITY_VERSION >= 202310
 				#pragma multi_compile _ EVALUATE_SH_MIXED EVALUATE_SH_VERTEX
 			#endif
@@ -387,6 +391,9 @@ Shader "MK/Toon/URP/Particles/Simple + Refraction"
 			#pragma multi_compile __ _ADDITIONAL_LIGHTS_VERTEX _ADDITIONAL_LIGHTS
 			#pragma multi_compile __ DIRLIGHTMAP_COMBINED
 			#pragma multi_compile __ LIGHTMAP_ON
+			#if UNITY_VERSION >= 202330
+			#pragma multi_compile _ USE_LEGACY_LIGHTMAPS
+			#endif
 			#if UNITY_VERSION >= 202310
 				#pragma multi_compile _ EVALUATE_SH_MIXED EVALUATE_SH_VERTEX
 			#endif
@@ -670,6 +677,9 @@ Shader "MK/Toon/URP/Particles/Simple + Refraction"
 			#pragma multi_compile __ _ADDITIONAL_LIGHTS_VERTEX _ADDITIONAL_LIGHTS
 			#pragma multi_compile __ DIRLIGHTMAP_COMBINED
 			#pragma multi_compile __ LIGHTMAP_ON
+			#if UNITY_VERSION >= 202330
+			#pragma multi_compile _ USE_LEGACY_LIGHTMAPS
+			#endif
 			#if UNITY_VERSION >= 202310
 				#pragma multi_compile _ EVALUATE_SH_MIXED EVALUATE_SH_VERTEX
 			#endif
@@ -801,6 +811,9 @@ Shader "MK/Toon/URP/Particles/Simple + Refraction"
 			#pragma multi_compile __ _ADDITIONAL_LIGHTS_VERTEX _ADDITIONAL_LIGHTS
 			#pragma multi_compile __ DIRLIGHTMAP_COMBINED
 			#pragma multi_compile __ LIGHTMAP_ON
+			#if UNITY_VERSION >= 202330
+			#pragma multi_compile _ USE_LEGACY_LIGHTMAPS
+			#endif
 			#if UNITY_VERSION >= 202310
 				#pragma multi_compile _ EVALUATE_SH_MIXED EVALUATE_SH_VERTEX
 			#endif
@@ -1076,6 +1089,9 @@ Shader "MK/Toon/URP/Particles/Simple + Refraction"
 			#pragma multi_compile __ _ADDITIONAL_LIGHTS_VERTEX _ADDITIONAL_LIGHTS
 			#pragma multi_compile __ DIRLIGHTMAP_COMBINED
 			#pragma multi_compile __ LIGHTMAP_ON
+			#if UNITY_VERSION >= 202330
+			#pragma multi_compile _ USE_LEGACY_LIGHTMAPS
+			#endif
 			#if UNITY_VERSION >= 202310
 				#pragma multi_compile _ EVALUATE_SH_MIXED EVALUATE_SH_VERTEX
 			#endif
@@ -1194,6 +1210,9 @@ Shader "MK/Toon/URP/Particles/Simple + Refraction"
 			#pragma multi_compile __ _ADDITIONAL_LIGHTS_VERTEX _ADDITIONAL_LIGHTS
 			#pragma multi_compile __ DIRLIGHTMAP_COMBINED
 			#pragma multi_compile __ LIGHTMAP_ON
+			#if UNITY_VERSION >= 202330
+			#pragma multi_compile _ USE_LEGACY_LIGHTMAPS
+			#endif
 			#if UNITY_VERSION >= 202310
 				#pragma multi_compile _ EVALUATE_SH_MIXED EVALUATE_SH_VERTEX
 			#endif

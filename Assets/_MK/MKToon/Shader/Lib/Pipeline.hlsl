@@ -537,21 +537,32 @@
 
 	inline float2 ComputeNormalizedScreenUV(float4 ndc, float4 nullNdc, float scale)
 	{
-		//Orthographic camera is hard to handle => no ability to get "size"
-		//therefore ortho view differs from perspective view
-		
-		//NDC offset
-		ndc.xy -= nullNdc.xy;
+		#ifndef MK_REGULAR_SCREEN_SPACE
+			//Orthographic camera is hard to handle => no ability to get "size"
+			//therefore ortho view differs from perspective view
+			
+			//NDC offset
+			ndc.xy -= nullNdc.xy;
 
-		//Scale based on rendertarget size
-		#if defined(UNITY_SINGLE_PASS_STEREO)
-			half aspect = SafeDivide(_ScreenParams.x, _ScreenParams.y);
+			//Scale based on rendertarget size
+			#if defined(UNITY_SINGLE_PASS_STEREO)
+				half aspect = SafeDivide(_ScreenParams.x, _ScreenParams.y);
+			#else
+				half aspect = SafeDivide(_ScreenParams.x, _ScreenParams.y);
+			#endif
+			ndc.x *= aspect;
+			ndc.xy *= scale;
+			ndc.xy *= nullNdc.w;
 		#else
-			half aspect = SafeDivide(_ScreenParams.x, _ScreenParams.y);
+			#if defined(UNITY_SINGLE_PASS_STEREO)
+				half aspect = SafeDivide(_ScreenParams.x, _ScreenParams.y);
+			#else
+				half aspect = SafeDivide(_ScreenParams.x, _ScreenParams.y);
+			#endif
+			ndc.x *= aspect;
+			ndc.xy *= scale;
+			ndc.xy *= nullNdc.w;
 		#endif
-		ndc.x *= aspect;
-		ndc.xy *= scale;
-		ndc.xy *= nullNdc.w;
 
 		return ndc.xy;
 	};

@@ -19,7 +19,7 @@ namespace MK.Toon.Editor.InstallWizard
     {
         public static InstallWizard instance = null;
         #pragma warning disable CS0414
-        private static readonly string _version = "3.0.25C";
+        private static readonly string _version = "3.0.30";
         #pragma warning restore CS0414
         
         private static readonly Vector2Int _referenceResolution = new Vector2Int(2560, 1440);

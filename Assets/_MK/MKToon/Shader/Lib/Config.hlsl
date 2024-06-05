@@ -498,7 +498,7 @@
 			#endif
 		#endif
 
-		#if SHADER_TARGET >= 30 && defined(MK_RIM) && defined(MK_SURFACE_TYPE_TRANSPARENT)
+		#if SHADER_TARGET >= 30 && defined(MK_RIM) && defined(MK_SURFACE_TYPE_TRANSPARENT) && !defined(MK_SHADER_API_MOBILE)
 			#ifndef MK_VFACE
 				#define MK_VFACE
 			#endif
@@ -984,5 +984,11 @@
 		#ifndef MK_VERTEX_COLOR_REQUIRED
 			#define MK_VERTEX_COLOR_REQUIRED
 		#endif
+	#endif
+
+	#if !defined(MK_DECLARE_V_FACE) && defined(MK_VFACE)
+		#define MK_DECLARE_V_FACE , half vFace : VFACE
+	#else
+		#define MK_DECLARE_V_FACE
 	#endif
 #endif

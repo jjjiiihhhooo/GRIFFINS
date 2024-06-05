@@ -38,7 +38,7 @@ public class CoolTimeManager : MonoBehaviour
         coolDic.Add("Red_Q", new CoolData(15, 0, 4));
         coolDic.Add("Red_E", new CoolData(8, 0, 5));
         coolDic.Add("Red_R", new CoolData(1, 0, 0));
-        coolDic.Add("Dash", new CoolData(0.7f, 0, -1));
+        coolDic.Add("Dash", new CoolData(0.6f, 0, -1));
 
     }
 

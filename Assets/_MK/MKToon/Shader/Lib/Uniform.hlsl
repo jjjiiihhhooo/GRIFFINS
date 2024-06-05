@@ -91,12 +91,14 @@
 		uniform half _DissolveAmount;
 		uniform half _DissolveBorderSize;
 		uniform half _OutlineNoise;
+		uniform half _OutlineClipOffset;
 		uniform half _DiffuseWrap;
 		uniform half _DetailMix;
 		uniform half _RefractionDistortionFade;
 		uniform half _GoochRampIntensity;
 		uniform half _VertexAnimationIntensity;
 		uniform half _IndirectFade;
+		uniform half _ArtisticShadowFilter;
 
 		uniform half _DetailNormalMapIntensity;
 		uniform half _NormalMapIntensity;
@@ -170,12 +172,14 @@
 			UNITY_DOTS_INSTANCED_PROP(float, _DissolveAmount)
 			UNITY_DOTS_INSTANCED_PROP(float, _DissolveBorderSize)
 			UNITY_DOTS_INSTANCED_PROP(float, _OutlineNoise)
+			UNITY_DOTS_INSTANCED_PROP(float, _OutlineClipOffset)
 			UNITY_DOTS_INSTANCED_PROP(float, _DiffuseWrap)
 			UNITY_DOTS_INSTANCED_PROP(float, _DetailMix)
 			UNITY_DOTS_INSTANCED_PROP(float, _RefractionDistortionFade)
 			UNITY_DOTS_INSTANCED_PROP(float, _GoochRampIntensity)
 			UNITY_DOTS_INSTANCED_PROP(float, _VertexAnimationIntensity)
 			UNITY_DOTS_INSTANCED_PROP(float, _IndirectFade)
+			UNITY_DOTS_INSTANCED_PROP(float, _ArtisticShadowFilter)
 			UNITY_DOTS_INSTANCED_PROP(float, _DetailNormalMapIntensity)
 			UNITY_DOTS_INSTANCED_PROP(float, _NormalMapIntensity)
 			UNITY_DOTS_INSTANCED_PROP(float, _Parallax)
@@ -195,12 +199,8 @@
 			UNITY_DOTS_INSTANCED_PROP(float, _RefractionDistortion)
 		UNITY_DOTS_INSTANCING_END(MaterialPropertyMetadata)
 
-		#if UNITY_VERSION >= 202330
+		#ifndef MK_DEFINE_CACHED_DOTS_INSTANCED_PROP
 			#define MK_DEFINE_CACHED_DOTS_INSTANCED_PROP(type, name) static type mk_DOTS_Cached##name;
-		#elif UNITY_VERSION >= 202210
-			#define MK_DEFINE_CACHED_DOTS_INSTANCED_PROP(type, name)
-		#else
-			#define MK_DEFINE_CACHED_DOTS_INSTANCED_PROP(type, name)
 		#endif
 
 		MK_DEFINE_CACHED_DOTS_INSTANCED_PROP(float4, _AlbedoMap_ST)
@@ -259,12 +259,14 @@
 		MK_DEFINE_CACHED_DOTS_INSTANCED_PROP(float, _DissolveAmount)
 		MK_DEFINE_CACHED_DOTS_INSTANCED_PROP(float, _DissolveBorderSize)
 		MK_DEFINE_CACHED_DOTS_INSTANCED_PROP(float, _OutlineNoise)
+		MK_DEFINE_CACHED_DOTS_INSTANCED_PROP(float, _OutlineClipOffset)
 		MK_DEFINE_CACHED_DOTS_INSTANCED_PROP(float, _DiffuseWrap)
 		MK_DEFINE_CACHED_DOTS_INSTANCED_PROP(float, _DetailMix)
 		MK_DEFINE_CACHED_DOTS_INSTANCED_PROP(float, _RefractionDistortionFade)
 		MK_DEFINE_CACHED_DOTS_INSTANCED_PROP(float, _GoochRampIntensity)
 		MK_DEFINE_CACHED_DOTS_INSTANCED_PROP(float, _VertexAnimationIntensity)
 		MK_DEFINE_CACHED_DOTS_INSTANCED_PROP(float, _IndirectFade)
+		MK_DEFINE_CACHED_DOTS_INSTANCED_PROP(float, _ArtisticShadowFilter)
 
 		MK_DEFINE_CACHED_DOTS_INSTANCED_PROP(float, _DetailNormalMapIntensity)
 		MK_DEFINE_CACHED_DOTS_INSTANCED_PROP(float, _NormalMapIntensity)
@@ -284,110 +286,102 @@
 		MK_DEFINE_CACHED_DOTS_INSTANCED_PROP(float, _IndexOfRefraction)
 		MK_DEFINE_CACHED_DOTS_INSTANCED_PROP(float, _RefractionDistortion)
 
-		#if UNITY_VERSION >= 202210
-			#ifndef MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT
-				#define MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(type, name) UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(type, name)
-			#endif
-		#else
-			#ifndef MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT
-				#define MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT() UNITY_ACCESS_DOTS_INSTANCED_PROP_FROM_MACRO
-			#endif
+		#ifndef MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT
+			#define MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(type, name) UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(type, name)
 		#endif
 
-		#if UNITY_VERSION >= 202330
-			void SetupDOTSLitMaterialPropertyCaches()
-			{
-				mk_DOTS_Cached_AlbedoMap_ST = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float4, _AlbedoMap_ST);
-				mk_DOTS_Cached_MainTex_ST = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float4, _MainTex_ST);
-				mk_DOTS_Cached_DetailMap_ST = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float4, _DetailMap_ST);
+		void SetupDOTSLitMaterialPropertyCaches()
+		{
+			mk_DOTS_Cached_AlbedoMap_ST = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float4, _AlbedoMap_ST);
+			mk_DOTS_Cached_MainTex_ST = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float4, _MainTex_ST);
+			mk_DOTS_Cached_DetailMap_ST = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float4, _DetailMap_ST);
 
-				mk_DOTS_Cached_AlbedoColor = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float4, _AlbedoColor);
-				mk_DOTS_Cached_DissolveBorderColor = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float4, _DissolveBorderColor);
-				mk_DOTS_Cached_OutlineColor = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float4, _OutlineColor);
-				mk_DOTS_Cached_IridescenceColor = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float4, _IridescenceColor);
-				mk_DOTS_Cached_RimColor = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float4, _RimColor);
-				mk_DOTS_Cached_RimBrightColor = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float4, _RimBrightColor);
-				mk_DOTS_Cached_RimDarkColor = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float4, _RimDarkColor);
-				mk_DOTS_Cached_GoochDarkColor = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float4, _GoochDarkColor);
-				mk_DOTS_Cached_GoochBrightColor = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float4, _GoochBrightColor);
-				mk_DOTS_Cached_VertexAnimationFrequency = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float4, _VertexAnimationFrequency);
+			mk_DOTS_Cached_AlbedoColor = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float4, _AlbedoColor);
+			mk_DOTS_Cached_DissolveBorderColor = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float4, _DissolveBorderColor);
+			mk_DOTS_Cached_OutlineColor = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float4, _OutlineColor);
+			mk_DOTS_Cached_IridescenceColor = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float4, _IridescenceColor);
+			mk_DOTS_Cached_RimColor = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float4, _RimColor);
+			mk_DOTS_Cached_RimBrightColor = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float4, _RimBrightColor);
+			mk_DOTS_Cached_RimDarkColor = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float4, _RimDarkColor);
+			mk_DOTS_Cached_GoochDarkColor = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float4, _GoochDarkColor);
+			mk_DOTS_Cached_GoochBrightColor = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float4, _GoochBrightColor);
+			mk_DOTS_Cached_VertexAnimationFrequency = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float4, _VertexAnimationFrequency);
 
-				mk_DOTS_Cached_DetailColor = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float3, _DetailColor);
-				mk_DOTS_Cached_SpecularColor = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float3, _SpecularColor);
-				mk_DOTS_Cached_LightTransmissionColor = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float3, _LightTransmissionColor);
+			mk_DOTS_Cached_DetailColor = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float3, _DetailColor);
+			mk_DOTS_Cached_SpecularColor = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float3, _SpecularColor);
+			mk_DOTS_Cached_LightTransmissionColor = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float3, _LightTransmissionColor);
 
-				mk_DOTS_Cached_EmissionColor = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float3, _EmissionColor);
+			mk_DOTS_Cached_EmissionColor = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float3, _EmissionColor);
 
-				mk_DOTS_Cached_SoftFadeNearDistance = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _SoftFadeNearDistance);
-				mk_DOTS_Cached_SoftFadeFarDistance = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _SoftFadeFarDistance);
-				mk_DOTS_Cached_CameraFadeNearDistance = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _CameraFadeNearDistance);
-				mk_DOTS_Cached_CameraFadeFarDistance = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _CameraFadeFarDistance);
-				mk_DOTS_Cached_OutlineFadeMin = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _OutlineFadeMin);
-				mk_DOTS_Cached_OutlineFadeMax = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _OutlineFadeMax);
+			mk_DOTS_Cached_SoftFadeNearDistance = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _SoftFadeNearDistance);
+			mk_DOTS_Cached_SoftFadeFarDistance = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _SoftFadeFarDistance);
+			mk_DOTS_Cached_CameraFadeNearDistance = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _CameraFadeNearDistance);
+			mk_DOTS_Cached_CameraFadeFarDistance = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _CameraFadeFarDistance);
+			mk_DOTS_Cached_OutlineFadeMin = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _OutlineFadeMin);
+			mk_DOTS_Cached_OutlineFadeMax = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _OutlineFadeMax);
 
-				mk_DOTS_Cached_AlphaCutoff = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _AlphaCutoff);
-				mk_DOTS_Cached_Metallic = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _Metallic);
-				mk_DOTS_Cached_Smoothness = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _Smoothness);
-				mk_DOTS_Cached_Roughness = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _Roughness);
-				mk_DOTS_Cached_Anisotropy = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _Anisotropy);
-				mk_DOTS_Cached_LightTransmissionDistortion = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _LightTransmissionDistortion);
-				mk_DOTS_Cached_LightBandsScale = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _LightBandsScale);
-				mk_DOTS_Cached_LightThreshold = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _LightThreshold);
-				mk_DOTS_Cached_DrawnClampMin = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _DrawnClampMin);
-				mk_DOTS_Cached_DrawnClampMax = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _DrawnClampMax);
-				mk_DOTS_Cached_Contrast = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _Contrast);
-				mk_DOTS_Cached_Saturation = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _Saturation);
-				mk_DOTS_Cached_Brightness = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _Brightness);
-				mk_DOTS_Cached_DiffuseSmoothness = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _DiffuseSmoothness);
-				mk_DOTS_Cached_DiffuseThresholdOffset = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _DiffuseThresholdOffset);
-				mk_DOTS_Cached_SpecularSmoothness = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _SpecularSmoothness);
-				mk_DOTS_Cached_SpecularThresholdOffset = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _SpecularThresholdOffset);
-				mk_DOTS_Cached_RimSmoothness = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _RimSmoothness);
-				mk_DOTS_Cached_RimThresholdOffset = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _RimThresholdOffset);
-				mk_DOTS_Cached_IridescenceSmoothness = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _IridescenceSmoothness);
-				mk_DOTS_Cached_IridescenceThresholdOffset = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _IridescenceThresholdOffset);
-				mk_DOTS_Cached_LightTransmissionSmoothness = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _LightTransmissionSmoothness);
-				mk_DOTS_Cached_LightTransmissionThresholdOffset = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _LightTransmissionThresholdOffset);
-				mk_DOTS_Cached_RimSize = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _RimSize);
-				mk_DOTS_Cached_IridescenceSize = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _IridescenceSize);
-				mk_DOTS_Cached_DissolveAmount = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _DissolveAmount);
-				mk_DOTS_Cached_DissolveBorderSize = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _DissolveBorderSize);
-				mk_DOTS_Cached_OutlineNoise = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _OutlineNoise);
-				mk_DOTS_Cached_DiffuseWrap = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _DiffuseWrap);
-				mk_DOTS_Cached_DetailMix = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _DetailMix);
-				mk_DOTS_Cached_RefractionDistortionFade = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _RefractionDistortionFade);
-				mk_DOTS_Cached_GoochRampIntensity = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _GoochRampIntensity);
-				mk_DOTS_Cached_VertexAnimationIntensity = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _VertexAnimationIntensity);
-				mk_DOTS_Cached_IndirectFade = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _IndirectFade);
-				mk_DOTS_Cached_DetailNormalMapIntensity = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _DetailNormalMapIntensity);
-				mk_DOTS_Cached_NormalMapIntensity = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _NormalMapIntensity);
-				mk_DOTS_Cached_Parallax = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _Parallax);
-				mk_DOTS_Cached_OcclusionMapIntensity = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _OcclusionMapIntensity);
-				mk_DOTS_Cached_LightBands = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _LightBands);
-				mk_DOTS_Cached_ThresholdMapScale = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _ThresholdMapScale);
-				mk_DOTS_Cached_ArtisticFrequency = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _ArtisticFrequency);
-				mk_DOTS_Cached_DissolveMapScale = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _DissolveMapScale);
-				mk_DOTS_Cached_DrawnMapScale = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _DrawnMapScale);
-				mk_DOTS_Cached_SketchMapScale = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _SketchMapScale);
-				mk_DOTS_Cached_HatchingMapScale = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _HatchingMapScale);
-				mk_DOTS_Cached_OutlineSize = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _OutlineSize);
-				mk_DOTS_Cached_SpecularIntensity = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _SpecularIntensity);
-				mk_DOTS_Cached_LightTransmissionIntensity = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _LightTransmissionIntensity);
-				mk_DOTS_Cached_RefractionDistortionMapScale = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _RefractionDistortionMapScale);
-				mk_DOTS_Cached_IndexOfRefraction = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _IndexOfRefraction);
-				mk_DOTS_Cached_RefractionDistortion = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _RefractionDistortion);
-			}
+			mk_DOTS_Cached_AlphaCutoff = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _AlphaCutoff);
+			mk_DOTS_Cached_Metallic = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _Metallic);
+			mk_DOTS_Cached_Smoothness = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _Smoothness);
+			mk_DOTS_Cached_Roughness = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _Roughness);
+			mk_DOTS_Cached_Anisotropy = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _Anisotropy);
+			mk_DOTS_Cached_LightTransmissionDistortion = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _LightTransmissionDistortion);
+			mk_DOTS_Cached_LightBandsScale = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _LightBandsScale);
+			mk_DOTS_Cached_LightThreshold = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _LightThreshold);
+			mk_DOTS_Cached_DrawnClampMin = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _DrawnClampMin);
+			mk_DOTS_Cached_DrawnClampMax = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _DrawnClampMax);
+			mk_DOTS_Cached_Contrast = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _Contrast);
+			mk_DOTS_Cached_Saturation = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _Saturation);
+			mk_DOTS_Cached_Brightness = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _Brightness);
+			mk_DOTS_Cached_DiffuseSmoothness = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _DiffuseSmoothness);
+			mk_DOTS_Cached_DiffuseThresholdOffset = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _DiffuseThresholdOffset);
+			mk_DOTS_Cached_SpecularSmoothness = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _SpecularSmoothness);
+			mk_DOTS_Cached_SpecularThresholdOffset = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _SpecularThresholdOffset);
+			mk_DOTS_Cached_RimSmoothness = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _RimSmoothness);
+			mk_DOTS_Cached_RimThresholdOffset = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _RimThresholdOffset);
+			mk_DOTS_Cached_IridescenceSmoothness = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _IridescenceSmoothness);
+			mk_DOTS_Cached_IridescenceThresholdOffset = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _IridescenceThresholdOffset);
+			mk_DOTS_Cached_LightTransmissionSmoothness = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _LightTransmissionSmoothness);
+			mk_DOTS_Cached_LightTransmissionThresholdOffset = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _LightTransmissionThresholdOffset);
+			mk_DOTS_Cached_RimSize = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _RimSize);
+			mk_DOTS_Cached_IridescenceSize = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _IridescenceSize);
+			mk_DOTS_Cached_DissolveAmount = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _DissolveAmount);
+			mk_DOTS_Cached_DissolveBorderSize = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _DissolveBorderSize);
+			mk_DOTS_Cached_OutlineNoise = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _OutlineNoise);
+			mk_DOTS_Cached_OutlineClipOffset = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _OutlineClipOffset);
+			mk_DOTS_Cached_DiffuseWrap = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _DiffuseWrap);
+			mk_DOTS_Cached_DetailMix = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _DetailMix);
+			mk_DOTS_Cached_RefractionDistortionFade = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _RefractionDistortionFade);
+			mk_DOTS_Cached_GoochRampIntensity = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _GoochRampIntensity);
+			mk_DOTS_Cached_VertexAnimationIntensity = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _VertexAnimationIntensity);
+			mk_DOTS_Cached_IndirectFade = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _IndirectFade);
+			mk_DOTS_Cached_ArtisticShadowFilter = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _ArtisticShadowFilter);
+			mk_DOTS_Cached_DetailNormalMapIntensity = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _DetailNormalMapIntensity);
+			mk_DOTS_Cached_NormalMapIntensity = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _NormalMapIntensity);
+			mk_DOTS_Cached_Parallax = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _Parallax);
+			mk_DOTS_Cached_OcclusionMapIntensity = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _OcclusionMapIntensity);
+			mk_DOTS_Cached_LightBands = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _LightBands);
+			mk_DOTS_Cached_ThresholdMapScale = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _ThresholdMapScale);
+			mk_DOTS_Cached_ArtisticFrequency = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _ArtisticFrequency);
+			mk_DOTS_Cached_DissolveMapScale = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _DissolveMapScale);
+			mk_DOTS_Cached_DrawnMapScale = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _DrawnMapScale);
+			mk_DOTS_Cached_SketchMapScale = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _SketchMapScale);
+			mk_DOTS_Cached_HatchingMapScale = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _HatchingMapScale);
+			mk_DOTS_Cached_OutlineSize = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _OutlineSize);
+			mk_DOTS_Cached_SpecularIntensity = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _SpecularIntensity);
+			mk_DOTS_Cached_LightTransmissionIntensity = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _LightTransmissionIntensity);
+			mk_DOTS_Cached_RefractionDistortionMapScale = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _RefractionDistortionMapScale);
+			mk_DOTS_Cached_IndexOfRefraction = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _IndexOfRefraction);
+			mk_DOTS_Cached_RefractionDistortion = MK_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float, _RefractionDistortion);
+		}
+
+		#ifdef UNITY_SETUP_DOTS_MATERIAL_PROPERTY_CACHES
+			#undef UNITY_SETUP_DOTS_MATERIAL_PROPERTY_CACHES
 		#endif
-
-		#undef UNITY_SETUP_DOTS_MATERIAL_PROPERTY_CACHES
 		#define UNITY_SETUP_DOTS_MATERIAL_PROPERTY_CACHES() SetupDOTSLitMaterialPropertyCaches()
 
-		#if UNITY_VERSION >= 202330
+		#ifndef MK_SET_DOTS_INSTANCED_PROP
 			#define MK_SET_DOTS_INSTANCED_PROP(type, name) mk_DOTS_Cached##name
-		#elif UNITY_VERSION >= 202210
-			#define MK_SET_DOTS_INSTANCED_PROP(type, name) UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(type, name)
-		#else
-			#define MK_SET_DOTS_INSTANCED_PROP(type, name) UNITY_ACCESS_DOTS_INSTANCED_PROP_FROM_MACRO(type, Metadata_##name)
 		#endif
 
 		#define _AlbedoMap_ST MK_SET_DOTS_INSTANCED_PROP(float4, _AlbedoMap_ST)
@@ -441,12 +435,14 @@
 		#define _DissolveAmount MK_SET_DOTS_INSTANCED_PROP(float, _DissolveAmount)
 		#define _DissolveBorderSize MK_SET_DOTS_INSTANCED_PROP(float, _DissolveBorderSize)
 		#define _OutlineNoise MK_SET_DOTS_INSTANCED_PROP(float, _OutlineNoise)
+		#define _OutlineClipOffset MK_SET_DOTS_INSTANCED_PROP(float, _OutlineClipOffset)
 		#define _DiffuseWrap MK_SET_DOTS_INSTANCED_PROP(float, _DiffuseWrap)
 		#define _DetailMix MK_SET_DOTS_INSTANCED_PROP(float, _DetailMix)
 		#define _RefractionDistortionFade MK_SET_DOTS_INSTANCED_PROP(float, _RefractionDistortionFade)
 		#define _GoochRampIntensity MK_SET_DOTS_INSTANCED_PROP(float, _GoochRampIntensity)
 		#define _VertexAnimationIntensity MK_SET_DOTS_INSTANCED_PROP(float, _VertexAnimationIntensity)
 		#define _IndirectFade MK_SET_DOTS_INSTANCED_PROP(float, _IndirectFade)
+		#define _ArtisticShadowFilter MK_SET_DOTS_INSTANCED_PROP(float, _ArtisticShadowFilter)
 		#define _DetailNormalMapIntensity MK_SET_DOTS_INSTANCED_PROP(float, _DetailNormalMapIntensity)
 		#define _NormalMapIntensity MK_SET_DOTS_INSTANCED_PROP(float, _NormalMapIntensity)
 		#define _Parallax MK_SET_DOTS_INSTANCED_PROP(float, _Parallax)

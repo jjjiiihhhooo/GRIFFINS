@@ -88,6 +88,9 @@ namespace MK.Toon.Editor
         protected MaterialProperty _drawnClampMax;
         protected MaterialProperty _sketchMapScale;
         protected MaterialProperty _sketchMap;
+        #if MK_TOON_STYLIZE_SYSTEM_SHADOWS
+        protected MaterialProperty _artisticShadowFilter;
+        #endif
         
         /////////////////
         // Advanced    //
@@ -123,6 +126,9 @@ namespace MK.Toon.Editor
             _drawnClampMax = FindProperty(Properties.drawnClampMax.uniform.name, props);
             _sketchMapScale = FindProperty(Properties.sketchMapScale.uniform.name, props);
             _sketchMap = FindProperty(Properties.sketchMap.uniform.name, props);
+            #if MK_TOON_STYLIZE_SYSTEM_SHADOWS
+            _artisticShadowFilter = FindProperty(Properties.artisticShadowFilter.uniform.name, props);
+            #endif
             _diffuseSmoothness = FindProperty(Properties.diffuseSmoothness.uniform.name, props);
             _diffuseThresholdOffset = FindProperty(Properties.diffuseThresholdOffset.uniform.name, props);
             _specularSmoothness = FindProperty(Properties.specularSmoothness.uniform.name, props);
@@ -496,6 +502,9 @@ namespace MK.Toon.Editor
                     materialEditor.TexturePropertySingleLine(UI.hatchingDarkMap, _hatchingDarkMap);
                     if(_hatchingBrightMap.textureValue != null || _hatchingDarkMap.textureValue != null)
                     {
+                        #if MK_TOON_STYLIZE_SYSTEM_SHADOWS
+                        materialEditor.ShaderProperty(_artisticShadowFilter, UI.artisticShadowFilter);
+                        #endif
                         materialEditor.ShaderProperty(_artisticFrequency, UI.artisticStutterFreqency);
                     }
                 }
@@ -506,6 +515,9 @@ namespace MK.Toon.Editor
                         materialEditor.TexturePropertySingleLine(UI.drawnMap, _drawnMap, _drawnMapScale);
                         materialEditor.ShaderProperty(_drawnClampMin, UI.drawnClampMin);
                         materialEditor.ShaderProperty(_drawnClampMax, UI.drawnClampMax);
+                        #if MK_TOON_STYLIZE_SYSTEM_SHADOWS
+                        materialEditor.ShaderProperty(_artisticShadowFilter, UI.artisticShadowFilter);
+                        #endif
                         materialEditor.ShaderProperty(_artisticFrequency, UI.artisticStutterFreqency);
                     }
                     else
@@ -516,6 +528,9 @@ namespace MK.Toon.Editor
                     if(_sketchMap.textureValue != null)
                     {
                         materialEditor.TexturePropertySingleLine(UI.sketchMap, _sketchMap, _sketchMapScale);
+                        #if MK_TOON_STYLIZE_SYSTEM_SHADOWS
+                        materialEditor.ShaderProperty(_artisticShadowFilter, UI.artisticShadowFilter);
+                        #endif
                         materialEditor.ShaderProperty(_artisticFrequency, UI.artisticStutterFreqency);
                     }
                     else
@@ -596,6 +611,7 @@ namespace MK.Toon.Editor
             materialEditor.EnableInstancingField();
             materialEditor.DoubleSidedGIField();
             DrawRenderPriority(materialEditor);
+            DrawAddPrecomputedVelocity(materialEditor);
         }
 
         protected override void DrawAdvancedContent(MaterialEditor materialEditor, Material material)

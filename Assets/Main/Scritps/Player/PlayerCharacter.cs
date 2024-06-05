@@ -620,9 +620,19 @@ public class WhiteCharacter : PlayerCharacter
 
         //Vector3 pos = player.transform.position + player.transform.forward * 10f;
         //OnlySingleton.Instance.camShake.ShakeCamera(7f, 0.1f);
-        GameObject temp = GameObject.Instantiate(explosionEffect, explosionEndTransform.position , Quaternion.identity);
+        if(target != null)
+        {
+            GameObject temp = GameObject.Instantiate(explosionEffect, target.transform.position, Quaternion.identity);
+            temp.SetActive(true);
+        }
+        else
+        {
+            GameObject temp = GameObject.Instantiate(explosionEffect, explosionEndTransform.position, Quaternion.identity);
+            temp.SetActive(true);
+        }
+        
         GameManager.Instance.coolTimeManager.GetCoolTime("CharacterChange");
-        temp.SetActive(true);
+        
     }
 
     public override void E_AnimExit()

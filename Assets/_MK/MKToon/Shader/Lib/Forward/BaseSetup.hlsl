@@ -44,6 +44,12 @@
 		#endif
 	#endif
 
+	#if defined(_MK_NORMAL_MAP) && SHADER_TARGET >= 35
+		#ifndef _NORMALMAP
+			#define _NORMALMAP
+		#endif
+	#endif
+
 	#if defined(SHADOWS_SCREEN) && defined(LIGHTMAP_ON) || defined(HANDLE_SHADOWS_BLENDING_IN_GI)
 		#define MK_HANDLE_SHADOWS_BLENDING_IN_GI 1
 		/*

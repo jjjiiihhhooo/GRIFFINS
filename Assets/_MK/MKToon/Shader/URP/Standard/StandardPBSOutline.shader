@@ -124,6 +124,7 @@ Shader "MK/Toon/URP/Standard/Physically Based + Outline"
 		_HatchingDarkMap ("", 2D) = "Black" {}
 		_SketchMapScale ("", Float) = 1
 		_SketchMap ("", 2D) = "black" {}
+		_ArtisticShadowFilter ("", Range(0.0, 0.5)) = 0.0
 
 		/////////////////
 		// Advanced    //
@@ -155,6 +156,8 @@ Shader "MK/Toon/URP/Standard/Physically Based + Outline"
 		[Enum(MK.Toon.StencilOperation)] _StencilFail ("", Int) = 0
 		[Enum(MK.Toon.StencilOperation)] _StencilZFail ("", Int) = 0
 
+		[HideInInspector] _AddPrecomputedVelocity("_AddPrecomputedVelocity", Float) = 0.0
+
 		/////////////////
 		// Outline 	   //
 		/////////////////
@@ -163,6 +166,7 @@ Shader "MK/Toon/URP/Standard/Physically Based + Outline"
 		_OutlineFadeMin ("", Float) = 0.25
 		_OutlineFadeMax ("", Float) = 2
 		_OutlineMap ("", 2D) = "white" {}
+		_OutlineClipOffset ("", Range(0, 1)) = 0.0
 		_OutlineSize ("", Float) = 5.0
 		_OutlineColor ("", Color) = (0, 0, 0, 1)
 		_OutlineNoise ("", Range(-1, 1)) = 0.0
@@ -180,6 +184,7 @@ Shader "MK/Toon/URP/Standard/Physically Based + Outline"
 		/////////////////
 		// System	   //
 		/////////////////
+		[HideInInspector] [Toggle] _AlembicMotionVectors("_AlembicMotionVectors", Float) = 0.0
 		[HideInInspector] _Cutoff ("", Range(0, 1)) = 0.5
 		[HideInInspector] _MainTex ("", 2D) = "white" {}
 		[HideInInspector] _Color ("", Color) = (1,1,1,1)
@@ -283,6 +288,9 @@ Shader "MK/Toon/URP/Standard/Physically Based + Outline"
 			#pragma multi_compile __ _ADDITIONAL_LIGHTS_VERTEX _ADDITIONAL_LIGHTS
 			#pragma multi_compile __ DIRLIGHTMAP_COMBINED
 			#pragma multi_compile __ LIGHTMAP_ON
+			#if UNITY_VERSION >= 202330
+			#pragma multi_compile _ USE_LEGACY_LIGHTMAPS
+			#endif
 			#if UNITY_VERSION >= 202310
 				#pragma multi_compile _ EVALUATE_SH_MIXED EVALUATE_SH_VERTEX
 			#endif
@@ -303,6 +311,10 @@ Shader "MK/Toon/URP/Standard/Physically Based + Outline"
 			#else
 				#pragma multi_compile __ _MAIN_LIGHT_SHADOWS
 				#pragma multi_compile __ _MAIN_LIGHT_SHADOWS_CASCADE
+			#endif
+
+			#if UNITY_VERSION >= 202320
+				#include_with_pragmas "Packages/com.unity.render-pipelines.core/ShaderLibrary/FoveatedRenderingKeywords.hlsl"
 			#endif
 
 			#if UNITY_VERSION >= 202220
@@ -424,6 +436,9 @@ Shader "MK/Toon/URP/Standard/Physically Based + Outline"
 			#pragma multi_compile __ _ADDITIONAL_LIGHTS_VERTEX _ADDITIONAL_LIGHTS
 			#pragma multi_compile __ DIRLIGHTMAP_COMBINED
 			#pragma multi_compile __ LIGHTMAP_ON
+			#if UNITY_VERSION >= 202330
+			#pragma multi_compile _ USE_LEGACY_LIGHTMAPS
+			#endif
 			#if UNITY_VERSION >= 202310
 				#pragma multi_compile _ EVALUATE_SH_MIXED EVALUATE_SH_VERTEX
 			#endif
@@ -444,6 +459,10 @@ Shader "MK/Toon/URP/Standard/Physically Based + Outline"
 			#else
 				#pragma multi_compile __ _MAIN_LIGHT_SHADOWS
 				#pragma multi_compile __ _MAIN_LIGHT_SHADOWS_CASCADE
+			#endif
+
+			#if UNITY_VERSION >= 202320
+				#include_with_pragmas "Packages/com.unity.render-pipelines.core/ShaderLibrary/FoveatedRenderingKeywords.hlsl"
 			#endif
 
 			#if UNITY_VERSION >= 202220
@@ -608,6 +627,10 @@ Shader "MK/Toon/URP/Standard/Physically Based + Outline"
 			#pragma shader_feature_local __ _MK_VERTEX_ANIMATION_SINE _MK_VERTEX_ANIMATION_PULSE _MK_VERTEX_ANIMATION_NOISE
 			#pragma shader_feature_local __ _MK_VERTEX_ANIMATION_MAP
 			#pragma shader_feature_local __ _MK_DISSOLVE_DEFAULT _MK_DISSOLVE_BORDER_COLOR _MK_DISSOLVE_BORDER_RAMP
+
+			#if UNITY_VERSION >= 202320
+				#include_with_pragmas "Packages/com.unity.render-pipelines.core/ShaderLibrary/FoveatedRenderingKeywords.hlsl"
+			#endif
 
 			#if UNITY_VERSION >= 202220
 				#pragma multi_compile_fragment _ LOD_FADE_CROSSFADE
@@ -898,6 +921,9 @@ Shader "MK/Toon/URP/Standard/Physically Based + Outline"
 			#pragma multi_compile __ _ADDITIONAL_LIGHTS_VERTEX _ADDITIONAL_LIGHTS
 			#pragma multi_compile __ DIRLIGHTMAP_COMBINED
 			#pragma multi_compile __ LIGHTMAP_ON
+			#if UNITY_VERSION >= 202330
+			#pragma multi_compile _ USE_LEGACY_LIGHTMAPS
+			#endif
 			#if UNITY_VERSION >= 202310
 				#pragma multi_compile _ EVALUATE_SH_MIXED EVALUATE_SH_VERTEX
 			#endif
@@ -918,6 +944,10 @@ Shader "MK/Toon/URP/Standard/Physically Based + Outline"
 			#else
 				#pragma multi_compile __ _MAIN_LIGHT_SHADOWS
 				#pragma multi_compile __ _MAIN_LIGHT_SHADOWS_CASCADE
+			#endif
+
+			#if UNITY_VERSION >= 202320
+				#include_with_pragmas "Packages/com.unity.render-pipelines.core/ShaderLibrary/FoveatedRenderingKeywords.hlsl"
 			#endif
 
 			#if UNITY_VERSION >= 202220
@@ -1036,6 +1066,9 @@ Shader "MK/Toon/URP/Standard/Physically Based + Outline"
 			#pragma multi_compile __ _ADDITIONAL_LIGHTS_VERTEX _ADDITIONAL_LIGHTS
 			#pragma multi_compile __ DIRLIGHTMAP_COMBINED
 			#pragma multi_compile __ LIGHTMAP_ON
+			#if UNITY_VERSION >= 202330
+			#pragma multi_compile _ USE_LEGACY_LIGHTMAPS
+			#endif
 			#if UNITY_VERSION >= 202310
 				#pragma multi_compile _ EVALUATE_SH_MIXED EVALUATE_SH_VERTEX
 			#endif
@@ -1056,6 +1089,10 @@ Shader "MK/Toon/URP/Standard/Physically Based + Outline"
 			#else
 				#pragma multi_compile __ _MAIN_LIGHT_SHADOWS
 				#pragma multi_compile __ _MAIN_LIGHT_SHADOWS_CASCADE
+			#endif
+
+			#if UNITY_VERSION >= 202320
+				#include_with_pragmas "Packages/com.unity.render-pipelines.core/ShaderLibrary/FoveatedRenderingKeywords.hlsl"
 			#endif
 
 			#if UNITY_VERSION >= 202220
@@ -1216,6 +1253,10 @@ Shader "MK/Toon/URP/Standard/Physically Based + Outline"
 			#pragma shader_feature_local __ _MK_VERTEX_ANIMATION_SINE _MK_VERTEX_ANIMATION_PULSE _MK_VERTEX_ANIMATION_NOISE
 			#pragma shader_feature_local __ _MK_VERTEX_ANIMATION_MAP
 			#pragma shader_feature_local __ _MK_DISSOLVE_DEFAULT _MK_DISSOLVE_BORDER_COLOR _MK_DISSOLVE_BORDER_RAMP
+
+			#if UNITY_VERSION >= 202320
+				#include_with_pragmas "Packages/com.unity.render-pipelines.core/ShaderLibrary/FoveatedRenderingKeywords.hlsl"
+			#endif
 
 			#if UNITY_VERSION >= 202220
 				#pragma multi_compile_fragment _ LOD_FADE_CROSSFADE
@@ -1500,6 +1541,9 @@ Shader "MK/Toon/URP/Standard/Physically Based + Outline"
 			#pragma multi_compile __ _ADDITIONAL_LIGHTS_VERTEX _ADDITIONAL_LIGHTS
 			#pragma multi_compile __ DIRLIGHTMAP_COMBINED
 			#pragma multi_compile __ LIGHTMAP_ON
+			#if UNITY_VERSION >= 202330
+			#pragma multi_compile _ USE_LEGACY_LIGHTMAPS
+			#endif
 			#if UNITY_VERSION >= 202310
 				#pragma multi_compile _ EVALUATE_SH_MIXED EVALUATE_SH_VERTEX
 			#endif
@@ -1520,6 +1564,10 @@ Shader "MK/Toon/URP/Standard/Physically Based + Outline"
 			#else
 				#pragma multi_compile __ _MAIN_LIGHT_SHADOWS
 				#pragma multi_compile __ _MAIN_LIGHT_SHADOWS_CASCADE
+			#endif
+
+			#if UNITY_VERSION >= 202320
+				#include_with_pragmas "Packages/com.unity.render-pipelines.core/ShaderLibrary/FoveatedRenderingKeywords.hlsl"
 			#endif
 
 			#if UNITY_VERSION >= 202220
@@ -1626,6 +1674,9 @@ Shader "MK/Toon/URP/Standard/Physically Based + Outline"
 			#pragma multi_compile __ _ADDITIONAL_LIGHTS_VERTEX _ADDITIONAL_LIGHTS
 			#pragma multi_compile __ DIRLIGHTMAP_COMBINED
 			#pragma multi_compile __ LIGHTMAP_ON
+			#if UNITY_VERSION >= 202330
+			#pragma multi_compile _ USE_LEGACY_LIGHTMAPS
+			#endif
 			#if UNITY_VERSION >= 202310
 				#pragma multi_compile _ EVALUATE_SH_MIXED EVALUATE_SH_VERTEX
 			#endif
@@ -1646,6 +1697,10 @@ Shader "MK/Toon/URP/Standard/Physically Based + Outline"
 			#else
 				#pragma multi_compile __ _MAIN_LIGHT_SHADOWS
 				#pragma multi_compile __ _MAIN_LIGHT_SHADOWS_CASCADE
+			#endif
+
+			#if UNITY_VERSION >= 202320
+				#include_with_pragmas "Packages/com.unity.render-pipelines.core/ShaderLibrary/FoveatedRenderingKeywords.hlsl"
 			#endif
 
 			#if UNITY_VERSION >= 202220
@@ -1796,6 +1851,10 @@ Shader "MK/Toon/URP/Standard/Physically Based + Outline"
 			#pragma shader_feature_local __ _MK_VERTEX_ANIMATION_MAP
 			#pragma shader_feature_local __ _MK_DISSOLVE_DEFAULT _MK_DISSOLVE_BORDER_COLOR _MK_DISSOLVE_BORDER_RAMP
 
+			#if UNITY_VERSION >= 202320
+				#include_with_pragmas "Packages/com.unity.render-pipelines.core/ShaderLibrary/FoveatedRenderingKeywords.hlsl"
+			#endif
+			
 			#if UNITY_VERSION >= 202220
 				#pragma multi_compile_fragment _ LOD_FADE_CROSSFADE
 			#endif

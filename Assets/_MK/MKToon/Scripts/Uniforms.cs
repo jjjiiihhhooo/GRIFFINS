@@ -129,6 +129,9 @@ namespace MK.Toon
         public static readonly Uniform drawnClampMax                    = new Uniform("_DrawnClampMax");
         public static readonly Uniform sketchMapScale                   = new Uniform("_SketchMapScale");
         public static readonly Uniform sketchMap                        = new Uniform("_SketchMap");
+        #if MK_TOON_STYLIZE_SYSTEM_SHADOWS
+        public static readonly Uniform artisticShadowFilter             = new Uniform("_ArtisticShadowFilter");
+        #endif
 
         /////////////////
         // Advanced    //
@@ -141,6 +144,7 @@ namespace MK.Toon
         public static readonly Uniform environmentReflections     = new Uniform("_EnvironmentReflections");
         public static readonly Uniform fresnelHighlights          = new Uniform("_FresnelHighlights");
         public static readonly Uniform IndirectFade               = new Uniform("_IndirectFade");
+        public static readonly Uniform alembicMotionVectors     = new Uniform("_AlembicMotionVectors");
         public static readonly Uniform stencil                    = new Uniform("_Stencil");
         public static readonly Uniform renderPriority             = new Uniform("_RenderPriority");
         public static readonly Uniform stencilRef                 = new Uniform("_StencilRef");
@@ -154,16 +158,17 @@ namespace MK.Toon
         /////////////////
         // Outline     //
         /////////////////
-        public static readonly Uniform outline        = new Uniform("_Outline");
-        public static readonly Uniform outlineData    = new Uniform("_OutlineData");
-        public static readonly Uniform outlineMap     = new Uniform("_OutlineMap");
-        public static readonly Uniform outlineSize    = new Uniform("_OutlineSize");
+        public static readonly Uniform outline           = new Uniform("_Outline");
+        public static readonly Uniform outlineData       = new Uniform("_OutlineData");
+        public static readonly Uniform outlineMap        = new Uniform("_OutlineMap");
+        public static readonly Uniform outlineClipOffset = new Uniform("_OutlineClipOffset");
+        public static readonly Uniform outlineSize       = new Uniform("_OutlineSize");
         #if MK_TOON_OUTLINE_FADING_LINEAR  || MK_TOON_OUTLINE_FADING_EXPONENTIAL || MK_TOON_OUTLINE_FADING_INVERSE_EXPONENTIAL
-        public static readonly Uniform outlineFadeMin = new Uniform("_OutlineFadeMin");
-        public static readonly Uniform outlineFadeMax = new Uniform("_OutlineFadeMax");
+        public static readonly Uniform outlineFadeMin    = new Uniform("_OutlineFadeMin");
+        public static readonly Uniform outlineFadeMax    = new Uniform("_OutlineFadeMax");
         #endif
-        public static readonly Uniform outlineColor   = new Uniform("_OutlineColor");
-        public static readonly Uniform outlineNoise   = new Uniform("_OutlineNoise");
+        public static readonly Uniform outlineColor      = new Uniform("_OutlineColor");
+        public static readonly Uniform outlineNoise      = new Uniform("_OutlineNoise");
 
         /////////////////
         // Refraction  //

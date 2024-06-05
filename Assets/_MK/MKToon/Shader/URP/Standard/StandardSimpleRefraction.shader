@@ -96,6 +96,7 @@ Shader "MK/Toon/URP/Standard/Simple + Refraction"
 		_HatchingDarkMap ("", 2D) = "Black" {}
 		_SketchMapScale ("", Float) = 1
 		_SketchMap ("", 2D) = "black" {}
+		_ArtisticShadowFilter ("", Range(0.0, 0.5)) = 0.0
 
 		/////////////////
 		// Advanced    //
@@ -122,6 +123,7 @@ Shader "MK/Toon/URP/Standard/Simple + Refraction"
 		[Enum(MK.Toon.StencilOperation)] _StencilPass ("", Int) = 0
 		[Enum(MK.Toon.StencilOperation)] _StencilFail ("", Int) = 0
 		[Enum(MK.Toon.StencilOperation)] _StencilZFail ("", Int) = 0
+		[HideInInspector] _AddPrecomputedVelocity("_AddPrecomputedVelocity", Float) = 0.0
 
 		/////////////////
 		// Refraction  //
@@ -145,6 +147,7 @@ Shader "MK/Toon/URP/Standard/Simple + Refraction"
 		/////////////////
 		// System	   //
 		/////////////////
+		[HideInInspector] [Toggle] _AlembicMotionVectors("_AlembicMotionVectors", Float) = 0.0
 		[HideInInspector] _Cutoff ("", Range(0, 1)) = 0.5
 		[HideInInspector] _MainTex ("", 2D) = "white" {}
 		[HideInInspector] _Color ("", Color) = (1,1,1,1)
@@ -235,6 +238,9 @@ Shader "MK/Toon/URP/Standard/Simple + Refraction"
 			#pragma multi_compile __ _ADDITIONAL_LIGHTS_VERTEX _ADDITIONAL_LIGHTS
 			#pragma multi_compile __ DIRLIGHTMAP_COMBINED
 			#pragma multi_compile __ LIGHTMAP_ON
+			#if UNITY_VERSION >= 202330
+			#pragma multi_compile _ USE_LEGACY_LIGHTMAPS
+			#endif
 			#if UNITY_VERSION >= 202310
 				#pragma multi_compile _ EVALUATE_SH_MIXED EVALUATE_SH_VERTEX
 			#endif
@@ -255,6 +261,10 @@ Shader "MK/Toon/URP/Standard/Simple + Refraction"
 			#else
 				#pragma multi_compile __ _MAIN_LIGHT_SHADOWS
 				#pragma multi_compile __ _MAIN_LIGHT_SHADOWS_CASCADE
+			#endif
+
+			#if UNITY_VERSION >= 202320
+				#include_with_pragmas "Packages/com.unity.render-pipelines.core/ShaderLibrary/FoveatedRenderingKeywords.hlsl"
 			#endif
 
 			#if UNITY_VERSION >= 202220
@@ -366,6 +376,9 @@ Shader "MK/Toon/URP/Standard/Simple + Refraction"
 			#pragma multi_compile __ _ADDITIONAL_LIGHTS_VERTEX _ADDITIONAL_LIGHTS
 			#pragma multi_compile __ DIRLIGHTMAP_COMBINED
 			#pragma multi_compile __ LIGHTMAP_ON
+			#if UNITY_VERSION >= 202330
+			#pragma multi_compile _ USE_LEGACY_LIGHTMAPS
+			#endif
 			#if UNITY_VERSION >= 202310
 				#pragma multi_compile _ EVALUATE_SH_MIXED EVALUATE_SH_VERTEX
 			#endif
@@ -386,6 +399,10 @@ Shader "MK/Toon/URP/Standard/Simple + Refraction"
 			#else
 				#pragma multi_compile __ _MAIN_LIGHT_SHADOWS
 				#pragma multi_compile __ _MAIN_LIGHT_SHADOWS_CASCADE
+			#endif
+
+			#if UNITY_VERSION >= 202320
+				#include_with_pragmas "Packages/com.unity.render-pipelines.core/ShaderLibrary/FoveatedRenderingKeywords.hlsl"
 			#endif
 
 			#if UNITY_VERSION >= 202220
@@ -765,6 +782,9 @@ Shader "MK/Toon/URP/Standard/Simple + Refraction"
 			#pragma multi_compile __ _ADDITIONAL_LIGHTS_VERTEX _ADDITIONAL_LIGHTS
 			#pragma multi_compile __ DIRLIGHTMAP_COMBINED
 			#pragma multi_compile __ LIGHTMAP_ON
+			#if UNITY_VERSION >= 202330
+			#pragma multi_compile _ USE_LEGACY_LIGHTMAPS
+			#endif
 			#if UNITY_VERSION >= 202310
 				#pragma multi_compile _ EVALUATE_SH_MIXED EVALUATE_SH_VERTEX
 			#endif
@@ -785,6 +805,10 @@ Shader "MK/Toon/URP/Standard/Simple + Refraction"
 			#else
 				#pragma multi_compile __ _MAIN_LIGHT_SHADOWS
 				#pragma multi_compile __ _MAIN_LIGHT_SHADOWS_CASCADE
+			#endif
+
+			#if UNITY_VERSION >= 202320
+				#include_with_pragmas "Packages/com.unity.render-pipelines.core/ShaderLibrary/FoveatedRenderingKeywords.hlsl"
 			#endif
 
 			#if UNITY_VERSION >= 202220
@@ -892,6 +916,9 @@ Shader "MK/Toon/URP/Standard/Simple + Refraction"
 			#pragma multi_compile __ _ADDITIONAL_LIGHTS_VERTEX _ADDITIONAL_LIGHTS
 			#pragma multi_compile __ DIRLIGHTMAP_COMBINED
 			#pragma multi_compile __ LIGHTMAP_ON
+			#if UNITY_VERSION >= 202330
+			#pragma multi_compile _ USE_LEGACY_LIGHTMAPS
+			#endif
 			#if UNITY_VERSION >= 202310
 				#pragma multi_compile _ EVALUATE_SH_MIXED EVALUATE_SH_VERTEX
 			#endif
@@ -912,6 +939,10 @@ Shader "MK/Toon/URP/Standard/Simple + Refraction"
 			#else
 				#pragma multi_compile __ _MAIN_LIGHT_SHADOWS
 				#pragma multi_compile __ _MAIN_LIGHT_SHADOWS_CASCADE
+			#endif
+
+			#if UNITY_VERSION >= 202320
+				#include_with_pragmas "Packages/com.unity.render-pipelines.core/ShaderLibrary/FoveatedRenderingKeywords.hlsl"
 			#endif
 
 			#if UNITY_VERSION >= 202220
@@ -1324,6 +1355,9 @@ Shader "MK/Toon/URP/Standard/Simple + Refraction"
 			#pragma multi_compile __ _ADDITIONAL_LIGHTS_VERTEX _ADDITIONAL_LIGHTS
 			#pragma multi_compile __ DIRLIGHTMAP_COMBINED
 			#pragma multi_compile __ LIGHTMAP_ON
+			#if UNITY_VERSION >= 202330
+			#pragma multi_compile _ USE_LEGACY_LIGHTMAPS
+			#endif
 			#if UNITY_VERSION >= 202310
 				#pragma multi_compile _ EVALUATE_SH_MIXED EVALUATE_SH_VERTEX
 			#endif
@@ -1344,6 +1378,10 @@ Shader "MK/Toon/URP/Standard/Simple + Refraction"
 			#else
 				#pragma multi_compile __ _MAIN_LIGHT_SHADOWS
 				#pragma multi_compile __ _MAIN_LIGHT_SHADOWS_CASCADE
+			#endif
+
+			#if UNITY_VERSION >= 202320
+				#include_with_pragmas "Packages/com.unity.render-pipelines.core/ShaderLibrary/FoveatedRenderingKeywords.hlsl"
 			#endif
 
 			#if UNITY_VERSION >= 202220
@@ -1443,6 +1481,9 @@ Shader "MK/Toon/URP/Standard/Simple + Refraction"
 			#pragma multi_compile __ _ADDITIONAL_LIGHTS_VERTEX _ADDITIONAL_LIGHTS
 			#pragma multi_compile __ DIRLIGHTMAP_COMBINED
 			#pragma multi_compile __ LIGHTMAP_ON
+			#if UNITY_VERSION >= 202330
+			#pragma multi_compile _ USE_LEGACY_LIGHTMAPS
+			#endif
 			#if UNITY_VERSION >= 202310
 				#pragma multi_compile _ EVALUATE_SH_MIXED EVALUATE_SH_VERTEX
 			#endif
@@ -1463,6 +1504,10 @@ Shader "MK/Toon/URP/Standard/Simple + Refraction"
 			#else
 				#pragma multi_compile __ _MAIN_LIGHT_SHADOWS
 				#pragma multi_compile __ _MAIN_LIGHT_SHADOWS_CASCADE
+			#endif
+
+			#if UNITY_VERSION >= 202320
+				#include_with_pragmas "Packages/com.unity.render-pipelines.core/ShaderLibrary/FoveatedRenderingKeywords.hlsl"
 			#endif
 
 			#if UNITY_VERSION >= 202220

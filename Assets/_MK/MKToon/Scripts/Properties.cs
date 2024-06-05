@@ -139,7 +139,9 @@ namespace MK.Toon
         public static readonly RangeProperty drawnClampMax                         = new RangeProperty(Uniforms.drawnClampMax, 0, 1);
         public static readonly FloatProperty sketchMapScale                        = new FloatProperty(Uniforms.sketchMapScale);
         public static readonly TextureProperty sketchMap                           = new TextureProperty(Uniforms.sketchMap);
-
+        #if MK_TOON_STYLIZE_SYSTEM_SHADOWS
+        public static readonly RangeProperty artisticShadowFilter                  = new RangeProperty(Uniforms.artisticShadowFilter, 0f, 0.5f);
+        #endif
         /////////////////
         // Advanced    //
         /////////////////
@@ -150,7 +152,8 @@ namespace MK.Toon
         public static readonly RangeProperty lightTransmissionIntensity             = new RangeProperty(Uniforms.lightTransmissionIntensity, 0);
         public static readonly EnvironmentReflectionProperty environmentReflections = new EnvironmentReflectionProperty(Uniforms.environmentReflections, Keywords.environmentReflections);
         public static readonly BoolProperty fresnelHighlights                       = new BoolProperty(Uniforms.fresnelHighlights, Keywords.fresnelHighlights);
-        public static readonly BoolProperty indirectFade                            = new BoolProperty(Uniforms.IndirectFade);
+        public static readonly RangeProperty indirectFade                           = new RangeProperty(Uniforms.IndirectFade, 0.0f, 1.0f);
+        public static readonly BoolProperty alembicMotionVectors                    = new BoolProperty(Uniforms.alembicMotionVectors, Keywords.alembicMotionVectors);
         public static readonly RenderPriorityProperty renderPriority                = new RenderPriorityProperty(Uniforms.renderPriority);
         //Stencil
         public static readonly StencilModeProperty stencil                          = new StencilModeProperty(Uniforms.stencil);
@@ -168,6 +171,7 @@ namespace MK.Toon
         public static readonly EnumProperty<Outline> outline         = new EnumProperty<Outline>(Uniforms.outline, Keywords.outline);
         public static readonly EnumProperty<OutlineData> outlineData = new EnumProperty<OutlineData>(Uniforms.outlineData, Keywords.outlineData);
         public static readonly TextureProperty outlineMap            = new TextureProperty(Uniforms.outlineMap, Keywords.outlineMap);
+        public static readonly RangeProperty outlineClipOffset       = new RangeProperty(Uniforms.outlineClipOffset, 0, 1);
         public static readonly RangeProperty outlineSize             = new RangeProperty(Uniforms.outlineSize, 0);
         public static readonly ColorProperty outlineColor            = new ColorProperty(Uniforms.outlineColor);
         #if MK_TOON_OUTLINE_FADING_LINEAR  || MK_TOON_OUTLINE_FADING_EXPONENTIAL || MK_TOON_OUTLINE_FADING_INVERSE_EXPONENTIAL

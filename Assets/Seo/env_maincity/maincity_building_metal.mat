@@ -43,7 +43,7 @@ Material:
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 2000
+  m_CustomRenderQueue: 1986
   stringTagMap:
     IGNOREPROJECTOR: False
     RenderType: Opaque
@@ -213,8 +213,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _AdvancedTab: 0
+    - _AddPrecomputedVelocity: 0
+    - _AdvancedTab: 1
     - _AlbedoMapIntensity: 1
+    - _AlembicMotionVectors: 0
     - _AlphaClip: 0
     - _AlphaClipping: 0
     - _AlphaCutoff: 0.5
@@ -222,6 +224,7 @@ Material:
     - _Artistic: 0
     - _ArtisticFrequency: 1
     - _ArtisticProjection: 0
+    - _ArtisticShadowFilter: 0
     - _Blend: 0
     - _BlendDst: 0
     - _BlendDstAlpha: 0
@@ -280,6 +283,7 @@ Material:
     - _OcclusionStrength: 1
     - _OptionsTab: 1
     - _Outline: 3
+    - _OutlineClipOffset: 0
     - _OutlineData: 0
     - _OutlineFadeMax: 2
     - _OutlineFadeMin: 0.25
@@ -289,7 +293,7 @@ Material:
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _RenderFace: 2
-    - _RenderPriority: 0
+    - _RenderPriority: 14
     - _Rim: 0
     - _RimSize: 1
     - _RimSmoothness: 0.5

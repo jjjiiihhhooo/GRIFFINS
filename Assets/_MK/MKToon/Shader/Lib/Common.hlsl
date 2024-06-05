@@ -58,27 +58,48 @@
 
 	inline half ScaleToFitOrthographicUV(float clipScale)
 	{
-		half scaleFactor;
-		#if defined(MK_MULTI_PASS_STEREO_SCALING) || defined(UNITY_SINGLE_PASS_STEREO) || defined(UNITY_STEREO_INSTANCING_ENABLED) || defined(UNITY_STEREO_MULTIVIEW_ENABLED)
-			scaleFactor = 2.0;
+		//#if defined(MK_MULTI_PASS_STEREO_SCALING) || defined(UNITY_SINGLE_PASS_STEREO) || defined(UNITY_STEREO_INSTANCING_ENABLED) || defined(UNITY_STEREO_MULTIVIEW_ENABLED)
+		#if (defined(USING_STEREO_MATRICES) || defined(MK_MULTI_PASS_STEREO_SCALING))
+			const half scaleFactor = 2.0;
 		#else
-			scaleFactor = 1.0;
+			const half scaleFactor = 1.0;
 		#endif
 		half orhtographicUVScale = 1;
 		UNITY_BRANCH
 		if(unity_OrthoParams.w > 0)
 			orhtographicUVScale = 2.0 * clipScale * unity_OrthoParams.y;
-		return orhtographicUVScale * scaleFactor;
+		#ifdef UNITY_SINGLE_PASS_STEREO
+			return half2(0.5h, 1) * (orhtographicUVScale * scaleFactor);
+		#else
+			return orhtographicUVScale * scaleFactor;
+		#endif
+	}
+
+	inline float ComputeLinearDepthToEyeDepth(float eyeDepth)
+{
+    #if UNITY_REVERSED_Z
+        return _ProjectionParams.z - (_ProjectionParams.z - _ProjectionParams.y) * eyeDepth;
+    #else
+        return _ProjectionParams.y + (_ProjectionParams.z - _ProjectionParams.y) * eyeDepth;
+    #endif
+}
+
+	inline half SoftFade(float near, float far, float4 ndc, float4 uvScreen)
+	{
+		//near OR far has to be > 0.0
+		float rawDepth = SampleDepth(uvScreen.xy);
+		float sceneDepth = (unity_OrthoParams.w == 0) ? ComputeLinearDepth(rawDepth) : ComputeLinearDepthToEyeDepth(rawDepth);
+		float depth = ComputeLinearDepth(ndc.z);
+
+		return saturate(far * ((sceneDepth - near) - depth));
 	}
 
 	inline half SoftFade(float near, float far, float4 ndc)
 	{
 		//near OR far has to be > 0.0
-		float sceneDepth = ComputeLinearDepth(SampleDepth(SafeDivide(ndc.xy,ndc.w)));
+		float sceneDepth = ComputeLinearDepth(SampleDepth(ndc.xy));
 		float depth = ComputeLinearDepth(SafeDivide(ndc.z, ndc.w));
 
-		//Remap to 0 - 1
-		far = Rcp(far - near);
 		return saturate(far * ((sceneDepth - near) - depth));
 	}
 

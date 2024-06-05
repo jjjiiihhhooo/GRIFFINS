@@ -104,4 +104,12 @@
 		#define MK_LEGACY_NOISE
 	#endif
 	$$*/
+
+	//Enable legacy noise
+	//%%MK_REGULAR_SCREEN_SPACE
+	/*!!
+	#ifndef MK_REGULAR_SCREEN_SPACE
+		#define MK_REGULAR_SCREEN_SPACE
+	#endif
+	$$*/
 #endif

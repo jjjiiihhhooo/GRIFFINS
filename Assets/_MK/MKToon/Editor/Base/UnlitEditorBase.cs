@@ -96,6 +96,7 @@ namespace MK.Toon.Editor
         // Advanced    //
         /////////////////
         protected MaterialProperty _renderPriority;
+        protected MaterialProperty _alembicMotionVectors;
 
         //Stencil
         protected MaterialProperty _stencil;
@@ -173,6 +174,7 @@ namespace MK.Toon.Editor
             _dissolveBorderColor = FindProperty(Properties.dissolveBorderColor.uniform.name, props);
             
             _renderPriority = FindProperty(Properties.renderPriority.uniform.name, props);
+            _alembicMotionVectors = FindProperty(Properties.alembicMotionVectors.uniform.name, props, false);
 
             _stencil = FindProperty(Properties.stencil.uniform.name, props);
             _stencilRef = FindProperty(Properties.stencilRef.uniform.name, props);
@@ -217,6 +219,7 @@ namespace MK.Toon.Editor
             MaterialProperty surface = FindProperty("_SurfaceType", propertiesSrc, false);
             MaterialProperty mode = FindProperty("_Mode", propertiesSrc, false);
             MaterialProperty blend = FindProperty("_BlendMode", propertiesSrc, false);
+            MaterialProperty addPrecomputedVelocity = FindProperty("_AddPrecomputedVelocity", propertiesSrc, false);
 
             if(mode != null)
                 Properties.surface.SetValue(materialDst, mode.floatValue <= 1 ? Surface.Opaque : Surface.Transparent);
@@ -254,6 +257,14 @@ namespace MK.Toon.Editor
                 Properties.alphaCutoff.SetValue(materialDst, cutoff.floatValue);
             if(cull != null)
                 Properties.renderFace.SetValue(materialDst, (RenderFace) cull.floatValue);
+
+            if(_alembicMotionVectors != null)
+            {
+                if(addPrecomputedVelocity != null)
+                {
+                    Properties.alembicMotionVectors.SetValue(materialDst, addPrecomputedVelocity.floatValue > 0 ? true : false);
+                }
+            }
         }
 
         /// <summary>
@@ -616,12 +627,21 @@ namespace MK.Toon.Editor
             materialEditor.ShaderProperty(_renderPriority, UI.renderPriority);
         }
 
+        protected void DrawAddPrecomputedVelocity(MaterialEditor materialEditor)
+        {
+            #if UNITY_2023_2_OR_NEWER
+            if(_alembicMotionVectors != null)
+                materialEditor.ShaderProperty(_alembicMotionVectors, UI.alembicMotionVectors);
+            #endif
+        }
+
         protected virtual void DrawPipeline(MaterialEditor materialEditor)
         {
             DrawPipelineHeader();
 
             materialEditor.EnableInstancingField();
             DrawRenderPriority(materialEditor);
+            DrawAddPrecomputedVelocity(materialEditor);
         }
 
         protected virtual void DrawStencil(MaterialEditor materialEditor, Material material)
@@ -763,6 +783,17 @@ namespace MK.Toon.Editor
             //No Keyword = Vertex Animation Map Off
         }
 
+        private void ManageKeywordsAlembicMotionVecotrs(Material material)
+        {
+            #if UNITY_2023_2_OR_NEWER
+            if(_alembicMotionVectors != null)
+            {
+                EditorHelper.SetKeyword(Properties.alembicMotionVectors.GetValue(material), Keywords.alembicMotionVectors, material);
+            }
+            material.SetShaderPassEnabled("MotionVectors", true);
+            #endif
+        }
+
         private void UpdateRenderPriority(Material material)
         {
             Properties.renderPriority.SetValue(material, Properties.renderPriority.GetValue(material), Properties.alphaClipping.GetValue(material));
@@ -786,6 +817,7 @@ namespace MK.Toon.Editor
             ManageKeywordsVertexAnimation(material);
             ManageKeywordsVertexAnimationMap(material);
             ManageKeywordsVertexAnimationStutter(material);
+            ManageKeywordsAlembicMotionVecotrs(material);
             _particles.UpdateKeywords(material);
             _outline.ManageKeywordsOutline(material);
             _outline.ManageKeywordsOutlineNoise(material);

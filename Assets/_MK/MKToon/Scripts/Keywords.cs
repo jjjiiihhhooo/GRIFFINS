@@ -44,6 +44,7 @@ namespace MK.Toon
         public static readonly string[] specular               = new string[3]{"_MK_SPECULAR_OFF", "_MK_SPECULAR_ISOTROPIC", "_MK_SPECULAR_ANISOTROPIC"};
         public static readonly string[] environmentReflections = new string[3]{ "_MK_ENVIRONMENT_REFLECTIONS_OFF", "_MK_ENVIRONMENT_REFLECTIONS_AMBIENT", "_MK_ENVIRONMENT_REFLECTIONS_ADVANCED"};
         public static readonly string fresnelHighlights        = "_MK_FRESNEL_HIGHLIGHTS";
+        public static readonly string alembicMotionVectors   = "_ADD_PRECOMPUTED_VELOCITY";
         public static readonly string[] outline                = new string[3]{"_MK_OUTLINE_HULL_OBJECT", "_MK_OUTLINE_HULL_ORIGIN", "_MK_OUTLINE_HULL_CLIP"};
         public static readonly string outlineData              = "_MK_OUTLINE_DATA_UV7";
         public static readonly string outlineMap               = "_MK_OUTLINE_MAP";

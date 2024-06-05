@@ -446,6 +446,9 @@ namespace MK.Toon
             Properties.renderPriority.SetValue(material, Properties.renderPriority.GetValue(material), Properties.alphaClipping.GetValue(material));
             material.SetInt(uniform.id, (int)surface);
             SetKeyword(material,(int) surface != 0, (int) surface);
+            
+            if(material.shader.name.Contains("URP"))
+                material.SetShaderPassEnabled("DepthOnly", Properties.zWrite.GetValue(material) == ZWrite.On ? true : false);
         }
     }
 
