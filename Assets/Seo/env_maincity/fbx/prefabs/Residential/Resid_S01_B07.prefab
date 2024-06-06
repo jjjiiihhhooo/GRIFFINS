@@ -9,7 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2171911343454426029}
+  - component: {fileID: 2204627374120645607}
   - component: {fileID: 8359175834950516963}
+  - component: {fileID: 4823691264522552420}
   m_Layer: 11
   m_Name: Resid_S01_B07
   m_TagString: Untagged
@@ -33,6 +35,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &2204627374120645607
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 661319689884141099}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 4.356723
+  m_Height: 37.011005
+  m_Direction: 1
+  m_Center: {x: 0.045913696, y: 12.582693, z: 0.015305519}
 --- !u!65 &8359175834950516963
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -44,8 +60,21 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 9.229701, y: 26.598417, z: 9.232523}
-  m_Center: {x: 0.02416277, y: 12.799211, z: -0.045297623}
+  m_Size: {x: 4.4241023, y: 26.598417, z: 8.712172}
+  m_Center: {x: 2.18209, y: 12.799211, z: 0.0006160736}
+--- !u!65 &4823691264522552420
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 661319689884141099}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 8.709349, y: 26.598417, z: 4.4881425}
+  m_Center: {x: 0.039466858, y: 12.799211, z: -2.1113985}
 --- !u!1 &4571966047233595650
 GameObject:
   m_ObjectHideFlags: 0
