@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66f335fb1ffd8684294ad653bf1c7564, type: 3}
   m_Name: ColorAdjustments
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   postExposure:
     m_OverrideState: 1
     m_Value: 0
@@ -109,22 +109,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 558a8e2b6826cf840aae193990ba9f2e, type: 3}
   m_Name: ShadowsMidtonesHighlights
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   shadows:
     m_OverrideState: 1
-    m_Value: {x: 0.86991644, y: 0.91369903, z: 1, w: -0.38873237}
+    m_Value: {x: 0.9063959, y: 0.9383845, z: 1, w: -0.017862638}
   midtones:
     m_OverrideState: 1
-    m_Value: {x: 1, y: 1, z: 1, w: 0}
+    m_Value: {x: 1, y: 0.98880714, z: 0.9552285, w: -0.018231539}
   highlights:
     m_OverrideState: 1
-    m_Value: {x: 0.9992313, y: 1, z: 0.91199297, w: 0}
+    m_Value: {x: 0.9992313, y: 1, z: 0.91199297, w: 0.12762077}
   shadowsStart:
-    m_OverrideState: 0
-    m_Value: 0
+    m_OverrideState: 1
+    m_Value: 0.15
   shadowsEnd:
-    m_OverrideState: 0
-    m_Value: 0.3
+    m_OverrideState: 1
+    m_Value: 0.25
   highlightsStart:
     m_OverrideState: 0
     m_Value: 0.55
@@ -209,21 +209,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 899c54efeace73346a0a16faa3afe726, type: 3}
   m_Name: Vignette
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   color:
     m_OverrideState: 1
-    m_Value: {r: 0, g: 0, b: 0, a: 1}
+    m_Value: {r: 0.11449803, g: 0.2924528, b: 0.26597795, a: 1}
   center:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: {x: 0.5, y: 0.5}
   intensity:
     m_OverrideState: 1
-    m_Value: 0.1
+    m_Value: 0.2
   smoothness:
     m_OverrideState: 1
-    m_Value: 0.5
+    m_Value: 0.529
   rounded:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 0
 --- !u!114 &2740993814837652062
 MonoBehaviour:
@@ -237,18 +237,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccf1aba9553839d41ae37dd52e9ebcce, type: 3}
   m_Name: MotionBlur
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   mode:
     m_OverrideState: 1
     m_Value: 0
   quality:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 2
   intensity:
     m_OverrideState: 1
     m_Value: 0.2
   clamp:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 0.05
 --- !u!114 &3392395407166844765
 MonoBehaviour:
@@ -288,17 +288,17 @@ MonoBehaviour:
     m_OverrideState: 0
     m_Value: 0
   radius:
-    m_OverrideState: 0
-    m_Value: 0.56
+    m_OverrideState: 1
+    m_Value: 0.9
   maxRadiusPixels:
     m_OverrideState: 0
     m_Value: 128
   bias:
-    m_OverrideState: 0
-    m_Value: 0.05
+    m_OverrideState: 1
+    m_Value: 0.224
   intensity:
     m_OverrideState: 1
-    m_Value: 1.62
+    m_Value: 2.09
   useMultiBounce:
     m_OverrideState: 0
     m_Value: 0
@@ -384,7 +384,7 @@ MonoBehaviour:
   active: 0
   mode:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 2
 --- !u!114 &6549711806299125720
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -397,22 +397,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b2db86121404754db890f4c8dfe81b2, type: 3}
   m_Name: Bloom
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   threshold:
     m_OverrideState: 1
-    m_Value: 0.62
+    m_Value: 0.6
   intensity:
     m_OverrideState: 1
-    m_Value: 0.63
+    m_Value: 0.1
   scatter:
     m_OverrideState: 1
-    m_Value: 0.7
+    m_Value: 0.1
   clamp:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 65472
   tint:
     m_OverrideState: 1
-    m_Value: {r: 1, g: 1, b: 1, a: 1}
+    m_Value: {r: 1, g: 0.98543113, b: 0.8915094, a: 1}
   highQualityFiltering:
     m_OverrideState: 0
     m_Value: 0
@@ -420,11 +420,11 @@ MonoBehaviour:
     m_OverrideState: 0
     m_Value: 0
   dirtTexture:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: {fileID: 2800000, guid: b17c561edbff85241b3044226dcbf5bb, type: 3}
     dimension: 1
   dirtIntensity:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 3
 --- !u!114 &7620968687822978861
 MonoBehaviour:

@@ -200,8 +200,8 @@ namespace MK.Toon.Editor
         (
             "Occlusion",
             "Direct/Indirect lighting occlusion map and intensity.\n\n" +
-            "(R) controls how much direct light is recieved.\n" +
-            "(G) controls how much indirect light is recieved.\n\n" +
+            "(R) controls how much indirect light is recieved.\n" +
+            "(G) controls how much direct light is recieved.\n\n" +
             "0/black: lighting fully occluded\n" +
             "1/white: default lighting\n\n" +
             "Slider scales the intensity of the occlusion map."
@@ -640,6 +640,13 @@ namespace MK.Toon.Editor
             "Sketch",
             "Lookup texture (R) to customize the lighting."
         );
+        #if MK_TOON_STYLIZE_SYSTEM_SHADOWS
+        internal static readonly GUIContent artisticShadowFilter = new GUIContent
+        (
+            "Shadow Filter", 
+            "Controls how strong the overlay is shown on received shadows."
+        );
+        #endif
 
         /////////////////
         // Advanced    //
@@ -710,6 +717,11 @@ namespace MK.Toon.Editor
             "Priority",
             "Determines the chronological rendering order for a Material. High values are rendered first."
         );
+        internal static readonly GUIContent alembicMotionVectors = new GUIContent
+        (
+            "Alembic Motion Vectors", 
+            "When enabled, the material will use motion vectors from the Alembic animation cache. Should not be used on regular meshes or Alembic caches without precomputed motion vectors."
+        );
         internal static readonly GUIContent stencilRef = new GUIContent
         (
             "Ref",
@@ -767,6 +779,11 @@ namespace MK.Toon.Editor
         (
             "Width",
             "Size of the outline. Map (R) is used for an advanced size setup."
+        );
+        public static readonly GUIContent outlineClipOffset = new GUIContent
+        (
+            "Offset", 
+            "Offsets the outline in clip space further away from the camera. This can be used to limit intersecting lines inside of the object."
         );
         internal static readonly GUIContent outlineColor = new GUIContent
         (

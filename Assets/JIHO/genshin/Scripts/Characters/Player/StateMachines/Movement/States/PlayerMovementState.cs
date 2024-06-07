@@ -117,7 +117,6 @@ public class PlayerMovementState : IState
     {
         if (stateMachine.Player.freeze) return;
         if (GameManager.Instance.dialogueManager.IsChat) return;
-        stateMachine.Player.Input.PlayerActions.WalkToggle.started += OnWalkToggleStarted;
 
         stateMachine.Player.Input.PlayerActions.Look.started += OnMouseMovementStarted;
 
@@ -129,7 +128,6 @@ public class PlayerMovementState : IState
     {
         if (stateMachine.Player.freeze) return;
         if (GameManager.Instance.dialogueManager.IsChat) return;
-        stateMachine.Player.Input.PlayerActions.WalkToggle.started -= OnWalkToggleStarted;
 
         stateMachine.Player.Input.PlayerActions.Look.started -= OnMouseMovementStarted;
 

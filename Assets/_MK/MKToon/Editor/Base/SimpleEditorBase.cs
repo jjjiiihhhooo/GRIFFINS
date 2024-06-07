@@ -7,8 +7,14 @@
 //////////////////////////////////////////////////////
 
 #if UNITY_EDITOR
-using UnityEditor;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
+using System.Linq;
+using System;
+using UnityEditor.Utils;
+using UnityEditorInternal;
+using EditorHelper = MK.Toon.Editor.EditorHelper;
 
 namespace MK.Toon.Editor
 {
@@ -23,8 +29,8 @@ namespace MK.Toon.Editor
             _renderPipeline = renderPipeline;
         }
         /////////////////////////////////////////////////////////////////////////////////////////////
-        // Properties                                                                              //
-        /////////////////////////////////////////////////////////////////////////////////////////////
+		// Properties                                                                              //
+		/////////////////////////////////////////////////////////////////////////////////////////////
 
         /////////////////
         // Input       //
@@ -82,7 +88,10 @@ namespace MK.Toon.Editor
         protected MaterialProperty _drawnClampMax;
         protected MaterialProperty _sketchMapScale;
         protected MaterialProperty _sketchMap;
-
+        #if MK_TOON_STYLIZE_SYSTEM_SHADOWS
+        protected MaterialProperty _artisticShadowFilter;
+        #endif
+        
         /////////////////
         // Advanced    //
         /////////////////
@@ -104,7 +113,7 @@ namespace MK.Toon.Editor
             _normalMap = FindProperty(Properties.normalMap.uniform.name, props);
             _emissionColor = FindProperty(Properties.emissionColor.uniform.name, props);
             _emissionMap = FindProperty(Properties.emissionMap.uniform.name, props);
-
+            
             _artistic = FindProperty(Properties.artistic.uniform.name, props);
             _artisticProjection = FindProperty(Properties.artisticProjection.uniform.name, props);
             _artisticFrequency = FindProperty(Properties.artisticFrequency.uniform.name, props);
@@ -117,6 +126,9 @@ namespace MK.Toon.Editor
             _drawnClampMax = FindProperty(Properties.drawnClampMax.uniform.name, props);
             _sketchMapScale = FindProperty(Properties.sketchMapScale.uniform.name, props);
             _sketchMap = FindProperty(Properties.sketchMap.uniform.name, props);
+            #if MK_TOON_STYLIZE_SYSTEM_SHADOWS
+            _artisticShadowFilter = FindProperty(Properties.artisticShadowFilter.uniform.name, props);
+            #endif
             _diffuseSmoothness = FindProperty(Properties.diffuseSmoothness.uniform.name, props);
             _diffuseThresholdOffset = FindProperty(Properties.diffuseThresholdOffset.uniform.name, props);
             _specularSmoothness = FindProperty(Properties.specularSmoothness.uniform.name, props);
@@ -147,7 +159,7 @@ namespace MK.Toon.Editor
             _rimColor = FindProperty(Properties.rimColor.uniform.name, props);
             _rimBrightColor = FindProperty(Properties.rimBrightColor.uniform.name, props);
             _rimDarkColor = FindProperty(Properties.rimDarkColor.uniform.name, props);
-
+            
             _receiveShadows = FindProperty(Properties.receiveShadows.uniform.name, props);
             _IndirectFade = FindProperty(Properties.indirectFade.uniform.name, props);
             _wrappedDiffuse = FindProperty(Properties.wrappedLighting.uniform.name, props);
@@ -157,8 +169,8 @@ namespace MK.Toon.Editor
         }
 
         /////////////////////////////////////////////////////////////////////////////////////////////
-        // Draw                                                                                    //
-        /////////////////////////////////////////////////////////////////////////////////////////////
+		// Draw                                                                                    //
+		/////////////////////////////////////////////////////////////////////////////////////////////
         protected override void ConvertSimilarValues(MaterialProperty[] propertiesSrc, Material materialSrc, Material materialDst)
         {
             base.ConvertSimilarValues(propertiesSrc, materialSrc, materialDst);
@@ -174,21 +186,21 @@ namespace MK.Toon.Editor
             MaterialProperty glossyReflections = FindProperty("_GlossyReflections", propertiesSrc, false);
             MaterialProperty environmentReflections = FindProperty("_EnvironmentReflections", propertiesSrc, false);
             MaterialProperty specular = FindProperty("_Specular", propertiesSrc, false);
-
-            if (metallicGlossMap != null)
+            
+            if(metallicGlossMap != null)
                 Properties.specularMap.SetValue(materialDst, metallicGlossMap.textureValue);
-            if (specGlossMap != null)
+            if(specGlossMap != null)
                 Properties.specularMap.SetValue(materialDst, specGlossMap.textureValue);
-
-            if (specColor != null)
+            
+            if(specColor != null)
                 Properties.specularColor.SetValue(materialDst, specColor.colorValue);
 
-            if (materialSrc.shader.name == "Standard")
+            if(materialSrc.shader.name == "Standard")
                 Properties.smoothness.SetValue(materialDst, glossiness.floatValue);
-
-            if (bumpScale != null)
+        
+            if(bumpScale != null)
                 Properties.normalMapIntensity.SetValue(materialDst, bumpScale.floatValue);
-            if (bumpMap != null)
+            if(bumpMap != null)
                 Properties.normalMap.SetValue(materialDst, bumpMap.textureValue);
 
             bool srctIsMKLitSimple = materialSrc.shader.name.Contains("MK/Toon/") && materialSrc.shader.name.Contains("Simple");
@@ -199,40 +211,40 @@ namespace MK.Toon.Editor
             bool dstIsMKLitPBS = materialDst.shader.name.Contains("MK/Toon/") && materialDst.shader.name.Contains("Physically Based");
             bool dstIsMKUnlit = materialDst.shader.name.Contains("MK/Toon/") && materialDst.shader.name.Contains("Unlit");
 
-            if (specularHighlights != null && !srcIsMKUnlit && !srctIsMKLitSimple && !srcIsMKLitPBS)
+            if(specularHighlights != null && !srcIsMKUnlit && !srctIsMKLitSimple && !srcIsMKLitPBS)
                 Properties.specular.SetValue(materialDst, specularHighlights.floatValue > 0 ? Specular.Isotropic : Specular.Off);
-            else if (specular == null && srcIsMKUnlit && (dstIsMKLitSimple || dstIsMKLitPBS))
-                if (dstIsMKLitPBS)
+            else if(specular == null && srcIsMKUnlit && (dstIsMKLitSimple || dstIsMKLitPBS))
+                if(dstIsMKLitPBS)
                     Properties.specular.SetValue(materialDst, Properties.specular.GetValue(materialDst));
                 else
                     Properties.specular.SetValue(materialDst, Properties.specular.GetValue(materialDst) > 0 ? Specular.Isotropic : Specular.Off);
-            else if (srcIsMKLitPBS && dstIsMKLitSimple)
+            else if(srcIsMKLitPBS && dstIsMKLitSimple)
                 Properties.specular.SetValue(materialDst, Properties.specular.GetValue(materialSrc) > 0 ? Specular.Isotropic : Specular.Off);
             else
-            { }
-
-            if (glossyReflections != null && !srcIsMKUnlit && !srctIsMKLitSimple && !srcIsMKLitPBS)
+                {}
+            
+            if(glossyReflections != null && !srcIsMKUnlit && !srctIsMKLitSimple && !srcIsMKLitPBS)
                 Properties.environmentReflections.SetValue(materialDst, glossyReflections.floatValue > 0 ? EnvironmentReflection.Advanced : EnvironmentReflection.Ambient);
-            else if (environmentReflections == null && srcIsMKUnlit && (dstIsMKLitSimple || dstIsMKLitPBS))
-                if (dstIsMKLitPBS)
+            else if(environmentReflections == null && srcIsMKUnlit && (dstIsMKLitSimple || dstIsMKLitPBS))
+                if(dstIsMKLitPBS)
                     Properties.environmentReflections.SetValue(materialDst, Properties.environmentReflections.GetValue(materialDst));
                 else
                     Properties.environmentReflections.SetValue(materialDst, (Properties.environmentReflections.GetValue(materialDst)) > EnvironmentReflection.Ambient ? EnvironmentReflection.Ambient : Properties.environmentReflections.GetValue(materialDst));
-            else if (srcIsMKUnlit && (dstIsMKLitSimple || dstIsMKLitPBS))
-                if (dstIsMKLitPBS)
+            else if(srcIsMKUnlit && (dstIsMKLitSimple || dstIsMKLitPBS))
+                if(dstIsMKLitPBS)
                     Properties.environmentReflections.SetValue(materialDst, Properties.environmentReflections.GetValue(materialDst));
                 else
                 {
                     Properties.environmentReflections.SetValue(materialDst, (Properties.environmentReflections.GetValue(materialDst)) > EnvironmentReflection.Ambient ? EnvironmentReflection.Ambient : Properties.environmentReflections.GetValue(materialDst));
                 }
-            else if (srcIsMKLitPBS && dstIsMKLitSimple)
+            else if(srcIsMKLitPBS && dstIsMKLitSimple)
                 Properties.environmentReflections.SetValue(materialDst, (Properties.environmentReflections.GetValue(materialSrc)) > EnvironmentReflection.Ambient ? EnvironmentReflection.Ambient : Properties.environmentReflections.GetValue(materialSrc));
             else
-            { }
-            if (!materialSrc.shader.name.Contains("MK/Toon/"))
+                {}
+            if(!materialSrc.shader.name.Contains("MK/Toon/"))
             {
                 bool emissionEnabled = materialSrc.globalIlluminationFlags.HasFlag(MaterialGlobalIlluminationFlags.EmissiveIsBlack);
-                if (emissionEnabled)
+                if(emissionEnabled)
                     Properties.emissionColor.SetValue(materialDst, Color.black);
             }
         }
@@ -285,7 +297,7 @@ namespace MK.Toon.Editor
                 DrawSmoothness(materialEditor);
             }
             */
-            if ((Specular)_specular.floatValue != Specular.Off)
+            if((Specular) _specular.floatValue != Specular.Off)
             {
                 DrawSpecularMap(materialEditor);
                 DrawSmoothness(materialEditor);
@@ -314,23 +326,23 @@ namespace MK.Toon.Editor
         {
             EditorGUILayout.LabelField("Ramps:", UnityEditor.EditorStyles.boldLabel);
         }
-
+        
         protected virtual void DrawLightingThreshold(MaterialEditor materialEditor)
         {
             //EditorGUILayout.LabelField("Threshold:", UnityEditor.EditorStyles.boldLabel);
             DrawLightingThresholdOffsetHeader();
-            if (_thresholdMap.textureValue != null)
+            if(_thresholdMap.textureValue != null)
                 materialEditor.TexturePropertySingleLine(UI.thresholdMap, _thresholdMap, _thresholdMapScale);
             else
                 materialEditor.TexturePropertySingleLine(UI.thresholdMap, _thresholdMap);
-            if (_thresholdMap.textureValue != null)
+            if(_thresholdMap.textureValue != null)
             {
                 materialEditor.ShaderProperty(_diffuseThresholdOffset, UI.diffuseThresholdOffset);
-                if (_specular.floatValue != (int)Specular.Off)
+                if(_specular.floatValue != (int) Specular.Off)
                     materialEditor.ShaderProperty(_specularThresholdOffset, UI.specularThresholdOffset);
-                if (_rim.floatValue != (int)Rim.Off)
+                if(_rim.floatValue != (int) Rim.Off)
                     materialEditor.ShaderProperty(_rimThresholdOffset, UI.rimThresholdOffset);
-                if (_iridescence.floatValue != (int)Iridescence.Off)
+                if(_iridescence.floatValue != (int) Iridescence.Off)
                     materialEditor.ShaderProperty(_iridescenceThresholdOffset, UI.iridescenceThresholdOffset);
             }
         }
@@ -340,32 +352,32 @@ namespace MK.Toon.Editor
             //EditorGUILayout.LabelField("Smoothness:", UnityEditor.EditorStyles.boldLabel);
             DrawLightingSmoothnessHeader();
             materialEditor.ShaderProperty(_diffuseSmoothness, UI.diffuseSmoothness);
-            if (_specular.floatValue != (int)Specular.Off)
+            if(_specular.floatValue != (int) Specular.Off)
                 materialEditor.ShaderProperty(_specularSmoothness, UI.specularSmoothness);
-            if (_rim.floatValue != (int)Rim.Off)
+            if(_rim.floatValue != (int) Rim.Off)
                 materialEditor.ShaderProperty(_rimSmoothness, UI.rimSmoothness);
-            if (_iridescence.floatValue != (int)Iridescence.Off)
+            if(_iridescence.floatValue != (int) Iridescence.Off)
                 materialEditor.ShaderProperty(_iridescenceSmoothness, UI.iridescenceSmoothness);
         }
 
         protected void DrawLightingRampWarningHeader()
         {
-            EditorGUILayout.LabelField("Please set a ramp for every active lighting feature to make the lighting work properly.", UnityEditor.EditorStyles.wordWrappedLabel);
+            EditorGUILayout.LabelField("Please set a ramp for every active lighting feature to make the lighting work properly.",  UnityEditor.EditorStyles.wordWrappedLabel);
         }
         protected virtual void DrawLightingRampWarning()
         {
             bool displayWarning = false;
             bool d = _diffuseRamp.textureValue == null;
-            bool s = (Specular)_specular.floatValue != Specular.Off && _specularRamp.textureValue == null;
-            bool r = (Rim)_rim.floatValue != Rim.Off && _rimRamp.textureValue == null;
+            bool s = (Specular) _specular.floatValue != Specular.Off && _specularRamp.textureValue == null;
+            bool r = (Rim) _rim.floatValue != Rim.Off && _rimRamp.textureValue == null;
 
-            if ((Light)_light.floatValue == Light.Ramp)
+            if((Light) _light.floatValue == Light.Ramp)
             {
-                if (d || s || r)
+                if(d || s || r)
                     displayWarning = true;
             }
 
-            if (displayWarning)
+            if(displayWarning)
                 DrawLightingRampWarningHeader();
         }
 
@@ -374,9 +386,9 @@ namespace MK.Toon.Editor
             DrawLightingRampHeader();
             DrawLightingRampWarning();
             materialEditor.TexturePropertySingleLine(UI.diffuseRamp, _diffuseRamp);
-            if ((Specular)_specular.floatValue != Specular.Off)
+            if((Specular) _specular.floatValue != Specular.Off)
                 materialEditor.TexturePropertySingleLine(UI.specularRamp, _specularRamp);
-            if ((Rim)_rim.floatValue != Rim.Off)
+            if((Rim) _rim.floatValue != Rim.Off)
                 materialEditor.TexturePropertySingleLine(UI.rimRamp, _rimRamp);
         }
 
@@ -392,9 +404,9 @@ namespace MK.Toon.Editor
                 materialEditor.ShaderProperty(_lightBandsScale, UI.lightBandsScale);
             }
             EditorHelper.Divider();
-
+            
             DrawLightingThreshold(materialEditor);
-
+            
             if (_light.floatValue == (int)(Light.Ramp))
             {
                 EditorHelper.Divider();
@@ -415,7 +427,7 @@ namespace MK.Toon.Editor
         protected virtual void DrawGooch(MaterialEditor materialEditor)
         {
             DrawGoochHeader();
-            if (_goochRamp.textureValue != null)
+            if(_goochRamp.textureValue != null)
                 materialEditor.TexturePropertySingleLine(UI.goochRamp, _goochRamp, _goochRampIntensity);
             else
                 materialEditor.TexturePropertySingleLine(UI.goochRamp, _goochRamp);
@@ -434,13 +446,13 @@ namespace MK.Toon.Editor
             SetBoldFontStyle(true);
             materialEditor.ShaderProperty(_rim, UI.rim);
             SetBoldFontStyle(false);
-            if ((Rim)_rim.floatValue != Rim.Off)
+            if((Rim)_rim.floatValue != Rim.Off)
             {
-                if ((Rim)_rim.floatValue == Rim.Default)
+                if((Rim)_rim.floatValue == Rim.Default)
                 {
                     materialEditor.ShaderProperty(_rimColor, UI.rimColor);
                 }
-                else if ((Rim)_rim.floatValue == Rim.Split)
+                else if((Rim)_rim.floatValue == Rim.Split)
                 {
                     materialEditor.ShaderProperty(_rimBrightColor, UI.rimBrightColor);
                     materialEditor.ShaderProperty(_rimDarkColor, UI.rimDarkColor);
@@ -460,7 +472,7 @@ namespace MK.Toon.Editor
             SetBoldFontStyle(true);
             materialEditor.ShaderProperty(_iridescence, UI.iridescence);
             SetBoldFontStyle(false);
-            if ((Iridescence)_iridescence.floatValue != Iridescence.Off)
+            if((Iridescence)_iridescence.floatValue != Iridescence.Off)
             {
                 materialEditor.TexturePropertySingleLine(UI.iridescenceRamp, _iridescenceRamp, _iridescenceColor);
                 materialEditor.ShaderProperty(_iridescenceSize, UI.iridescenceSize, 2);
@@ -473,43 +485,52 @@ namespace MK.Toon.Editor
         }
 
         protected virtual void DrawArtistic(MaterialEditor materialEditor)
-        {
+        {   
             //DrawArtisticHeader();
             SetBoldFontStyle(true);
             materialEditor.ShaderProperty(_artistic, UI.artistic);
             SetBoldFontStyle(false);
-            if (_artistic.floatValue != (int)(Artistic.Off))
+            if(_artistic.floatValue != (int)(Artistic.Off))
             {
                 materialEditor.ShaderProperty(_artisticProjection, UI.artisticProjection);
-                if (_artistic.floatValue == (int)(Artistic.Hatching))
+                if(_artistic.floatValue == (int)(Artistic.Hatching))
                 {
-                    if (_hatchingBrightMap.textureValue != null || _hatchingDarkMap.textureValue != null)
+                    if(_hatchingBrightMap.textureValue != null || _hatchingDarkMap.textureValue != null)
                         materialEditor.TexturePropertySingleLine(UI.hatchingBrightMap, _hatchingBrightMap, _hatchingMapScale);
                     else
                         materialEditor.TexturePropertySingleLine(UI.hatchingBrightMap, _hatchingBrightMap);
                     materialEditor.TexturePropertySingleLine(UI.hatchingDarkMap, _hatchingDarkMap);
-                    if (_hatchingBrightMap.textureValue != null || _hatchingDarkMap.textureValue != null)
+                    if(_hatchingBrightMap.textureValue != null || _hatchingDarkMap.textureValue != null)
                     {
+                        #if MK_TOON_STYLIZE_SYSTEM_SHADOWS
+                        materialEditor.ShaderProperty(_artisticShadowFilter, UI.artisticShadowFilter);
+                        #endif
                         materialEditor.ShaderProperty(_artisticFrequency, UI.artisticStutterFreqency);
                     }
                 }
-                else if (_artistic.floatValue == (int)(Artistic.Drawn))
+                else if(_artistic.floatValue == (int)(Artistic.Drawn))
                 {
-                    if (_drawnMap.textureValue != null)
+                    if(_drawnMap.textureValue != null)
                     {
                         materialEditor.TexturePropertySingleLine(UI.drawnMap, _drawnMap, _drawnMapScale);
                         materialEditor.ShaderProperty(_drawnClampMin, UI.drawnClampMin);
                         materialEditor.ShaderProperty(_drawnClampMax, UI.drawnClampMax);
+                        #if MK_TOON_STYLIZE_SYSTEM_SHADOWS
+                        materialEditor.ShaderProperty(_artisticShadowFilter, UI.artisticShadowFilter);
+                        #endif
                         materialEditor.ShaderProperty(_artisticFrequency, UI.artisticStutterFreqency);
                     }
                     else
                         materialEditor.TexturePropertySingleLine(UI.drawnMap, _drawnMap);
                 }
-                else if (_artistic.floatValue == (int)(Artistic.Sketch))
+                else if(_artistic.floatValue == (int)(Artistic.Sketch))
                 {
-                    if (_sketchMap.textureValue != null)
+                    if(_sketchMap.textureValue != null)
                     {
                         materialEditor.TexturePropertySingleLine(UI.sketchMap, _sketchMap, _sketchMapScale);
+                        #if MK_TOON_STYLIZE_SYSTEM_SHADOWS
+                        materialEditor.ShaderProperty(_artisticShadowFilter, UI.artisticShadowFilter);
+                        #endif
                         materialEditor.ShaderProperty(_artisticFrequency, UI.artisticStutterFreqency);
                     }
                     else
@@ -548,19 +569,19 @@ namespace MK.Toon.Editor
         // Advanced    //
         /////////////////
         protected virtual void DrawReceiveShadows(MaterialEditor materialEditor)
-        {
+        { 
             materialEditor.ShaderProperty(_receiveShadows, UI.receiveShadows);
         }
 
         protected virtual void DrawWrappedLighting(MaterialEditor materialEditor)
-        {
+        { 
             materialEditor.ShaderProperty(_wrappedDiffuse, UI.wrappedLighting);
         }
 
         protected virtual void DrawSpecularMode(MaterialEditor materialEditor)
-        {
+        { 
             materialEditor.ShaderProperty(_specular, UI.specular);
-            if (_specular.floatValue != (int)Specular.Off)
+            if(_specular.floatValue != (int)Specular.Off)
             {
                 materialEditor.ShaderProperty(_specularIntensity, UI.specularIntensity, 1);
             }
@@ -569,7 +590,7 @@ namespace MK.Toon.Editor
         protected virtual void DrawEnvironmentReflections(MaterialEditor materialEditor)
         {
             materialEditor.ShaderProperty(_environmentReflections, UI.environmentReflections);
-            if (_environmentReflections.floatValue != (int)EnvironmentReflection.Off)
+            if(_environmentReflections.floatValue != (int)EnvironmentReflection.Off)
                 materialEditor.ShaderProperty(_IndirectFade, UI.indirectFade);
         }
 
@@ -590,12 +611,13 @@ namespace MK.Toon.Editor
             materialEditor.EnableInstancingField();
             materialEditor.DoubleSidedGIField();
             DrawRenderPriority(materialEditor);
+            DrawAddPrecomputedVelocity(materialEditor);
         }
 
         protected override void DrawAdvancedContent(MaterialEditor materialEditor, Material material)
         {
             DrawAdvancedLighting(materialEditor);
-
+            
             EditorHelper.Divider();
             DrawPipeline(materialEditor);
 
@@ -604,8 +626,8 @@ namespace MK.Toon.Editor
         }
 
         /////////////////////////////////////////////////////////////////////////////////////////////
-        // Variants Setup                                                                          //
-        /////////////////////////////////////////////////////////////////////////////////////////////
+		// Variants Setup                                                                          //
+		/////////////////////////////////////////////////////////////////////////////////////////////
         private void ManageKeywordsNormalMap(Material material)
         {
             //Normalmap
@@ -653,22 +675,22 @@ namespace MK.Toon.Editor
         private void ManageKeywordsArtistic(Material material)
         {
             //Artistic
-            EditorHelper.SetKeyword(Properties.artistic.GetValue(material) == Artistic.Drawn, Keywords.artistic[1], material);
-            EditorHelper.SetKeyword(Properties.artistic.GetValue(material) == Artistic.Hatching, Keywords.artistic[2], material);
-            EditorHelper.SetKeyword(Properties.artistic.GetValue(material) == Artistic.Sketch, Keywords.artistic[3], material);
+            EditorHelper.SetKeyword(Properties.artistic.GetValue(material) == Artistic.Drawn , Keywords.artistic[1], material);
+            EditorHelper.SetKeyword(Properties.artistic.GetValue(material) == Artistic.Hatching , Keywords.artistic[2], material);
+            EditorHelper.SetKeyword(Properties.artistic.GetValue(material) == Artistic.Sketch , Keywords.artistic[3], material);
             //No keyword = no artistic
         }
 
         private void ManageKeywordsArtisticAnimation(Material material)
         {
             //Artistic Animation
-            EditorHelper.SetKeyword(Properties.artisticFrequency.GetValue(material) != 0.0f, Keywords.artisticAnimation, material);
+            EditorHelper.SetKeyword(Properties.artisticFrequency.GetValue(material) != 0.0f , Keywords.artisticAnimation, material);
         }
 
         private void ManageKeywordsArtisticProjection(Material material)
         {
             //Artistic Projection
-            EditorHelper.SetKeyword(Properties.artisticProjection.GetValue(material) == ArtisticProjection.ScreenSpace, Keywords.artisticProjection[1], material);
+            EditorHelper.SetKeyword(Properties.artisticProjection.GetValue(material) == ArtisticProjection.ScreenSpace , Keywords.artisticProjection[1], material);
         }
 
         private void ManageKeywordsRim(Material material)

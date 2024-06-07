@@ -17,7 +17,7 @@
 	/////////////////////////////////////////////////////////////////////////////////////////////
 	// VERTEX SHADER
 	/////////////////////////////////////////////////////////////////////////////////////////////
-	void ForwardVert (VertexInputForward VERTEX_INPUT, out VertexOutputForward vertexOutput, out VertexOutputLight vertexOutputLight)
+	void ForwardVert (VertexInputForward VERTEX_INPUT, out VertexOutputLight vertexOutputLight, out VertexOutputForward vertexOutput)
 	{
 		UNITY_SETUP_INSTANCE_ID(VERTEX_INPUT);
 		INITIALIZE_STRUCT(VertexOutputForward, vertexOutput);
@@ -129,11 +129,7 @@
 	/////////////////////////////////////////////////////////////////////////////////////////////
 	// FRAGMENT SHADER
 	/////////////////////////////////////////////////////////////////////////////////////////////
-	MKFragmentOutput ForwardFrag(in VertexOutputForward vertexOutput, in VertexOutputLight vertexOutputLight
-		#ifdef MK_VFACE
-		, half vFace : VFACE
-		#endif
-	)
+	MKFragmentOutput ForwardFrag(in VertexOutputLight vertexOutputLight, in VertexOutputForward vertexOutput MK_DECLARE_V_FACE)
 	{
 		UNITY_SETUP_INSTANCE_ID(vertexOutput);
 		UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(vertexOutput);

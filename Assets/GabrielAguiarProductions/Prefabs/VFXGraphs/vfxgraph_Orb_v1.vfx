@@ -861,7 +861,7 @@ MonoBehaviour:
     enumValues: []
     descendantCount: 0
   m_ImportDependencies: []
-  m_GraphVersion: 8
+  m_GraphVersion: 9
   m_ResourceVersion: 1
   m_SubgraphDependencies: []
   m_CategoryPath: 
@@ -1410,8 +1410,7 @@ MonoBehaviour:
   castShadows: 0
   useExposureWeight: 0
   flipbookLayout: 0
-  shaderGraph: {fileID: -5475051401550479605, guid: e258e3daef09481409a01243274a8ed4,
-    type: 3}
+  shaderGraph: {fileID: -5475051401550479605, guid: e258e3daef09481409a01243274a8ed4, type: 3}
   materialSettings:
     m_PropertyNames: []
     m_PropertyValues: []
@@ -1452,14 +1451,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 081ffb0090424ba4cb05370a42ead6b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UIIgnoredErrors: []
-  m_Parent: {fileID: 0}
-  m_Children: []
-  m_UIPosition: {x: 0, y: 0}
-  m_UICollapsed: 1
-  m_UISuperCollapsed: 0
-  opaqueRenderQueue: 0
-  transparentRenderQueue: 1
 --- !u!114 &8926484042661614591
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2211,7 +2202,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614616}
   m_ExposedName: YOffset
   m_Exposed: 1
-  m_Order: 9
+  m_Order: 16
   m_Category: 
   m_Min:
     m_Type:
@@ -2331,7 +2322,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614618}
   m_ExposedName: OrbGradient
   m_Exposed: 1
-  m_Order: 0
+  m_Order: 1
   m_Category: ORB
   m_Min:
     m_Type:
@@ -2419,7 +2410,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614620}
   m_ExposedName: OrbMovementCurve
   m_Exposed: 1
-  m_Order: 3
+  m_Order: 8
   m_Category: ORB
   m_Min:
     m_Type:
@@ -2515,7 +2506,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614622}
   m_ExposedName: OrbSizeCurve
   m_Exposed: 1
-  m_Order: 5
+  m_Order: 13
   m_Category: ORB
   m_Min:
     m_Type:
@@ -2611,7 +2602,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614624}
   m_ExposedName: OrbSize
   m_Exposed: 1
-  m_Order: 4
+  m_Order: 10
   m_Category: ORB
   m_Min:
     m_Type:
@@ -4389,8 +4380,7 @@ MonoBehaviour:
   castShadows: 0
   useExposureWeight: 0
   flipbookLayout: 0
-  shaderGraph: {fileID: -5475051401550479605, guid: e258e3daef09481409a01243274a8ed4,
-    type: 3}
+  shaderGraph: {fileID: -5475051401550479605, guid: e258e3daef09481409a01243274a8ed4, type: 3}
   materialSettings:
     m_PropertyNames: []
     m_PropertyValues: []
@@ -7412,7 +7402,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614824}
   m_ExposedName: SparksLifetime
   m_Exposed: 1
-  m_Order: 3
+  m_Order: 9
   m_Category: SPARKS
   m_Min:
     m_Type:
@@ -7495,7 +7485,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614826}
   m_ExposedName: SparksSize
   m_Exposed: 1
-  m_Order: 4
+  m_Order: 11
   m_Category: SPARKS
   m_Min:
     m_Type:
@@ -7996,7 +7986,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614859}
   m_ExposedName: SparksColor
   m_Exposed: 1
-  m_Order: 0
+  m_Order: 2
   m_Category: SPARKS
   m_Min:
     m_Type:
@@ -10891,8 +10881,7 @@ MonoBehaviour:
   castShadows: 0
   useExposureWeight: 0
   flipbookLayout: 0
-  shaderGraph: {fileID: -5475051401550479605, guid: e258e3daef09481409a01243274a8ed4,
-    type: 3}
+  shaderGraph: {fileID: -5475051401550479605, guid: e258e3daef09481409a01243274a8ed4, type: 3}
   materialSettings:
     m_PropertyNames: []
     m_PropertyValues: []
@@ -12998,7 +12987,7 @@ MonoBehaviour:
   - {fileID: 8926484042661615125}
   m_ExposedName: ShockwavesGradient
   m_Exposed: 1
-  m_Order: 7
+  m_Order: 14
   m_Category: SHOCKWAVES
   m_Min:
     m_Type:
@@ -13078,7 +13067,7 @@ MonoBehaviour:
   - {fileID: 8926484042661615127}
   m_ExposedName: ShockwavesSize
   m_Exposed: 1
-  m_Order: 19
+  m_Order: 22
   m_Category: SHOCKWAVES
   m_Min:
     m_Type:
@@ -17136,7 +17125,7 @@ MonoBehaviour:
   - {fileID: 8926484042661615308}
   m_ExposedName: ElectricityColor
   m_Exposed: 1
-  m_Order: 12
+  m_Order: 17
   m_Category: ELECTRICITY
   m_Min:
     m_Type:
@@ -17352,7 +17341,7 @@ MonoBehaviour:
   - {fileID: 8926484042661615314}
   m_ExposedName: ElectricitySize
   m_Exposed: 1
-  m_Order: 16
+  m_Order: 19
   m_Category: ELECTRICITY
   m_Min:
     m_Type:
@@ -18348,7 +18337,7 @@ MonoBehaviour:
   - {fileID: 8926484042661615358}
   m_ExposedName: ShockwavesYOffset
   m_Exposed: 1
-  m_Order: 2
+  m_Order: 5
   m_Category: SHOCKWAVES
   m_Min:
     m_Type:
@@ -18428,7 +18417,7 @@ MonoBehaviour:
   - {fileID: 8926484042661615360}
   m_ExposedName: ElectricityYOffset
   m_Exposed: 1
-  m_Order: 8
+  m_Order: 15
   m_Category: ELECTRICITY
   m_Min:
     m_Type:
@@ -18508,7 +18497,7 @@ MonoBehaviour:
   - {fileID: 8926484042661615362}
   m_ExposedName: ShockwavesSpawnCruve
   m_Exposed: 1
-  m_Order: 17
+  m_Order: 20
   m_Category: SHOCKWAVES
   m_Min:
     m_Type:
@@ -18588,7 +18577,7 @@ MonoBehaviour:
   - {fileID: 8926484042661615364}
   m_ExposedName: ShockwavesTexture
   m_Exposed: 1
-  m_Order: 13
+  m_Order: 18
   m_Category: SHOCKWAVES
   m_Min:
     m_Type:
@@ -18668,7 +18657,7 @@ MonoBehaviour:
   - {fileID: 8926484042661615366}
   m_ExposedName: ShockwavesDistortionAmount
   m_Exposed: 1
-  m_Order: 18
+  m_Order: 21
   m_Category: SHOCKWAVES
   m_Min:
     m_Type:
@@ -18748,7 +18737,7 @@ MonoBehaviour:
   - {fileID: 8926484042661615368}
   m_ExposedName: SparksSpawnCurve
   m_Exposed: 1
-  m_Order: 2
+  m_Order: 6
   m_Category: SPARKS
   m_Min:
     m_Type:
@@ -18828,7 +18817,7 @@ MonoBehaviour:
   - {fileID: 8926484042661615370}
   m_ExposedName: ElectricitySpawnCurve
   m_Exposed: 1
-  m_Order: 4
+  m_Order: 12
   m_Category: ELECTRICITY
   m_Min:
     m_Type:
@@ -18908,7 +18897,7 @@ MonoBehaviour:
   - {fileID: 8926484042661615372}
   m_ExposedName: OrbTexture
   m_Exposed: 1
-  m_Order: 1
+  m_Order: 3
   m_Category: ORB
   m_Min:
     m_Type:
@@ -18988,7 +18977,7 @@ MonoBehaviour:
   - {fileID: 8926484042661615374}
   m_ExposedName: FlareTexture
   m_Exposed: 1
-  m_Order: 2
+  m_Order: 7
   m_Category: ORB
   m_Min:
     m_Type:
@@ -19068,7 +19057,7 @@ MonoBehaviour:
   - {fileID: 8926484042661615376}
   m_ExposedName: CircleBackTexture
   m_Exposed: 1
-  m_Order: 20
+  m_Order: 23
   m_Category: ORB
   m_Min:
     m_Type:
@@ -19148,7 +19137,7 @@ MonoBehaviour:
   - {fileID: 8926484042661615378}
   m_ExposedName: SparksTexture
   m_Exposed: 1
-  m_Order: 1
+  m_Order: 4
   m_Category: SPARKS
   m_Min:
     m_Type:
@@ -20356,14 +20345,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 081ffb0090424ba4cb05370a42ead6b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UIIgnoredErrors: []
-  m_Parent: {fileID: 0}
-  m_Children: []
-  m_UIPosition: {x: 0, y: 0}
-  m_UICollapsed: 1
-  m_UISuperCollapsed: 0
-  opaqueRenderQueue: 0
-  transparentRenderQueue: 1
 --- !u!114 &8926484042661615426
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20376,14 +20357,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 081ffb0090424ba4cb05370a42ead6b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UIIgnoredErrors: []
-  m_Parent: {fileID: 0}
-  m_Children: []
-  m_UIPosition: {x: 0, y: 0}
-  m_UICollapsed: 1
-  m_UISuperCollapsed: 0
-  opaqueRenderQueue: 0
-  transparentRenderQueue: 1
 --- !u!114 &8926484042661615427
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20396,14 +20369,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 081ffb0090424ba4cb05370a42ead6b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UIIgnoredErrors: []
-  m_Parent: {fileID: 0}
-  m_Children: []
-  m_UIPosition: {x: 0, y: 0}
-  m_UICollapsed: 1
-  m_UISuperCollapsed: 0
-  opaqueRenderQueue: 0
-  transparentRenderQueue: 1
 --- !u!114 &8926484042661615428
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20416,14 +20381,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 081ffb0090424ba4cb05370a42ead6b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UIIgnoredErrors: []
-  m_Parent: {fileID: 0}
-  m_Children: []
-  m_UIPosition: {x: 0, y: 0}
-  m_UICollapsed: 1
-  m_UISuperCollapsed: 0
-  opaqueRenderQueue: 0
-  transparentRenderQueue: 1
 --- !u!114 &8926484042661615429
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20436,11 +20393,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 081ffb0090424ba4cb05370a42ead6b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UIIgnoredErrors: []
-  m_Parent: {fileID: 0}
-  m_Children: []
-  m_UIPosition: {x: 0, y: 0}
-  m_UICollapsed: 1
-  m_UISuperCollapsed: 0
-  opaqueRenderQueue: 0
-  transparentRenderQueue: 1

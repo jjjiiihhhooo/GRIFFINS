@@ -277,13 +277,33 @@
 	#endif
 
 	#if defined(MK_ARTISTIC_DRAWN)
-		#define ARTISTIC_RAW_ADDITIVE(value) value = Drawn(value, surface.artistic0, _DrawnClampMax)
+		#define ARTISTIC_RAW_ADDITIVE(value) value = Drawn(value, surface.artistic0, _DrawnClampMax) * step(HALF_MIN, value)
 	#elif defined(MK_ARTISTIC_HATCHING)
-		#define ARTISTIC_RAW_ADDITIVE(value) value = Hatching(surface.artistic0, surface.artistic1, value, 0)
+		#define ARTISTIC_RAW_ADDITIVE(value) value = Hatching(surface.artistic0, surface.artistic1, value, 0) * step(HALF_MIN, value)
 	#elif defined(MK_ARTISTIC_SKETCH)
-		#define ARTISTIC_RAW_ADDITIVE(value) value = Sketch(surface.artistic0, value)
+		#define ARTISTIC_RAW_ADDITIVE(value) value = Sketch(surface.artistic0, value) * step(HALF_MIN, value)
 	#else
 		#define ARTISTIC_RAW_ADDITIVE(value)
+	#endif
+
+	#if defined(MK_ARTISTIC_DRAWN)
+		#define ARTISTIC_RAW_MASKED(value, shadowMask, compare) value = Drawn(value, surface.artistic0, _DrawnClampMin, _DrawnClampMax) * step(HALF_MIN, compare)
+	#elif defined(MK_ARTISTIC_HATCHING)
+		#define ARTISTIC_RAW_MASKED(value, shadowMask, compare) value = Hatching(surface.artistic0, surface.artistic1, value, lerp(0, 0.166667h, shadowMask)) * step(HALF_MIN, compare)
+	#elif defined(MK_ARTISTIC_SKETCH)
+		#define ARTISTIC_RAW_MASKED(value, shadowMask, compare) value = Sketch(surface.artistic0, 1, value) * step(HALF_MIN, compare)
+	#else
+		#define ARTISTIC_RAW_MASKED(value, shadowMask, compare)
+	#endif
+
+	#if defined(MK_ARTISTIC_DRAWN)
+		#define ARTISTIC_RAW_SHADOW_MASKED(value, shadowMask, compare) value = Drawn(value, surface.artistic0, lerp(_DrawnClampMin, _ArtisticShadowFilter, shadowMask), _DrawnClampMax) * step(HALF_MIN, compare)
+	#elif defined(MK_ARTISTIC_HATCHING)
+		#define ARTISTIC_RAW_SHADOW_MASKED(value, shadowMask, compare) value = Hatching(surface.artistic0, surface.artistic1, value, lerp(0, _ArtisticShadowFilter, shadowMask)) * step(HALF_MIN, compare)
+	#elif defined(MK_ARTISTIC_SKETCH)
+		#define ARTISTIC_RAW_SHADOW_MASKED(value, shadowMask, compare) value = Sketch(surface.artistic0, 1, lerp(value, _ArtisticShadowFilter, shadowMask)) * step(HALF_MIN, compare)
+	#else
+		#define ARTISTIC_RAW_SHADOW_MASKED(value, shadowMask, compare)
 	#endif
 
 	#define TRANSFER_SCALAR_TO_VECTOR(value) value.rgb = value.a
@@ -635,7 +655,12 @@
 				#endif
 
 				#ifdef MK_LINEAR_lIGHT_DISTANCE_ATTENUATION
-					LinearDistanceAttenuation(light, surfaceData, GetPerObjectLightIndex(index));
+					#if USE_FORWARD_PLUS
+						int lightIndex = index;
+					#else
+						int lightIndex = GetPerObjectLightIndex(index);
+					#endif
+					LinearDistanceAttenuation(light, surfaceData, lightIndex);
 				#endif
 				mkLight.distanceAttenuation = light.distanceAttenuation;
 				mkLight.color = light.color;
@@ -794,6 +819,7 @@
 	}
 
 	//Aniso specular blinn phong
+	/*
 	inline half BlinnSpecularAniso(half3 normal, half3 halfV, half ndhv, half shine, half offset, half4 aDir, half ndl)
 	{
 		half term = pow(lerp(ndhv, max(0.0, sin(radians((dot(MKSafeNormalize(normal + aDir.rgb), halfV) + offset) * 180.0))), aDir.a), shine);
@@ -803,6 +829,7 @@
 			return term;
 		#endif
 	}
+	*/
 
 	//specular blinn phong
 	inline half BlinnSpecular(half ndhv, half shine)
@@ -939,7 +966,7 @@
 		#ifdef MK_LIT
 			half3 goochRamp;
 			#ifdef MK_GOOCH_RAMP
-				goochRamp = lerp(1.0, SampleRamp2D(PASS_TEXTURE_2D(_GoochRamp, SAMPLER_CLAMPED_MAIN), half2(diffuse.a, light.distanceAttenuation)).rgb, _GoochRampIntensity);
+				goochRamp = lerp(HALF3_ONE, SampleRamp2D(PASS_TEXTURE_2D(_GoochRamp, SAMPLER_CLAMPED_MAIN), half2(diffuse.a, light.distanceAttenuation)).rgb, _GoochRampIntensity);
 			#else
 				goochRamp = 1.0;
 			#endif
@@ -969,7 +996,7 @@
 						geometric = GeometricSmithGGX(surfaceData.VoN, lightData.NoL, pbsData.roughness);
 						sFresnel = FresnelCSch(lightData.LoLHV, pbsData.specularRadiance);
 					#endif
-					specular.a = SafeDivide(distribution * geometric, 4 * surfaceData.VoN * lightData.NoL);
+					specular.a = SafeDivide(distribution * geometric, 4.0 * surfaceData.VoN * lightData.NoL + HALF_MIN);
 				#else //MK_SIMPLE Iso Only
 					specular.a = BlinnSpecular(lightData.NoLHV, pbsData.smoothness);
 				#endif
@@ -1048,7 +1075,11 @@
 		#ifdef MK_LIT
 			half diffuseRaw = MKLightingDiffuse(surface, surfaceData, pbsData, light, lightData);
 			half4 diffuse = half4(0, 0, 0, diffuseRaw);
-			ARTISTIC_RAW(diffuse.a);
+			#ifdef MK_STYLIZE_SYSTEM_SHADOWS
+				ARTISTIC_RAW_SHADOW_MASKED(diffuse.a, saturate(1.0 - light.shadowAttenuation), light.distanceAttenuation);
+			#else
+				ARTISTIC_RAW_MASKED(diffuse.a, 0, light.distanceAttenuation);
+			#endif
 			//diffuse.a *= diffuseRaw;
 			TRANSFER_SCALAR_TO_VECTOR(diffuse);
 			
@@ -1061,7 +1092,11 @@
 		#ifdef MK_LIT
 			half diffuseRaw = MKLightingDiffuse(surface, surfaceData, pbsData, light, lightData);
 			half4 diffuse = half4(0, 0, 0, diffuseRaw);
-			ARTISTIC_RAW(diffuse.a);
+			#ifdef MK_STYLIZE_SYSTEM_SHADOWS
+				ARTISTIC_RAW_SHADOW_MASKED(diffuse.a, saturate(1.0 - light.shadowAttenuation), light.distanceAttenuation);
+			#else
+				ARTISTIC_RAW_MASKED(diffuse.a, 0, light.distanceAttenuation);
+			#endif
 			TRANSFER_SCALAR_TO_VECTOR(diffuse);
 			
 			MKLightingSFX(surface, surfaceData, pbsData, light, lightData, diffuse, finalLightColor);

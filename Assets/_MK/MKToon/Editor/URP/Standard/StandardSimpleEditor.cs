@@ -33,6 +33,7 @@ namespace MK.Toon.Editor.URP
 
             materialEditor.EnableInstancingField();
             DrawRenderPriority(materialEditor);
+            DrawAddPrecomputedVelocity(materialEditor);
         }
     }
 }
