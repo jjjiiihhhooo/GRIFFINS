@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4604884272760239656}
   - component: {fileID: 3897233602229721901}
-  - component: {fileID: 4083484819988524051}
   m_Layer: 11
   m_Name: street_overlay11
   m_TagString: Untagged
@@ -47,30 +46,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 14.785488, y: 0.1797084, z: 5.9864917}
   m_Center: {x: -0.0051107407, y: 0.043117724, z: -0.0013859272}
---- !u!205 &4083484819988524051
-LODGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2376623089854039826}
-  serializedVersion: 2
-  m_LocalReferencePoint: {x: 0, y: 0, z: 0}
-  m_Size: 1
-  m_FadeMode: 0
-  m_AnimateCrossFading: 0
-  m_LastLODIsBillboard: 0
-  m_LODs:
-  - screenRelativeHeight: 0.6
-    fadeTransitionWidth: 0
-    renderers: []
-  - screenRelativeHeight: 0.3
-    fadeTransitionWidth: 0
-    renderers: []
-  - screenRelativeHeight: 0.1
-    fadeTransitionWidth: 0
-    renderers: []
-  m_Enabled: 1
 --- !u!1 &2620179154962951734
 GameObject:
   m_ObjectHideFlags: 0

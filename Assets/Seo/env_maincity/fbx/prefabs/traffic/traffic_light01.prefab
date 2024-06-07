@@ -85,7 +85,6 @@ GameObject:
   - component: {fileID: 8994741993077066212}
   - component: {fileID: 5439334303683757633}
   - component: {fileID: 7825165925261914763}
-  - component: {fileID: 5895158525517780065}
   m_Layer: 0
   m_Name: traffic_light
   m_TagString: Untagged
@@ -158,30 +157,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!205 &5895158525517780065
-LODGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8617759396515386206}
-  serializedVersion: 2
-  m_LocalReferencePoint: {x: 3.0345848, y: -0.24953489, z: 4.000002}
-  m_Size: 8.000004
-  m_FadeMode: 1
-  m_AnimateCrossFading: 1
-  m_LastLODIsBillboard: 0
-  m_LODs:
-  - screenRelativeHeight: 0.5
-    fadeTransitionWidth: 0
-    renderers:
-    - renderer: {fileID: 0}
-  - screenRelativeHeight: 0.25
-    fadeTransitionWidth: 0
-    renderers:
-    - renderer: {fileID: 0}
-  - screenRelativeHeight: 0.002
-    fadeTransitionWidth: 0
-    renderers:
-    - renderer: {fileID: 0}
-  m_Enabled: 1
