@@ -27,12 +27,12 @@ public class PlayerAirborneState : PlayerMovementState
     {
         if (GameManager.Instance.dialogueManager.IsChat) return;
 
-        stateMachine.Player.Input.PlayerActions.Dash.started += OnDashStarted;
+        //stateMachine.Player.Input.PlayerActions.Dash.started += OnDashStarted;
     }
 
     protected override void RemoveInputActionsCallbacks()
     {
-        stateMachine.Player.Input.PlayerActions.Dash.started -= OnDashStarted;
+        //stateMachine.Player.Input.PlayerActions.Dash.started -= OnDashStarted;
     }
 
 

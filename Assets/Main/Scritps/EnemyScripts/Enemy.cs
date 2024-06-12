@@ -26,13 +26,14 @@ public class Enemy
     public float hitDelay;
     public float knockback;
 
-    protected Transform target;
+    public Transform target;
 
     public float modelShakeTime;
 
     public bool backHpHit;
 
     public bool isAction;
+    public bool isRun;
 
     public Vector3 knockbackDir;
 
@@ -133,11 +134,70 @@ public class Normal_Enemy : Enemy
 
     public override void EnemyUpdate()
     {
+        if (enemyController.isDead) return;
+
+        if(attackCurCool > 0 && isAction)
+        {
+            attackCurCool -= Time.deltaTime;
+            if (attackCurCool < 0) isAction = false;
+        }
+
+        if (enemyController.isHit)
+        {
+            enemyController.hitCool -= Time.deltaTime;
+
+            if (enemyController.hitCool < 0)
+            {
+                enemyController.rigid.velocity = Vector3.zero;
+                enemyController.isHit = false;
+            }
+
+            return;
+        }
+
+        
+
         Action();
-        AttackDelay();
-        ModelShake();
+        AnimTransform();
+        //ModelShake();
         UiUpdate();
     }
+
+    public void AnimTransform()
+    {
+        if (animator.GetCurrentAnimatorStateInfo(0).IsTag("Attack"))
+        {
+            //Debug.LogError(model.transform.localPosition);
+
+            RaycastHit hit;
+
+            if (Physics.Raycast(enemyController.transform.position + Vector3.up, enemyController.transform.forward, out hit, 2f, enemyController.animCheckLayer))
+            {
+                animator.transform.localPosition = new Vector3(0f, animator.transform.localPosition.y, 0f);
+            }
+
+            enemyController.transform.position = animator.transform.position;
+            animator.transform.localPosition = Vector3.zero;
+        }
+        else if(animator.GetCurrentAnimatorStateInfo(0).IsTag("GetDamage"))
+        {
+            enemyController.transform.position = animator.transform.position;
+            animator.transform.localPosition = Vector3.zero;
+        }
+        else
+        {
+            animator.transform.localPosition = Vector3.zero;
+            float x = animator.transform.localEulerAngles.x;
+            float y = animator.transform.localEulerAngles.y;
+            float z = animator.transform.localEulerAngles.z;
+
+            if (x != 0 || y != 0 || z != 0)
+                animator.transform.localEulerAngles = Vector3.zero;
+        }
+        
+    }
+
+    
 
     public override void UiUpdate()
     {
@@ -161,11 +221,6 @@ public class Normal_Enemy : Enemy
         enemyController.canvas.transform.LookAt(enemyController.canvas.transform.position + Camera.main.transform.rotation * Vector3.forward, Camera.main.transform.rotation * Vector3.up);
     }
 
-    private void AttackDelay()
-    {
-        if (curTime > 0) curTime -= Time.deltaTime;
-    }
-
 
     public override void ModelShake()
     {
@@ -181,28 +236,7 @@ public class Normal_Enemy : Enemy
     {
         if (target == null) target = Player.Instance.transform;
 
-        if (enemyController.isHit)
-        {
-            enemyController.hitCool -= Time.deltaTime;
-            Vector3 playerPos = new Vector3(target.transform.position.x, enemyController.transform.position.y, target.transform.position.z);
-            Vector3 KnockbackDir;
-
-            if (knockbackDir == Vector3.zero)
-                KnockbackDir = -enemyController.transform.forward;
-            else
-            {
-                KnockbackDir = knockbackDir;
-            }
-            enemyController.rigid.velocity = Vector3.zero;
-            enemyController.rigid.AddForce(KnockbackDir * knockback, ForceMode.VelocityChange);
-
-            if (enemyController.hitCool < 0)
-            {
-                enemyController.rigid.velocity = Vector3.zero;
-                enemyController.isHit = false;
-            }
-            return;
-        }
+        
 
         if (Vector3.Distance(target.transform.position, enemyController.transform.position) > 3f && curTime <= 0 && !isAction) Move();
         else if (Vector3.Distance(target.transform.position, enemyController.transform.position) <= 3f && curTime <= 0 && !isAction) Attack();
@@ -213,26 +247,32 @@ public class Normal_Enemy : Enemy
     {
         Debug.Log("NormalAttack");
         isAction = true;
-        animator.Play("Normal_Attack", 0, 0f);
+        animator.Play("NormalAttack_1", 0, 0f);
+        curTime = coolTime;
+    }
+
+    private void RunAttack()
+    {
+        isAction = true;
+        animator.Play("Normal_RunAttack_1", 0, 0f);
         curTime = coolTime;
     }
 
     private void Attack()
     {
-        Vector3 forward = target.transform.position - enemyController.transform.position;
-        float x = enemyController.transform.eulerAngles.x;
-        float z = enemyController.transform.eulerAngles.z;
+        enemyController.transform.LookAt(target.transform);
+        enemyController.transform.eulerAngles = new Vector3(0f, enemyController.transform.eulerAngles.y, 0f);
 
-        enemyController.transform.forward = forward;
-        enemyController.transform.eulerAngles = new Vector3(x, enemyController.transform.eulerAngles.y, z);
-        NormalAttack();
+        if (isRun) RunAttack();
+        else NormalAttack();
     }
 
     private void Move()
     {
         Debug.Log(animator.GetCurrentAnimatorStateInfo(0));
-        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Run")) animator.Play("Run", 0, 0f);
+        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Normal_Run")) animator.Play("Normal_Run", 0, 0f);
 
+        if (!isRun) isRun = true;
 
         enemyController.transform.LookAt(target.transform);
         enemyController.transform.eulerAngles = new Vector3(0f, enemyController.transform.eulerAngles.y, 0f);
@@ -245,11 +285,15 @@ public class Normal_Enemy : Enemy
 
     public override void GetDamage(float damage)
     {
-
+        if (enemyController.isDead) return;
         enemyController.uiShowDelay = 4f;
         enemyController.canvas.gameObject.SetActive(true);
+        int temp = Random.Range(1, 3);
+        string temp2 = "GetDamage_" + temp.ToString();
+        enemyController.transform.LookAt(target.transform);
+        enemyController.transform.eulerAngles = new Vector3(0f, enemyController.transform.eulerAngles.y, 0f);
+        if(!animator.GetCurrentAnimatorStateInfo(0).IsTag("Attack")) animator.Play(temp2, 0, 0);
 
-        //if (animator != null) animator.Play("GetDamage", 0, 0);
         curHp -= damage;
         backHpHit = false;
         GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["enemyHit"], false);
@@ -258,10 +302,14 @@ public class Normal_Enemy : Enemy
         if (curHp <= 0) Die();
     }
 
+    
+
     public override void Die()
     {
-        //animator.Play("Dead");
-        enemyController.DeadMessage();
+        enemyController.isDead = true;
+
+        enemyController.gameObject.layer = enemyController.deadLayer;
+        animator.Play("Dead");
     }
 }
 

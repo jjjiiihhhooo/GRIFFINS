@@ -56,6 +56,7 @@ public class PlayerCharacter
     public ParticleSystem Q_Particle;
     public ParticleSystem Chasing_Particle;
     public ParticleSystem[] normalAttackEffects;
+    public GameObject Devastation_effect;
 
     [Header("Transform")]
     public Transform Q_Transform;
@@ -315,6 +316,12 @@ public class PlayerCharacter
 
         if (x != 0 || y != 0 || z != 0)
             model.transform.localEulerAngles = Vector3.zero;
+
+        if(animator.GetCurrentAnimatorStateInfo(3).IsTag("Attack") && target != null && player.movementStateMachine.CurStateName() != "PlayerDashingState")
+        {
+            player.transform.forward = target.transform.position - player.transform.position;
+            player.transform.eulerAngles = new Vector3(0f, player.transform.eulerAngles.y, 0f);
+        }
     }
 
     public void AnimTransform()
@@ -325,7 +332,7 @@ public class PlayerCharacter
 
             RaycastHit hit;
 
-            if (Physics.Raycast(player.transform.position + Vector3.up, player.transform.forward, out hit, 5f, animCheckLayer))
+            if (Physics.Raycast(player.transform.position + Vector3.up, player.transform.forward, out hit, 0.1f, animCheckLayer))
             {
                 model.transform.localPosition = new Vector3(0f, model.transform.localPosition.y, 0f);
             }
@@ -346,6 +353,15 @@ public class PlayerCharacter
         //player.transform.position = model.transform.position;
         model.transform.localPosition = new Vector3(0, 0, 0);
     }
+
+    public void HandEffectFalse()
+    {
+        for(int i = 0; i < handParticle.Length; i++)
+        {
+            handParticle[i].SetActive(false);
+        }
+    }
+
 
     public virtual void SkillCoolTimeResetAnim(int index)
     {
@@ -961,7 +977,7 @@ public class GreenCharacter : PlayerCharacter
     public override void Q_Action()
     {
         if (!GameManager.Instance.coolTimeManager.CoolCheck("Green_Q")) return;
-
+        if (followEnemy) return;
         GameManager.Instance.coolTimeManager.GetCoolTime("Green_Q");
         player.isAttack = true;
         DragonAnim();
@@ -999,7 +1015,7 @@ public class GreenCharacter : PlayerCharacter
     public override void E_Action()
     {
         if (!GameManager.Instance.coolTimeManager.CoolCheck("Green_E")) return;
-
+        if (followEnemy) return;
         GameManager.Instance.coolTimeManager.GetCoolTime("Green_E");
         player.isAttack = true;
         Gust();
@@ -1355,7 +1371,7 @@ public class RedCharacter : PlayerCharacter
     public override void Q_Action()
     {
         if (!GameManager.Instance.coolTimeManager.CoolCheck("Red_Q")) return;
-
+        if (followEnemy) return;
         GameManager.Instance.coolTimeManager.GetCoolTime("Red_Q");
         player.isAttack = true;
         DevastationAnim();
@@ -1364,7 +1380,7 @@ public class RedCharacter : PlayerCharacter
     public override void E_Action()
     {
         if (!GameManager.Instance.coolTimeManager.CoolCheck("Red_E")) return;
-
+        if (followEnemy) return;
         GameManager.Instance.coolTimeManager.GetCoolTime("Red_E");
         player.isAttack = true;
         HellDive();
@@ -1418,7 +1434,7 @@ public class RedCharacter : PlayerCharacter
         if (target == null) { followEnemy = false; return; };
 
 
-        if (target != null && Vector3.Distance(target.transform.position, player.transform.position) > attackArea)
+        if (target != null && Vector3.Distance(target.transform.position, player.transform.position) > attackArea - 2f)
         {
             time -= Time.deltaTime;
             player.movementStateMachine.ChangeState(player.movementStateMachine.IdlingState);
@@ -1507,7 +1523,7 @@ public class RedCharacter : PlayerCharacter
     public override void Q_AnimExit()
     {
         GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["red_normalAttack1"], false);
-        GameObject temp = GameObject.Instantiate(Q_Particle.gameObject, model.transform.position, Quaternion.identity);
+        GameObject temp = GameObject.Instantiate(Devastation_effect, model.transform.position, Quaternion.identity);
         temp.transform.forward = player.transform.forward;
         player.isAttack = false;
         GameManager.Instance.coolTimeManager.GetCoolTime("CharacterChange");

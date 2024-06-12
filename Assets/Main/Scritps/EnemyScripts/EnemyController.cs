@@ -19,12 +19,17 @@ public class EnemyController : SerializedMonoBehaviour
 
 
     public AttackCol attackCol;
+    public AttackCol runAttackCol;
     public GameObject targetUI_obj;
 
     public DOTweenAnimation anim_dot;
 
+    public LayerMask animCheckLayer;
+    public LayerMask deadLayer;
+
     public bool isHit;
     public bool isBoss;
+    public bool isDead;
     public bool isBossStart;
 
     public float maxHitCool;
@@ -214,6 +219,12 @@ public class EnemyController : SerializedMonoBehaviour
     {
         enemy.isAction = false;
         attackCol.gameObject.SetActive(true);
+    }
+
+    public void StartAttackAnim()
+    {
+        transform.LookAt(enemy.target.transform);
+        transform.eulerAngles = new Vector3(0f, transform.eulerAngles.y, 0f);
     }
 
     public void CorEvent(IEnumerator cor)

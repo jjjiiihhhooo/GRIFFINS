@@ -1,4 +1,5 @@
 
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyAnimationEvent : MonoBehaviour
@@ -25,4 +26,29 @@ public class EnemyAnimationEvent : MonoBehaviour
         _enemy.enemy.TrackingAnimExit();
     }
 
+    public void AttackStart()
+    {
+        _enemy.StartAttackAnim();
+    }
+
+    public void Normal_Enemy_Attack()
+    {
+        _enemy.attackCol.gameObject.SetActive(true);
+    }
+
+    public void Normal_Enemy_RunAttack()
+    {
+        _enemy.runAttackCol.gameObject.SetActive(true);
+        _enemy.enemy.isRun = false;
+    }
+
+    public void AttackExit()
+    {
+        _enemy.enemy.attackCurCool = _enemy.enemy.attackMaxCool;
+    }
+
+    public void Dead()
+    {
+        _enemy.DeadMessage();
+    }
 }

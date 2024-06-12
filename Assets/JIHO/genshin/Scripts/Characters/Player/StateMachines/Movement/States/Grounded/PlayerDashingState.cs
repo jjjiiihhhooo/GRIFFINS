@@ -33,6 +33,8 @@ public class PlayerDashingState : PlayerGroundedState
 
         stateMachine.Player.isNormalAttack = false;
 
+        //stateMachine.Player.currentCharacter.HandEffectFalse();
+
         Dash();
 
         shouldKeepRotating = stateMachine.ReusableData.MovementInput != Vector2.zero;
