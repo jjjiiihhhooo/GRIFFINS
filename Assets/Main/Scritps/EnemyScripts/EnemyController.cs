@@ -64,7 +64,6 @@ public class EnemyController : SerializedMonoBehaviour
         enemy.EnemyUpdate();
         UIUpdate();
 
-
     }
 
     private void UIUpdate()
@@ -72,62 +71,10 @@ public class EnemyController : SerializedMonoBehaviour
 
         hpSlider.value = Mathf.Lerp(hpSlider.value, enemy.curHp / enemy.maxHp, Time.deltaTime * 5f);
 
-        //if (enemy.backHpHit)
-        //{
-        //    backHpSlider.value = Mathf.Lerp(backHpSlider.value, hpSlider.value, Time.deltaTime * 6f);
-        //    if (hpSlider.value >= backHpSlider.value - 0.001f)
-        //    {
-        //        enemy.backHpHit = false;
-        //        backHpSlider.value = hpSlider.value;
-        //    }
-        //}
         if (!isBoss)
             canvas.transform.LookAt(canvas.transform.position + Camera.main.transform.rotation * Vector3.forward, Camera.main.transform.rotation * Vector3.up);
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        //if(other.CompareTag("usingObject"))
-        //{
-        //    //float damage = other.GetComponent<AttackCol>().damage;
-        //    float damage = 1f;
-
-        //    Vector3 center1 = other.bounds.center;
-        //    Vector3 center2 = transform.GetComponent<BoxCollider>().bounds.center;
-
-        //    Vector3 finalCenter = (center1 + center2) / 2f;
-
-        //    DamageMessage(damage, finalCenter);
-        //}
-
-        //if(other.CompareTag("AttackCol"))
-        //{
-        //    float damage = Player.Instance.currentCharacter.normalAttackDamage;
-
-        //    Vector3 center1 = other.bounds.center;
-        //    Vector3 center2 = transform.GetComponent<Collider>().bounds.center;
-
-        //    Vector3 finalCenter = (center1 + center2) / 2f;
-
-
-        //    DamageMessage(damage, finalCenter);
-        //}
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        //if(collision.transform.CompareTag("usingObject"))
-        //{
-        //    float damage = 1f;
-
-        //    Vector3 center1 = collision.collider.bounds.center;
-        //    Vector3 center2 = transform.GetComponent<BoxCollider>().bounds.center;
-
-        //    Vector3 finalCenter = (center1 + center2) / 2f;
-
-        //    DamageMessage(damage, finalCenter);
-        //}
-    }
 
     public void CoroutineEvent(string name)
     {

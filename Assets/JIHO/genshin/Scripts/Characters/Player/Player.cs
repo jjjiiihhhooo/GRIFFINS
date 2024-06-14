@@ -284,6 +284,7 @@ public class Player : MonoBehaviour
     {
         if (playerHit) return;
         if (GameManager.Instance.isCutScene) return;
+        if (movementStateMachine.CurStateName() == "PlayerDashingState") return;
         playerHit = true;
         curHitCool = maxHitCool;
         curHp -= damage;

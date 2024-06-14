@@ -1,4 +1,6 @@
 using System.Collections;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -26,6 +28,10 @@ public class Enemy
     public float hitDelay;
     public float knockback;
 
+    public float hammerCoolTime = 11f;
+    public float hammerCurTime = 0f;
+
+
     public Transform target;
 
     public float modelShakeTime;
@@ -33,6 +39,7 @@ public class Enemy
     public bool backHpHit;
 
     public bool isAction;
+    public bool isHammer = true;
     public bool isRun;
 
     public Vector3 knockbackDir;
@@ -96,7 +103,7 @@ public class Enemy
 
     }
 
-    public virtual Vector3 CalculateJumpVelocity(Vector3 startPoint, Vector3 endPoint, float trajectoryHeight) //목표 위치까지 포물선 trajectoryHeight 높이 추가
+    public virtual Vector3 CalculateJumpVelocity(Vector3 startPoint, Vector3 endPoint, float trajectoryHeight)
     {
         float gravity = Physics.gravity.y;
         float displacementY = endPoint.y - startPoint.y;
@@ -123,9 +130,8 @@ public class Enemy
 [System.Serializable]
 public class Normal_Enemy : Enemy
 {
-
-    public float coolTime = 2f;
-    public float curTime = 2f;
+    public float coolTime = 3f;
+    public float curTime = 3f;
 
     public override void Init(EnemyController controller)
     {
@@ -245,8 +251,8 @@ public class Normal_Enemy : Enemy
 
     private void NormalAttack()
     {
-        Debug.Log("NormalAttack");
         isAction = true;
+        enemyController.rigid.constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotation;
         animator.Play("NormalAttack_1", 0, 0f);
         curTime = coolTime;
     }
@@ -254,6 +260,7 @@ public class Normal_Enemy : Enemy
     private void RunAttack()
     {
         isAction = true;
+        enemyController.rigid.constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotation;
         animator.Play("Normal_RunAttack_1", 0, 0f);
         curTime = coolTime;
     }
@@ -262,6 +269,8 @@ public class Normal_Enemy : Enemy
     {
         enemyController.transform.LookAt(target.transform);
         enemyController.transform.eulerAngles = new Vector3(0f, enemyController.transform.eulerAngles.y, 0f);
+
+        enemyController.rigid.velocity = Vector3.zero;
 
         if (isRun) RunAttack();
         else NormalAttack();
@@ -272,15 +281,23 @@ public class Normal_Enemy : Enemy
         Debug.Log(animator.GetCurrentAnimatorStateInfo(0));
         if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Normal_Run")) animator.Play("Normal_Run", 0, 0f);
 
-        if (!isRun) isRun = true;
+        if (!isRun)
+        { 
+            isRun = true;
+        }
+
+        bool temp = (enemyController.rigid.constraints & RigidbodyConstraints.FreezePosition) != 0;
+
+        if (temp) enemyController.rigid.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
+
 
         enemyController.transform.LookAt(target.transform);
         enemyController.transform.eulerAngles = new Vector3(0f, enemyController.transform.eulerAngles.y, 0f);
 
-        //enemyController.rigid.AddForce(enemyController.transform.forward.normalized * moveSpeed , ForceMode.VelocityChange);
+        //enemyController.rigid.AddForce(enemyController.transform.forward.normalized , ForceMode.VelocityChange);
 
-        //enemyController.rigid.velocity = enemyController.transform.forward * moveSpeed;
-        enemyController.transform.position = enemyController.transform.position + enemyController.transform.forward.normalized * moveSpeed * Time.deltaTime;
+        enemyController.rigid.velocity = enemyController.transform.forward * moveSpeed;
+        //enemyController.transform.position = enemyController.transform.position + enemyController.transform.forward.normalized * moveSpeed * Time.deltaTime;
     }
 
     public override void GetDamage(float damage)
@@ -292,8 +309,9 @@ public class Normal_Enemy : Enemy
         string temp2 = "GetDamage_" + temp.ToString();
         enemyController.transform.LookAt(target.transform);
         enemyController.transform.eulerAngles = new Vector3(0f, enemyController.transform.eulerAngles.y, 0f);
-        if(!animator.GetCurrentAnimatorStateInfo(0).IsTag("Attack")) animator.Play(temp2, 0, 0);
-
+        //if(!animator.GetCurrentAnimatorStateInfo(0).IsTag("Attack"))
+        animator.Play(temp2, 0, 0);
+        attackCurCool = 1.0f;
         curHp -= damage;
         backHpHit = false;
         GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["enemyHit"], false);
@@ -316,6 +334,12 @@ public class Normal_Enemy : Enemy
 [System.Serializable]
 public class Epic_Enemy : Enemy
 {
+    public float coolTime = 5f;
+    public float curTime = 5f;
+
+    public float dashSpeed;
+    
+
     public override void Init(EnemyController controller)
     {
         base.Init(controller);
@@ -323,18 +347,326 @@ public class Epic_Enemy : Enemy
 
     public override void EnemyUpdate()
     {
-        base.EnemyUpdate();
+        if (enemyController.isDead) return;
+
+        if (attackCurCool > 0 && isAction)
+        {
+            attackCurCool -= Time.deltaTime;
+            if (attackCurCool < 0) isAction = false;
+        }
+
+        if(hammerCurTime > 0 && !isHammer)
+        {
+            hammerCurTime -= Time.deltaTime;
+            if (hammerCurTime < 0) isHammer = true;
+        }
+
+        if (enemyController.isHit)
+        {
+            enemyController.hitCool -= Time.deltaTime;
+
+            if (enemyController.hitCool < 0)
+            {
+                //enemyController.rigid.velocity = Vector3.zero;
+                enemyController.isHit = false;
+            }
+
+            return;
+        }
+
+        Action();
+        //AnimTransform();
+        //ModelShake();
+        UiUpdate();
+    }
+
+    public void AnimTransform()
+    {
+        if (animator.GetCurrentAnimatorStateInfo(0).IsTag("Attack"))
+        {
+            //Debug.LogError(model.transform.localPosition);
+
+            RaycastHit hit;
+
+            if (Physics.Raycast(enemyController.transform.position + Vector3.up, enemyController.transform.forward, out hit, 2f, enemyController.animCheckLayer))
+            {
+                animator.transform.localPosition = new Vector3(0f, animator.transform.localPosition.y, 0f);
+            }
+
+            enemyController.transform.position = animator.transform.position;
+            animator.transform.localPosition = Vector3.zero;
+        }
+        else if (animator.GetCurrentAnimatorStateInfo(0).IsTag("GetDamage"))
+        {
+            enemyController.transform.position = animator.transform.position;
+            animator.transform.localPosition = Vector3.zero;
+        }
+        else
+        {
+            animator.transform.localPosition = Vector3.zero;
+            float x = animator.transform.localEulerAngles.x;
+            float y = animator.transform.localEulerAngles.y;
+            float z = animator.transform.localEulerAngles.z;
+
+            if (x != 0 || y != 0 || z != 0)
+                animator.transform.localEulerAngles = Vector3.zero;
+        }
+    }
+
+
+
+    public override void UiUpdate()
+    {
+        if (enemyController.uiShowDelay < 0f)
+            enemyController.canvas.gameObject.SetActive(false);
+        else
+            enemyController.uiShowDelay -= Time.deltaTime;
+
+        enemyController.hpSlider.value = Mathf.Lerp(enemyController.hpSlider.value, curHp / maxHp, Time.deltaTime * 5f);
+
+        if (backHpHit)
+        {
+            enemyController.backHpSlider.value = Mathf.Lerp(enemyController.backHpSlider.value, enemyController.hpSlider.value, Time.deltaTime * 6f);
+            if (enemyController.hpSlider.value >= enemyController.backHpSlider.value - 0.001f)
+            {
+                backHpHit = false;
+                enemyController.backHpSlider.value = enemyController.hpSlider.value;
+            }
+        }
+
+        enemyController.canvas.transform.LookAt(enemyController.canvas.transform.position + Camera.main.transform.rotation * Vector3.forward, Camera.main.transform.rotation * Vector3.up);
+    }
+
+
+    public override void ModelShake()
+    {
+        if (modelShakeTime > 0f)
+        {
+            modelShakeTime -= Time.deltaTime;
+            animator.transform.localPosition = Random.insideUnitSphere * 0.3f + Vector3.zero;
+            if (modelShakeTime <= 0f) animator.transform.localPosition = Vector3.zero;
+        }
     }
 
     public override void Action()
     {
-        base.Action();
+        if (target == null) target = Player.Instance.transform;
+        
+        if(isHammer)
+        {
+            if (Vector3.Distance(target.transform.position, enemyController.transform.position) < 10f && !isAction) HammerDown(target.transform.position);
+            else if (Vector3.Distance(target.transform.position, enemyController.transform.position) > 10f && !isAction) Dash();
+        }
+        else
+        {
+            if (Vector3.Distance(target.transform.position, enemyController.transform.position) > 3f && !isAction) Move();
+            else if (Vector3.Distance(target.transform.position, enemyController.transform.position) <= 3f && !isAction) Attack();
+        }
+    }
+
+    private void HammerDown(Vector3 endPos)
+    {
+
+        isAction = true;
+        isHammer = false;
+        Vector3 velocity = HammerVelocity(enemyController.transform.position, endPos, 1f);
+
+
+
+        target.GetComponent<Player>().CoroutineEvent(HammerCor(enemyController.transform.position, target.transform.position));
+    }
+
+    private Vector3 HammerVelocity(Vector3 start, Vector3 end, float t)
+    {
+        float parabolaHeight = Mathf.Abs(start.y - end.y) + 4; // 포물선의 높이 조정, 필요시 수정
+        float parabola = -4 * parabolaHeight * (t - 0.5f) * (t - 0.5f) + parabolaHeight;
+
+        // 선형 보간을 사용하여 x, z 위치 계산
+        Vector3 linearPosition = Vector3.Lerp(start, end, t);
+
+        // y 위치에 포물선 값 추가
+        return new Vector3(linearPosition.x, linearPosition.y + parabola, linearPosition.z);
+    }
+
+    private IEnumerator HammerCor(Vector3 startPosition, Vector3 targetPosition)
+    {
+        float elapsedTime = 0;
+        float flightDuration = 1f;
+
+        enemyController.animator.SetBool("isHammer", true);
+
+        while (elapsedTime < flightDuration)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = elapsedTime / flightDuration;
+
+            // 포물선 경로 계산
+            Vector3 currentPosition = HammerVelocity(startPosition, targetPosition, t);
+            enemyController.transform.position = currentPosition;
+
+
+            yield return null; // 다음 프레임까지 대기
+        }
+
+        // 마지막 위치 설정 (정확히 목표 지점)
+        enemyController.rigid.velocity = Vector3.zero;
+        enemyController.transform.position = targetPosition;
+    }
+
+    private void Dash()
+    {
+        isAction = true;
+        isHammer = false;
+
+
+        enemyController.transform.LookAt(target.transform);
+        enemyController.transform.eulerAngles = new Vector3(0f, enemyController.transform.eulerAngles.y, 0f);
+
+        if (!enemyController.animator.GetCurrentAnimatorStateInfo(0).IsName("Dash")) enemyController.animator.Play("Dash");
+
+        target.GetComponent<Player>().CoroutineEvent(DashCor());
+    }
+
+    private IEnumerator DashCor()
+    {
+        float time = 1f;
+
+        Vector3 playerPos = target.transform.position;
+
+        while(Vector3.Distance(target.transform.position, enemyController.transform.position) > 10f && time > 0)
+        {
+            time -= Time.deltaTime;
+            
+            enemyController.rigid.velocity = enemyController.transform.forward * dashSpeed;
+
+            yield return new WaitForFixedUpdate();
+        }
+
+        HammerDown(playerPos);
+    }
+
+    private void NormalAttack()
+    {
+        isAction = true;
+        enemyController.rigid.constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotation;
+        animator.Play("NormalAttack_1", 0, 0f);
+        curTime = coolTime;
+    }
+
+    private void RunAttack()
+    {
+        isAction = true;
+        enemyController.rigid.constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotation;
+        animator.Play("Normal_RunAttack_1", 0, 0f);
+        curTime = coolTime;
+    }
+
+    private void Attack()
+    {
+        enemyController.transform.LookAt(target.transform);
+        enemyController.transform.eulerAngles = new Vector3(0f, enemyController.transform.eulerAngles.y, 0f);
+
+        enemyController.rigid.velocity = Vector3.zero;
+
+        if (isRun) RunAttack();
+        else NormalAttack();
+    }
+
+
+    private void Move()
+    {
+        Debug.Log(animator.GetCurrentAnimatorStateInfo(0));
+        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Normal_Run")) animator.Play("Normal_Run", 0, 0f);
+
+        if (!isRun) isRun = true;
+
+        bool temp = (enemyController.rigid.constraints & RigidbodyConstraints.FreezePosition) != 0;
+
+        if (temp) enemyController.rigid.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
+
+
+        enemyController.transform.LookAt(target.transform);
+        enemyController.transform.eulerAngles = new Vector3(0f, enemyController.transform.eulerAngles.y, 0f);
+
+        //enemyController.rigid.AddForce(enemyController.transform.forward.normalized , ForceMode.VelocityChange);
+
+        enemyController.rigid.velocity = enemyController.transform.forward * moveSpeed;
+        //enemyController.transform.position = enemyController.transform.position + enemyController.transform.forward.normalized * moveSpeed * Time.deltaTime;
     }
 
     public override void GetDamage(float damage)
     {
-        base.GetDamage(damage);
+        if (enemyController.isDead) return;
+        enemyController.uiShowDelay = 4f;
+        enemyController.canvas.gameObject.SetActive(true);
+        int temp = Random.Range(1, 3);
+        string temp2 = "GetDamage_" + temp.ToString();
+        //enemyController.transform.LookAt(target.transform);
+        //enemyController.transform.eulerAngles = new Vector3(0f, enemyController.transform.eulerAngles.y, 0f);
+        //if(!animator.GetCurrentAnimatorStateInfo(0).IsTag("Attack"))
+        //    animator.Play(temp2, 0, 0);
+        curHp -= damage;
+        backHpHit = false;
+        GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["enemyHit"], false);
+        enemyController.Invoke("BackHpFunMessage", 0.3f);
+
+        if (curHp <= 0) Die();
     }
+
+
+
+    public override void Die()
+    {
+        enemyController.isDead = true;
+
+        enemyController.gameObject.layer = enemyController.deadLayer;
+        animator.Play("Dead");
+    }
+
+    public Vector3 CalculateJumpVelocity(Vector3 startPoint, Vector3 endPoint, float trajectoryHeight, float speedMultiplier)
+    {
+        Debug.LogError("StartPoint" + startPoint);
+        Debug.LogError("EndPoint" + endPoint);
+        float gravity = Physics.gravity.y;
+        float displacementY = endPoint.y - startPoint.y;
+        Vector3 displacementXZ = new Vector3(endPoint.x - startPoint.x, 0f, endPoint.z - startPoint.z);
+
+        // 궤적의 최고점 높이를 기반으로 시간을 계산
+        float timeToPeak = Mathf.Sqrt(-2 * trajectoryHeight / gravity);
+        float timeFromPeakToTarget = Mathf.Sqrt(2 * (trajectoryHeight - displacementY) / -gravity);
+        float originalTotalTime = timeToPeak + timeFromPeakToTarget;
+
+        // 속도 배율을 적용하여 시간을 줄임
+        float totalTime = originalTotalTime / speedMultiplier;
+
+        // 시간 값이 0이 아니도록 확인
+        if (totalTime <= 0)
+        {
+            Debug.LogError("Total time is zero or negative, which is invalid for velocity calculation.");
+            return Vector3.zero;
+        }
+
+        // XZ 평면 속도 계산
+        Vector3 velocityXZ = displacementXZ / totalTime;
+
+        // Y축 속도 계산
+        float velocityYToPeak = Mathf.Sqrt(-2 * gravity * trajectoryHeight);
+        float velocityYFromPeak = Mathf.Sqrt(2 * gravity * (trajectoryHeight - displacementY));
+
+        // 두 속도의 평균을 사용하여 총 Y축 속도를 계산
+        float velocityY = (velocityYToPeak + velocityYFromPeak) / 2;
+
+        // 속도 값이 NaN이 아닌지 확인
+        if (float.IsNaN(velocityXZ.x) || float.IsNaN(velocityXZ.y) || float.IsNaN(velocityXZ.z) || float.IsNaN(velocityY))
+        {
+            Debug.LogError("Calculated velocity contains NaN values.");
+            return Vector3.zero;
+        }
+
+        // 최종 속도 벡터 반환
+        return velocityXZ + Vector3.up * velocityY;
+    }
+
 }
 
 [System.Serializable]

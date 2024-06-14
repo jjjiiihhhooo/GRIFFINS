@@ -38,6 +38,7 @@ public class InputData : MonoBehaviour
         if (GameManager.Instance.isCutScene) return;
         if (player.isDead) return;
         MenuInput();
+        if (GameManager.Instance.dialogueManager.IsChat) return;
         KeyboardInput();
         MouseInput();
     }

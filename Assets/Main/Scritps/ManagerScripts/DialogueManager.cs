@@ -55,6 +55,7 @@ public class DialogueManager : MonoBehaviour
         if (!dialogueDot.gameObject.activeSelf)
         {
             isChat = true;
+            Player.Instance.movementStateMachine.ChangeState(Player.Instance.movementStateMachine.IdlingState);
             dialogueDot.gameObject.SetActive(true);
             dialogueDot.DORestartById("Start");
         }
