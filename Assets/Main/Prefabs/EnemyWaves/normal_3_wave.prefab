@@ -141,8 +141,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 122713701501887303}
-  m_LocalRotation: {x: 8.581021e-11, y: -0.0000000075080715, z: -0.112686574, w: 0.9936306}
-  m_LocalPosition: {x: -0.120355606, y: 0.000000038146972, z: 0}
+  m_LocalRotation: {x: -0.01071423, y: -0.07258567, z: -0.0070982105, w: -0.9972794}
+  m_LocalPosition: {x: -0.120355695, y: 0.000000023748681, z: -0.000000029802296}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -270,8 +270,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 240764258332600683}
-  m_LocalRotation: {x: 0.0000000042051327, y: -0.00000013506265, z: 0.044397384, w: 0.99901396}
-  m_LocalPosition: {x: -0.32405585, y: -0.00034506797, z: -9.59626e-10}
+  m_LocalRotation: {x: 0.02036395, y: 0.0024267244, z: -0.043930408, w: 0.9988241}
+  m_LocalPosition: {x: -0.32405588, y: -0.00034511, z: -0.000000020489134}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -998,8 +998,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 778783544329622077}
-  m_LocalRotation: {x: -0.5927389, y: 0.37986636, z: 0.025180321, w: 0.7097381}
-  m_LocalPosition: {x: 0.017340165, y: -0.0022433472, z: 0.08945327}
+  m_LocalRotation: {x: -0.038100645, y: -0.2886987, z: 0.07717558, w: -0.95354354}
+  m_LocalPosition: {x: 0.017340224, y: -0.002243363, z: 0.08945329}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1376,8 +1376,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1164321579923490905}
-  m_LocalRotation: {x: 0.10352796, y: -0.33774266, z: 0.022916311, w: 0.9352469}
-  m_LocalPosition: {x: -0.23459713, y: 0.000000009536743, z: 0}
+  m_LocalRotation: {x: -0.15404141, y: -0.43511888, z: 0.36863086, w: 0.8068792}
+  m_LocalPosition: {x: -0.23459855, y: -0.00000027567148, z: -0.0000017583368}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1694,8 +1694,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1304121215177201634}
-  m_LocalRotation: {x: 0.6336826, y: -0.017029533, z: -0.1992545, w: 0.74729776}
-  m_LocalPosition: {x: -0.5130063, y: 0, z: 0}
+  m_LocalRotation: {x: 0.76224035, y: 0.14219466, z: 0.023392389, w: 0.6310492}
+  m_LocalPosition: {x: -0.5130151, y: -0.000029250967, z: -0.00061459077}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1900,7 +1900,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -4296,7 +4296,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -4490,7 +4490,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1340917911425457390
 Transform:
   m_ObjectHideFlags: 0
@@ -4524,142 +4524,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
+    SerializedFormat: 0
+    SerializedBytes: 01010500000065006e0065006d0079002f00000000011d0000004e006f0072006d0061006c005f0045006e0065006d0079002c00200041007300730065006d0062006c0079002d00430053006800610072007000000000002d010c000000640061006d006100670065004500660066006500630074002d010c000000610074007400610063006b004500660066006500630074002d010800000061006e0069006d00610074006f0072002d010f00000065006e0065006d00790043006f006e00740072006f006c006c00650072002d010d00000066006900720065005400720061006e00730066006f0072006d000b01030000006f0062006a00000000000101060000005f006500760065006e0074002f01000000013500000055006e0069007400790045006e00670069006e0065002e004500760065006e00740073002e0055006e006900740079004500760065006e0074002c00200055006e0069007400790045006e00670069006e0065002e0043006f00720065004d006f00640075006c006500010000000101110000006d005f00500065007200730069007300740065006e007400430061006c006c0073002f02000000013e00000055006e0069007400790045006e00670069006e0065002e004500760065006e00740073002e00500065007200730069007300740065006e007400430061006c006c00470072006f00750070002c00200055006e0069007400790045006e00670069006e0065002e0043006f00720065004d006f00640075006c006500020000000101070000006d005f00430061006c006c0073002f030000000168000000530079007300740065006d002e0043006f006c006c0065006300740069006f006e0073002e00470065006e0065007200690063002e004c00690073007400600031005b005b0055006e0069007400790045006e00670069006e0065002e004500760065006e00740073002e00500065007200730069007300740065006e007400430061006c006c002c00200055006e0069007400790045006e00670069006e0065002e0043006f00720065004d006f00640075006c0065005d005d002c0020006d00730063006f0072006c006900620003000000060000000000000000070505052d01040000006e0061006d0065001f01050000006d00610078004800700000007a441f01050000006300750072004800700000007a441f01090000006d006f0076006500530070006500650064000000a0401f010c000000610074007400610063006b00440061006d006100670065000000803f1f010d000000610074007400610063006b0043007500720043006f006f006c00000000001f010d000000610074007400610063006b004d006100780043006f006f006c00000040401f0106000000720061006e006700650058000000a0411f0106000000720061006e00670065005a000000a0411f0108000000680069007400440065006c0061007900000000001f01090000006b006e006f0063006b006200610063006b00000000001f010e000000680061006d006d006500720043006f006f006c00540069006d006500000000001f010d000000680061006d006d0065007200430075007200540069006d006500000000002d01060000007400610072006700650074001f010e0000006d006f00640065006c005300680061006b006500540069006d006500000000002b01090000006200610063006b0048007000480069007400002b01080000006900730041006300740069006f006e00002b010800000069007300480061006d006d0065007200002b010500000069007300520075006e000003010c0000006b006e006f0063006b006200610063006b004400690072002f04000000012b00000055006e0069007400790045006e00670069006e0065002e0056006500630074006f00720033002c00200055006e0069007400790045006e00670069006e0065002e0043006f00720065004d006f00640075006c006500200000000020000000002000000000052b010b0000006900730042006f007300730053007400610072007400001f010800000063006f006f006c00540069006d006500000000001f0107000000630075007200540069006d0065000000000005
     ReferencedUnityObjects:
     - {fileID: 7201352494644501532, guid: 9314bd05728fae94fb41c7c9ae4e661c, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes:
-    - Name: enemy
-      Entry: 7
-      Data: 0|Normal_Enemy, Assembly-CSharp
-    - Name: damageEffect
-      Entry: 6
-      Data: 
-    - Name: animator
-      Entry: 6
-      Data: 
-    - Name: enemyController
-      Entry: 6
-      Data: 
-    - Name: fireTransform
-      Entry: 6
-      Data: 
-    - Name: obj
-      Entry: 10
-      Data: 0
-    - Name: _event
-      Entry: 7
-      Data: 1|UnityEngine.Events.UnityEvent, UnityEngine.CoreModule
-    - Name: m_PersistentCalls
-      Entry: 7
-      Data: 2|UnityEngine.Events.PersistentCallGroup, UnityEngine.CoreModule
-    - Name: m_Calls
-      Entry: 7
-      Data: 3|System.Collections.Generic.List`1[[UnityEngine.Events.PersistentCall,
-        UnityEngine.CoreModule]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: name
-      Entry: 6
-      Data: 
-    - Name: maxHp
-      Entry: 4
-      Data: 1000
-    - Name: curHp
-      Entry: 4
-      Data: 1000
-    - Name: moveSpeed
-      Entry: 4
-      Data: 5
-    - Name: attackDamage
-      Entry: 4
-      Data: 1
-    - Name: attackCurCool
-      Entry: 4
-      Data: 0
-    - Name: attackMaxCool
-      Entry: 4
-      Data: 3
-    - Name: rangeX
-      Entry: 4
-      Data: 20
-    - Name: rangeZ
-      Entry: 4
-      Data: 20
-    - Name: hitDelay
-      Entry: 4
-      Data: 0
-    - Name: knockback
-      Entry: 4
-      Data: 0
-    - Name: hammerCoolTime
-      Entry: 4
-      Data: 0
-    - Name: hammerCurTime
-      Entry: 4
-      Data: 0
-    - Name: target
-      Entry: 6
-      Data: 
-    - Name: modelShakeTime
-      Entry: 4
-      Data: 0
-    - Name: backHpHit
-      Entry: 5
-      Data: false
-    - Name: isAction
-      Entry: 5
-      Data: false
-    - Name: isHammer
-      Entry: 5
-      Data: false
-    - Name: isRun
-      Entry: 5
-      Data: false
-    - Name: knockbackDir
-      Entry: 7
-      Data: UnityEngine.Vector3, UnityEngine.CoreModule
-    - Name: 
-      Entry: 4
-      Data: 0
-    - Name: 
-      Entry: 4
-      Data: 0
-    - Name: 
-      Entry: 4
-      Data: 0
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: isBossStart
-      Entry: 5
-      Data: false
-    - Name: coolTime
-      Entry: 4
-      Data: 0
-    - Name: curTime
-      Entry: 4
-      Data: 0
-    - Name: 
-      Entry: 8
-      Data: 
+    SerializationNodes: []
   dmgTxt: {fileID: 0}
   canvas: {fileID: 1340917910520289909}
   animator: {fileID: 0}
@@ -4667,6 +4540,7 @@ MonoBehaviour:
   hpSlider: {fileID: 1340917910317035763}
   backHpSlider: {fileID: 1340917910292436673}
   attackCol: {fileID: 1340917910706052086}
+  hammerCol: {fileID: 0}
   runAttackCol: {fileID: 4002344799393403066}
   targetUI_obj: {fileID: 1340917910777498637}
   anim_dot: {fileID: 0}
@@ -5572,8 +5446,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1671052062409640616}
-  m_LocalRotation: {x: -0.000000015454336, y: 0.000000015454289, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: -0.28312486, y: 0.35402298, z: 0.000000019073486}
+  m_LocalRotation: {x: -0.00000002142033, y: 0.0000000447033, z: 0.7212101, w: -0.69271654}
+  m_LocalPosition: {x: -0.28312522, y: 0.35402328, z: -0.00000013783576}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -7774,8 +7648,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3340617600480064364}
-  m_LocalRotation: {x: 7.283061e-14, y: 4.3558034e-17, z: 0.00059807306, w: 0.9999998}
-  m_LocalPosition: {x: -0.45927796, y: 0.000000007152557, z: 0}
+  m_LocalRotation: {x: 0.07024755, y: -0.011156953, z: 0.28925416, w: 0.9546061}
+  m_LocalPosition: {x: -0.45927966, y: -0.0000000949949, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -8050,8 +7924,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3487864146983652745}
-  m_LocalRotation: {x: 0.09721662, y: -0.0065796445, z: -0.08527879, w: 0.99158114}
-  m_LocalPosition: {x: -0.18425365, y: -0.020164566, z: 0.00041431427}
+  m_LocalRotation: {x: 0.013320428, y: -0.03141339, z: 0.21689598, w: -0.9755983}
+  m_LocalPosition: {x: -0.1842539, y: -0.020164635, z: 0.00041430607}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -8082,8 +7956,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3488051514319974752}
-  m_LocalRotation: {x: 0.0000000027379259, y: -0.00000014404964, z: -0.036809117, w: 0.9993223}
-  m_LocalPosition: {x: -0.3602295, y: -0.000000007152557, z: 0}
+  m_LocalRotation: {x: -0.0251249, y: 0.06568949, z: -0.06507941, w: 0.9953986}
+  m_LocalPosition: {x: -0.3602297, y: 0.00004141778, z: -0.00035151464}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -8394,8 +8268,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3813717434863081623}
-  m_LocalRotation: {x: -0.47954038, y: 0.4795397, z: 0.51965475, w: 0.5196554}
-  m_LocalPosition: {x: 0.0000000025455773, y: 1.1084256, z: 0.058199592}
+  m_LocalRotation: {x: -0.4795404, y: 0.47953975, z: 0.5196547, w: 0.51965535}
+  m_LocalPosition: {x: 0, y: 1.1084256, z: 0.058199562}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -8907,8 +8781,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4062785125155537629}
-  m_LocalRotation: {x: -0.0000000763892, y: 0.00000089034626, z: -0.23193553, w: 0.9727312}
-  m_LocalPosition: {x: -0.4864679, y: -0.115658425, z: -0.00000023290863}
+  m_LocalRotation: {x: 0.041756902, y: 0.010064216, z: -0.3989896, w: 0.915949}
+  m_LocalPosition: {x: -0.486468, y: -0.11565846, z: -0.00000025518233}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -9841,8 +9715,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4941818766602754249}
-  m_LocalRotation: {x: -0.0000020407342, y: 0.0000005582245, z: 0.044220854, w: 0.99902177}
-  m_LocalPosition: {x: -0.121252365, y: -0.00025699614, z: 0.00000016850827}
+  m_LocalRotation: {x: -0.0000018179414, y: 0.0000007599591, z: 0.04422095, w: 0.99902177}
+  m_LocalPosition: {x: -0.121252365, y: -0.00025701517, z: 0.00000015273686}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -9923,6 +9797,7 @@ Transform:
   - {fileID: 5428032541983160594}
   - {fileID: 8146990040729338459}
   - {fileID: 7580616959781269151}
+  - {fileID: 6921189394601735267}
   m_Father: {fileID: 5453005408811984179}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -9939,122 +9814,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
-    ReferencedUnityObjects: []
+    SerializedFormat: 0
+    SerializedBytes: 01010500000065006e0065006d0079002f00000000011b00000045007000690063005f0045006e0065006d0079002c00200041007300730065006d0062006c0079002d00430053006800610072007000000000002d010c000000640061006d006100670065004500660066006500630074000b010c000000610074007400610063006b00450066006600650063007400000000002d010800000061006e0069006d00610074006f0072002d010f00000065006e0065006d00790043006f006e00740072006f006c006c00650072002d010d00000066006900720065005400720061006e00730066006f0072006d002d01030000006f0062006a002d01060000005f006500760065006e0074002d01040000006e0061006d0065001f01050000006d0061007800480070000080bb441f0105000000630075007200480070000080bb441f01090000006d006f0076006500530070006500650064000000a0401f010c000000610074007400610063006b00440061006d00610067006500000000401f010d000000610074007400610063006b0043007500720043006f006f006c00000000001f010d000000610074007400610063006b004d006100780043006f006f006c000000a0401f0106000000720061006e00670065005800000000001f0106000000720061006e00670065005a00000000001f0108000000680069007400440065006c0061007900000000001f01090000006b006e006f0063006b006200610063006b00000000001f010e000000680061006d006d006500720043006f006f006c00540069006d006500000030411f010d000000680061006d006d0065007200430075007200540069006d006500000000402d01060000007400610072006700650074001f010e0000006d006f00640065006c005300680061006b006500540069006d006500000000002b01090000006200610063006b0048007000480069007400002b01080000006900730041006300740069006f006e00002b010800000069007300480061006d006d0065007200002b010500000069007300520075006e000003010c0000006b006e006f0063006b006200610063006b004400690072002f01000000012b00000055006e0069007400790045006e00670069006e0065002e0056006500630074006f00720033002c00200055006e0069007400790045006e00670069006e0065002e0043006f00720065004d006f00640075006c006500200000000020000000002000000000052b010b0000006900730042006f007300730053007400610072007400001f010800000063006f006f006c00540069006d0065000000a0401f0107000000630075007200540069006d0065000000a0401f01090000006400610073006800530070006500650064000000204205
+    ReferencedUnityObjects:
+    - {fileID: 4599545528568739242, guid: c7d15ca14700cf04d9faa9d9e5ea3016, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes:
-    - Name: enemy
-      Entry: 7
-      Data: 0|Epic_Enemy, Assembly-CSharp
-    - Name: damageEffect
-      Entry: 6
-      Data: 
-    - Name: animator
-      Entry: 6
-      Data: 
-    - Name: enemyController
-      Entry: 6
-      Data: 
-    - Name: fireTransform
-      Entry: 6
-      Data: 
-    - Name: obj
-      Entry: 6
-      Data: 
-    - Name: _event
-      Entry: 6
-      Data: 
-    - Name: name
-      Entry: 6
-      Data: 
-    - Name: maxHp
-      Entry: 4
-      Data: 1500
-    - Name: curHp
-      Entry: 4
-      Data: 1500
-    - Name: moveSpeed
-      Entry: 4
-      Data: 5
-    - Name: attackDamage
-      Entry: 4
-      Data: 2
-    - Name: attackCurCool
-      Entry: 4
-      Data: 0
-    - Name: attackMaxCool
-      Entry: 4
-      Data: 5
-    - Name: rangeX
-      Entry: 4
-      Data: 0
-    - Name: rangeZ
-      Entry: 4
-      Data: 0
-    - Name: hitDelay
-      Entry: 4
-      Data: 0
-    - Name: knockback
-      Entry: 4
-      Data: 0
-    - Name: hammerCoolTime
-      Entry: 4
-      Data: 11
-    - Name: hammerCurTime
-      Entry: 4
-      Data: 2
-    - Name: target
-      Entry: 6
-      Data: 
-    - Name: modelShakeTime
-      Entry: 4
-      Data: 0
-    - Name: backHpHit
-      Entry: 5
-      Data: false
-    - Name: isAction
-      Entry: 5
-      Data: false
-    - Name: isHammer
-      Entry: 5
-      Data: false
-    - Name: isRun
-      Entry: 5
-      Data: false
-    - Name: knockbackDir
-      Entry: 7
-      Data: UnityEngine.Vector3, UnityEngine.CoreModule
-    - Name: 
-      Entry: 4
-      Data: 0
-    - Name: 
-      Entry: 4
-      Data: 0
-    - Name: 
-      Entry: 4
-      Data: 0
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: isBossStart
-      Entry: 5
-      Data: false
-    - Name: coolTime
-      Entry: 4
-      Data: 5
-    - Name: curTime
-      Entry: 4
-      Data: 5
-    - Name: dashSpeed
-      Entry: 4
-      Data: 40
-    - Name: 
-      Entry: 8
-      Data: 
+    SerializationNodes: []
   dmgTxt: {fileID: 0}
   canvas: {fileID: 2196289174434995589}
   animator: {fileID: 0}
@@ -10062,6 +9830,7 @@ MonoBehaviour:
   hpSlider: {fileID: 2004453715175263504}
   backHpSlider: {fileID: 5558019908006168038}
   attackCol: {fileID: 560524051603315111}
+  hammerCol: {fileID: 1795173206455920732}
   runAttackCol: {fileID: 0}
   targetUI_obj: {fileID: 8894941466457743923}
   anim_dot: {fileID: 0}
@@ -10571,8 +10340,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5351932943365324537}
-  m_LocalRotation: {x: -4.623879e-10, y: 5.511653e-11, z: -0.118361846, w: 0.9929705}
-  m_LocalPosition: {x: -0.09166847, y: 0.000000076293944, z: 0}
+  m_LocalRotation: {x: -0.00000067299686, y: -0.03192253, z: -0.39692634, w: 0.9172952}
+  m_LocalPosition: {x: -0.09166843, y: 0.000000015669906, z: 0.000000006719427}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -10603,8 +10372,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5362462126369565996}
-  m_LocalRotation: {x: 0.5927389, y: -0.37986636, z: 0.025180332, w: 0.709738}
-  m_LocalPosition: {x: 0.017340088, y: -0.0022436522, z: -0.089453235}
+  m_LocalRotation: {x: 0.0024704628, y: 0.30534393, z: 0.14093216, w: -0.9417522}
+  m_LocalPosition: {x: 0.017340101, y: -0.0022436115, z: -0.08945333}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -10812,8 +10581,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5468816426396089043}
-  m_LocalRotation: {x: 0.0000000013096395, y: 0.000000056720616, z: -0.036809117, w: 0.9993223}
-  m_LocalPosition: {x: -0.36022943, y: -0.000000009536743, z: -0.000000019073486}
+  m_LocalRotation: {x: 0.00754213, y: -0.11205215, z: -0.22894989, w: 0.96693814}
+  m_LocalPosition: {x: -0.3602297, y: -0.000000007450579, z: -0.00039776973}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -11056,8 +10825,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5540649689528334917}
-  m_LocalRotation: {x: -0.10352796, y: 0.3377425, z: 0.022916317, w: 0.93524694}
-  m_LocalPosition: {x: -0.23459713, y: -0.000000019073486, z: 0.00000015258789}
+  m_LocalRotation: {x: 0.21783037, y: 0.43552136, z: 0.36594522, w: 0.7930669}
+  m_LocalPosition: {x: -0.23459852, y: -0.00000041723237, z: 0.0000019073482}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -11285,8 +11054,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5725809492498564314}
-  m_LocalRotation: {x: 0.000000015454349, y: -0.00000001545429, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: -0.2831249, y: 0.3540229, z: 0}
+  m_LocalRotation: {x: 0.0000000065192394, y: 0.000000011175839, z: 0.7093288, w: -0.70487785}
+  m_LocalPosition: {x: -0.28312498, y: 0.3540229, z: 0.000000015832484}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -11386,8 +11155,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5798886959497041378}
-  m_LocalRotation: {x: -0.5, y: 0.5, z: 0.4999993, w: 0.5000007}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalRotation: {x: -0.58051175, y: 0.40203735, z: 0.54450256, w: 0.45264673}
+  m_LocalPosition: {x: 0.07755515, y: 0.0037146658, z: -0.06565866}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -11549,8 +11318,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5943590160228299926}
-  m_LocalRotation: {x: -0.5758347, y: -0.16838847, z: 0.7830625, w: -0.16392966}
-  m_LocalPosition: {x: 0.09739105, y: 0.07855499, z: 0.11986574}
+  m_LocalRotation: {x: 0.76837915, y: -0.09830298, z: -0.6247131, w: 0.098302975}
+  m_LocalPosition: {x: 0.19197375, y: 0.024368193, z: 0.1283977}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -11581,8 +11350,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5953110585060645142}
-  m_LocalRotation: {x: -0.0000000022690283, y: -0.0000000072328574, z: -0.11836185, w: 0.9929705}
-  m_LocalPosition: {x: -0.09166847, y: -0.000000076293944, z: 0.000000009536743}
+  m_LocalRotation: {x: 0.0000005727633, y: -0.066775404, z: 0.8302946, w: -0.5533101}
+  m_LocalPosition: {x: -0.09166855, y: -0.000000021167224, z: 0.000000012963312}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -12260,8 +12029,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6452907168425775335}
-  m_LocalRotation: {x: 0.000000082824236, y: -0.000000105697964, z: -0.0041744024, w: 0.9999913}
-  m_LocalPosition: {x: -0.10986267, y: -0.047340088, z: -0.0000000049176743}
+  m_LocalRotation: {x: 0.01796757, y: -0.01302594, z: 0.106215775, w: 0.99409544}
+  m_LocalPosition: {x: -0.109862715, y: -0.047340132, z: -0.000000013969837}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -12450,8 +12219,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6736052223415718464}
-  m_LocalRotation: {x: -1.7162043e-10, y: 0.000000015016143, z: -0.112686574, w: 0.9936306}
-  m_LocalPosition: {x: -0.120355606, y: 0, z: 0.000000076293944}
+  m_LocalRotation: {x: -0.010902252, y: 0.00040394795, z: 0.0021542823, w: 0.9999382}
+  m_LocalPosition: {x: -0.12035566, y: -0.00000005448232, z: 0.000000044703434}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -13513,7 +13282,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -14247,7 +14016,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6824623682789390798
 Transform:
   m_ObjectHideFlags: 0
@@ -14281,142 +14050,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
+    SerializedFormat: 0
+    SerializedBytes: 01010500000065006e0065006d0079002f00000000011d0000004e006f0072006d0061006c005f0045006e0065006d0079002c00200041007300730065006d0062006c0079002d00430053006800610072007000000000002d010c000000640061006d006100670065004500660066006500630074002d010c000000610074007400610063006b004500660066006500630074002d010800000061006e0069006d00610074006f0072002d010f00000065006e0065006d00790043006f006e00740072006f006c006c00650072002d010d00000066006900720065005400720061006e00730066006f0072006d000b01030000006f0062006a00000000000101060000005f006500760065006e0074002f01000000013500000055006e0069007400790045006e00670069006e0065002e004500760065006e00740073002e0055006e006900740079004500760065006e0074002c00200055006e0069007400790045006e00670069006e0065002e0043006f00720065004d006f00640075006c006500010000000101110000006d005f00500065007200730069007300740065006e007400430061006c006c0073002f02000000013e00000055006e0069007400790045006e00670069006e0065002e004500760065006e00740073002e00500065007200730069007300740065006e007400430061006c006c00470072006f00750070002c00200055006e0069007400790045006e00670069006e0065002e0043006f00720065004d006f00640075006c006500020000000101070000006d005f00430061006c006c0073002f030000000168000000530079007300740065006d002e0043006f006c006c0065006300740069006f006e0073002e00470065006e0065007200690063002e004c00690073007400600031005b005b0055006e0069007400790045006e00670069006e0065002e004500760065006e00740073002e00500065007200730069007300740065006e007400430061006c006c002c00200055006e0069007400790045006e00670069006e0065002e0043006f00720065004d006f00640075006c0065005d005d002c0020006d00730063006f0072006c006900620003000000060000000000000000070505052d01040000006e0061006d0065001f01050000006d00610078004800700000007a441f01050000006300750072004800700000007a441f01090000006d006f0076006500530070006500650064000000a0401f010c000000610074007400610063006b00440061006d006100670065000000803f1f010d000000610074007400610063006b0043007500720043006f006f006c00000000001f010d000000610074007400610063006b004d006100780043006f006f006c00000040401f0106000000720061006e006700650058000000a0411f0106000000720061006e00670065005a000000a0411f0108000000680069007400440065006c0061007900000000001f01090000006b006e006f0063006b006200610063006b00000000001f010e000000680061006d006d006500720043006f006f006c00540069006d006500000000001f010d000000680061006d006d0065007200430075007200540069006d006500000000002d01060000007400610072006700650074001f010e0000006d006f00640065006c005300680061006b006500540069006d006500000000002b01090000006200610063006b0048007000480069007400002b01080000006900730041006300740069006f006e00002b010800000069007300480061006d006d0065007200002b010500000069007300520075006e000003010c0000006b006e006f0063006b006200610063006b004400690072002f04000000012b00000055006e0069007400790045006e00670069006e0065002e0056006500630074006f00720033002c00200055006e0069007400790045006e00670069006e0065002e0043006f00720065004d006f00640075006c006500200000000020000000002000000000052b010b0000006900730042006f007300730053007400610072007400001f010800000063006f006f006c00540069006d006500000000001f0107000000630075007200540069006d0065000000000005
     ReferencedUnityObjects:
     - {fileID: 7201352494644501532, guid: 9314bd05728fae94fb41c7c9ae4e661c, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes:
-    - Name: enemy
-      Entry: 7
-      Data: 0|Normal_Enemy, Assembly-CSharp
-    - Name: damageEffect
-      Entry: 6
-      Data: 
-    - Name: animator
-      Entry: 6
-      Data: 
-    - Name: enemyController
-      Entry: 6
-      Data: 
-    - Name: fireTransform
-      Entry: 6
-      Data: 
-    - Name: obj
-      Entry: 10
-      Data: 0
-    - Name: _event
-      Entry: 7
-      Data: 1|UnityEngine.Events.UnityEvent, UnityEngine.CoreModule
-    - Name: m_PersistentCalls
-      Entry: 7
-      Data: 2|UnityEngine.Events.PersistentCallGroup, UnityEngine.CoreModule
-    - Name: m_Calls
-      Entry: 7
-      Data: 3|System.Collections.Generic.List`1[[UnityEngine.Events.PersistentCall,
-        UnityEngine.CoreModule]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: name
-      Entry: 6
-      Data: 
-    - Name: maxHp
-      Entry: 4
-      Data: 1000
-    - Name: curHp
-      Entry: 4
-      Data: 1000
-    - Name: moveSpeed
-      Entry: 4
-      Data: 5
-    - Name: attackDamage
-      Entry: 4
-      Data: 1
-    - Name: attackCurCool
-      Entry: 4
-      Data: 0
-    - Name: attackMaxCool
-      Entry: 4
-      Data: 3
-    - Name: rangeX
-      Entry: 4
-      Data: 20
-    - Name: rangeZ
-      Entry: 4
-      Data: 20
-    - Name: hitDelay
-      Entry: 4
-      Data: 0
-    - Name: knockback
-      Entry: 4
-      Data: 0
-    - Name: hammerCoolTime
-      Entry: 4
-      Data: 0
-    - Name: hammerCurTime
-      Entry: 4
-      Data: 0
-    - Name: target
-      Entry: 6
-      Data: 
-    - Name: modelShakeTime
-      Entry: 4
-      Data: 0
-    - Name: backHpHit
-      Entry: 5
-      Data: false
-    - Name: isAction
-      Entry: 5
-      Data: false
-    - Name: isHammer
-      Entry: 5
-      Data: false
-    - Name: isRun
-      Entry: 5
-      Data: false
-    - Name: knockbackDir
-      Entry: 7
-      Data: UnityEngine.Vector3, UnityEngine.CoreModule
-    - Name: 
-      Entry: 4
-      Data: 0
-    - Name: 
-      Entry: 4
-      Data: 0
-    - Name: 
-      Entry: 4
-      Data: 0
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: isBossStart
-      Entry: 5
-      Data: false
-    - Name: coolTime
-      Entry: 4
-      Data: 0
-    - Name: curTime
-      Entry: 4
-      Data: 0
-    - Name: 
-      Entry: 8
-      Data: 
+    SerializationNodes: []
   dmgTxt: {fileID: 0}
   canvas: {fileID: 6824623682021588821}
   animator: {fileID: 0}
@@ -14424,6 +14066,7 @@ MonoBehaviour:
   hpSlider: {fileID: 6824623681684100563}
   backHpSlider: {fileID: 6824623681791636449}
   attackCol: {fileID: 6824623682104590038}
+  hammerCol: {fileID: 0}
   runAttackCol: {fileID: 8909568993264792986}
   targetUI_obj: {fileID: 6824623683382946093}
   anim_dot: {fileID: 0}
@@ -14536,7 +14179,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -15973,8 +15616,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6838626166548300559}
-  m_LocalRotation: {x: -0.0000000022190456, y: -0.000000015198626, z: 0.09983344, w: 0.9950042}
-  m_LocalPosition: {x: -0.47317275, y: 0, z: 0}
+  m_LocalRotation: {x: 0.26177073, y: -0.09202736, z: 0.4667478, w: 0.8397343}
+  m_LocalPosition: {x: -0.47317863, y: 0.0000031292443, z: 0.0000016763804}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -16014,6 +15657,68 @@ Transform:
   m_Father: {fileID: 5835361539233402960}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6875850622745318681
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6921189394601735267}
+  - component: {fileID: 1795173206455920732}
+  - component: {fileID: 2960836120998061422}
+  m_Layer: 7
+  m_Name: HammerCol
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &6921189394601735267
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6875850622745318681}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 9076489848963387142}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1795173206455920732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6875850622745318681}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3cfc397da3fd1048843198b5fc40ded, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  time: 0.2
+  damage: 30
+  otherTag: Player
+  isParticle: 0
+--- !u!65 &2960836120998061422
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6875850622745318681}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 13, y: 10, z: 13}
+  m_Center: {x: 0, y: 3.95, z: 0}
 --- !u!1 &6877289741407318105
 GameObject:
   m_ObjectHideFlags: 0
@@ -16409,8 +16114,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7137953391252648372}
-  m_LocalRotation: {x: 0.038878646, y: 0.9992439, z: 0.0000013810524, w: -0.00000016002683}
-  m_LocalPosition: {x: 0.12080085, y: -0.010456686, z: -0.20299977}
+  m_LocalRotation: {x: -0.06820701, y: 0.98871315, z: -0.084186465, w: -0.10347336}
+  m_LocalPosition: {x: 0.12219687, y: 0.00017514073, z: -0.20299977}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -16760,8 +16465,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7472291327918251632}
-  m_LocalRotation: {x: 0.000000001487634, y: -0.000000014826716, z: 0.09983344, w: 0.9950042}
-  m_LocalPosition: {x: -0.47317266, y: 0, z: 0.00000015258789}
+  m_LocalRotation: {x: -0.21119873, y: 0.051897846, z: 0.35519138, w: 0.9091429}
+  m_LocalPosition: {x: -0.47317758, y: 0.0000019967554, z: -0.0000010579822}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -16819,7 +16524,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7518763705369905238
 Transform:
   m_ObjectHideFlags: 0
@@ -16853,142 +16558,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
+    SerializedFormat: 0
+    SerializedBytes: 01010500000065006e0065006d0079002f00000000011d0000004e006f0072006d0061006c005f0045006e0065006d0079002c00200041007300730065006d0062006c0079002d00430053006800610072007000000000002d010c000000640061006d006100670065004500660066006500630074002d010c000000610074007400610063006b004500660066006500630074002d010800000061006e0069006d00610074006f0072002d010f00000065006e0065006d00790043006f006e00740072006f006c006c00650072002d010d00000066006900720065005400720061006e00730066006f0072006d000b01030000006f0062006a00000000000101060000005f006500760065006e0074002f01000000013500000055006e0069007400790045006e00670069006e0065002e004500760065006e00740073002e0055006e006900740079004500760065006e0074002c00200055006e0069007400790045006e00670069006e0065002e0043006f00720065004d006f00640075006c006500010000000101110000006d005f00500065007200730069007300740065006e007400430061006c006c0073002f02000000013e00000055006e0069007400790045006e00670069006e0065002e004500760065006e00740073002e00500065007200730069007300740065006e007400430061006c006c00470072006f00750070002c00200055006e0069007400790045006e00670069006e0065002e0043006f00720065004d006f00640075006c006500020000000101070000006d005f00430061006c006c0073002f030000000168000000530079007300740065006d002e0043006f006c006c0065006300740069006f006e0073002e00470065006e0065007200690063002e004c00690073007400600031005b005b0055006e0069007400790045006e00670069006e0065002e004500760065006e00740073002e00500065007200730069007300740065006e007400430061006c006c002c00200055006e0069007400790045006e00670069006e0065002e0043006f00720065004d006f00640075006c0065005d005d002c0020006d00730063006f0072006c006900620003000000060000000000000000070505052d01040000006e0061006d0065001f01050000006d00610078004800700000007a441f01050000006300750072004800700000007a441f01090000006d006f0076006500530070006500650064000000a0401f010c000000610074007400610063006b00440061006d006100670065000000803f1f010d000000610074007400610063006b0043007500720043006f006f006c00000000001f010d000000610074007400610063006b004d006100780043006f006f006c00000040401f0106000000720061006e006700650058000000a0411f0106000000720061006e00670065005a000000a0411f0108000000680069007400440065006c0061007900000000001f01090000006b006e006f0063006b006200610063006b00000000001f010e000000680061006d006d006500720043006f006f006c00540069006d006500000000001f010d000000680061006d006d0065007200430075007200540069006d006500000000002d01060000007400610072006700650074001f010e0000006d006f00640065006c005300680061006b006500540069006d006500000000002b01090000006200610063006b0048007000480069007400002b01080000006900730041006300740069006f006e00002b010800000069007300480061006d006d0065007200002b010500000069007300520075006e000003010c0000006b006e006f0063006b006200610063006b004400690072002f04000000012b00000055006e0069007400790045006e00670069006e0065002e0056006500630074006f00720033002c00200055006e0069007400790045006e00670069006e0065002e0043006f00720065004d006f00640075006c006500200000000020000000002000000000052b010b0000006900730042006f007300730053007400610072007400001f010800000063006f006f006c00540069006d006500000000001f0107000000630075007200540069006d0065000000000005
     ReferencedUnityObjects:
     - {fileID: 7201352494644501532, guid: 9314bd05728fae94fb41c7c9ae4e661c, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes:
-    - Name: enemy
-      Entry: 7
-      Data: 0|Normal_Enemy, Assembly-CSharp
-    - Name: damageEffect
-      Entry: 6
-      Data: 
-    - Name: animator
-      Entry: 6
-      Data: 
-    - Name: enemyController
-      Entry: 6
-      Data: 
-    - Name: fireTransform
-      Entry: 6
-      Data: 
-    - Name: obj
-      Entry: 10
-      Data: 0
-    - Name: _event
-      Entry: 7
-      Data: 1|UnityEngine.Events.UnityEvent, UnityEngine.CoreModule
-    - Name: m_PersistentCalls
-      Entry: 7
-      Data: 2|UnityEngine.Events.PersistentCallGroup, UnityEngine.CoreModule
-    - Name: m_Calls
-      Entry: 7
-      Data: 3|System.Collections.Generic.List`1[[UnityEngine.Events.PersistentCall,
-        UnityEngine.CoreModule]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: name
-      Entry: 6
-      Data: 
-    - Name: maxHp
-      Entry: 4
-      Data: 1000
-    - Name: curHp
-      Entry: 4
-      Data: 1000
-    - Name: moveSpeed
-      Entry: 4
-      Data: 5
-    - Name: attackDamage
-      Entry: 4
-      Data: 1
-    - Name: attackCurCool
-      Entry: 4
-      Data: 0
-    - Name: attackMaxCool
-      Entry: 4
-      Data: 3
-    - Name: rangeX
-      Entry: 4
-      Data: 20
-    - Name: rangeZ
-      Entry: 4
-      Data: 20
-    - Name: hitDelay
-      Entry: 4
-      Data: 0
-    - Name: knockback
-      Entry: 4
-      Data: 0
-    - Name: hammerCoolTime
-      Entry: 4
-      Data: 0
-    - Name: hammerCurTime
-      Entry: 4
-      Data: 0
-    - Name: target
-      Entry: 6
-      Data: 
-    - Name: modelShakeTime
-      Entry: 4
-      Data: 0
-    - Name: backHpHit
-      Entry: 5
-      Data: false
-    - Name: isAction
-      Entry: 5
-      Data: false
-    - Name: isHammer
-      Entry: 5
-      Data: false
-    - Name: isRun
-      Entry: 5
-      Data: false
-    - Name: knockbackDir
-      Entry: 7
-      Data: UnityEngine.Vector3, UnityEngine.CoreModule
-    - Name: 
-      Entry: 4
-      Data: 0
-    - Name: 
-      Entry: 4
-      Data: 0
-    - Name: 
-      Entry: 4
-      Data: 0
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: isBossStart
-      Entry: 5
-      Data: false
-    - Name: coolTime
-      Entry: 4
-      Data: 0
-    - Name: curTime
-      Entry: 4
-      Data: 0
-    - Name: 
-      Entry: 8
-      Data: 
+    SerializationNodes: []
   dmgTxt: {fileID: 0}
   canvas: {fileID: 7518763706806701773}
   animator: {fileID: 0}
@@ -16996,6 +16574,7 @@ MonoBehaviour:
   hpSlider: {fileID: 7518763706477618251}
   backHpSlider: {fileID: 7518763706501939833}
   attackCol: {fileID: 7518763706889703246}
+  hammerCol: {fileID: 0}
   runAttackCol: {fileID: 5568922072675812354}
   targetUI_obj: {fileID: 7518763706013931701}
   anim_dot: {fileID: 0}
@@ -17210,7 +16789,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -19582,7 +19161,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -20283,8 +19862,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7561465667853910178}
-  m_LocalRotation: {x: 8.971237e-14, y: -1.06044874e-14, z: 0.00059807306, w: 0.9999998}
-  m_LocalPosition: {x: -0.45927796, y: 0, z: 0.000000019073486}
+  m_LocalRotation: {x: -0.032549683, y: -0.008584602, z: 0.31705204, w: 0.9478106}
+  m_LocalPosition: {x: -0.459279, y: -0.00000030547383, z: 0.00000002980233}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -20872,8 +20451,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7820898726368318908}
-  m_LocalRotation: {x: 0.038878646, y: 0.9992439, z: 0.0000013823577, w: -0.00000024286078}
-  m_LocalPosition: {x: 0.12080101, y: -0.010457811, z: 0.20299967}
+  m_LocalRotation: {x: -0.28239182, y: 0.95503896, z: 0.02684788, w: 0.086224176}
+  m_LocalPosition: {x: 0.122197814, y: 0.00017546855, z: 0.20299985}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -22277,7 +21856,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7949165252268723532
 Transform:
   m_ObjectHideFlags: 0
@@ -22311,142 +21890,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
+    SerializedFormat: 0
+    SerializedBytes: 01010500000065006e0065006d0079002f00000000011d0000004e006f0072006d0061006c005f0045006e0065006d0079002c00200041007300730065006d0062006c0079002d00430053006800610072007000000000002d010c000000640061006d006100670065004500660066006500630074002d010c000000610074007400610063006b004500660066006500630074002d010800000061006e0069006d00610074006f0072002d010f00000065006e0065006d00790043006f006e00740072006f006c006c00650072002d010d00000066006900720065005400720061006e00730066006f0072006d000b01030000006f0062006a00000000000101060000005f006500760065006e0074002f01000000013500000055006e0069007400790045006e00670069006e0065002e004500760065006e00740073002e0055006e006900740079004500760065006e0074002c00200055006e0069007400790045006e00670069006e0065002e0043006f00720065004d006f00640075006c006500010000000101110000006d005f00500065007200730069007300740065006e007400430061006c006c0073002f02000000013e00000055006e0069007400790045006e00670069006e0065002e004500760065006e00740073002e00500065007200730069007300740065006e007400430061006c006c00470072006f00750070002c00200055006e0069007400790045006e00670069006e0065002e0043006f00720065004d006f00640075006c006500020000000101070000006d005f00430061006c006c0073002f030000000168000000530079007300740065006d002e0043006f006c006c0065006300740069006f006e0073002e00470065006e0065007200690063002e004c00690073007400600031005b005b0055006e0069007400790045006e00670069006e0065002e004500760065006e00740073002e00500065007200730069007300740065006e007400430061006c006c002c00200055006e0069007400790045006e00670069006e0065002e0043006f00720065004d006f00640075006c0065005d005d002c0020006d00730063006f0072006c006900620003000000060000000000000000070505052d01040000006e0061006d0065001f01050000006d00610078004800700000007a441f01050000006300750072004800700000007a441f01090000006d006f0076006500530070006500650064000000a0401f010c000000610074007400610063006b00440061006d006100670065000000803f1f010d000000610074007400610063006b0043007500720043006f006f006c00000000001f010d000000610074007400610063006b004d006100780043006f006f006c00000040401f0106000000720061006e006700650058000000a0411f0106000000720061006e00670065005a000000a0411f0108000000680069007400440065006c0061007900000000001f01090000006b006e006f0063006b006200610063006b00000000001f010e000000680061006d006d006500720043006f006f006c00540069006d006500000000001f010d000000680061006d006d0065007200430075007200540069006d006500000000002d01060000007400610072006700650074001f010e0000006d006f00640065006c005300680061006b006500540069006d006500000000002b01090000006200610063006b0048007000480069007400002b01080000006900730041006300740069006f006e00002b010800000069007300480061006d006d0065007200002b010500000069007300520075006e000003010c0000006b006e006f0063006b006200610063006b004400690072002f04000000012b00000055006e0069007400790045006e00670069006e0065002e0056006500630074006f00720033002c00200055006e0069007400790045006e00670069006e0065002e0043006f00720065004d006f00640075006c006500200000000020000000002000000000052b010b0000006900730042006f007300730053007400610072007400001f010800000063006f006f006c00540069006d006500000000001f0107000000630075007200540069006d0065000000000005
     ReferencedUnityObjects:
     - {fileID: 7201352494644501532, guid: 9314bd05728fae94fb41c7c9ae4e661c, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes:
-    - Name: enemy
-      Entry: 7
-      Data: 0|Normal_Enemy, Assembly-CSharp
-    - Name: damageEffect
-      Entry: 6
-      Data: 
-    - Name: animator
-      Entry: 6
-      Data: 
-    - Name: enemyController
-      Entry: 6
-      Data: 
-    - Name: fireTransform
-      Entry: 6
-      Data: 
-    - Name: obj
-      Entry: 10
-      Data: 0
-    - Name: _event
-      Entry: 7
-      Data: 1|UnityEngine.Events.UnityEvent, UnityEngine.CoreModule
-    - Name: m_PersistentCalls
-      Entry: 7
-      Data: 2|UnityEngine.Events.PersistentCallGroup, UnityEngine.CoreModule
-    - Name: m_Calls
-      Entry: 7
-      Data: 3|System.Collections.Generic.List`1[[UnityEngine.Events.PersistentCall,
-        UnityEngine.CoreModule]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: name
-      Entry: 6
-      Data: 
-    - Name: maxHp
-      Entry: 4
-      Data: 1000
-    - Name: curHp
-      Entry: 4
-      Data: 1000
-    - Name: moveSpeed
-      Entry: 4
-      Data: 5
-    - Name: attackDamage
-      Entry: 4
-      Data: 1
-    - Name: attackCurCool
-      Entry: 4
-      Data: 0
-    - Name: attackMaxCool
-      Entry: 4
-      Data: 3
-    - Name: rangeX
-      Entry: 4
-      Data: 20
-    - Name: rangeZ
-      Entry: 4
-      Data: 20
-    - Name: hitDelay
-      Entry: 4
-      Data: 0
-    - Name: knockback
-      Entry: 4
-      Data: 0
-    - Name: hammerCoolTime
-      Entry: 4
-      Data: 0
-    - Name: hammerCurTime
-      Entry: 4
-      Data: 0
-    - Name: target
-      Entry: 6
-      Data: 
-    - Name: modelShakeTime
-      Entry: 4
-      Data: 0
-    - Name: backHpHit
-      Entry: 5
-      Data: false
-    - Name: isAction
-      Entry: 5
-      Data: false
-    - Name: isHammer
-      Entry: 5
-      Data: false
-    - Name: isRun
-      Entry: 5
-      Data: false
-    - Name: knockbackDir
-      Entry: 7
-      Data: UnityEngine.Vector3, UnityEngine.CoreModule
-    - Name: 
-      Entry: 4
-      Data: 0
-    - Name: 
-      Entry: 4
-      Data: 0
-    - Name: 
-      Entry: 4
-      Data: 0
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: isBossStart
-      Entry: 5
-      Data: false
-    - Name: coolTime
-      Entry: 4
-      Data: 0
-    - Name: curTime
-      Entry: 4
-      Data: 0
-    - Name: 
-      Entry: 8
-      Data: 
+    SerializationNodes: []
   dmgTxt: {fileID: 0}
   canvas: {fileID: 7949165253112581079}
   animator: {fileID: 0}
@@ -22454,6 +21906,7 @@ MonoBehaviour:
   hpSlider: {fileID: 7949165253307523409}
   backHpSlider: {fileID: 7949165253417404259}
   attackCol: {fileID: 7949165253197417044}
+  hammerCol: {fileID: 0}
   runAttackCol: {fileID: 5422845712031007000}
   targetUI_obj: {fileID: 7949165251792477615}
   anim_dot: {fileID: 0}
@@ -22566,7 +22019,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -23086,7 +22539,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -24517,7 +23970,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   time: 0.2
-  damage: 10
+  damage: 20
   otherTag: Player
   isParticle: 0
 --- !u!65 &4626210428683183056
@@ -24531,8 +23984,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 9.95, y: 6.36, z: 9.63}
-  m_Center: {x: -0.32406348, y: 2.406651, z: -1.46}
+  m_Size: {x: 5.71, y: 4.93, z: 6.05}
+  m_Center: {x: -0.32406348, y: 2.406651, z: -2.82}
 --- !u!1 &8178474233473320351
 GameObject:
   m_ObjectHideFlags: 0
@@ -24751,8 +24204,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8306150320547548035}
-  m_LocalRotation: {x: 0.5758338, y: 0.16838616, z: 0.78306323, w: -0.16393133}
-  m_LocalPosition: {x: 0.09739105, y: 0.078555755, z: -0.119865336}
+  m_LocalRotation: {x: 0.8301511, y: -0.12407784, z: 0.5292056, w: -0.124078}
+  m_LocalPosition: {x: 0.17956631, y: 0.040781867, z: -0.112217635}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -25253,8 +24706,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8652475618396138199}
-  m_LocalRotation: {x: -0.6336826, y: 0.017029544, z: -0.19925453, w: 0.74729776}
-  m_LocalPosition: {x: -0.5130063, y: 0.000000009536743, z: -0.00000015258789}
+  m_LocalRotation: {x: 0.7527236, y: 0.1562811, z: 0.030941486, w: -0.63876915}
+  m_LocalPosition: {x: -0.51301056, y: -0.0000033155072, z: 0.00034616134}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -25871,8 +25324,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8980396386107108771}
-  m_LocalRotation: {x: -0.09721662, y: 0.006579651, z: -0.08527878, w: 0.99158114}
-  m_LocalPosition: {x: -0.18425362, y: -0.020164642, z: -0.0004143524}
+  m_LocalRotation: {x: 0.0127584655, y: -0.15214592, z: -0.55187386, w: 0.8198317}
+  m_LocalPosition: {x: -0.18425356, y: -0.020164575, z: -0.00041436063}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

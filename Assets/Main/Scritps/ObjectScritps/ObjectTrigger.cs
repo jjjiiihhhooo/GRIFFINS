@@ -102,7 +102,7 @@ public class ObjectTrigger : MonoBehaviour
 
     public void PlayerSpawnSet()
     {
-        spawnSet.SetSpawn();
+        //spawnSet.SetSpawn();
     }
 
     public void BossIsStart()

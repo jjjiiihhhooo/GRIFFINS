@@ -4803,6 +4803,7 @@ GameObject:
   - component: {fileID: 4599545528568739243}
   - component: {fileID: 4599545528568739245}
   - component: {fileID: 4599545528568739244}
+  - component: {fileID: -7948399620378570260}
   m_Layer: 0
   m_Name: ObjectCrashEffect
   m_TagString: Untagged
@@ -4819,7 +4820,7 @@ Transform:
   m_GameObject: {fileID: 4599545528568739242}
   m_LocalRotation: {x: -0, y: -0.99986184, z: -0, w: -0.016626246}
   m_LocalPosition: {x: 34.405266, y: 18.167446, z: 23.675587}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
+  m_LocalScale: {x: 2.5, y: 1, z: 2.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4599545527738708385}
@@ -9576,3 +9577,16 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &-7948399620378570260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4599545528568739242}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5a92ec89de1aec4281ea738f0693ff1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selfdestruct_in: 1.1

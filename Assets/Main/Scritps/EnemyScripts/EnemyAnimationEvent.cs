@@ -36,11 +36,30 @@ public class EnemyAnimationEvent : MonoBehaviour
         _enemy.attackCol.gameObject.SetActive(true);
     }
 
+
+
     public void Normal_Enemy_RunAttack()
     {
         _enemy.runAttackCol.gameObject.SetActive(true);
         _enemy.enemy.isRun = false;
     }
+
+
+    public void Epic_Enemy_NormalAttack()
+    {
+        _enemy.enemy.attackCurCool = _enemy.enemy.attackMaxCool;
+        _enemy.attackCol.gameObject.SetActive(true);
+        //Instantiate(_enemy.enemy.attackEffect, transform.position, Quaternion.identity);
+    }
+
+    public void Epic_Enemy_HammerAttack()
+    {
+        _enemy.enemy.attackCurCool = _enemy.enemy.attackMaxCool;
+        _enemy.enemy.hammerCurTime = _enemy.enemy.hammerCoolTime;
+        _enemy.hammerCol.gameObject.SetActive(true);
+        Instantiate(_enemy.enemy.attackEffect, transform.position, Quaternion.identity);
+    }
+
 
     public void AttackExit()
     {

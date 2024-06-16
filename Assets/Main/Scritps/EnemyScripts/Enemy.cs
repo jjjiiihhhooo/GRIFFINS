@@ -8,6 +8,7 @@ using UnityEngine.Events;
 public class Enemy
 {
     public ParticleSystem damageEffect;
+    public GameObject attackEffect;
     public Animator animator;
     public EnemyController enemyController;
     public Transform fireTransform;
@@ -337,6 +338,8 @@ public class Epic_Enemy : Enemy
     public float coolTime = 5f;
     public float curTime = 5f;
 
+    
+
     public float dashSpeed;
     
 
@@ -459,8 +462,8 @@ public class Epic_Enemy : Enemy
         }
         else
         {
-            if (Vector3.Distance(target.transform.position, enemyController.transform.position) > 3f && !isAction) Move();
-            else if (Vector3.Distance(target.transform.position, enemyController.transform.position) <= 3f && !isAction) Attack();
+            if (Vector3.Distance(target.transform.position, enemyController.transform.position) <= 3f && !isAction) Attack();
+            else if (Vector3.Distance(target.transform.position, enemyController.transform.position) > 3f && !isAction) Move();
         }
     }
 
@@ -470,8 +473,6 @@ public class Epic_Enemy : Enemy
         isAction = true;
         isHammer = false;
         Vector3 velocity = HammerVelocity(enemyController.transform.position, endPos, 1f);
-
-
 
         target.GetComponent<Player>().CoroutineEvent(HammerCor(enemyController.transform.position, target.transform.position));
     }
@@ -493,7 +494,8 @@ public class Epic_Enemy : Enemy
         float elapsedTime = 0;
         float flightDuration = 1f;
 
-        enemyController.animator.SetBool("isHammer", true);
+        if(!enemyController.animator.GetCurrentAnimatorStateInfo(0).IsName("Dash")) animator.Play("HammerDown", 0, 0f);
+        else enemyController.animator.SetBool("isHammer", true);
 
         while (elapsedTime < flightDuration)
         {
@@ -509,8 +511,11 @@ public class Epic_Enemy : Enemy
         }
 
         // 마지막 위치 설정 (정확히 목표 지점)
+
         enemyController.rigid.velocity = Vector3.zero;
         enemyController.transform.position = targetPosition;
+
+
     }
 
     private void Dash()
@@ -549,7 +554,7 @@ public class Epic_Enemy : Enemy
     {
         isAction = true;
         enemyController.rigid.constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotation;
-        animator.Play("NormalAttack_1", 0, 0f);
+        animator.Play("Normal_Attack", 0, 0f);
         curTime = coolTime;
     }
 
@@ -568,15 +573,14 @@ public class Epic_Enemy : Enemy
 
         enemyController.rigid.velocity = Vector3.zero;
 
-        if (isRun) RunAttack();
-        else NormalAttack();
+        NormalAttack();
     }
 
 
     private void Move()
     {
         Debug.Log(animator.GetCurrentAnimatorStateInfo(0));
-        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Normal_Run")) animator.Play("Normal_Run", 0, 0f);
+        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Run")) animator.Play("Run", 0, 0f);
 
         if (!isRun) isRun = true;
 
@@ -620,6 +624,7 @@ public class Epic_Enemy : Enemy
         enemyController.isDead = true;
 
         enemyController.gameObject.layer = enemyController.deadLayer;
+        
         animator.Play("Dead");
     }
 

@@ -1,9 +1,12 @@
+using Mono.Cecil.Cil;
 using System.Collections;
 using UnityEngine;
 
 public class CutSceneEvent : MonoBehaviour
 {
     public float time;
+
+    public bool isBoss;
 
     private void Awake()
     {
@@ -16,7 +19,13 @@ public class CutSceneEvent : MonoBehaviour
         yield return new WaitForSecondsRealtime(time);
         GameManager.Instance.isCutScene = false;
         //Time.timeScale = 1f;
-        Player.Instance.currentCharacter.CutSceneEvent(this.gameObject);
-
+        if(!isBoss)
+        { 
+            Player.Instance.currentCharacter.CutSceneEvent(this.gameObject);
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
     }
 }

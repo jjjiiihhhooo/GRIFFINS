@@ -38,7 +38,7 @@ public class InputData : MonoBehaviour
         if (GameManager.Instance.isCutScene) return;
         if (player.isDead) return;
         MenuInput();
-        if (GameManager.Instance.dialogueManager.IsChat) return;
+        
         KeyboardInput();
         MouseInput();
     }
@@ -55,6 +55,7 @@ public class InputData : MonoBehaviour
     {
         if (player == null) return;
         if (GameManager.Instance.isMenu) return;
+        if (GameManager.Instance.dialogueManager.IsChat) return;
 
         Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
         if (Physics.Raycast(ray, out RaycastHit raycastHit, 999f, aimColliderMask))
@@ -74,6 +75,7 @@ public class InputData : MonoBehaviour
 
     private void ActionInput()
     {
+        if (GameManager.Instance.dialogueManager.IsChat) return;
         if (Player.Instance.currentCharacter.isGrappleReady) return;
         if (!Player.Instance.isGround) return;
         if (Player.Instance.isAttack) return;
@@ -106,6 +108,7 @@ public class InputData : MonoBehaviour
 
     private void InteractInput()
     {
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
             if (GameManager.Instance.dialogueManager.CurDialogues != null)
@@ -124,6 +127,7 @@ public class InputData : MonoBehaviour
     private void ChangeInput()
     {
         //if (!GameManager.Instance.tutorialManager.characterChange) return;
+        if (GameManager.Instance.dialogueManager.IsChat) return;
         if (Player.Instance.currentCharacter.isGrappleReady) return;
         if (Player.Instance.isAttack) return;
         if (Player.Instance.isNormalAttack) return;

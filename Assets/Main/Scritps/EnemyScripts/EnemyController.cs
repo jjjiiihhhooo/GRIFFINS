@@ -19,6 +19,7 @@ public class EnemyController : SerializedMonoBehaviour
 
 
     public AttackCol attackCol;
+    public AttackCol hammerCol;
     public AttackCol runAttackCol;
     public GameObject targetUI_obj;
 

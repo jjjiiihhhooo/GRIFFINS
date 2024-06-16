@@ -6275,7 +6275,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 501592056585820989}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 1.97, y: -1.03, z: 3.7}
+  m_LocalPosition: {x: 1.97, y: 0, z: 3.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6323,6 +6323,9 @@ MonoBehaviour:
       Entry: 7
       Data: 0|Boss_Destroyer, Assembly-CSharp
     - Name: damageEffect
+      Entry: 6
+      Data: 
+    - Name: attackEffect
       Entry: 6
       Data: 
     - Name: animator
@@ -6373,6 +6376,15 @@ MonoBehaviour:
     - Name: knockback
       Entry: 4
       Data: 0
+    - Name: hammerCoolTime
+      Entry: 4
+      Data: 0
+    - Name: hammerCurTime
+      Entry: 4
+      Data: 0
+    - Name: target
+      Entry: 6
+      Data: 
     - Name: modelShakeTime
       Entry: 4
       Data: 0
@@ -6380,6 +6392,12 @@ MonoBehaviour:
       Entry: 5
       Data: false
     - Name: isAction
+      Entry: 5
+      Data: false
+    - Name: isHammer
+      Entry: 5
+      Data: false
+    - Name: isRun
       Entry: 5
       Data: false
     - Name: knockbackDir
@@ -6485,10 +6503,19 @@ MonoBehaviour:
   hpSlider: {fileID: 2708226573094969323}
   backHpSlider: {fileID: 270369539230648473}
   attackCol: {fileID: 0}
+  hammerCol: {fileID: 0}
+  runAttackCol: {fileID: 0}
   targetUI_obj: {fileID: 0}
   anim_dot: {fileID: 2398722434769038422}
+  animCheckLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  deadLayer:
+    serializedVersion: 2
+    m_Bits: 0
   isHit: 0
   isBoss: 1
+  isDead: 0
   isBossStart: 0
   maxHitCool: 0.05
   uiShowDelay: 0
@@ -6520,8 +6547,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 4, y: 6, z: 4}
-  m_Center: {x: 0, y: 4.05, z: 0}
+  m_Size: {x: 4, y: 7.56, z: 4}
+  m_Center: {x: 0, y: 3.91, z: 0}
 --- !u!1 &501592056945721253
 GameObject:
   m_ObjectHideFlags: 0
