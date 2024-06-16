@@ -19,34 +19,52 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private AudioSource[] audioSources;
     //Manager.Instance.soundManager.Play(Manager.Instance.soundManager.audioDictionary["이름"], false);
 
+    public string curBGM;
+
+    private void Update()
+    {
+        EndBGM();
+    }
+
+    private void EndBGM()
+    {
+        if (!audioSources[0].isPlaying)
+        {
+            Play(curBGM, true); 
+        }
+    }
 
     public void Init()
     {
         audioDictionary = new Dictionary<string, AudioClip>();
         for (int i = 0; i < audioDatas.Length; i++) audioDictionary.Add(audioDatas[i].audioName, audioDatas[i].audio);
 
-        Play(audioDictionary["Stage_1"], true);
+        Play("Stage_1", true);
     }
 
-    public void Play(AudioClip audioClip, bool _isBgm, float pitch = 1.0f)
+    public void Play(string name, bool _isBgm, float pitch = 1.0f)
     {
-        if (audioClip == null)
+        if (audioDictionary[name] == null)
             return;
+
+
 
         if (_isBgm) // BGM 배경음악 재생
         {
-
+            curBGM = name;
             if (audioSources[0].isPlaying)
                 audioSources[0].Stop();
 
             audioSources[0].pitch = pitch;
-            audioSources[0].clip = audioClip;
+            audioSources[0].clip = audioDictionary[name];
             audioSources[0].Play();
         }
         else // Effect 효과음 재생
         {
             audioSources[1].pitch = pitch;
-            audioSources[1].PlayOneShot(audioClip);
+            audioSources[1].PlayOneShot(audioDictionary[name]);
         }
     }
+
+    
 }

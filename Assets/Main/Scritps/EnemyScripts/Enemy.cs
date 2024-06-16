@@ -315,7 +315,7 @@ public class Normal_Enemy : Enemy
         attackCurCool = 1.0f;
         curHp -= damage;
         backHpHit = false;
-        GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["enemyHit"], false);
+        GameManager.Instance.soundManager.Play("enemyHit", false);
         enemyController.Invoke("BackHpFunMessage", 0.3f);
 
         if (curHp <= 0) Die();
@@ -611,7 +611,7 @@ public class Epic_Enemy : Enemy
         //    animator.Play(temp2, 0, 0);
         curHp -= damage;
         backHpHit = false;
-        GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["enemyHit"], false);
+        GameManager.Instance.soundManager.Play("enemyHit", false);
         enemyController.Invoke("BackHpFunMessage", 0.3f);
 
         if (curHp <= 0) Die();
@@ -799,7 +799,7 @@ public class Boss_Destroyer : Enemy
         if (attackCurDelay > 0)
         {
             attackCurDelay -= Time.deltaTime;
-            if (!animator.GetCurrentAnimatorStateInfo(0).IsName("BossIdle")) animator.Play("BossIdle", 0, 0f);
+            //if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Boss_Idle")) animator.Play("Boss_Idle", 0, 0f);
             return;
         }
 
@@ -1050,7 +1050,7 @@ public class Boss_Destroyer : Enemy
         curHp -= damage;
         backHpHit = false;
         enemyController.anim_dot.DORestartById("Hit");
-        GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["enemyHit"], false);
+        GameManager.Instance.soundManager.Play("enemyHit", false);
         enemyController.Invoke("BackHpFunMessage", 0.3f);
 
         if (curHp <= 0)

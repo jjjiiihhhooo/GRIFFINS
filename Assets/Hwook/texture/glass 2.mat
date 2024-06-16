@@ -33,6 +33,7 @@ Material:
     RenderType: Transparent
   disabledShaderPasses:
   - SHADOWCASTER
+  - DepthOnly
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -198,8 +199,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _AddPrecomputedVelocity: 0
     - _AdvancedTab: 0
     - _AlbedoMapIntensity: 1
+    - _AlembicMotionVectors: 0
     - _AlphaClip: 0
     - _AlphaClipping: 0
     - _AlphaCutoff: 0.5
@@ -207,6 +210,7 @@ Material:
     - _Artistic: 0
     - _ArtisticFrequency: 1
     - _ArtisticProjection: 0
+    - _ArtisticShadowFilter: 0
     - _Blend: 0
     - _BlendDst: 10
     - _BlendDstAlpha: 10
@@ -265,6 +269,7 @@ Material:
     - _OcclusionStrength: 1
     - _OptionsTab: 1
     - _Outline: 3
+    - _OutlineClipOffset: 0
     - _OutlineData: 0
     - _OutlineFadeMax: 2
     - _OutlineFadeMin: 0.25

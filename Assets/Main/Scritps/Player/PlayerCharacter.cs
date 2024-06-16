@@ -573,7 +573,7 @@ public class WhiteCharacter : PlayerCharacter
     public override void NormalAttackExit()
     {
         player.isNormalAttack = false;
-        GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["red_normalAttack1"], false);
+        GameManager.Instance.soundManager.Play("red_normalAttack1", false);
         if (target != null)
         {
             Player.Instance.StartCoroutine(ProjectileCor());
@@ -588,7 +588,7 @@ public class WhiteCharacter : PlayerCharacter
     {
         player.isNormalAttack = false;
         player.isSuperAttacking = false;
-        GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["red_normalAttack1"], false);
+        GameManager.Instance.soundManager.Play("red_normalAttack1", false);
         if (target != null)
         {
             SuperProjectile();
@@ -692,7 +692,7 @@ public class WhiteCharacter : PlayerCharacter
     {
         if (name == "jump")
         {
-            GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["red_jump"], false);
+            GameManager.Instance.soundManager.Play("red_jump", false);
         }
     }
 
@@ -1039,7 +1039,7 @@ public class GreenCharacter : PlayerCharacter
     public override void NormalAttackExit()
     {
         player.isNormalAttack = false;
-        GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["red_normalAttack1"], false);
+        GameManager.Instance.soundManager.Play("red_normalAttack1", false);
         normalAttackCol.gameObject.SetActive(true);
     }
 
@@ -1047,13 +1047,13 @@ public class GreenCharacter : PlayerCharacter
     {
         player.isNormalAttack = false;
         OnlySingleton.Instance.camShake.ShakeCamera(7f, 0.1f);
-        GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["red_normalAttack2"], false);
+        GameManager.Instance.soundManager.Play("red_normalAttack2", false);
         normalAttackCol_2.gameObject.SetActive(true);
     }
 
     public override void Q_AnimExit()
     {
-        GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["red_normalAttack1"], false);
+        GameManager.Instance.soundManager.Play("red_normalAttack1", false);
         player.isAttack = false;
         GameObject.Instantiate(Q_Particle.gameObject, model.transform.position, Quaternion.identity);
         player.Rigidbody.useGravity = true;
@@ -1065,7 +1065,7 @@ public class GreenCharacter : PlayerCharacter
 
     public override void E_AnimExit()
     {
-        GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["red_normalAttack1"], false);
+        GameManager.Instance.soundManager.Play("red_normalAttack1", false);
         player.isAttack = false;
         OnlySingleton.Instance.green_E_cam.Priority = 9;
         GameObject temp = GameObject.Instantiate(E_Particle.gameObject, model.transform.position, Quaternion.identity);
@@ -1147,7 +1147,7 @@ public class GreenCharacter : PlayerCharacter
     {
         player.isNormalAttack = false;
         player.isSuperAttack = false;
-        GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["red_normalAttack1"], false);
+        GameManager.Instance.soundManager.Play("red_normalAttack1", false);
         normalAttackCol.gameObject.SetActive(true);
         player.isSuperAttacking = false;
     }
@@ -1236,7 +1236,7 @@ public class GreenCharacter : PlayerCharacter
     {
         if (name == "jump")
         {
-            GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["red_jump"], false);
+            GameManager.Instance.soundManager.Play("red_jump", false);
         }
     }
 
@@ -1499,7 +1499,7 @@ public class RedCharacter : PlayerCharacter
     public override void NormalAttackExit()
     {
         player.isNormalAttack = false;
-        GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["red_normalAttack1"], false);
+        GameManager.Instance.soundManager.Play("red_normalAttack1", false);
         normalAttackCol.gameObject.SetActive(true);
     }
 
@@ -1507,7 +1507,7 @@ public class RedCharacter : PlayerCharacter
     {
         player.isNormalAttack = false;
         player.isSuperAttack = false;
-        GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["red_normalAttack1"], false);
+        GameManager.Instance.soundManager.Play("red_normalAttack1", false);
         normalAttackCol.gameObject.SetActive(true);
         player.isSuperAttacking = false;
     }
@@ -1516,13 +1516,13 @@ public class RedCharacter : PlayerCharacter
     {
         player.isNormalAttack = false;
         OnlySingleton.Instance.camShake.ShakeCamera(7f, 0.1f);
-        GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["red_normalAttack2"], false);
+        GameManager.Instance.soundManager.Play("red_normalAttack2", false);
         normalAttackCol_2.gameObject.SetActive(true);
     }
 
     public override void Q_AnimExit()
     {
-        GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["red_normalAttack1"], false);
+        GameManager.Instance.soundManager.Play("red_normalAttack1", false);
         GameObject temp = GameObject.Instantiate(Devastation_effect, model.transform.position, Quaternion.identity);
         temp.transform.forward = player.transform.forward;
         player.isAttack = false;
@@ -1532,7 +1532,7 @@ public class RedCharacter : PlayerCharacter
 
     public override void E_AnimExit()
     {
-        GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["red_normalAttack1"], false);
+        GameManager.Instance.soundManager.Play("red_normalAttack1", false);
         player.isAttack = false;
         OnlySingleton.Instance.red_E_cam.Priority = 9;
         GameObject temp = GameObject.Instantiate(E_Particle.gameObject, model.transform.position, Quaternion.identity);
@@ -1667,7 +1667,7 @@ public class RedCharacter : PlayerCharacter
     {
         if (name == "jump")
         {
-            GameManager.Instance.soundManager.Play(GameManager.Instance.soundManager.audioDictionary["red_jump"], false);
+            GameManager.Instance.soundManager.Play("red_jump", false);
         }
     }
 
