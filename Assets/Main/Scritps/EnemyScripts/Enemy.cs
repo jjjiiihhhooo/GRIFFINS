@@ -193,6 +193,11 @@ public class Normal_Enemy : Enemy
             {
                 animator.transform.localPosition = new Vector3(0f, animator.transform.localPosition.y, 0f);
             }
+
+            if(Player.Instance.currentCharacter.GetType().Name == "GreenCharacter")
+            {
+                animator.transform.localPosition = new Vector3(0f, animator.transform.localPosition.y, 0f);
+            }
             enemyController.transform.position = animator.transform.position;
             animator.transform.localPosition = Vector3.zero;
         }
@@ -406,6 +411,7 @@ public class Epic_Enemy : Enemy
         }
         else if (animator.GetCurrentAnimatorStateInfo(0).IsTag("GetDamage"))
         {
+
             enemyController.transform.position = animator.transform.position;
             animator.transform.localPosition = Vector3.zero;
         }

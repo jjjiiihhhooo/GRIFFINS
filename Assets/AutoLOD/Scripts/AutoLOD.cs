@@ -94,8 +94,8 @@ public class AutoLODWindow : EditorWindow
     {
         previewRender = new PreviewRenderUtility(true);
         previewRender.camera.fieldOfView = previewFov;
-        previewRender.camera.nearClipPlane = 0.001f;
-        previewRender.camera.farClipPlane = 10000f;
+        previewRender.camera.nearClipPlane = 0.1f;
+        previewRender.camera.farClipPlane = 2000f;
         previewRender.camera.transform.LookAt(Vector3.zero);
         previewRender.camera.clearFlags = CameraClearFlags.Color;
         previewRender.camera.backgroundColor = Color.black;

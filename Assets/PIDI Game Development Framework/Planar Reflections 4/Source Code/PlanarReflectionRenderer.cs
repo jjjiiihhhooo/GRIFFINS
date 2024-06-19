@@ -27,9 +27,9 @@
     public class PlanarReflectionSettings
     {
 
-        public float nearClipPlane = 0.03f;
+        public float nearClipPlane = 0.1f;
 
-        public float farClipPlane = 1000;
+        public float farClipPlane = 2000;
 
         public LayerMask reflectLayers = 1;
 

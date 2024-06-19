@@ -31,6 +31,8 @@ public class OnlySingleton : MonoBehaviour
     private void Update()
     {
         destinationTransform.position = mainCam.position;
+
+
     }
 
     public void BackToNormal()
