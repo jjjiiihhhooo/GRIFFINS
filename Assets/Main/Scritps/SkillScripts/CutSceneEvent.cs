@@ -25,6 +25,11 @@ public class CutSceneEvent : MonoBehaviour
         }
         else
         {
+            if(isBoss)
+            {
+                GetComponentInParent<DialogueContainer>().StartEvent();
+            }
+
             Destroy(this.gameObject);
         }
     }

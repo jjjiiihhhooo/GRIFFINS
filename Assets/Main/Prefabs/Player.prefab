@@ -48147,11 +48147,12 @@ MonoBehaviour:
     - {fileID: 198285461679219400, guid: 42eec05d614490a4487bc722ec0d9aea, type: 3}
     - {fileID: 198406564588387756, guid: 98e859f4c90281b458f61d8656ad9369, type: 3}
     - {fileID: 198178008105517744, guid: 269d2ea7c26f5a943b27f22403a1417b, type: 3}
+    Devastation_effect: {fileID: 0}
     Q_Transform: {fileID: 0}
     E_Transform: {fileID: 0}
     animCheckLayer:
       serializedVersion: 2
-      m_Bits: 2176
+      m_Bits: 2048
     knockbackDirs:
     - {x: 0, y: 0, z: 0}
     - {x: 0, y: 0, z: 0}
@@ -48216,11 +48217,12 @@ MonoBehaviour:
     - {fileID: 198259089502633732, guid: 6f83211a64ad01240ab7f4aaddd89960, type: 3}
     - {fileID: 198259089502633732, guid: 6f83211a64ad01240ab7f4aaddd89960, type: 3}
     - {fileID: 198259089502633732, guid: 6f83211a64ad01240ab7f4aaddd89960, type: 3}
+    Devastation_effect: {fileID: 0}
     Q_Transform: {fileID: 0}
     E_Transform: {fileID: 0}
     animCheckLayer:
       serializedVersion: 2
-      m_Bits: 2176
+      m_Bits: 2048
     knockbackDirs:
     - {x: 0, y: 0, z: 0}
     - {x: 0, y: 0, z: 0}
@@ -48277,18 +48279,19 @@ MonoBehaviour:
     curKnockback: 0
     curParticle: {fileID: 0}
     Right_Particle: {fileID: 0}
-    E_Particle: {fileID: 198109985788967936, guid: df04aeb82c805e24b8e9df43237d0f4d, type: 3}
+    E_Particle: {fileID: 2198880809583347736, guid: 2d7e0049eecd9084eb0006a49d3b6589, type: 3}
     Q_Particle: {fileID: 4364132757843318468, guid: efac2eb0d7c6a564687120637cbefea4, type: 3}
     Chasing_Particle: {fileID: 1107324212316225835, guid: 15c637eff0bed914eaea2a1a7953a57a, type: 3}
     normalAttackEffects:
     - {fileID: 198285461679219400, guid: a270d4b31a4d11a4b8302acf069f853a, type: 3}
     - {fileID: 198406564588387756, guid: 89f21bbcc5cb3ea418e1be51775f9548, type: 3}
     - {fileID: 198178008105517744, guid: 306e7743e5cc81f4b9e82b22a0e8bf62, type: 3}
+    Devastation_effect: {fileID: 4837967482554372369, guid: 710aca18b4ee5824e8d90aadbb06c032, type: 3}
     Q_Transform: {fileID: 814580743324702140}
     E_Transform: {fileID: 3780231264869893640}
     animCheckLayer:
       serializedVersion: 2
-      m_Bits: 2176
+      m_Bits: 2048
     knockbackDirs:
     - {x: 0, y: 0, z: 0}
     - {x: 0, y: 0, z: 0}
@@ -48298,8 +48301,8 @@ MonoBehaviour:
     curKnockbackDir: {x: 0, y: 0, z: 0}
     time: 0
   orginPos: {x: 0, y: 0, z: 0}
-  maxHp: 500
-  curHp: 500
+  maxHp: 250
+  curHp: 250
   dir: {x: 0, y: 0, z: 0}
   isGround: 0
   isAttack: 0
@@ -81451,7 +81454,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2185539572649738493
 Transform:
   m_ObjectHideFlags: 0

@@ -53,6 +53,7 @@ public class UIManager : MonoBehaviour
 
     public TextMeshProUGUI right_text;
     public TextMeshProUGUI left_text;
+    public TextMeshProUGUI deathCount_text;
 
     private Player player;
 

@@ -70,7 +70,7 @@ public class Player : MonoBehaviour
 
     public float maxHp;
     public float curHp;
-
+    public int deathCount = 0;
 
 
     //1: white
@@ -266,9 +266,10 @@ public class Player : MonoBehaviour
         isSuperAttacking = false;
         isSuperAttack = false;
         playerHit = false;
-        Destroy(GameManager.Instance.enemyManager.curWaveObject);
-        GameManager.Instance.questManager.QuestDestoryEvent();
-        if (curTrigger != null) curTrigger.GetComponent<Collider>().enabled = true;
+        deathCount++;
+        //Destroy(GameManager.Instance.enemyManager.curWaveObject);
+        //GameManager.Instance.questManager.QuestDestoryEvent();
+        //if (curTrigger != null) curTrigger.GetComponent<Collider>().enabled = true;
         curHp = maxHp;
         GameManager.Instance.uiManager.FadeInOut();
         currentCharacter.animator.Play("Up", 3, 0f);
@@ -277,7 +278,8 @@ public class Player : MonoBehaviour
 
     public void PlayerSpawn()
     {
-        spawn.Spawn();
+        GameManager.Instance.uiManager.deathCount_text.text = "Death : " + deathCount;
+        //spawn.Spawn();
     }
 
     public void GetDamage(float damage)
