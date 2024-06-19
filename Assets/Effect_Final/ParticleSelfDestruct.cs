@@ -3,7 +3,6 @@ using UnityEngine.Rendering;
 
 public class ParticleSelfDestruct : MonoBehaviour
 {
-    private ParticleSystem ps;
     private Volume volume;
 
     private float startWeight;
@@ -11,7 +10,6 @@ public class ParticleSelfDestruct : MonoBehaviour
 
     private void Start()
     {
-        ps = GetComponent<ParticleSystem>();
         volume = GetComponent<Volume>();
 
         if (volume == null)
@@ -33,7 +31,8 @@ public class ParticleSelfDestruct : MonoBehaviour
             return;
         }
 
-        currentWeight -= (startWeight / ps.main.startLifetime.constant) * Time.deltaTime;
+        currentWeight -= Time.deltaTime;
+
         volume.weight = currentWeight;
     }
 }
