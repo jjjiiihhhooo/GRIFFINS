@@ -39,7 +39,7 @@ public class AttackCol : MonoBehaviour
             Vector3 finalCenter = transform.position + dir.normalized * temp;
             if (!isParticle) finalCenter.y = finalCenter.y + 1;
 
-                //finalCenter.y = finalCenter.y + 1;
+            //finalCenter.y = finalCenter.y + 1;
             if (otherTag == "Enemy")
             {
                 other.GetComponent<EnemyController>().DamageMessage(Player.Instance.currentCharacter.curKnockback, Player.Instance.currentCharacter.curKnockbackDir, damage, finalCenter, Player.Instance.currentCharacter.curParticle);

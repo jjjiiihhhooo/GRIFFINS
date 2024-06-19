@@ -27,15 +27,15 @@ public class Dragon_Projectile : MonoBehaviour
         Player.Instance.currentCharacter.curKnockbackDir = Vector3.up;
         Player.Instance.currentCharacter.curKnockback = 2;
 
-        for(int i = 0; i < 30; i++)
+        for (int i = 0; i < 30; i++)
         {
             col.enabled = true;
             yield return new WaitForSeconds(0.05f);
             col.enabled = false;
         }
 
-        
-        
+
+
         Destroy(this.gameObject);
     }
 
@@ -57,7 +57,7 @@ public class Dragon_Projectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Enemy" && isFirst && !isBoom)
+        if (other.tag == "Enemy" && isFirst && !isBoom)
         {
             isBoom = true;
             GameObject temp = Instantiate(dragon_boom, new Vector3(other.transform.position.x, transform.position.y, other.transform.position.z), Quaternion.identity);

@@ -20,7 +20,7 @@ namespace MK.Toon
         protected Uniform _uniform;
         public Uniform uniform
         {
-            get{ return _uniform; }
+            get { return _uniform; }
         }
 
         public Property(Uniform uniform, params string[] keywords)
@@ -34,7 +34,7 @@ namespace MK.Toon
 
         protected void SetKeyword(UnityEngine.Material material, bool b, int keywordIndex)
         {
-            if(b && _keywords != null && _keywords.Length > keywordIndex && _keywords.Length > 0)
+            if (b && _keywords != null && _keywords.Length > keywordIndex && _keywords.Length > 0)
             {
                 CleanKeywords(material);
                 material.EnableKeyword(_keywords[keywordIndex]);
@@ -47,14 +47,14 @@ namespace MK.Toon
 
         private void CleanKeywords(Material material)
         {
-            for(int i = 0; i < _keywords.Length; i++)
+            for (int i = 0; i < _keywords.Length; i++)
                 material.DisableKeyword(_keywords[i]);
         }
     }
 
     public abstract class Property<T, U> : Property<T>
     {
-        public Property(Uniform uniform, params string[] keywords) : base(uniform, keywords) {}
+        public Property(Uniform uniform, params string[] keywords) : base(uniform, keywords) { }
         public abstract void SetValue(UnityEngine.Material material, T valueM, U valueS);
     }
 
@@ -63,8 +63,8 @@ namespace MK.Toon
     /////////////////////////////////////////////////////////////////////////////////////////////
     public class BoolProperty : Property<bool>
     {
-        public BoolProperty(Uniform uniform, string keyword) : base(uniform, keyword) {}
-        public BoolProperty(Uniform uniform) : base(uniform) {}
+        public BoolProperty(Uniform uniform, string keyword) : base(uniform, keyword) { }
+        public BoolProperty(Uniform uniform) : base(uniform) { }
 
         public override bool GetValue(Material material)
         {
@@ -79,8 +79,8 @@ namespace MK.Toon
     public class IntProperty : Property<int>
     {
         private int _keywordDisabled = 0;
-        public IntProperty(Uniform uniform, string keyword, int keywordDisabled = 0) : base(uniform, keyword) {}
-        public IntProperty(Uniform uniform) : base(uniform) {}
+        public IntProperty(Uniform uniform, string keyword, int keywordDisabled = 0) : base(uniform, keyword) { }
+        public IntProperty(Uniform uniform) : base(uniform) { }
 
         public override int GetValue(Material material)
         {
@@ -99,7 +99,7 @@ namespace MK.Toon
 
         public StepProperty(Uniform uniform, int minValue, int maxValue, string keyword, int keywordDisabled = 0) : base(uniform, keyword)
         {
-            _keywordDisabled = keywordDisabled; 
+            _keywordDisabled = keywordDisabled;
             _minValue = minValue;
             _maxValue = maxValue;
         }
@@ -124,7 +124,7 @@ namespace MK.Toon
     {
         private float _keywordDisabled = 0;
         public FloatProperty(Uniform uniform, string keyword, float keywordDisabled = 0) : base(uniform, keyword) { _keywordDisabled = keywordDisabled; }
-        public FloatProperty(Uniform uniform) : base(uniform) {}
+        public FloatProperty(Uniform uniform) : base(uniform) { }
 
         public override float GetValue(Material material)
         {
@@ -133,7 +133,7 @@ namespace MK.Toon
         public override void SetValue(Material material, float value)
         {
             material.SetFloat(_uniform.id, value);
-            SetKeyword(material, value != _keywordDisabled, (int) value);
+            SetKeyword(material, value != _keywordDisabled, (int)value);
         }
     }
     public class RangeProperty : Property<float>
@@ -143,13 +143,13 @@ namespace MK.Toon
 
         public RangeProperty(Uniform uniform, string keyword, float minValue, float maxValue, float keywordDisabled = 0) : base(uniform, keyword)
         {
-            _keywordDisabled = keywordDisabled; 
+            _keywordDisabled = keywordDisabled;
             _minValue = minValue;
             _maxValue = maxValue;
         }
         public RangeProperty(Uniform uniform, string keyword, float minValue, float keywordDisabled = 0) : base(uniform, keyword)
         {
-            _keywordDisabled = keywordDisabled; 
+            _keywordDisabled = keywordDisabled;
             _minValue = minValue;
             _maxValue = Mathf.Infinity;
         }
@@ -172,12 +172,12 @@ namespace MK.Toon
         {
             value = Mathf.Clamp(value, _minValue, _maxValue);
             material.SetFloat(_uniform.id, value);
-            SetKeyword(material, value != _keywordDisabled, (int) value);
+            SetKeyword(material, value != _keywordDisabled, (int)value);
         }
     }
     public class Vector2Property : Property<Vector2>
     {
-        public Vector2Property(Uniform uniform) : base(uniform) {}
+        public Vector2Property(Uniform uniform) : base(uniform) { }
 
         public override Vector2 GetValue(Material material)
         {
@@ -190,7 +190,7 @@ namespace MK.Toon
     }
     public class Vector3Property : Property<Vector3>
     {
-        public Vector3Property(Uniform uniform) : base(uniform) {}
+        public Vector3Property(Uniform uniform) : base(uniform) { }
 
         public override Vector3 GetValue(Material material)
         {
@@ -203,7 +203,7 @@ namespace MK.Toon
     }
     public class Vector4Property : Property<Vector4>
     {
-        public Vector4Property(Uniform uniform) : base(uniform) {}
+        public Vector4Property(Uniform uniform) : base(uniform) { }
 
         public override Vector4 GetValue(Material material)
         {
@@ -216,8 +216,8 @@ namespace MK.Toon
     }
     public class ColorProperty : Property<UnityEngine.Color>
     {
-        public ColorProperty(Uniform uniform, string keyword) : base(uniform, keyword) {}
-        public ColorProperty(Uniform uniform) : base(uniform) {}
+        public ColorProperty(Uniform uniform, string keyword) : base(uniform, keyword) { }
+        public ColorProperty(Uniform uniform) : base(uniform) { }
 
         public override UnityEngine.Color GetValue(Material material)
         {
@@ -231,8 +231,8 @@ namespace MK.Toon
     }
     public class TextureProperty : Property<UnityEngine.Texture>
     {
-        public TextureProperty(Uniform uniform, string keyword) : base(uniform, keyword) {}
-        public TextureProperty(Uniform uniform) : base(uniform) {}
+        public TextureProperty(Uniform uniform, string keyword) : base(uniform, keyword) { }
+        public TextureProperty(Uniform uniform) : base(uniform) { }
 
         public override UnityEngine.Texture GetValue(Material material)
         {
@@ -246,16 +246,16 @@ namespace MK.Toon
     }
     public class EnumProperty<T> : Property<T> where T : System.Enum
     {
-        public EnumProperty(Uniform uniform, params string[] keywords) : base(uniform, keywords) {}
+        public EnumProperty(Uniform uniform, params string[] keywords) : base(uniform, keywords) { }
 
         public override T GetValue(Material material)
         {
-            return (T) (object) material.GetInt(_uniform.id);
+            return (T)(object)material.GetInt(_uniform.id);
         }
         public override void SetValue(Material material, T value)
         {
-            material.SetInt(_uniform.id, (int) (object) value);
-            SetKeyword(material,(int) (object) value != 0, (int) (object) value);
+            material.SetInt(_uniform.id, (int)(object)value);
+            SetKeyword(material, (int)(object)value != 0, (int)(object)value);
         }
     }
     /////////////////////////////////////////////////////////////////////////////////////////////
@@ -263,7 +263,7 @@ namespace MK.Toon
     /////////////////////////////////////////////////////////////////////////////////////////////
     public class AlphaClippingProperty : Property<bool>
     {
-        public AlphaClippingProperty(Uniform uniform, string keyword) : base(uniform, keyword) {}
+        public AlphaClippingProperty(Uniform uniform, string keyword) : base(uniform, keyword) { }
 
         public override bool GetValue(Material material)
         {
@@ -277,10 +277,10 @@ namespace MK.Toon
             Properties.renderPriority.SetValue(material, Properties.renderPriority.GetValue(material), value);
         }
     }
-    
+
     public class TilingProperty : Property<Vector2>
     {
-        public TilingProperty(Uniform uniform) : base(uniform) {}
+        public TilingProperty(Uniform uniform) : base(uniform) { }
 
         public override Vector2 GetValue(Material material)
         {
@@ -293,7 +293,7 @@ namespace MK.Toon
     }
     public class OffsetProperty : Property<Vector2>
     {
-        public OffsetProperty(Uniform uniform) : base(uniform) {}
+        public OffsetProperty(Uniform uniform) : base(uniform) { }
 
         public override Vector2 GetValue(Material material)
         {
@@ -306,39 +306,39 @@ namespace MK.Toon
     }
     public class SpecularProperty : Property<Specular>
     {
-        public SpecularProperty(Uniform uniform, params string[] keywords) : base(uniform, keywords) {}
+        public SpecularProperty(Uniform uniform, params string[] keywords) : base(uniform, keywords) { }
 
         public override Specular GetValue(Material material)
         {
-            return (Specular) material.GetInt(_uniform.id);
+            return (Specular)material.GetInt(_uniform.id);
         }
         public override void SetValue(Material material, Specular specular)
         {
-            if(material.shader.name.Contains(Properties.shaderVariantSimpleName))
-                specular = (int) specular >= 1 ? Specular.Isotropic : Specular.Off;
-            material.SetInt(_uniform.id, (int) specular);
-            SetKeyword(material,(int) specular != 0, (int) specular);
+            if (material.shader.name.Contains(Properties.shaderVariantSimpleName))
+                specular = (int)specular >= 1 ? Specular.Isotropic : Specular.Off;
+            material.SetInt(_uniform.id, (int)specular);
+            SetKeyword(material, (int)specular != 0, (int)specular);
         }
     }
     public class EnvironmentReflectionProperty : Property<EnvironmentReflection>
     {
-        public EnvironmentReflectionProperty(Uniform uniform, params string[] keywords) : base(uniform, keywords) {}
+        public EnvironmentReflectionProperty(Uniform uniform, params string[] keywords) : base(uniform, keywords) { }
 
         public override EnvironmentReflection GetValue(Material material)
         {
-            return (EnvironmentReflection) material.GetInt(_uniform.id);
+            return (EnvironmentReflection)material.GetInt(_uniform.id);
         }
         public override void SetValue(Material material, EnvironmentReflection environmentReflection)
         {
-            if(material.shader.name.Contains(Properties.shaderVariantSimpleName))
-                environmentReflection = (int) environmentReflection >= 1 ? EnvironmentReflection.Ambient : EnvironmentReflection.Off;
-            material.SetInt(_uniform.id, (int) environmentReflection);
-            SetKeyword(material,(int) environmentReflection != 0, (int) environmentReflection);
+            if (material.shader.name.Contains(Properties.shaderVariantSimpleName))
+                environmentReflection = (int)environmentReflection >= 1 ? EnvironmentReflection.Ambient : EnvironmentReflection.Off;
+            material.SetInt(_uniform.id, (int)environmentReflection);
+            SetKeyword(material, (int)environmentReflection != 0, (int)environmentReflection);
         }
     }
     public class StencilModeProperty : Property<Stencil>
     {
-        public StencilModeProperty(Uniform uniform) : base(uniform) {}
+        public StencilModeProperty(Uniform uniform) : base(uniform) { }
 
         public override Stencil GetValue(Material material)
         {
@@ -346,7 +346,7 @@ namespace MK.Toon
         }
         public override void SetValue(Material material, Stencil stencil)
         {
-            if(stencil == Stencil.Builtin)
+            if (stencil == Stencil.Builtin)
             {
                 Properties.stencilRef.SetValue(material, 0);
                 Properties.stencilReadMask.SetValue(material, 255);
@@ -361,7 +361,7 @@ namespace MK.Toon
     }
     public class RenderPriorityProperty : Property<int, bool>
     {
-        public RenderPriorityProperty(Uniform uniform) : base(uniform) {}
+        public RenderPriorityProperty(Uniform uniform) : base(uniform) { }
 
         public override int GetValue(Material material)
         {
@@ -372,21 +372,21 @@ namespace MK.Toon
         public override void SetValue(Material material, int priority, bool alphaClipping)
         {
             Surface surface = Properties.surface.GetValue(material);
-            switch(surface)
+            switch (surface)
             {
                 default:
-                if(alphaClipping)
-                {
-                    material.renderQueue = (int)RenderQueue.AlphaTest;
-                }
-                else
-                {
-                    material.renderQueue = (int)RenderQueue.Geometry;
-                }
-                break;
+                    if (alphaClipping)
+                    {
+                        material.renderQueue = (int)RenderQueue.AlphaTest;
+                    }
+                    else
+                    {
+                        material.renderQueue = (int)RenderQueue.Geometry;
+                    }
+                    break;
                 case Surface.Transparent:
-                material.renderQueue = (int)RenderQueue.Transparent;
-                break;
+                    material.renderQueue = (int)RenderQueue.Transparent;
+                    break;
             }
             material.SetInt(uniform.id, priority);
             material.renderQueue -= Properties.renderPriority.GetValue(material);
@@ -394,67 +394,67 @@ namespace MK.Toon
     }
     public class SurfaceProperty : Property<Surface, bool>
     {
-        public SurfaceProperty(Uniform uniform, params string[] keywords) : base(uniform, keywords) {}
+        public SurfaceProperty(Uniform uniform, params string[] keywords) : base(uniform, keywords) { }
 
         public override Surface GetValue(Material material)
         {
-            return (Surface) material.GetInt(uniform.id);
+            return (Surface)material.GetInt(uniform.id);
         }
 
         public override void SetValue(Material material, Surface surface) => SetValue(material, surface, false);
         public override void SetValue(Material material, Surface surface, bool alphaClipping)
         {
-            if(material.shader.name.Contains(Properties.shaderComponentOutlineName))
+            if (material.shader.name.Contains(Properties.shaderComponentOutlineName))
                 surface = Surface.Opaque;
-            if(material.shader.name.Contains(Properties.shaderComponentRefractionName))
+            if (material.shader.name.Contains(Properties.shaderComponentRefractionName))
                 surface = Surface.Transparent;
 
             bool customBlendingEnabled = Properties.blend.GetValue(material) == Blend.Custom ? true : false;
 
-            switch(surface)
+            switch (surface)
             {
                 default:
-                if(!customBlendingEnabled)
-                {
-                    Properties.zWrite.SetValue(material, ZWrite.On);
-                    Properties.zTest.SetValue(material, ZTest.LessEqual);
-                }
-                if(alphaClipping)
-                {
-                    material.SetOverrideTag("RenderType", "TransparentCutout");
-                    material.SetOverrideTag("IgnoreProjector", "true");
-                }
-                else
-                {
-                    material.SetOverrideTag("RenderType", "Opaque");
-                    material.SetOverrideTag("IgnoreProjector", "false");
-                }
-                material.SetShaderPassEnabled("ShadowCaster", true);
-                break;
+                    if (!customBlendingEnabled)
+                    {
+                        Properties.zWrite.SetValue(material, ZWrite.On);
+                        Properties.zTest.SetValue(material, ZTest.LessEqual);
+                    }
+                    if (alphaClipping)
+                    {
+                        material.SetOverrideTag("RenderType", "TransparentCutout");
+                        material.SetOverrideTag("IgnoreProjector", "true");
+                    }
+                    else
+                    {
+                        material.SetOverrideTag("RenderType", "Opaque");
+                        material.SetOverrideTag("IgnoreProjector", "false");
+                    }
+                    material.SetShaderPassEnabled("ShadowCaster", true);
+                    break;
                 case Surface.Transparent:
-                if(!customBlendingEnabled)
-                {
-                    Properties.zWrite.SetValue(material, ZWrite.Off);
-                    Properties.zTest.SetValue(material, ZTest.LessEqual);
-                }
-                material.SetOverrideTag("RenderType", "Transparent");
-                material.SetOverrideTag("IgnoreProjector", "true");
-                material.SetShaderPassEnabled("ShadowCaster", false);
-                break;
+                    if (!customBlendingEnabled)
+                    {
+                        Properties.zWrite.SetValue(material, ZWrite.Off);
+                        Properties.zTest.SetValue(material, ZTest.LessEqual);
+                    }
+                    material.SetOverrideTag("RenderType", "Transparent");
+                    material.SetOverrideTag("IgnoreProjector", "true");
+                    material.SetShaderPassEnabled("ShadowCaster", false);
+                    break;
             }
             Properties.blend.SetValue(material, Properties.blend.GetValue(material));
             Properties.renderPriority.SetValue(material, Properties.renderPriority.GetValue(material), Properties.alphaClipping.GetValue(material));
             material.SetInt(uniform.id, (int)surface);
-            SetKeyword(material,(int) surface != 0, (int) surface);
-            
-            if(material.shader.name.Contains("URP"))
+            SetKeyword(material, (int)surface != 0, (int)surface);
+
+            if (material.shader.name.Contains("URP"))
                 material.SetShaderPassEnabled("DepthOnly", Properties.zWrite.GetValue(material) == ZWrite.On ? true : false);
         }
     }
 
     public class BlendProperty : Property<Blend>
     {
-        public BlendProperty(Uniform uniform, params string[] keywords) : base(uniform, keywords) {}
+        public BlendProperty(Uniform uniform, params string[] keywords) : base(uniform, keywords) { }
 
         public override Blend GetValue(Material material)
         {
@@ -468,10 +468,10 @@ namespace MK.Toon
         /// <param uniform="blend"></param>
         public override void SetValue(Material material, Blend blend)
         {
-            if(Properties.blend.GetValue(material) != Blend.Custom)
+            if (Properties.blend.GetValue(material) != Blend.Custom)
             {
                 Properties.zTest.SetValue(material, ZTest.LessEqual);
-                if(Properties.surface.GetValue(material) == Surface.Opaque)
+                if (Properties.surface.GetValue(material) == Surface.Opaque)
                 {
                     Properties.blendSrc.SetValue(material, BlendFactor.One);
                     Properties.blendDst.SetValue(material, BlendFactor.Zero);
@@ -480,47 +480,47 @@ namespace MK.Toon
                 }
                 else
                 {
-                    switch(blend)
+                    switch (blend)
                     {
                         case Blend.Alpha: //Alpha
-                        Properties.blendSrc.SetValue(material, BlendFactor.SrcAlpha);
-                        Properties.blendDst.SetValue(material, BlendFactor.OneMinusSrcAlpha);
-                        Properties.blendSrcAlpha.SetValue(material, BlendFactor.One);
-                        Properties.blendDstAlpha.SetValue(material, BlendFactor.OneMinusSrcAlpha);
-                        break;
+                            Properties.blendSrc.SetValue(material, BlendFactor.SrcAlpha);
+                            Properties.blendDst.SetValue(material, BlendFactor.OneMinusSrcAlpha);
+                            Properties.blendSrcAlpha.SetValue(material, BlendFactor.One);
+                            Properties.blendDstAlpha.SetValue(material, BlendFactor.OneMinusSrcAlpha);
+                            break;
                         case Blend.Premultiply:
-                        Properties.blendSrc.SetValue(material, BlendFactor.One);
-                        Properties.blendDst.SetValue(material, BlendFactor.OneMinusSrcAlpha);
-                        Properties.blendSrcAlpha.SetValue(material, BlendFactor.One);
-                        Properties.blendDstAlpha.SetValue(material, BlendFactor.OneMinusSrcAlpha);
-                        break;
+                            Properties.blendSrc.SetValue(material, BlendFactor.One);
+                            Properties.blendDst.SetValue(material, BlendFactor.OneMinusSrcAlpha);
+                            Properties.blendSrcAlpha.SetValue(material, BlendFactor.One);
+                            Properties.blendDstAlpha.SetValue(material, BlendFactor.OneMinusSrcAlpha);
+                            break;
                         case Blend.Additive:
-                        Properties.blendSrc.SetValue(material, BlendFactor.SrcAlpha);
-                        Properties.blendDst.SetValue(material, BlendFactor.One);
-                        Properties.blendSrcAlpha.SetValue(material, BlendFactor.One);
-                        Properties.blendDstAlpha.SetValue(material, BlendFactor.One);
-                        break;
+                            Properties.blendSrc.SetValue(material, BlendFactor.SrcAlpha);
+                            Properties.blendDst.SetValue(material, BlendFactor.One);
+                            Properties.blendSrcAlpha.SetValue(material, BlendFactor.One);
+                            Properties.blendDstAlpha.SetValue(material, BlendFactor.One);
+                            break;
                         case Blend.Multiply:
-                        Properties.blendSrc.SetValue(material, BlendFactor.DstColor);
-                        Properties.blendDst.SetValue(material, BlendFactor.Zero);
-                        Properties.blendSrcAlpha.SetValue(material, BlendFactor.Zero);
-                        Properties.blendDstAlpha.SetValue(material, BlendFactor.One);
-                        break;
+                            Properties.blendSrc.SetValue(material, BlendFactor.DstColor);
+                            Properties.blendDst.SetValue(material, BlendFactor.Zero);
+                            Properties.blendSrcAlpha.SetValue(material, BlendFactor.Zero);
+                            Properties.blendDstAlpha.SetValue(material, BlendFactor.One);
+                            break;
                         default:
-                        Properties.blendSrc.SetValue(material, BlendFactor.SrcAlpha);
-                        Properties.blendDst.SetValue(material, BlendFactor.OneMinusSrcAlpha);
-                        Properties.blendSrcAlpha.SetValue(material, BlendFactor.One);
-                        Properties.blendDstAlpha.SetValue(material, BlendFactor.OneMinusSrcAlpha);
-                        break;
+                            Properties.blendSrc.SetValue(material, BlendFactor.SrcAlpha);
+                            Properties.blendDst.SetValue(material, BlendFactor.OneMinusSrcAlpha);
+                            Properties.blendSrcAlpha.SetValue(material, BlendFactor.One);
+                            Properties.blendDstAlpha.SetValue(material, BlendFactor.OneMinusSrcAlpha);
+                            break;
                     }
                 }
-                material.SetInt(Properties.blend.uniform.id, (int) blend);
-                SetKeyword(material,(int) blend != 0, (int) blend);
+                material.SetInt(Properties.blend.uniform.id, (int)blend);
+                SetKeyword(material, (int)blend != 0, (int)blend);
             }
             else
             {
-                material.SetInt(Properties.blend.uniform.id, (int) blend);
-                SetKeyword(material,(int) blend != 0, (int) blend);
+                material.SetInt(Properties.blend.uniform.id, (int)blend);
+                SetKeyword(material, (int)blend != 0, (int)blend);
             }
         }
     }

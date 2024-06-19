@@ -76,7 +76,7 @@ public class GameManager : SerializedMonoBehaviour
         Time.timeScale = scale;
         StartCoroutine(PauseCor(time));
     }
-  
+
     public void GameExit()
     {
         Application.Quit();
@@ -128,6 +128,6 @@ public class GameManager : SerializedMonoBehaviour
         Time.timeScale = 1f;
     }
 
-    
+
 
 }

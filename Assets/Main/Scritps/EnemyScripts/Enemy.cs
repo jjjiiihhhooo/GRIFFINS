@@ -1,6 +1,4 @@
 using System.Collections;
-using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -143,7 +141,7 @@ public class Normal_Enemy : Enemy
     {
         if (enemyController.isDead) return;
 
-        if(attackCurCool > 0 && isAction)
+        if (attackCurCool > 0 && isAction)
         {
             attackCurCool -= Time.deltaTime;
             if (attackCurCool < 0) isAction = false;
@@ -162,7 +160,7 @@ public class Normal_Enemy : Enemy
             return;
         }
 
-        
+
 
         Action();
         AnimTransform();
@@ -186,7 +184,7 @@ public class Normal_Enemy : Enemy
             enemyController.transform.position = animator.transform.position;
             animator.transform.localPosition = Vector3.zero;
         }
-        else if(animator.GetCurrentAnimatorStateInfo(0).IsTag("GetDamage"))
+        else if (animator.GetCurrentAnimatorStateInfo(0).IsTag("GetDamage"))
         {
 
             RaycastHit hit;
@@ -208,10 +206,10 @@ public class Normal_Enemy : Enemy
             if (x != 0 || y != 0 || z != 0)
                 animator.transform.localEulerAngles = Vector3.zero;
         }
-        
+
     }
 
-    
+
 
     public override void UiUpdate()
     {
@@ -250,7 +248,7 @@ public class Normal_Enemy : Enemy
     {
         if (target == null) target = Player.Instance.transform;
 
-        
+
 
         if (Vector3.Distance(target.transform.position, enemyController.transform.position) > 3f && curTime <= 0 && !isAction) Move();
         else if (Vector3.Distance(target.transform.position, enemyController.transform.position) <= 3f && curTime <= 0 && !isAction) Attack();
@@ -290,7 +288,7 @@ public class Normal_Enemy : Enemy
         if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Normal_Run")) animator.Play("Normal_Run", 0, 0f);
 
         if (!isRun)
-        { 
+        {
             isRun = true;
         }
 
@@ -328,7 +326,7 @@ public class Normal_Enemy : Enemy
         if (curHp <= 0) Die();
     }
 
-    
+
 
     public override void Die()
     {
@@ -345,10 +343,10 @@ public class Epic_Enemy : Enemy
     public float coolTime = 5f;
     public float curTime = 5f;
 
-    
+
 
     public float dashSpeed;
-    
+
 
     public override void Init(EnemyController controller)
     {
@@ -365,7 +363,7 @@ public class Epic_Enemy : Enemy
             if (attackCurCool < 0) isAction = false;
         }
 
-        if(hammerCurTime > 0 && !isHammer)
+        if (hammerCurTime > 0 && !isHammer)
         {
             hammerCurTime -= Time.deltaTime;
             if (hammerCurTime < 0) isHammer = true;
@@ -461,8 +459,8 @@ public class Epic_Enemy : Enemy
     public override void Action()
     {
         if (target == null) target = Player.Instance.transform;
-        
-        if(isHammer)
+
+        if (isHammer)
         {
             if (Vector3.Distance(target.transform.position, enemyController.transform.position) < 10f && !isAction) HammerDown(target.transform.position);
             else if (Vector3.Distance(target.transform.position, enemyController.transform.position) > 10f && !isAction) Dash();
@@ -501,7 +499,7 @@ public class Epic_Enemy : Enemy
         float elapsedTime = 0;
         float flightDuration = 1f;
 
-        if(!enemyController.animator.GetCurrentAnimatorStateInfo(0).IsName("Dash")) animator.Play("HammerDown", 0, 0f);
+        if (!enemyController.animator.GetCurrentAnimatorStateInfo(0).IsName("Dash")) animator.Play("HammerDown", 0, 0f);
         else enemyController.animator.SetBool("isHammer", true);
 
         while (elapsedTime < flightDuration)
@@ -545,10 +543,10 @@ public class Epic_Enemy : Enemy
 
         Vector3 playerPos = target.transform.position;
 
-        while(Vector3.Distance(target.transform.position, enemyController.transform.position) > 10f && time > 0)
+        while (Vector3.Distance(target.transform.position, enemyController.transform.position) > 10f && time > 0)
         {
             time -= Time.deltaTime;
-            
+
             enemyController.rigid.velocity = enemyController.transform.forward * dashSpeed;
 
             yield return new WaitForFixedUpdate();
@@ -631,7 +629,7 @@ public class Epic_Enemy : Enemy
         enemyController.isDead = true;
 
         enemyController.gameObject.layer = enemyController.deadLayer;
-        
+
         animator.Play("Dead");
     }
 

@@ -558,7 +558,7 @@
 
 #if UNITY_POST_PROCESSING_STACK_V2
                         rCam.AddComponent<PostProcessLayer>();
-                        rCam.GetComponent<PostProcessLayer>().Init( internalPostFXResources );
+                        rCam.GetComponent<PostProcessLayer>().Init(internalPostFXResources);
                         rCam.GetComponent<PostProcessLayer>().enabled = false;
 #endif
 
@@ -573,9 +573,9 @@
                             _reflectionCameras[0] = rCam.GetComponent<Camera>();
 
 #if UNITY_POST_PROCESSING_STACK_V2
-                        rCam.AddComponent<PostProcessLayer>();
-                        rCam.GetComponent<PostProcessLayer>().Init( internalPostFXResources );
-                        rCam.GetComponent<PostProcessLayer>().enabled = false;
+                            rCam.AddComponent<PostProcessLayer>();
+                            rCam.GetComponent<PostProcessLayer>().Init(internalPostFXResources);
+                            rCam.GetComponent<PostProcessLayer>().enabled = false;
 #endif
 
                             rCam.hideFlags = HideFlags.HideAndDontSave;
@@ -706,10 +706,11 @@
 
             PostProcessLayer postFX;
 
-                if ( refCamera.TryGetComponent<PostProcessLayer>( out postFX ) ) {
-                    postFX.enabled = _settings.usePostFX;
-                    postFX.volumeLayer = _settings.postFXVolumeMask;
-                }
+            if (refCamera.TryGetComponent<PostProcessLayer>(out postFX))
+            {
+                postFX.enabled = _settings.usePostFX;
+                postFX.volumeLayer = _settings.postFXVolumeMask;
+            }
 #else
 
             var uData = refCamera.GetUniversalAdditionalCameraData();
@@ -808,9 +809,9 @@
                     {
 #endif
 #if UNITY_POST_PROCESSING_STACK_V2
-                    if (!postFX)
+                        if (!postFX)
 #endif
-                        uData.renderPostProcessing = _settings.usePostFX;
+                            uData.renderPostProcessing = _settings.usePostFX;
 #if UNITY_EDITOR
                     }
 #endif

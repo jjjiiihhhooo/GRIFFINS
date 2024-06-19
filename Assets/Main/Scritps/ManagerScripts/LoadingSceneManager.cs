@@ -10,7 +10,7 @@ public class LoadingSceneManager : MonoBehaviour
 
     private void Start()
     {
-        if(GameManager.Instance != null)
+        if (GameManager.Instance != null)
         {
             if (GameManager.Instance.isDestroy)
             {
@@ -19,7 +19,7 @@ public class LoadingSceneManager : MonoBehaviour
                 Destroy(GameManager.Instance.gameObject);
             }
         }
-        
+
         StartCoroutine(LoadScene());
     }
 

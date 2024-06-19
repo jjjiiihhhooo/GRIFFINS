@@ -7,22 +7,16 @@
 //////////////////////////////////////////////////////
 
 #if UNITY_EDITOR
-using System.Collections.Generic;
-using UnityEngine;
 using UnityEditor;
-using System.Linq;
-using System;
-using UnityEditor.Utils;
-using UnityEditorInternal;
-using EditorHelper = MK.Toon.Editor.EditorHelper;
+using UnityEngine;
 
 namespace MK.Toon.Editor
 {
     internal sealed class OutlineComponent : ShaderGUI
     {
         /////////////////////////////////////////////////////////////////////////////////////////////
-		// Properties                                                                              //
-		/////////////////////////////////////////////////////////////////////////////////////////////
+        // Properties                                                                              //
+        /////////////////////////////////////////////////////////////////////////////////////////////
         private MaterialProperty _outline;
         private MaterialProperty _outlineData;
         private MaterialProperty _outlineMap;
@@ -31,10 +25,10 @@ namespace MK.Toon.Editor
         private MaterialProperty _outlineNoise;
         private MaterialProperty _outlineClipOffset;
 
-        #if MK_TOON_OUTLINE_FADING_LINEAR  || MK_TOON_OUTLINE_FADING_EXPONENTIAL || MK_TOON_OUTLINE_FADING_INVERSE_EXPONENTIAL
+#if MK_TOON_OUTLINE_FADING_LINEAR || MK_TOON_OUTLINE_FADING_EXPONENTIAL || MK_TOON_OUTLINE_FADING_INVERSE_EXPONENTIAL
             private MaterialProperty _outlineFadeMin;
             private MaterialProperty _outlineFadeMax;
-        #endif
+#endif
 
         private MaterialProperty _outlineBehavior;
         internal bool active { get { return _outlineBehavior != null; } }
@@ -49,33 +43,33 @@ namespace MK.Toon.Editor
             _outlineNoise = FindProperty(Properties.outlineNoise.uniform.name, props, false);
             _outlineClipOffset = FindProperty(Properties.outlineClipOffset.uniform.name, props, false);
 
-            #if MK_TOON_OUTLINE_FADING_LINEAR  || MK_TOON_OUTLINE_FADING_EXPONENTIAL || MK_TOON_OUTLINE_FADING_INVERSE_EXPONENTIAL
+#if MK_TOON_OUTLINE_FADING_LINEAR || MK_TOON_OUTLINE_FADING_EXPONENTIAL || MK_TOON_OUTLINE_FADING_INVERSE_EXPONENTIAL
                 _outlineFadeMin = FindProperty(Properties.outlineFadeMin.uniform.name, props, false);
                 _outlineFadeMax = FindProperty(Properties.outlineFadeMax.uniform.name, props, false);
-            #endif
+#endif
 
             _outlineBehavior = FindProperty(EditorProperties.outlineTab.uniform.name, props, false);
         }
 
         /////////////////////////////////////////////////////////////////////////////////////////////
-		// Draw                                                                                    //
-		/////////////////////////////////////////////////////////////////////////////////////////////
+        // Draw                                                                                    //
+        /////////////////////////////////////////////////////////////////////////////////////////////
         internal void DrawOutline(MaterialEditor materialEditor, MaterialProperty[] properties)
         {
             //All outline properties needs to be available on the material
             //the outline tab is used for check
-            if(_outlineBehavior != null)
+            if (_outlineBehavior != null)
             {
-                if(EditorHelper.HandleBehavior(UI.outlineTab.text, "", _outlineBehavior, null, materialEditor, false))
+                if (EditorHelper.HandleBehavior(UI.outlineTab.text, "", _outlineBehavior, null, materialEditor, false))
                 {
-                    #if MK_URP
+#if MK_URP
                     MK.Toon.Editor.InstallWizard.Configuration.ShowURPOutlineWarning();
                     MK.Toon.Editor.EditorHelper.VerticalSpace();
-                    #endif
+#endif
 
                     FindProperties(properties);
                     materialEditor.ShaderProperty(_outline, UI.outline);
-                    if((Outline) _outline.floatValue != Outline.HullOrigin)
+                    if ((Outline)_outline.floatValue != Outline.HullOrigin)
                     {
                         materialEditor.ShaderProperty(_outlineData, UI.outlineData);
                     }
@@ -83,10 +77,10 @@ namespace MK.Toon.Editor
                     materialEditor.ShaderProperty(_outlineColor, UI.outlineColor);
                     materialEditor.TexturePropertySingleLine(UI.outlineMap, _outlineMap, _outlineSize);
 
-                    #if MK_TOON_OUTLINE_FADING_LINEAR  || MK_TOON_OUTLINE_FADING_EXPONENTIAL || MK_TOON_OUTLINE_FADING_INVERSE_EXPONENTIAL
+#if MK_TOON_OUTLINE_FADING_LINEAR || MK_TOON_OUTLINE_FADING_EXPONENTIAL || MK_TOON_OUTLINE_FADING_INVERSE_EXPONENTIAL
                         materialEditor.ShaderProperty(_outlineFadeMin, UI.outlineFadeMin);
                         materialEditor.ShaderProperty(_outlineFadeMax, UI.outlineFadeMax);
-                    #endif
+#endif
                     materialEditor.ShaderProperty(_outlineNoise, UI.outlineNoise);
                     materialEditor.ShaderProperty(_outlineClipOffset, UI.outlineClipOffset);
                 }
@@ -97,7 +91,7 @@ namespace MK.Toon.Editor
 
         internal void ManageKeywordsOutline(Material material)
         {
-            if(_outlineBehavior != null)
+            if (_outlineBehavior != null)
             {
                 material.SetShaderPassEnabled("Always", true);
                 EditorHelper.SetKeyword(Properties.outline.GetValue(material) == Outline.HullClip, Keywords.outline[2], material);
@@ -106,21 +100,21 @@ namespace MK.Toon.Editor
         }
         internal void ManageKeywordsOutlineData(Material material)
         {
-            if(_outlineBehavior != null)
+            if (_outlineBehavior != null)
             {
                 EditorHelper.SetKeyword(Properties.outlineData.GetValue(material) == OutlineData.Baked, Keywords.outlineData, material);
             }
         }
         internal void ManageKeywordsOutlineNoise(Material material)
         {
-            if(_outlineBehavior != null)
+            if (_outlineBehavior != null)
             {
                 EditorHelper.SetKeyword(Properties.outlineNoise.GetValue(material) != 0, Keywords.outlineNoise, material);
             }
         }
         internal void ManageKeywordsOutlineMap(Material material)
         {
-            if(_outlineBehavior != null)
+            if (_outlineBehavior != null)
             {
                 EditorHelper.SetKeyword(Properties.outlineMap.GetValue(material) != null, Keywords.outlineMap, material);
             }

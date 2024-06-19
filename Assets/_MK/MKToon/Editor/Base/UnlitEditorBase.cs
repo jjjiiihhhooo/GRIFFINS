@@ -7,14 +7,8 @@
 //////////////////////////////////////////////////////
 
 #if UNITY_EDITOR
-using System.Collections.Generic;
-using UnityEngine;
 using UnityEditor;
-using System.Linq;
-using System;
-using UnityEditor.Utils;
-using UnityEditorInternal;
-using EditorHelper = MK.Toon.Editor.EditorHelper;
+using UnityEngine;
 
 // ------------------------------------------------------------------------------------------
 // Note:
@@ -46,11 +40,11 @@ namespace MK.Toon.Editor
         }
 
         /////////////////////////////////////////////////////////////////////////////////////////////
-		// Properties                                                                              //
-		/////////////////////////////////////////////////////////////////////////////////////////////
+        // Properties                                                                              //
+        /////////////////////////////////////////////////////////////////////////////////////////////
         protected ShaderTemplate _shaderTemplate;
-        protected RenderPipeline _renderPipeline; 
-   
+        protected RenderPipeline _renderPipeline;
+
         /////////////////
         // Options     //
         /////////////////
@@ -172,7 +166,7 @@ namespace MK.Toon.Editor
             _dissolveBorderRamp = FindProperty(Properties.dissolveBorderRamp.uniform.name, props);
             _dissolveBorderSize = FindProperty(Properties.dissolveBorderSize.uniform.name, props);
             _dissolveBorderColor = FindProperty(Properties.dissolveBorderColor.uniform.name, props);
-            
+
             _renderPriority = FindProperty(Properties.renderPriority.uniform.name, props);
             _alembicMotionVectors = FindProperty(Properties.alembicMotionVectors.uniform.name, props, false);
 
@@ -197,9 +191,9 @@ namespace MK.Toon.Editor
         }
 
         /////////////////////////////////////////////////////////////////////////////////////////////
-		// Setup                                                                                   //
-		/////////////////////////////////////////////////////////////////////////////////////////////
-        
+        // Setup                                                                                   //
+        /////////////////////////////////////////////////////////////////////////////////////////////
+
         /// <summary>
         /// Find similar values from the changed shader
         /// </summary>
@@ -221,46 +215,46 @@ namespace MK.Toon.Editor
             MaterialProperty blend = FindProperty("_BlendMode", propertiesSrc, false);
             MaterialProperty addPrecomputedVelocity = FindProperty("_AddPrecomputedVelocity", propertiesSrc, false);
 
-            if(mode != null)
+            if (mode != null)
                 Properties.surface.SetValue(materialDst, mode.floatValue <= 1 ? Surface.Opaque : Surface.Transparent);
-            if(surface != null)
+            if (surface != null)
                 Properties.surface.SetValue(materialDst, surface.floatValue > 0 ? Surface.Transparent : Surface.Opaque);
-            if(blend != null)
-                Properties.blend.SetValue(materialDst, (Blend) ((int) blend.floatValue));
+            if (blend != null)
+                Properties.blend.SetValue(materialDst, (Blend)((int)blend.floatValue));
 
-            if(materialSrc.shader.name.Contains("Universal Render Pipeline") || materialSrc.shader.name.Contains("Lightweight Render Pipeline"))
+            if (materialSrc.shader.name.Contains("Universal Render Pipeline") || materialSrc.shader.name.Contains("Lightweight Render Pipeline"))
             {
-                if(alphaClip != null)
+                if (alphaClip != null)
                     Properties.alphaClipping.SetValue(materialDst, alphaClip.floatValue > 0 ? true : false);
-                if(baseTex != null)
+                if (baseTex != null)
                     Properties.albedoMap.SetValue(materialDst, baseTex.textureValue);
-                if(baseMap != null)
+                if (baseMap != null)
                     Properties.albedoMap.SetValue(materialDst, baseMap.textureValue);
-                if(baseColor != null)
+                if (baseColor != null)
                     Properties.albedoColor.SetValue(materialDst, baseColor.colorValue);
             }
             else
             {
-                if(mode != null)
+                if (mode != null)
                     Properties.alphaClipping.SetValue(materialDst, mode.floatValue == 1 ? true : false);
-                if(mainTex != null)
+                if (mainTex != null)
                 {
                     Properties.albedoMap.SetValue(materialDst, mainTex.textureValue);
                     Properties.mainTiling.SetValue(materialDst, materialSrc.mainTextureScale);
                     Properties.mainOffset.SetValue(materialDst, materialSrc.mainTextureOffset);
                 }
-                if(color != null)
+                if (color != null)
                     Properties.albedoColor.SetValue(materialDst, color.colorValue);
             }
 
-            if(cutoff != null)
+            if (cutoff != null)
                 Properties.alphaCutoff.SetValue(materialDst, cutoff.floatValue);
-            if(cull != null)
-                Properties.renderFace.SetValue(materialDst, (RenderFace) cull.floatValue);
+            if (cull != null)
+                Properties.renderFace.SetValue(materialDst, (RenderFace)cull.floatValue);
 
-            if(_alembicMotionVectors != null)
+            if (_alembicMotionVectors != null)
             {
-                if(addPrecomputedVelocity != null)
+                if (addPrecomputedVelocity != null)
                 {
                     Properties.alembicMotionVectors.SetValue(materialDst, addPrecomputedVelocity.floatValue > 0 ? true : false);
                 }
@@ -294,18 +288,18 @@ namespace MK.Toon.Editor
             _defaultFontStyle = EditorStyles.label.fontStyle;
             FindProperties(properties);
 
-            #if !UNITY_2021_2_OR_NEWER
+#if !UNITY_2021_2_OR_NEWER
             EditorGUI.BeginChangeCheck();
-            #endif
+#endif
             DrawInspector(materialEditor, properties, material);
 
-            #if !UNITY_2021_2_OR_NEWER
+#if !UNITY_2021_2_OR_NEWER
             if(EditorGUI.EndChangeCheck())
             {
                 foreach (Material mat in _stylizeTab.targets)
                     ValidateMaterial(mat);
             }
-            #endif
+#endif
         }
 
         /// <summary>
@@ -315,7 +309,7 @@ namespace MK.Toon.Editor
         /// <param name="oldShader"></param>
         /// <param name="newShader"></param>
         protected virtual void MaterialSetup(Material materialDst, Shader oldShader, Shader newShader)
-        {            
+        {
             Material materialSrc = new Material(materialDst);
             MaterialProperty[] propertiesSrc = MaterialEditor.GetMaterialProperties(new Material[] { materialSrc });
 
@@ -329,11 +323,11 @@ namespace MK.Toon.Editor
 
             ConvertSimilarValues(propertiesSrc, materialSrc, materialDst);
 
-            if(_outline.active)
+            if (_outline.active)
             {
                 Properties.surface.SetValue(materialDst, Surface.Opaque, Properties.alphaClipping.GetValue(materialDst));
             }
-            if(_refraction.active)
+            if (_refraction.active)
             {
                 Properties.surface.SetValue(materialDst, Surface.Transparent, Properties.alphaClipping.GetValue(materialDst));
             }
@@ -342,9 +336,9 @@ namespace MK.Toon.Editor
         }
 
         /////////////////////////////////////////////////////////////////////////////////////////////
-		// Draw                                                                                    //
-		/////////////////////////////////////////////////////////////////////////////////////////////
-        
+        // Draw                                                                                    //
+        /////////////////////////////////////////////////////////////////////////////////////////////
+
         /// <summary>
         /// Unlit warning for legacy renderpipeline
         /// </summary>
@@ -360,7 +354,7 @@ namespace MK.Toon.Editor
         {
             return EditorHelper.HandleBehavior("Options", "", _optionsTab, null, materialEditor, false);
         }
-        
+
         protected virtual void DrawSurfaceType(MaterialEditor materialEditor)
         {
             materialEditor.ShaderProperty(_surface, UI.surface);
@@ -377,13 +371,13 @@ namespace MK.Toon.Editor
 
         protected virtual void DrawCustomBlend(MaterialEditor materialEditor)
         {
-            if((Blend) _blend.floatValue == Blend.Custom)
+            if ((Blend)_blend.floatValue == Blend.Custom)
             {
                 materialEditor.ShaderProperty(_zWrite, UI.zWrite, 1);
                 materialEditor.ShaderProperty(_zTest, UI.zTest, 1);
                 materialEditor.ShaderProperty(_blendSrc, UI.blendSrc, 1);
                 materialEditor.ShaderProperty(_blendDst, UI.blendDst, 1);
-                if(_renderPipeline == RenderPipeline.Universal)
+                if (_renderPipeline == RenderPipeline.Universal)
                 {
                     materialEditor.ShaderProperty(_blendSrcAlpha, UI.blendSrcAlpha, 1);
                     materialEditor.ShaderProperty(_blendDstAlpha, UI.blendDstAlpha, 1);
@@ -394,17 +388,17 @@ namespace MK.Toon.Editor
         protected virtual void DrawBlend(MaterialEditor materialEditor)
         {
             EditorGUI.showMixedValue = _blend.hasMixedValue;
-            Blend blend = (Blend) _blend.floatValue;
+            Blend blend = (Blend)_blend.floatValue;
 
             EditorGUI.BeginChangeCheck();
-            if((Surface) _surface.floatValue == Surface.Transparent)
-                blend = (Blend) EditorGUILayout.EnumPopup(UI.blend, (Blend) blend);
+            if ((Surface)_surface.floatValue == Surface.Transparent)
+                blend = (Blend)EditorGUILayout.EnumPopup(UI.blend, (Blend)blend);
             else
-                blend = (Blend) EditorGUILayout.EnumPopup(UI.blend, (BlendOpaque) blend);
-            if(EditorGUI.EndChangeCheck())
+                blend = (Blend)EditorGUILayout.EnumPopup(UI.blend, (BlendOpaque)blend);
+            if (EditorGUI.EndChangeCheck())
             {
                 materialEditor.RegisterPropertyChangeUndo("Blend");
-                _blend.floatValue = (int) blend;
+                _blend.floatValue = (int)blend;
             }
             EditorGUI.showMixedValue = false;
         }
@@ -418,7 +412,7 @@ namespace MK.Toon.Editor
         {
             materialEditor.ShaderProperty(_alphaClipping, UI.alphaClipping);
 
-            if(_alphaClipping.floatValue == 1)
+            if (_alphaClipping.floatValue == 1)
             {
                 materialEditor.ShaderProperty(_alphaCutoff, UI.alphaCutoff);
             }
@@ -440,7 +434,7 @@ namespace MK.Toon.Editor
         private void DrawOptions(MaterialEditor materialEditor)
         {
             EditorHelper.DrawSplitter();
-            if(OptionsBehavior(materialEditor))
+            if (OptionsBehavior(materialEditor))
             {
                 DrawOptionsContent(materialEditor);
             }
@@ -468,7 +462,7 @@ namespace MK.Toon.Editor
         {
             materialEditor.TextureScaleOffsetProperty(_albedoMap);
         }
-            
+
         /// <summary>
         /// Draw the Input Content
         /// </summary>
@@ -482,7 +476,7 @@ namespace MK.Toon.Editor
 
         private void DrawInput(MaterialEditor materialEditor)
         {
-            if(InputBehavior(materialEditor))
+            if (InputBehavior(materialEditor))
             {
                 DrawInputContent(materialEditor);
             }
@@ -507,7 +501,7 @@ namespace MK.Toon.Editor
             SetBoldFontStyle(true);
             materialEditor.ShaderProperty(_colorGrading, UI.colorGrading);
             SetBoldFontStyle(false);
-            if(_colorGrading.floatValue != (int)(ColorGrading.Off))
+            if (_colorGrading.floatValue != (int)(ColorGrading.Off))
             {
                 materialEditor.ShaderProperty(_contrast, UI.contrast);
                 materialEditor.ShaderProperty(_saturation, UI.saturation);
@@ -526,21 +520,21 @@ namespace MK.Toon.Editor
             SetBoldFontStyle(true);
             materialEditor.ShaderProperty(_dissolve, UI.dissolve);
             SetBoldFontStyle(false);
-            if(_dissolve.floatValue != (int)Dissolve.Off)
+            if (_dissolve.floatValue != (int)Dissolve.Off)
             {
-                if(_dissolveMap.textureValue != null)
+                if (_dissolveMap.textureValue != null)
                     materialEditor.TexturePropertySingleLine(UI.dissolveMap, _dissolveMap, _dissolveMapScale);
                 else
                     materialEditor.TexturePropertySingleLine(UI.dissolveMap, _dissolveMap);
 
-                if(_dissolveMap.textureValue != null)
+                if (_dissolveMap.textureValue != null)
                 {
                     materialEditor.ShaderProperty(_dissolveAmount, UI.dissolveAmount);
-                    if(_dissolve.floatValue == (int)Dissolve.BorderRamp)
+                    if (_dissolve.floatValue == (int)Dissolve.BorderRamp)
                     {
                         materialEditor.TexturePropertySingleLine(UI.dissolveBorderRamp, _dissolveBorderRamp, _dissolveBorderSize, _dissolveBorderColor);
                     }
-                    else if(_dissolve.floatValue == (int)Dissolve.BorderColor)
+                    else if (_dissolve.floatValue == (int)Dissolve.BorderColor)
                     {
                         materialEditor.ShaderProperty(_dissolveBorderColor, UI.dissolveBorderColor);
                         materialEditor.ShaderProperty(_dissolveBorderSize, UI.dissolveBorderSize);
@@ -561,7 +555,7 @@ namespace MK.Toon.Editor
             materialEditor.ShaderProperty(_vertexAnimation, UI.vertexAnimation);
             SetBoldFontStyle(false);
 
-            if((VertexAnimation) _vertexAnimation.floatValue != VertexAnimation.Off)
+            if ((VertexAnimation)_vertexAnimation.floatValue != VertexAnimation.Off)
             {
                 materialEditor.TexturePropertySingleLine(UI.vertexAnimationMap, _vertexAnimationMap, _vertexAnimationIntensity);
                 materialEditor.ShaderProperty(_vertexAnimationStutter, UI.vertexAnimationStutter);
@@ -587,7 +581,7 @@ namespace MK.Toon.Editor
 
         private void DrawStylize(MaterialEditor materialEditor)
         {
-            if(StylizeBehavior(materialEditor))
+            if (StylizeBehavior(materialEditor))
             {
                 DrawStylizeContent(materialEditor);
             }
@@ -606,7 +600,7 @@ namespace MK.Toon.Editor
         {
             EditorGUI.BeginChangeCheck();
             Properties.stencil.SetValue(material, Stencil.Builtin);
-            if(EditorGUI.EndChangeCheck())
+            if (EditorGUI.EndChangeCheck())
             {
                 materialEditor.RegisterPropertyChangeUndo("Stencil Mode");
             }
@@ -629,10 +623,10 @@ namespace MK.Toon.Editor
 
         protected void DrawAddPrecomputedVelocity(MaterialEditor materialEditor)
         {
-            #if UNITY_2023_2_OR_NEWER
+#if UNITY_2023_2_OR_NEWER
             if(_alembicMotionVectors != null)
                 materialEditor.ShaderProperty(_alembicMotionVectors, UI.alembicMotionVectors);
-            #endif
+#endif
         }
 
         protected virtual void DrawPipeline(MaterialEditor materialEditor)
@@ -649,7 +643,7 @@ namespace MK.Toon.Editor
             DrawStencilHeader();
 
             materialEditor.ShaderProperty(_stencil, UI.stencil);
-            if(_stencil.floatValue == (int)Stencil.Custom)
+            if (_stencil.floatValue == (int)Stencil.Custom)
             {
                 materialEditor.ShaderProperty(_stencilRef, UI.stencilRef);
                 materialEditor.ShaderProperty(_stencilReadMask, UI.stencilReadMask);
@@ -670,7 +664,7 @@ namespace MK.Toon.Editor
         /// </summary>
         /// <param name="materialEditor"></param>
         protected virtual void DrawAdvancedContent(MaterialEditor materialEditor, Material material)
-        {            
+        {
             DrawPipeline(materialEditor);
             EditorHelper.Divider();
             DrawStencil(materialEditor, material);
@@ -678,7 +672,7 @@ namespace MK.Toon.Editor
 
         private void DrawAdvanced(MaterialEditor materialEditor, Material material)
         {
-            if(AdvancedBehavior(materialEditor))
+            if (AdvancedBehavior(materialEditor))
             {
                 DrawAdvancedContent(materialEditor, material);
             }
@@ -708,9 +702,9 @@ namespace MK.Toon.Editor
         }
 
         /////////////////////////////////////////////////////////////////////////////////////////////
-		// Variants Setup                                                                          //
-		/////////////////////////////////////////////////////////////////////////////////////////////
-        
+        // Variants Setup                                                                          //
+        /////////////////////////////////////////////////////////////////////////////////////////////
+
         private void ManageKeywordsBlend(Material material)
         {
             //Colorsource
@@ -785,13 +779,13 @@ namespace MK.Toon.Editor
 
         private void ManageKeywordsAlembicMotionVecotrs(Material material)
         {
-            #if UNITY_2023_2_OR_NEWER
+#if UNITY_2023_2_OR_NEWER
             if(_alembicMotionVectors != null)
             {
                 EditorHelper.SetKeyword(Properties.alembicMotionVectors.GetValue(material), Keywords.alembicMotionVectors, material);
             }
             material.SetShaderPassEnabled("MotionVectors", true);
-            #endif
+#endif
         }
 
         private void UpdateRenderPriority(Material material)
@@ -827,17 +821,17 @@ namespace MK.Toon.Editor
             _refraction.ManageKeywordsIndexOfRefraction(material);
         }
 
-        #if UNITY_2021_2_OR_NEWER
+#if UNITY_2021_2_OR_NEWER
         public override void ValidateMaterial(Material material)
         {
             UpdateKeywords(material);
         }
-        #else
+#else
         public void ValidateMaterial(Material material)
         {
             UpdateKeywords(material);
         }
-        #endif
+#endif
     }
 }
 #endif

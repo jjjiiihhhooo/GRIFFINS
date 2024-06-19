@@ -20,7 +20,7 @@ namespace MK.Toon.Editor
         /////////////////
         internal static readonly GUIContent workflow = new GUIContent
         (
-            "Workflow", 
+            "Workflow",
             "Physically based workflow.\n\n" +
             "Metallic: Metallic + Smoothness\n\n" +
             "Specular: Specular + Smoothness\n\n" +
@@ -28,7 +28,7 @@ namespace MK.Toon.Editor
         );
         internal static readonly GUIContent renderFace = new GUIContent
         (
-            "Render Face", 
+            "Render Face",
             "Culling / visibility of faces.\n\n" +
             "Front: Back faces are culled.\n" +
             "Back: Front faces are culled.\n" +
@@ -36,18 +36,18 @@ namespace MK.Toon.Editor
         );
         internal static readonly GUIContent surface = new GUIContent
         (
-            "Surface", 
+            "Surface",
             "Opaque: Surface is rendered opaque.\n\n" +
             "Transparent: Surface is rendered transparent."
         );
         internal static readonly GUIContent zWrite = new GUIContent
         (
-            "Z-Write", 
+            "Z-Write",
             "Controls if the material writes into the depth buffer."
         );
         internal static readonly GUIContent blend = new GUIContent
         (
-            "Blending", 
+            "Blending",
             "Controls how the surface color blends into the background.\n \n" +
             "Alpha/Defaul: Raw albedo alpha is used.\n\n" +
             "Premultiply: Similar to Alpha, but preserves reflections and highlights.\n\n" +
@@ -57,32 +57,32 @@ namespace MK.Toon.Editor
         );
         internal static readonly GUIContent zTest = new GUIContent
         (
-            "Z Test", 
+            "Z Test",
             "Controls how depth testing should be performed."
         );
         internal static readonly GUIContent overwriteBlend = new GUIContent
         (
-            "Overwrite Blending", 
+            "Overwrite Blending",
             "Overwrites the blending and lets you control it via two blend factors, a ZWrite and a ZTest. If enabled the surface property does not touch the blending if its changed. The base blending compile directives are still used."
         );
         internal static readonly GUIContent blendSrc = new GUIContent
         (
-            "Src Factor RGB", 
+            "Src Factor RGB",
             "Generated color is multiplied by the Src Factor."
         );
         internal static readonly GUIContent blendDst = new GUIContent
         (
-            "Dst Factor RGB", 
+            "Dst Factor RGB",
             "Color that is already on the screen is multiplied by the Dst Factor."
         );
         internal static readonly GUIContent blendSrcAlpha = new GUIContent
         (
-            "Src Factor Alpha", 
+            "Src Factor Alpha",
             "Generated alpha is multiplied by the Src Factor."
         );
         internal static readonly GUIContent blendDstAlpha = new GUIContent
         (
-            "Dst Factor Alpha", 
+            "Dst Factor Alpha",
             "Alpha that is already on the screen is multiplied by the Dst Factor."
         );
         internal static readonly GUIContent alphaClipping = new GUIContent
@@ -95,34 +95,34 @@ namespace MK.Toon.Editor
         /////////////////
         internal static readonly GUIContent albedoColor = new GUIContent
         (
-            "Color", 
+            "Color",
             ""
         );
         internal static readonly GUIContent alphaCutoff = new GUIContent
         (
-            "Alpha Cutoff", 
+            "Alpha Cutoff",
             "Pixels will be discarded if the albedo alpha minus Cutoff passes a value of < 0."
         );
         internal static readonly GUIContent albedoMap = new GUIContent
         (
-            "Albedo", 
+            "Albedo",
             "Albedo (RGBA) represents the base of your Material. Color (RGB) and Alpha (A) are used."
         );
         internal static readonly GUIContent specularColor = new GUIContent
         (
-            "Color", 
+            "Color",
             ""
         );
         internal static readonly GUIContent smoothness = new GUIContent
         (
-            "Smoothness", 
+            "Smoothness",
             "Physically Based Shading Smoothness. Controls how the surface spreads the highlights.\n\n" +
             "0/black: Rough highlight, rough surface\n" +
             "1/white: Sharp highlight, smooth surface"
         );
         internal static readonly GUIContent specularMap = new GUIContent
         (
-            "Specular", 
+            "Specular",
             "Physically Based Shading Specular.\n\n" +
             "0/black: Fully dielectric\n" +
             "1/white: Fully reflective\n" +
@@ -130,7 +130,7 @@ namespace MK.Toon.Editor
         );
         internal static readonly GUIContent roughnessMap = new GUIContent
         (
-            "Roughness", 
+            "Roughness",
             "Physically Based Shading Roughness. Controls how the surface spreads the highlights. \n\n" +
             "0/black: Sharp highlight, smooth surface\n" +
             "1/white: Rough highlight, rough surface \n" +
@@ -138,7 +138,7 @@ namespace MK.Toon.Editor
         );
         internal static readonly GUIContent metallicMap = new GUIContent
         (
-            "Metallic", 
+            "Metallic",
             "Physically Based Shading Metallic value (R).\n\n" +
             "0/black: Fully dielectric\n" +
             "1/white: Fully metallic\n" +
@@ -146,12 +146,12 @@ namespace MK.Toon.Editor
         );
         internal static readonly GUIContent normalMapIntensity = new GUIContent
         (
-            "Normal Map Scale", 
+            "Normal Map Scale",
             ""
         );
         internal static readonly GUIContent normalMap = new GUIContent
         (
-            "Normals", 
+            "Normals",
             "Tangent spaced normal map + intensity."
         );
         internal static readonly GUIContent heightMapScale = new GUIContent
@@ -161,29 +161,29 @@ namespace MK.Toon.Editor
         );
         internal static readonly GUIContent heightMap = new GUIContent
         (
-            "Height", 
+            "Height",
             "Height map used for parallax mapping and scaling.\n\n" +
             "(R) controls how much height/distortion is applied.\n" +
             "Slider controls the intensity of the parallax mapping."
         );
         internal static readonly GUIContent lightTransmission = new GUIContent
         (
-            "Light Transmission", 
+            "Light Transmission",
             ""
         );
         internal static readonly GUIContent lightTransmissionDistortion = new GUIContent
         (
-            "Distortion", 
+            "Distortion",
             ""
         );
         internal static readonly GUIContent lightTransmissionColor = new GUIContent
         (
-            "Color", 
+            "Color",
             ""
         );
         internal static readonly GUIContent thicknessMap = new GUIContent
         (
-            "Thickness", 
+            "Thickness",
             "Thickness Map, distortion and color.\n\n" +
             "(R) is used to control the thickness.\n" +
             "0/black: thick, zero light is transmitted\n" +
@@ -193,12 +193,12 @@ namespace MK.Toon.Editor
         );
         internal static readonly GUIContent occlusionMapScale = new GUIContent
         (
-            "Occlusion Map Scale", 
+            "Occlusion Map Scale",
             ""
         );
         internal static readonly GUIContent occlusionMap = new GUIContent
         (
-            "Occlusion", 
+            "Occlusion",
             "Direct/Indirect lighting occlusion map and intensity.\n\n" +
             "(R) controls how much indirect light is recieved.\n" +
             "(G) controls how much direct light is recieved.\n\n" +
@@ -208,12 +208,12 @@ namespace MK.Toon.Editor
         );
         internal static readonly GUIContent emissionColor = new GUIContent
         (
-            "Color", 
+            "Color",
             ""
         );
         internal static readonly GUIContent emissionMap = new GUIContent
         (
-            "Emission", 
+            "Emission",
             "Emission Map (RGB) & Color (RGB). Emission makes the material emit light to the environment."
         );
 
@@ -222,22 +222,22 @@ namespace MK.Toon.Editor
         /////////////////
         internal static readonly GUIContent detailBlend = new GUIContent
         (
-            "Blend", 
+            "Blend",
             ""
         );
         internal static readonly GUIContent detailColor = new GUIContent
         (
-            "Color", 
+            "Color",
             ""
         );
         internal static readonly GUIContent detailMix = new GUIContent
         (
-            "Mix", 
+            "Mix",
             ""
         );
         internal static readonly GUIContent detailMap = new GUIContent
         (
-            "Detail", 
+            "Detail",
             "Details (RGBA) & Color will be combined with the Albedo(RGB).\n\n" +
             "Blending:\n" +
             "Mix: albedo and detail is interpolated\n" +
@@ -249,12 +249,12 @@ namespace MK.Toon.Editor
         );
         internal static readonly GUIContent detailNormalMapScale = new GUIContent
         (
-            "Scale", 
+            "Scale",
             ""
         );
         internal static readonly GUIContent detailNormalMap = new GUIContent
         (
-            "Normals", 
+            "Normals",
             "Tangent spaced normal map + intensity.\n\n" +
             "Detail normals are automatically combined with the main normals."
         );
@@ -264,37 +264,37 @@ namespace MK.Toon.Editor
         /////////////////
         internal static readonly GUIContent wrappedLighting = new GUIContent
         (
-            "Wrapped Lighting", 
+            "Wrapped Lighting",
             "If enabled the diffuse lighting is more soft (areas get lit more easily).\n\n" +
             "You may need to adjust your light threshold after enable/disable this setting."
         );
         internal static readonly GUIContent receiveShadows = new GUIContent
         (
-            "Receive Shadows", 
+            "Receive Shadows",
             "When enabled, other GameObjects can cast shadows onto this GameObject."
         );
         internal static readonly GUIContent diffuseSmoothness = new GUIContent
         (
-            "Diffuse", 
+            "Diffuse",
             "Smoothness of the diffuse lighting.\n\n" +
             "0: Hard edge for the light/shadow\n" +
             "1: Smooth interpolation for light/shadow"
         );
         internal static readonly GUIContent diffuseThresholdOffset = new GUIContent
         (
-            "Diffuse", 
+            "Diffuse",
             "Threshold in addition the light threshold."
         );
         internal static readonly GUIContent specularSmoothness = new GUIContent
         (
-            "Specular", 
+            "Specular",
             "Smoothness of the specular lighting.\n\n" +
             "0: Hard edge for the light/shadow\n" +
             "1: Smooth interpolation for light/shadow"
         );
         internal static readonly GUIContent specularThresholdOffset = new GUIContent
         (
-            "Specular", 
+            "Specular",
             "Threshold in addition the light threshold."
         );
         internal static readonly GUIContent rimSmoothness = new GUIContent
@@ -305,7 +305,7 @@ namespace MK.Toon.Editor
         );
         internal static readonly GUIContent rimThresholdOffset = new GUIContent
         (
-            "Rim", 
+            "Rim",
             "Threshold in addition the light threshold."
         );
         internal static readonly GUIContent lightTransmissionSmoothness = new GUIContent
@@ -316,12 +316,12 @@ namespace MK.Toon.Editor
         );
         internal static readonly GUIContent lightTransmissionThresholdOffset = new GUIContent
         (
-            "Light Transmission", 
+            "Light Transmission",
             "Threshold in addition the light threshold."
         );
         internal static readonly GUIContent light = new GUIContent
         (
-            "Style", 
+            "Style",
             "The style defines the appearance of light.\n\n" +
             "Builtin: Lighting calculation has no custom style\n\n" +
             "Simple: Typical cel shading style. One light cut is applied to lighting.\n\n" +
@@ -330,67 +330,67 @@ namespace MK.Toon.Editor
         );
         internal static readonly GUIContent diffuseRamp = new GUIContent
         (
-            "Diffuse", 
+            "Diffuse",
             "2D Ramp (R) / intensity and falloff for lighting.\n" +
             "Intensity: X axis, left/dark -> right/bright.\n" +
             "Falloff: Y axis, bottom/far -> top/near (non directional lights only)."
         );
         internal static readonly GUIContent specularRamp = new GUIContent
         (
-            "Specular", 
+            "Specular",
             "2D Ramp (R) / intensity and falloff for lighting.\n" +
             "Intensity: X axis, left/dark -> right/bright.\n" +
             "Falloff: Y axis, bottom/far -> top/near (non directional lights only)."
         );
         internal static readonly GUIContent rimRamp = new GUIContent
         (
-            "Rim", 
+            "Rim",
             "2D Ramp (R) / intensity and falloff for lighting.\n" +
             "Intensity: X axis, left/dark -> right/bright.\n" +
             "Falloff: Y axis, bottom/far -> top/near (non directional lights only)."
         );
         internal static readonly GUIContent lightTransmissionRamp = new GUIContent
         (
-            "Light Transmission", 
+            "Light Transmission",
             "2D Ramp (R) / intensity and falloff for lighting.\n" +
             "Intensity: X axis, left/dark -> right/bright.\n" +
             "Falloff: Y axis, bottom/far -> top/near (non directional lights only)."
         );
         internal static readonly GUIContent lightBands = new GUIContent
         (
-            "Bands", 
+            "Bands",
             "Amount of light cuts."
         );
         internal static readonly GUIContent lightBandsScale = new GUIContent
         (
-            "Bands Scale", 
+            "Bands Scale",
             "Interpolation of the light bands. A higher value will “push” the band more into shadowed areas."
         );
         internal static readonly GUIContent lightThreshold = new GUIContent
         (
-            "Light Threshold", 
+            "Light Threshold",
             "Threshold defined for light/shadow. \n\n" +
             "0: Material is more lit (also depends on wrapped lighting => advanced tab). \n" +
             "1: Material is fully shadowed, no lights are visible."
         );
         internal static readonly GUIContent thresholdMap = new GUIContent
         (
-            "Threshold", 
+            "Threshold",
             "Threshold texture and scaling. Value is added additive to the light threshold."
         );
         internal static readonly GUIContent thresholdMapScale = new GUIContent
         (
-            "Scale", 
+            "Scale",
             ""
         );
         internal static readonly GUIContent goochRampIntensity = new GUIContent
         (
-            "Intensity", 
+            "Intensity",
             ""
         );
         internal static readonly GUIContent goochRamp = new GUIContent
         (
-            "Ramp", 
+            "Ramp",
             "2D Ramp (RGB) / interpolated tint based on lighting. Does not affect the light intensity or falloff.\n\n" +
             "Intensity: X axis, left/dark -> right/bright.\n" +
             "Falloff: Y axis, bottom/far -> top/near (non directional lights only). \n\n" +
@@ -398,12 +398,12 @@ namespace MK.Toon.Editor
         );
         internal static readonly GUIContent goochBrightColor = new GUIContent
         (
-            "Bright", 
+            "Bright",
             ""
         );
         internal static readonly GUIContent goochBrightMap = new GUIContent
         (
-            "Bright", 
+            "Bright",
             "Bright gooch colors are used for lit areas of the material. \n\n" +
             "Bright areas will interpolate between the albedo (RGB) and the bright gooch (RGB)."
         );
@@ -414,13 +414,13 @@ namespace MK.Toon.Editor
         );
         internal static readonly GUIContent goochDarkMap = new GUIContent
         (
-            "Dark", 
+            "Dark",
             "Dark gooch colors are used for shadowed areas of the material. \n\n" +
             "Dark areas will interpolate between the albedo (RGB) and the dark gooch (RGB)."
         );
         internal static readonly GUIContent colorGrading = new GUIContent
         (
-            "Color Grading", 
+            "Color Grading",
             "Controls how the contrast, saturation and brightness is applied.\n\n" +
             "Off: Effect disabled.\n\n" +
             "Albedo: Effect is applied to input albedo only.\n\n" +
@@ -428,17 +428,17 @@ namespace MK.Toon.Editor
         );
         internal static readonly GUIContent contrast = new GUIContent
         (
-            "Contrast", 
+            "Contrast",
             ""
         );
         internal static readonly GUIContent saturation = new GUIContent
         (
-            "Saturation", 
+            "Saturation",
             ""
         );
         internal static readonly GUIContent brightness = new GUIContent
         (
-            "Brightness", 
+            "Brightness",
             ""
         );
         internal static readonly GUIContent iridescence = new GUIContent
@@ -448,34 +448,34 @@ namespace MK.Toon.Editor
         );
         internal static readonly GUIContent iridescenceRamp = new GUIContent
         (
-            "Ramp", 
+            "Ramp",
             "Ramp (RGB) defines the iridescence color based on the viewing angle.\n\n" +
             "Tint: X axis, left/dark -> right/bright.\n" +
             "Color (RGB) tints the effect additionally. (A) is used for visibility."
         );
         internal static readonly GUIContent iridescenceSize = new GUIContent
         (
-            "Size", 
+            "Size",
             "Size of the iridescence effect."
         );
         internal static readonly GUIContent iridescenceThresholdOffset = new GUIContent
         (
-            "Iridescence", 
+            "Iridescence",
             "Threshold in addition the light threshold."
         );
         internal static readonly GUIContent iridescenceSmoothness = new GUIContent
         (
-            "Iridescence", 
+            "Iridescence",
             "Smoothness of the specular lighting."
         );
         internal static readonly GUIContent iridescenceColor = new GUIContent
         (
-            "Color", 
+            "Color",
             ""
         );
         internal static readonly GUIContent rim = new GUIContent
         (
-            "Rim", 
+            "Rim",
             "Rim lighting can be applied as different variants. Lighting is based on the fresnel effect. Outer visible areas of the Material will be highlighted.\n\n" +
             "Off: Rim lighting is disabled.\n\n" +
             "Default: Rim lighting is applied to the whole material.\n\n" +
@@ -483,12 +483,12 @@ namespace MK.Toon.Editor
         );
         internal static readonly GUIContent rimColor = new GUIContent
         (
-            "Color", 
+            "Color",
             "Color (RGB) defines the resulting color. Alpha is used for visibility."
         );
         internal static readonly GUIContent rimBrightColor = new GUIContent
         (
-            "Bright", 
+            "Bright",
             "Color (RGB) defines the resulting color on lit areas. Alpha is used for visibility."
         );
         internal static readonly GUIContent rimDarkColor = new GUIContent
@@ -498,12 +498,12 @@ namespace MK.Toon.Editor
         );
         internal static readonly GUIContent rimSize = new GUIContent
         (
-            "Size", 
+            "Size",
             "Size of the rim effect."
         );
         internal static readonly GUIContent vertexAnimation = new GUIContent
         (
-            "Vertex Animation", 
+            "Vertex Animation",
             ".\n\n" +
             "Off: Vertex Animation is disabled.\n" +
             "Sine: Sine based animation, applied in object space.\n" +
@@ -512,27 +512,27 @@ namespace MK.Toon.Editor
         );
         internal static readonly GUIContent vertexAnimationStutter = new GUIContent
         (
-            "Stutter", 
+            "Stutter",
             "Enable stuttering for the vertex animation."
         );
         internal static readonly GUIContent vertexAnimationMap = new GUIContent
         (
-            "Intensity", 
+            "Intensity",
             "Controls the intensity of the Vertex Animation. Map (R) is used for additional adjustments."
         );
         internal static readonly GUIContent vertexAnimationIntensity = new GUIContent
         (
-            "Intensity", 
+            "Intensity",
             ""
         );
         internal static readonly GUIContent vertexAnimationFrequency = new GUIContent
         (
-            "Frequency", 
+            "Frequency",
             "Frequency of the animation for X, Y, Z axis."
         );
         internal static readonly GUIContent dissolve = new GUIContent
         (
-            "Dissolve", 
+            "Dissolve",
             "A dissolving effect can be applied to the material based on a dissolve value and a Ramp (RGB)\n\n" +
             "Off: Dissolve is disabled\n\n" +
             "Simple: Dissolving is done via a map and a dissolve value.\n\n" +
@@ -540,39 +540,39 @@ namespace MK.Toon.Editor
         );
         internal static readonly GUIContent dissolveMap = new GUIContent
         (
-            "Dissolve", 
+            "Dissolve",
             "Dissolve map (R) is used for the layout of the dissolve."
         );
         internal static readonly GUIContent dissolveMapScale = new GUIContent
         (
-            "Scale", 
+            "Scale",
             ""
         );
         internal static readonly GUIContent dissolveAmount = new GUIContent
         (
-            "Amount", 
+            "Amount",
             "0: Object fully visible.\n" +
             "1: Object fully dissolved."
         );
         internal static readonly GUIContent dissolveBorderSize = new GUIContent
         (
-            "Border", 
+            "Border",
             "The border size is used to create a edge effect around the dissolve itself"
         );
         internal static readonly GUIContent dissolveBorderRamp = new GUIContent
         (
-            "Ramp", 
+            "Ramp",
             "The ramp, border size and color is used to create a edge effect around the dissolve itself.\n\n" +
             "Colors are used from left to right."
         );
         internal static readonly GUIContent dissolveBorderColor = new GUIContent
         (
-            "Color", 
+            "Color",
             "The color is used to tint the border."
         );
         internal static readonly GUIContent artistic = new GUIContent
         (
-            "Artistic", 
+            "Artistic",
             "Artistic style gives your material a customization for the lighting based on input texture/s.\n\n" +
             "Off: Artistic style is disabled.\n\n" +
             "Drawn: Lighting is customized via a lookup texture (R) and two thresholds for lit and shadowed areas.\n\n" +
@@ -583,77 +583,77 @@ namespace MK.Toon.Editor
         );
         internal static readonly GUIContent artisticProjection = new GUIContent
         (
-            "Projection", 
+            "Projection",
             "The artistic customization can be projected via Tangent or Screen Space.\n\n" +
             "Tangent Space: Original UV coords are used\n\n" +
             "Screen Space: Projected onto the surface based on the view angle."
         );
         internal static readonly GUIContent artisticStutterFreqency = new GUIContent
         (
-            "Frequency", 
+            "Frequency",
             "Animates the artistic effect to give it a constantly redrawn look. A value of 1 disables the animation."
         );
         internal static readonly GUIContent drawnMapScale = new GUIContent
         (
-            "Scale", 
+            "Scale",
             ""
         );
         internal static readonly GUIContent drawnMap = new GUIContent
         (
-            "Drawn", 
+            "Drawn",
             "Lookup texture (R) to customize the lighting."
         );
         internal static readonly GUIContent hatchingMapScale = new GUIContent
         (
-            "Scale", 
+            "Scale",
             ""
         );
         internal static readonly GUIContent hatchingBrightMap = new GUIContent
         (
-            "Bright", 
+            "Bright",
             "Lookup texture for brighter areas:\n" +
             "(R) => (G) => (B)"
         );
         internal static readonly GUIContent hatchingDarkMap = new GUIContent
         (
-            "Dark", 
+            "Dark",
             "Lookup texture for darker areas:\n" +
             "(R) => (G) => (B)"
         );
         internal static readonly GUIContent drawnClampMin = new GUIContent
         (
-            "Artistic Clamp Min", 
+            "Artistic Clamp Min",
             "Threshold to control the shadowed areas."
         );
         internal static readonly GUIContent drawnClampMax = new GUIContent
         (
-            "Artistic Clamp Max", 
+            "Artistic Clamp Max",
             "Threshold to control the lit areas."
         );
         internal static readonly GUIContent sketchMapScale = new GUIContent
         (
-            "Scale", 
+            "Scale",
             ""
         );
         internal static readonly GUIContent sketchMap = new GUIContent
         (
-            "Sketch", 
+            "Sketch",
             "Lookup texture (R) to customize the lighting."
         );
-        #if MK_TOON_STYLIZE_SYSTEM_SHADOWS
+#if MK_TOON_STYLIZE_SYSTEM_SHADOWS
         internal static readonly GUIContent artisticShadowFilter = new GUIContent
         (
             "Shadow Filter", 
             "Controls how strong the overlay is shown on received shadows."
         );
-        #endif
+#endif
 
         /////////////////
         // Advanced    //
         /////////////////
         internal static readonly GUIContent diffuse = new GUIContent
         (
-            "Diffuse", 
+            "Diffuse",
             "Diffuse lighting can be stylized the following way:\n\n" +
             "Lambert: The most simple lighting based lambertian reflectance.\n\n" +
             "Oren Nayar: A more precise lighting, which takes the roughness of the surface and the view angle into account.\n\n" +
@@ -662,7 +662,7 @@ namespace MK.Toon.Editor
         );
         internal static readonly GUIContent specular = new GUIContent
         (
-            "Specular", 
+            "Specular",
             "Controls how the specular affects the lighting. \n\n" +
             "Off: Specular is disabled.\n\n" +
             "Isotropic: Round shaped specular highlight.\n\n" +
@@ -675,18 +675,18 @@ namespace MK.Toon.Editor
         );
         internal static readonly GUIContent anisotropy = new GUIContent
         (
-            "Anisotropy", 
+            "Anisotropy",
             "Anisotropic specular strech based on the tangents at a Range between -1 and 1."
         );
         internal static readonly GUIContent lightTransmissionIntensity = new GUIContent
         (
-            "Intensity", 
+            "Intensity",
             "Intensity/brightness of the transmitted light.\n\n" +
             "A physically correct value would be 1 (Built-in lighting style). However on some lighting styles you need to exposure your highlights."
         );
         internal static readonly GUIContent environmentReflections = new GUIContent
         (
-            "Environment Reflection", 
+            "Environment Reflection",
             "Indirect Lighting from reflections / Global Illumination / Sky.\n\n" +
             "Off: Indirect Lighting is disabled.\n\n" +
             "Ambient: Indirect lighting only uses ambient color.\n\n" +
@@ -694,12 +694,12 @@ namespace MK.Toon.Editor
         );
         internal static readonly GUIContent fresnelHighlights = new GUIContent
         (
-            "Fresnel Highlights", 
+            "Fresnel Highlights",
             "Physically based fresnel highlights"
         );
         internal static readonly GUIContent indirectFade = new GUIContent
         (
-            "Indirect Fade", 
+            "Indirect Fade",
             "Fades the indirect lighting between the lit and shadowed areas based on a value between 0 and 1.\n" +
             "0: No indirect on shadowed areas\n" +
             "1: Indirect fully affects shadowed areas\n\n" +
@@ -707,34 +707,34 @@ namespace MK.Toon.Editor
         );
         internal static readonly GUIContent stencil = new GUIContent
         (
-            "Stencil", 
+            "Stencil",
             "Use a custom stencil test based on the unity setup.\n\n" +
             "Builtin: Default Stencil will be used.\n\n" +
             "Custom: Define your own stencil test."
         );
         internal static readonly GUIContent renderPriority = new GUIContent
         (
-            "Priority", 
+            "Priority",
             "Determines the chronological rendering order for a Material. High values are rendered first."
         );
         internal static readonly GUIContent alembicMotionVectors = new GUIContent
         (
-            "Alembic Motion Vectors", 
+            "Alembic Motion Vectors",
             "When enabled, the material will use motion vectors from the Alembic animation cache. Should not be used on regular meshes or Alembic caches without precomputed motion vectors."
         );
         internal static readonly GUIContent stencilRef = new GUIContent
         (
-            "Ref", 
+            "Ref",
             ""
         );
         internal static readonly GUIContent stencilReadMask = new GUIContent
         (
-            "Read Mask", 
+            "Read Mask",
             ""
         );
         internal static readonly GUIContent stencilWriteMask = new GUIContent
         (
-            "Write Mask", 
+            "Write Mask",
             ""
         );
         internal static readonly GUIContent stencilComp = new GUIContent
@@ -744,26 +744,26 @@ namespace MK.Toon.Editor
         );
         internal static readonly GUIContent stencilPass = new GUIContent
         (
-            "Pass", 
+            "Pass",
             ""
         );
         internal static readonly GUIContent stencilFail = new GUIContent
         (
-            "Fail", 
+            "Fail",
             ""
         );
         internal static readonly GUIContent stencilZFail = new GUIContent
         (
-            "Z Fail", 
+            "Z Fail",
             ""
         );
-       
+
         /////////////////
         // Outline     //
         /////////////////
         internal static readonly GUIContent outline = new GUIContent
         (
-            "Outline", 
+            "Outline",
             "Controls how the outline is created.\n\n" +
             "Hull Object: Outline is created as an inverted hull. It’s the most common per object outline method.\n\n" +
             "Hull Origin: Outline is created based on the object space vertex position as an inverted hull. Your geometry needs to be centered.\n\n" +
@@ -771,31 +771,31 @@ namespace MK.Toon.Editor
         );
         internal static readonly GUIContent outlineData = new GUIContent
         (
-            "Data", 
+            "Data",
             "Normal: Original normal of the mesh is used.\n\n" +
             "Baked: Outline is created using a different data set of normals. You can use the MK Mesh Utility to create new meshes with a modified UV7 channel or just average the mesh normals in your 3D program and save them to the UV7 channel. Baked normals can only work for static meshes."
         );
         internal static readonly GUIContent outlineMap = new GUIContent
         (
-            "Width", 
+            "Width",
             "Size of the outline. Map (R) is used for an advanced size setup."
         );
         public static readonly GUIContent outlineClipOffset = new GUIContent
         (
-            "Offset", 
+            "Offset",
             "Offsets the outline in clip space further away from the camera. This can be used to limit intersecting lines inside of the object."
         );
         internal static readonly GUIContent outlineColor = new GUIContent
         (
-            "Color", 
+            "Color",
             "Color of the outline."
         );
         internal static readonly GUIContent outlineNoise = new GUIContent
         (
-            "Noise", 
+            "Noise",
             "Noise effect applied to the outline."
         );
-        #if MK_TOON_OUTLINE_FADING_LINEAR  || MK_TOON_OUTLINE_FADING_EXPONENTIAL || MK_TOON_OUTLINE_FADING_INVERSE_EXPONENTIAL
+#if MK_TOON_OUTLINE_FADING_LINEAR || MK_TOON_OUTLINE_FADING_EXPONENTIAL || MK_TOON_OUTLINE_FADING_INVERSE_EXPONENTIAL
         internal static readonly GUIContent outlineFadeMin = new GUIContent
         (
             "Fade Min", 
@@ -806,7 +806,7 @@ namespace MK.Toon.Editor
             "Fade Max", 
             "Maximum required distance to show the outline at full size."
         );
-        #endif
+#endif
 
         /////////////////
         // Refraction  //
@@ -818,22 +818,22 @@ namespace MK.Toon.Editor
         );
         internal static readonly GUIContent refractionDistortionMap = new GUIContent
         (
-            "DuDv", 
+            "DuDv",
             "Map to control the distortion effect. A normal or dudv map should be applied."
         );
         internal static readonly GUIContent refractionDistortion = new GUIContent
         (
-            "Distortion", 
+            "Distortion",
             "Controls how much distortion is applied to the refraction."
         );
         internal static readonly GUIContent indexOfRefraction = new GUIContent
         (
-            "IOR", 
+            "IOR",
             "Index of refraction, controls how much the refraction is bending over the surface."
         );
         internal static readonly GUIContent refractionDistortionFade = new GUIContent
         (
-            "Fade", 
+            "Fade",
             "Controls how visible the refraction is.\n\n" +
             "0: No visible refraction.\n" +
             "1: refraction fully visible."
@@ -844,12 +844,12 @@ namespace MK.Toon.Editor
         /////////////////
         internal static readonly GUIContent flipbook = new GUIContent
         (
-            "Flipbook", 
+            "Flipbook",
             "Blends the frames in a flip-book together in a smooth animation."
         );
         internal static readonly GUIContent softFade = new GUIContent
         (
-            "Soft Fade", 
+            "Soft Fade",
             "Surface fade out if intersect with other geometry in the depthbuffer."
         );
         internal static readonly GUIContent softFadeNearDistance = new GUIContent
@@ -859,27 +859,27 @@ namespace MK.Toon.Editor
         );
         internal static readonly GUIContent softFadeFarDistance = new GUIContent
         (
-            "Far", 
+            "Far",
             ""
         );
         internal static readonly GUIContent cameraFade = new GUIContent
         (
-            "Camera Fade", 
+            "Camera Fade",
             "Surface fade out when get close to the camera."
         );
         internal static readonly GUIContent cameraFadeNearDistance = new GUIContent
         (
-            "Near", 
+            "Near",
             ""
         );
-        internal static readonly GUIContent cameraFadeFarDistance  = new GUIContent
+        internal static readonly GUIContent cameraFadeFarDistance = new GUIContent
         (
-            "Far", 
+            "Far",
             ""
         );
         internal static readonly GUIContent colorBlend = new GUIContent
         (
-            "Color Blend", 
+            "Color Blend",
             "Controls how the input particle color gets applied to the particle surfaces."
         );
 
@@ -888,42 +888,42 @@ namespace MK.Toon.Editor
         /////////////////
         internal static readonly GUIContent initialized = new GUIContent
         (
-            "Initialization", 
+            "Initialization",
             "Internal only, DONT TOUCH ME"
         );
         internal static readonly GUIContent optionsTab = new GUIContent
         (
-            "Options", 
+            "Options",
             ""
         );
         internal static readonly GUIContent inputTab = new GUIContent
         (
-            "Input", 
+            "Input",
             ""
         );
         internal static readonly GUIContent stylizeTab = new GUIContent
         (
-            "Stylize", 
+            "Stylize",
             ""
         );
         internal static readonly GUIContent advancedTab = new GUIContent
         (
-            "Advanced", 
+            "Advanced",
             ""
         );
         internal static readonly GUIContent particlesTab = new GUIContent
         (
-            "Particles", 
+            "Particles",
             ""
         );
         internal static readonly GUIContent outlineTab = new GUIContent
         (
-            "Outline", 
+            "Outline",
             ""
         );
         internal static readonly GUIContent refractionTab = new GUIContent
         (
-            "Refraction", 
+            "Refraction",
             ""
         );
     }

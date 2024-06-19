@@ -30,7 +30,7 @@ public class SoundManager : MonoBehaviour
     {
         if (!audioSources[0].isPlaying)
         {
-            Play(curBGM, true); 
+            Play(curBGM, true);
         }
     }
 
@@ -66,5 +66,5 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    
+
 }

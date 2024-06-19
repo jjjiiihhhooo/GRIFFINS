@@ -1,7 +1,6 @@
-﻿using UnityEngine;
-using UnityEngine.Rendering;
-using MoreMountains.Feedbacks;
+﻿using MoreMountains.Feedbacks;
 using MoreMountains.Tools;
+using UnityEngine;
 #if MM_HDRP
 using UnityEngine.Rendering.HighDefinition;
 #endif
@@ -11,9 +10,9 @@ namespace MoreMountains.FeedbacksForThirdParty
 	/// <summary>
 	/// Add this class to a Camera with a white balance post processing and it'll be able to "shake" its values by getting events
 	/// </summary>
-	#if MM_HDRP
+#if MM_HDRP
 	[RequireComponent(typeof(Volume))]
-	#endif
+#endif
 	[AddComponentMenu("More Mountains/Feedbacks/Shakers/PostProcessing/MMWhiteBalanceShaker_HDRP")]
 	public class MMWhiteBalanceShaker_HDRP : MMShaker
 	{
@@ -47,7 +46,7 @@ namespace MoreMountains.FeedbacksForThirdParty
 		[Range(-100f, 100f)]
 		public float RemapTintOne = 100f;
 
-		#if MM_HDRP
+#if MM_HDRP
 		protected Volume _volume;
 		protected WhiteBalance _whiteBalance;
 		protected float _initialTemperature;
@@ -194,7 +193,7 @@ namespace MoreMountains.FeedbacksForThirdParty
 			base.StopListening();
 			MMWhiteBalanceShakeEvent_HDRP.Unregister(OnWhiteBalanceShakeEvent);
 		}
-		#endif
+#endif
 	}
 
 	/// <summary>
@@ -206,15 +205,15 @@ namespace MoreMountains.FeedbacksForThirdParty
 		[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)] private static void RuntimeInitialization() { OnEvent = null; }
 		static public void Register(Delegate callback) { OnEvent += callback; }
 		static public void Unregister(Delegate callback) { OnEvent -= callback; }
-		
+
 		public delegate void Delegate(AnimationCurve temperature, float duration, float remapTemperatureMin, float remapTemperatureMax,
 			AnimationCurve tint, float remapTintMin, float remapTintMax, bool relativeValues = false,
-			float attenuation = 1.0f, MMChannelData channelData = null, bool resetShakerValuesAfterShake = true, bool resetTargetValuesAfterShake = true, 
+			float attenuation = 1.0f, MMChannelData channelData = null, bool resetShakerValuesAfterShake = true, bool resetTargetValuesAfterShake = true,
 			bool forwardDirection = true, TimescaleModes timescaleMode = TimescaleModes.Scaled, bool stop = false, bool restore = false);
 
 		static public void Trigger(AnimationCurve temperature, float duration, float remapTemperatureMin, float remapTemperatureMax,
 			AnimationCurve tint, float remapTintMin, float remapTintMax, bool relativeValues = false,
-			float attenuation = 1.0f, MMChannelData channelData = null, bool resetShakerValuesAfterShake = true, bool resetTargetValuesAfterShake = true, 
+			float attenuation = 1.0f, MMChannelData channelData = null, bool resetShakerValuesAfterShake = true, bool resetTargetValuesAfterShake = true,
 			bool forwardDirection = true, TimescaleModes timescaleMode = TimescaleModes.Scaled, bool stop = false, bool restore = false)
 		{
 			OnEvent?.Invoke(temperature, duration, remapTemperatureMin, remapTemperatureMax,

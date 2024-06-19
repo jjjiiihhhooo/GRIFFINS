@@ -1,48 +1,45 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
-using UnityEngine;
+﻿using UnityEditor;
 
 namespace MoreMountains.Tools
 {
-	[CustomEditor(typeof(MMRadioSignal), true)]
-	[CanEditMultipleObjects]
-	public class MMRadioSignalEditor : Editor
-	{
-		protected MMRadioSignal _radioSignal;
+    [CustomEditor(typeof(MMRadioSignal), true)]
+    [CanEditMultipleObjects]
+    public class MMRadioSignalEditor : Editor
+    {
+        protected MMRadioSignal _radioSignal;
 
-		protected float _inspectorWidth;
-        
-		protected SerializedProperty _duration;
-		protected SerializedProperty _currentLevel;
+        protected float _inspectorWidth;
 
-		public override bool RequiresConstantRepaint()
-		{
-			return true;
-		}
+        protected SerializedProperty _duration;
+        protected SerializedProperty _currentLevel;
 
-		protected virtual void OnEnable()
-		{
-			_radioSignal = target as MMRadioSignal;
-			_duration = serializedObject.FindProperty("Duration");
-			_currentLevel = serializedObject.FindProperty("CurrentLevel");
-		}
+        public override bool RequiresConstantRepaint()
+        {
+            return true;
+        }
 
-		public override void OnInspectorGUI()
-		{
-			serializedObject.Update();
-			_inspectorWidth = EditorGUIUtility.currentViewWidth - 24;
+        protected virtual void OnEnable()
+        {
+            _radioSignal = target as MMRadioSignal;
+            _duration = serializedObject.FindProperty("Duration");
+            _currentLevel = serializedObject.FindProperty("CurrentLevel");
+        }
 
-			DrawProperties();
+        public override void OnInspectorGUI()
+        {
+            serializedObject.Update();
+            _inspectorWidth = EditorGUIUtility.currentViewWidth - 24;
 
-			serializedObject.ApplyModifiedProperties();
-		}
+            DrawProperties();
 
-		protected virtual void DrawProperties()
-		{
-			DrawPropertiesExcluding(serializedObject, "AnimatedPreview", "CurrentLevel");
-		}
+            serializedObject.ApplyModifiedProperties();
+        }
 
-        
-	}
+        protected virtual void DrawProperties()
+        {
+            DrawPropertiesExcluding(serializedObject, "AnimatedPreview", "CurrentLevel");
+        }
+
+
+    }
 }

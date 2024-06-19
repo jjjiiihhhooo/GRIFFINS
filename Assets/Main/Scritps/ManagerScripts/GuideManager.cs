@@ -76,7 +76,7 @@ public class GuideManager : MonoBehaviour
 
     public void PlayerDead()
     {
-        if(Player.Instance.isDead)
+        if (Player.Instance.isDead)
         {
             Player.Instance.DeadNotice();
         }

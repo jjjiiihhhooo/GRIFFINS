@@ -115,7 +115,7 @@ public class QuestManager : SerializedMonoBehaviour
         //UpdateQuest();
         titleText.text = quest.QuestTitleText;
         curQuest = quest;
-        for(int i = 0; i < curQuest.QuestDatas.Length; i++)
+        for (int i = 0; i < curQuest.QuestDatas.Length; i++)
         {
             if (curQuest.QuestDatas[i].type == QuestType.Input) isInput = true;
         }
@@ -126,7 +126,7 @@ public class QuestManager : SerializedMonoBehaviour
 
     private void Update()
     {
-        if(isInput)
+        if (isInput)
         {
             if (Input.GetKeyDown(KeyCode.W))
                 InputQuestCheck(KeyCode.W);
@@ -140,7 +140,7 @@ public class QuestManager : SerializedMonoBehaviour
             if (Input.GetKeyDown(KeyCode.D))
                 InputQuestCheck(KeyCode.D);
 
-            
+
 
         }
     }

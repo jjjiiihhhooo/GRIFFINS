@@ -1,15 +1,15 @@
 ﻿#if UNITY_EDITOR
 
-using UnityEngine;
-using UnityEditor;
 using System.Collections.Generic;
+using UnityEditor;
+using UnityEngine;
 
 namespace MK.TextureChannelPacker
 {
     public class MKTextureChannelPacker : EditorWindow
     {
         private GUIStyle flowTextStyle { get { return new GUIStyle(EditorStyles.label) { wordWrap = true }; } }
-        
+
         private static readonly string _defaultFilePath = "Assets/_MK/MKTextureChannelPacker";
         private string _filePath = _defaultFilePath;
         private string _filename = "NewTexture";
@@ -21,10 +21,10 @@ namespace MK.TextureChannelPacker
         private enum TextureFormat
         {
             PNG = 0
-            #if UNITY_2018_3_OR_NEWER
+#if UNITY_2018_3_OR_NEWER
             ,
             TGA = 1
-            #endif
+#endif
         };
 
         private enum TextureChannel
@@ -106,9 +106,9 @@ namespace MK.TextureChannelPacker
 
             EditorGUILayout.BeginHorizontal();
             _filePath = EditorGUILayout.TextField("Output Folder", _filePath);
-            if(GUILayout.Button("Select"))
+            if (GUILayout.Button("Select"))
                 _filePath = EditorUtility.SaveFolderPanel("Output Folder", _filePath, "");
-            if(_filePath == "")
+            if (_filePath == "")
                 _filePath = _defaultFilePath;
             EditorGUILayout.EndHorizontal();
             _filename = EditorGUILayout.TextField("Filename", _filename);
@@ -118,51 +118,51 @@ namespace MK.TextureChannelPacker
             EditorGUILayout.EndScrollView();
 
             bool oversized = _outputWidth >= 16384 || _outputHeight >= 16384;
-            if(oversized)
+            if (oversized)
             {
                 EditorGUILayout.LabelField("Texture width or height is oversized.", UnityEditor.EditorStyles.boldLabel);
             }
 
             bool doubledChannelUsed = false;
-            if(CheckDoubledOutputChannel(_targetChannel0) || CheckDoubledOutputChannel(_targetChannel1) ||
+            if (CheckDoubledOutputChannel(_targetChannel0) || CheckDoubledOutputChannel(_targetChannel1) ||
                 CheckDoubledOutputChannel(_targetChannel2) || CheckDoubledOutputChannel(_targetChannel3))
-                {
-                    doubledChannelUsed = true;
-                    EditorGUILayout.LabelField("Every output channel has to be unique.", UnityEditor.EditorStyles.boldLabel);
-                }
-
-            if(!doubledChannelUsed && !oversized && _filename != "")
             {
-                if(GUILayout.Button("Create Texture"))
+                doubledChannelUsed = true;
+                EditorGUILayout.LabelField("Every output channel has to be unique.", UnityEditor.EditorStyles.boldLabel);
+            }
+
+            if (!doubledChannelUsed && !oversized && _filename != "")
+            {
+                if (GUILayout.Button("Create Texture"))
                 {
                     EditorUtility.DisplayProgressBar("Texture progress", "Creating new texture...", 0.5f);
                     Texture2D _outputTexture = new Texture2D(_outputWidth, _outputHeight);
 
                     bool ra0 = false, ra1 = false, ra2 = false, ra3 = false;
-                    
-                    if(_sourceTexture0)
+
+                    if (_sourceTexture0)
                     {
                         ra0 = SetTextureReadable(_sourceTexture0);
                     }
-                    if(_sourceTexture1)
+                    if (_sourceTexture1)
                     {
                         ra1 = SetTextureReadable(_sourceTexture1);
                     }
-                    if(_sourceTexture2)
+                    if (_sourceTexture2)
                     {
                         ra2 = SetTextureReadable(_sourceTexture2);
                     }
-                    if(_sourceTexture3)
+                    if (_sourceTexture3)
                     {
                         ra3 = SetTextureReadable(_sourceTexture3);
                     }
 
-                    for(int i = 0; i < _outputHeight; i++)
+                    for (int i = 0; i < _outputHeight; i++)
                     {
                         Vector2 pPos = new Vector2();
                         pPos.y = (float)i / (float)_outputHeight;
 
-                        for(int j = 0; j < _outputWidth; j++)
+                        for (int j = 0; j < _outputWidth; j++)
                         {
                             pPos.x = (float)j / (float)_outputWidth;
                             Color pixelColor = Color.black, sourceRead0, sourceRead1, sourceRead2, sourceRead3;
@@ -183,13 +183,13 @@ namespace MK.TextureChannelPacker
                     _outputTexture.Apply();
                     SaveOutputTexture(_outputTexture, _filePath, FilterFilename(_filename), _outputFormat, _outputWidth >= _outputHeight ? _outputWidth : _outputHeight);
 
-                    if(_sourceTexture0)
+                    if (_sourceTexture0)
                         SetTextureReadable(_sourceTexture0, ra0);
-                    if(_sourceTexture1)
+                    if (_sourceTexture1)
                         SetTextureReadable(_sourceTexture1, ra1);
-                    if(_sourceTexture2)
+                    if (_sourceTexture2)
                         SetTextureReadable(_sourceTexture2, ra2);
-                    if(_sourceTexture3)
+                    if (_sourceTexture3)
                         SetTextureReadable(_sourceTexture3, ra3);
 
                     EditorUtility.ClearProgressBar();
@@ -212,82 +212,82 @@ namespace MK.TextureChannelPacker
         private static void PackColorChannelValueIntoChannel(Color source, TextureChannel sourceChannel, TextureChannel targetChannel, bool invertChannel, ref Color color)
         {
             source = invertChannel ? Color.white - source : source;
-            switch(sourceChannel)
+            switch (sourceChannel)
             {
                 case TextureChannel.Alpha:
-                    switch(targetChannel)
+                    switch (targetChannel)
                     {
                         case TextureChannel.Alpha:
                             color.a = source.a;
-                        break;
+                            break;
                         case TextureChannel.Blue:
                             color.b = source.a;
-                        break;
+                            break;
                         case TextureChannel.Green:
                             color.g = source.a;
-                        break;
+                            break;
                         default:
                             color.r = source.a;
-                        break;
+                            break;
                     }
-                break;
+                    break;
                 case TextureChannel.Blue:
-                    switch(targetChannel)
+                    switch (targetChannel)
                     {
                         case TextureChannel.Alpha:
                             color.a = source.b;
-                        break;
+                            break;
                         case TextureChannel.Blue:
                             color.b = source.b;
-                        break;
+                            break;
                         case TextureChannel.Green:
                             color.g = source.b;
-                        break;
+                            break;
                         default:
                             color.r = source.b;
-                        break;
+                            break;
                     }
-                break;
+                    break;
                 case TextureChannel.Green:
-                    switch(targetChannel)
+                    switch (targetChannel)
                     {
                         case TextureChannel.Alpha:
                             color.a = source.g;
-                        break;
+                            break;
                         case TextureChannel.Blue:
                             color.b = source.g;
-                        break;
+                            break;
                         case TextureChannel.Green:
                             color.g = source.g;
-                        break;
+                            break;
                         default:
                             color.r = source.g;
-                        break;
+                            break;
                     }
-                break;
+                    break;
                 default:
-                    switch(targetChannel)
+                    switch (targetChannel)
                     {
                         case TextureChannel.Alpha:
                             color.a = source.r;
-                        break;
+                            break;
                         case TextureChannel.Blue:
                             color.b = source.r;
-                        break;
+                            break;
                         case TextureChannel.Green:
                             color.g = source.r;
-                        break;
+                            break;
                         default:
                             color.r = source.r;
-                        break;
+                            break;
                     }
-                break;
+                    break;
             }
         }
 
         private static Color ReadPixelValue(Texture2D texture, Vector2 pPos, ChannelColor channelColor)
         {
-            if(texture != null)
+            if (texture != null)
             {
                 int width, height;
                 width = Mathf.RoundToInt((float)texture.width * pPos.x);
@@ -299,17 +299,17 @@ namespace MK.TextureChannelPacker
             {
                 Color color;
 
-                switch(channelColor)
+                switch (channelColor)
                 {
                     case ChannelColor.Black:
-                        color = new Color(0,0,0,1);
-                    break;
+                        color = new Color(0, 0, 0, 1);
+                        break;
                     case ChannelColor.White:
-                        color = new Color(1,1,1,1);
-                    break;
+                        color = new Color(1, 1, 1, 1);
+                        break;
                     default:
-                        color = new Color(0,0,0,1);
-                    break;
+                        color = new Color(0, 0, 0, 1);
+                        break;
                 }
 
                 return color;
@@ -320,37 +320,37 @@ namespace MK.TextureChannelPacker
         {
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.BeginVertical();
-            texture = (Texture2D) EditorGUILayout.ObjectField(texture, typeof(Texture2D), false, GUILayout.Width(70), GUILayout.Height(70));
+            texture = (Texture2D)EditorGUILayout.ObjectField(texture, typeof(Texture2D), false, GUILayout.Width(70), GUILayout.Height(70));
             EditorGUILayout.EndVertical();
-            if(texture != null)
+            if (texture != null)
             {
                 EditorGUILayout.BeginVertical();
-                EditorGUILayout.LabelField("Invert?:", UnityEditor.EditorStyles.boldLabel,  GUILayout.Width(70));
+                EditorGUILayout.LabelField("Invert?:", UnityEditor.EditorStyles.boldLabel, GUILayout.Width(70));
                 sourceChannelInvert = EditorGUILayout.Toggle(sourceChannelInvert, GUILayout.Width(70));
                 EditorGUILayout.EndVertical();
                 EditorGUILayout.BeginVertical();
-                EditorGUILayout.LabelField("From:", UnityEditor.EditorStyles.boldLabel,  GUILayout.Width(70));
-                sourceChannel = (TextureChannel) EditorGUILayout.EnumPopup(sourceChannel,  GUILayout.Width(70));
+                EditorGUILayout.LabelField("From:", UnityEditor.EditorStyles.boldLabel, GUILayout.Width(70));
+                sourceChannel = (TextureChannel)EditorGUILayout.EnumPopup(sourceChannel, GUILayout.Width(70));
                 EditorGUILayout.EndVertical();
                 EditorGUILayout.BeginVertical();
-                EditorGUILayout.LabelField("To:", UnityEditor.EditorStyles.boldLabel,  GUILayout.Width(70));
-                targetChannel = (TextureChannel) EditorGUILayout.EnumPopup(targetChannel,  GUILayout.Width(70));
+                EditorGUILayout.LabelField("To:", UnityEditor.EditorStyles.boldLabel, GUILayout.Width(70));
+                targetChannel = (TextureChannel)EditorGUILayout.EnumPopup(targetChannel, GUILayout.Width(70));
                 EditorGUILayout.EndVertical();
             }
             else
             {
                 sourceChannelInvert = false;
                 EditorGUILayout.BeginVertical();
-                EditorGUILayout.LabelField("Assume:", UnityEditor.EditorStyles.boldLabel,  GUILayout.Width(70));
-                targetChannelColor = (ChannelColor) EditorGUILayout.EnumPopup(targetChannelColor,  GUILayout.Width(70));
+                EditorGUILayout.LabelField("Assume:", UnityEditor.EditorStyles.boldLabel, GUILayout.Width(70));
+                targetChannelColor = (ChannelColor)EditorGUILayout.EnumPopup(targetChannelColor, GUILayout.Width(70));
                 EditorGUILayout.EndVertical();
                 EditorGUILayout.BeginVertical();
-                EditorGUILayout.LabelField("From:", UnityEditor.EditorStyles.boldLabel,  GUILayout.Width(70));
-                sourceChannel = (TextureChannel) EditorGUILayout.EnumPopup(sourceChannel,  GUILayout.Width(70));
+                EditorGUILayout.LabelField("From:", UnityEditor.EditorStyles.boldLabel, GUILayout.Width(70));
+                sourceChannel = (TextureChannel)EditorGUILayout.EnumPopup(sourceChannel, GUILayout.Width(70));
                 EditorGUILayout.EndVertical();
                 EditorGUILayout.BeginVertical();
-                EditorGUILayout.LabelField("To:", UnityEditor.EditorStyles.boldLabel,  GUILayout.Width(70));
-                targetChannel = (TextureChannel) EditorGUILayout.EnumPopup(targetChannel,  GUILayout.Width(70));
+                EditorGUILayout.LabelField("To:", UnityEditor.EditorStyles.boldLabel, GUILayout.Width(70));
+                targetChannel = (TextureChannel)EditorGUILayout.EnumPopup(targetChannel, GUILayout.Width(70));
                 EditorGUILayout.EndVertical();
             }
             EditorGUILayout.EndHorizontal();
@@ -359,16 +359,16 @@ namespace MK.TextureChannelPacker
         private bool CheckDoubledOutputChannel(TextureChannel channel)
         {
             int channelUsageCount = 0;
-            if(channel == _targetChannel0)
+            if (channel == _targetChannel0)
                 channelUsageCount++;
-            if(channel == _targetChannel1)
+            if (channel == _targetChannel1)
                 channelUsageCount++;
-            if(channel == _targetChannel2)
+            if (channel == _targetChannel2)
                 channelUsageCount++;
-            if(channel == _targetChannel3)
+            if (channel == _targetChannel3)
                 channelUsageCount++;
-            
-            if(channelUsageCount > 1)
+
+            if (channelUsageCount > 1)
                 return true;
             else
                 return false;
@@ -378,42 +378,42 @@ namespace MK.TextureChannelPacker
         {
             GUILayout.Box("", new GUILayoutOption[] { GUILayout.ExpandWidth(true), GUILayout.Height(2) });
         }
-        
+
         private static string FilterFilename(string name)
-		{
-			List<char> notAllowedFilenameChars = new List<char>(System.IO.Path.GetInvalidFileNameChars());
+        {
+            List<char> notAllowedFilenameChars = new List<char>(System.IO.Path.GetInvalidFileNameChars());
             List<char> filename = new List<char>();
 
-            foreach(char c in name)
-			{
-				if(!notAllowedFilenameChars.Contains(c))
-					filename.Add(c);
-			}
+            foreach (char c in name)
+            {
+                if (!notAllowedFilenameChars.Contains(c))
+                    filename.Add(c);
+            }
 
-			return new string(filename.ToArray());
-		}
+            return new string(filename.ToArray());
+        }
 
         private static void SaveOutputTexture(Texture2D tex, string path, string name, TextureFormat format, int maxSize)
         {
             path = path.Substring(path.IndexOf("Assets"));
             path += "/";
-            
+
             string fileSuffix = "tex";
-            #if UNITY_2018_3_OR_NEWER
-            if(format == TextureFormat.PNG)
+#if UNITY_2018_3_OR_NEWER
+            if (format == TextureFormat.PNG)
                 fileSuffix = ".png";
             else
                 fileSuffix = ".tga";
-            #endif
+#endif
 
             path = path + name + fileSuffix;
 
-            #if UNITY_2018_3_OR_NEWER
-            if(format == TextureFormat.PNG)
+#if UNITY_2018_3_OR_NEWER
+            if (format == TextureFormat.PNG)
                 System.IO.File.WriteAllBytes(path, tex.EncodeToPNG());
             else
                 System.IO.File.WriteAllBytes(path, tex.EncodeToTGA());
-            #endif
+#endif
 
             AssetDatabase.Refresh();
 

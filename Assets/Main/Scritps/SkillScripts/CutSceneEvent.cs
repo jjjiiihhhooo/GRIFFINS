@@ -1,4 +1,3 @@
-using Mono.Cecil.Cil;
 using System.Collections;
 using UnityEngine;
 
@@ -19,13 +18,13 @@ public class CutSceneEvent : MonoBehaviour
         yield return new WaitForSecondsRealtime(time);
         GameManager.Instance.isCutScene = false;
         //Time.timeScale = 1f;
-        if(!isBoss)
-        { 
+        if (!isBoss)
+        {
             Player.Instance.currentCharacter.CutSceneEvent(this.gameObject);
         }
         else
         {
-            if(isBoss)
+            if (isBoss)
             {
                 GetComponentInParent<DialogueContainer>().StartEvent();
             }
