@@ -188,6 +188,13 @@ public class Normal_Enemy : Enemy
         }
         else if(animator.GetCurrentAnimatorStateInfo(0).IsTag("GetDamage"))
         {
+
+            RaycastHit hit;
+
+            if (Physics.Raycast(enemyController.transform.position + Vector3.up, -enemyController.transform.forward, out hit, 2f, enemyController.animCheckLayer))
+            {
+                animator.transform.localPosition = new Vector3(0f, animator.transform.localPosition.y, 0f);
+            }
             enemyController.transform.position = animator.transform.position;
             animator.transform.localPosition = Vector3.zero;
         }

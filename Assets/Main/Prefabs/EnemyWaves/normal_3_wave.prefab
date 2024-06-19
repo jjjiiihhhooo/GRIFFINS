@@ -1900,7 +1900,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -4296,7 +4296,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -4490,7 +4490,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1340917911425457390
 Transform:
   m_ObjectHideFlags: 0
@@ -4524,15 +4524,145 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serializationData:
-    SerializedFormat: 0
-    SerializedBytes: 01010500000065006e0065006d0079002f00000000011d0000004e006f0072006d0061006c005f0045006e0065006d0079002c00200041007300730065006d0062006c0079002d00430053006800610072007000000000002d010c000000640061006d006100670065004500660066006500630074002d010c000000610074007400610063006b004500660066006500630074002d010800000061006e0069006d00610074006f0072002d010f00000065006e0065006d00790043006f006e00740072006f006c006c00650072002d010d00000066006900720065005400720061006e00730066006f0072006d000b01030000006f0062006a00000000000101060000005f006500760065006e0074002f01000000013500000055006e0069007400790045006e00670069006e0065002e004500760065006e00740073002e0055006e006900740079004500760065006e0074002c00200055006e0069007400790045006e00670069006e0065002e0043006f00720065004d006f00640075006c006500010000000101110000006d005f00500065007200730069007300740065006e007400430061006c006c0073002f02000000013e00000055006e0069007400790045006e00670069006e0065002e004500760065006e00740073002e00500065007200730069007300740065006e007400430061006c006c00470072006f00750070002c00200055006e0069007400790045006e00670069006e0065002e0043006f00720065004d006f00640075006c006500020000000101070000006d005f00430061006c006c0073002f030000000168000000530079007300740065006d002e0043006f006c006c0065006300740069006f006e0073002e00470065006e0065007200690063002e004c00690073007400600031005b005b0055006e0069007400790045006e00670069006e0065002e004500760065006e00740073002e00500065007200730069007300740065006e007400430061006c006c002c00200055006e0069007400790045006e00670069006e0065002e0043006f00720065004d006f00640075006c0065005d005d002c0020006d00730063006f0072006c006900620003000000060000000000000000070505052d01040000006e0061006d0065001f01050000006d00610078004800700000007a441f01050000006300750072004800700000007a441f01090000006d006f0076006500530070006500650064000000a0401f010c000000610074007400610063006b00440061006d006100670065000000803f1f010d000000610074007400610063006b0043007500720043006f006f006c00000000001f010d000000610074007400610063006b004d006100780043006f006f006c00000040401f0106000000720061006e006700650058000000a0411f0106000000720061006e00670065005a000000a0411f0108000000680069007400440065006c0061007900000000001f01090000006b006e006f0063006b006200610063006b00000000001f010e000000680061006d006d006500720043006f006f006c00540069006d006500000000001f010d000000680061006d006d0065007200430075007200540069006d006500000000002d01060000007400610072006700650074001f010e0000006d006f00640065006c005300680061006b006500540069006d006500000000002b01090000006200610063006b0048007000480069007400002b01080000006900730041006300740069006f006e00002b010800000069007300480061006d006d0065007200002b010500000069007300520075006e000003010c0000006b006e006f0063006b006200610063006b004400690072002f04000000012b00000055006e0069007400790045006e00670069006e0065002e0056006500630074006f00720033002c00200055006e0069007400790045006e00670069006e0065002e0043006f00720065004d006f00640075006c006500200000000020000000002000000000052b010b0000006900730042006f007300730053007400610072007400001f010800000063006f006f006c00540069006d006500000000001f0107000000630075007200540069006d0065000000000005
+    SerializedFormat: 2
+    SerializedBytes: 
     ReferencedUnityObjects:
     - {fileID: 7201352494644501532, guid: 9314bd05728fae94fb41c7c9ae4e661c, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes: []
+    SerializationNodes:
+    - Name: enemy
+      Entry: 7
+      Data: 0|Normal_Enemy, Assembly-CSharp
+    - Name: damageEffect
+      Entry: 6
+      Data: 
+    - Name: attackEffect
+      Entry: 6
+      Data: 
+    - Name: animator
+      Entry: 6
+      Data: 
+    - Name: enemyController
+      Entry: 6
+      Data: 
+    - Name: fireTransform
+      Entry: 6
+      Data: 
+    - Name: obj
+      Entry: 10
+      Data: 0
+    - Name: _event
+      Entry: 7
+      Data: 1|UnityEngine.Events.UnityEvent, UnityEngine.CoreModule
+    - Name: m_PersistentCalls
+      Entry: 7
+      Data: 2|UnityEngine.Events.PersistentCallGroup, UnityEngine.CoreModule
+    - Name: m_Calls
+      Entry: 7
+      Data: 3|System.Collections.Generic.List`1[[UnityEngine.Events.PersistentCall,
+        UnityEngine.CoreModule]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: name
+      Entry: 6
+      Data: 
+    - Name: maxHp
+      Entry: 4
+      Data: 1000
+    - Name: curHp
+      Entry: 4
+      Data: 1000
+    - Name: moveSpeed
+      Entry: 4
+      Data: 5
+    - Name: attackDamage
+      Entry: 4
+      Data: 1
+    - Name: attackCurCool
+      Entry: 4
+      Data: 0
+    - Name: attackMaxCool
+      Entry: 4
+      Data: 3
+    - Name: rangeX
+      Entry: 4
+      Data: 20
+    - Name: rangeZ
+      Entry: 4
+      Data: 20
+    - Name: hitDelay
+      Entry: 4
+      Data: 0
+    - Name: knockback
+      Entry: 4
+      Data: 0
+    - Name: hammerCoolTime
+      Entry: 4
+      Data: 0
+    - Name: hammerCurTime
+      Entry: 4
+      Data: 0
+    - Name: target
+      Entry: 6
+      Data: 
+    - Name: modelShakeTime
+      Entry: 4
+      Data: 0
+    - Name: backHpHit
+      Entry: 5
+      Data: false
+    - Name: isAction
+      Entry: 5
+      Data: false
+    - Name: isHammer
+      Entry: 5
+      Data: false
+    - Name: isRun
+      Entry: 5
+      Data: false
+    - Name: knockbackDir
+      Entry: 7
+      Data: UnityEngine.Vector3, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: isBossStart
+      Entry: 5
+      Data: false
+    - Name: coolTime
+      Entry: 4
+      Data: 0
+    - Name: curTime
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
   dmgTxt: {fileID: 0}
   canvas: {fileID: 1340917910520289909}
   animator: {fileID: 0}
@@ -9814,15 +9944,126 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serializationData:
-    SerializedFormat: 0
-    SerializedBytes: 01010500000065006e0065006d0079002f00000000011b00000045007000690063005f0045006e0065006d0079002c00200041007300730065006d0062006c0079002d00430053006800610072007000000000002d010c000000640061006d006100670065004500660066006500630074000b010c000000610074007400610063006b00450066006600650063007400000000002d010800000061006e0069006d00610074006f0072002d010f00000065006e0065006d00790043006f006e00740072006f006c006c00650072002d010d00000066006900720065005400720061006e00730066006f0072006d002d01030000006f0062006a002d01060000005f006500760065006e0074002d01040000006e0061006d0065001f01050000006d0061007800480070000080bb441f0105000000630075007200480070000080bb441f01090000006d006f0076006500530070006500650064000000a0401f010c000000610074007400610063006b00440061006d00610067006500000000401f010d000000610074007400610063006b0043007500720043006f006f006c00000000001f010d000000610074007400610063006b004d006100780043006f006f006c000000a0401f0106000000720061006e00670065005800000000001f0106000000720061006e00670065005a00000000001f0108000000680069007400440065006c0061007900000000001f01090000006b006e006f0063006b006200610063006b00000000001f010e000000680061006d006d006500720043006f006f006c00540069006d006500000030411f010d000000680061006d006d0065007200430075007200540069006d006500000000402d01060000007400610072006700650074001f010e0000006d006f00640065006c005300680061006b006500540069006d006500000000002b01090000006200610063006b0048007000480069007400002b01080000006900730041006300740069006f006e00002b010800000069007300480061006d006d0065007200002b010500000069007300520075006e000003010c0000006b006e006f0063006b006200610063006b004400690072002f01000000012b00000055006e0069007400790045006e00670069006e0065002e0056006500630074006f00720033002c00200055006e0069007400790045006e00670069006e0065002e0043006f00720065004d006f00640075006c006500200000000020000000002000000000052b010b0000006900730042006f007300730053007400610072007400001f010800000063006f006f006c00540069006d0065000000a0401f0107000000630075007200540069006d0065000000a0401f01090000006400610073006800530070006500650064000000204205
+    SerializedFormat: 2
+    SerializedBytes: 
     ReferencedUnityObjects:
     - {fileID: 4599545528568739242, guid: c7d15ca14700cf04d9faa9d9e5ea3016, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes: []
+    SerializationNodes:
+    - Name: enemy
+      Entry: 7
+      Data: 0|Epic_Enemy, Assembly-CSharp
+    - Name: damageEffect
+      Entry: 6
+      Data: 
+    - Name: attackEffect
+      Entry: 10
+      Data: 0
+    - Name: animator
+      Entry: 6
+      Data: 
+    - Name: enemyController
+      Entry: 6
+      Data: 
+    - Name: fireTransform
+      Entry: 6
+      Data: 
+    - Name: obj
+      Entry: 6
+      Data: 
+    - Name: _event
+      Entry: 6
+      Data: 
+    - Name: name
+      Entry: 6
+      Data: 
+    - Name: maxHp
+      Entry: 4
+      Data: 1500
+    - Name: curHp
+      Entry: 4
+      Data: 1500
+    - Name: moveSpeed
+      Entry: 4
+      Data: 5
+    - Name: attackDamage
+      Entry: 4
+      Data: 2
+    - Name: attackCurCool
+      Entry: 4
+      Data: 0
+    - Name: attackMaxCool
+      Entry: 4
+      Data: 5
+    - Name: rangeX
+      Entry: 4
+      Data: 0
+    - Name: rangeZ
+      Entry: 4
+      Data: 0
+    - Name: hitDelay
+      Entry: 4
+      Data: 0
+    - Name: knockback
+      Entry: 4
+      Data: 0
+    - Name: hammerCoolTime
+      Entry: 4
+      Data: 11
+    - Name: hammerCurTime
+      Entry: 4
+      Data: 2
+    - Name: target
+      Entry: 6
+      Data: 
+    - Name: modelShakeTime
+      Entry: 4
+      Data: 0
+    - Name: backHpHit
+      Entry: 5
+      Data: false
+    - Name: isAction
+      Entry: 5
+      Data: false
+    - Name: isHammer
+      Entry: 5
+      Data: false
+    - Name: isRun
+      Entry: 5
+      Data: false
+    - Name: knockbackDir
+      Entry: 7
+      Data: UnityEngine.Vector3, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: isBossStart
+      Entry: 5
+      Data: false
+    - Name: coolTime
+      Entry: 4
+      Data: 5
+    - Name: curTime
+      Entry: 4
+      Data: 5
+    - Name: dashSpeed
+      Entry: 4
+      Data: 40
+    - Name: 
+      Entry: 8
+      Data: 
   dmgTxt: {fileID: 0}
   canvas: {fileID: 2196289174434995589}
   animator: {fileID: 0}
@@ -13282,7 +13523,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -14016,7 +14257,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &6824623682789390798
 Transform:
   m_ObjectHideFlags: 0
@@ -14050,15 +14291,145 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serializationData:
-    SerializedFormat: 0
-    SerializedBytes: 01010500000065006e0065006d0079002f00000000011d0000004e006f0072006d0061006c005f0045006e0065006d0079002c00200041007300730065006d0062006c0079002d00430053006800610072007000000000002d010c000000640061006d006100670065004500660066006500630074002d010c000000610074007400610063006b004500660066006500630074002d010800000061006e0069006d00610074006f0072002d010f00000065006e0065006d00790043006f006e00740072006f006c006c00650072002d010d00000066006900720065005400720061006e00730066006f0072006d000b01030000006f0062006a00000000000101060000005f006500760065006e0074002f01000000013500000055006e0069007400790045006e00670069006e0065002e004500760065006e00740073002e0055006e006900740079004500760065006e0074002c00200055006e0069007400790045006e00670069006e0065002e0043006f00720065004d006f00640075006c006500010000000101110000006d005f00500065007200730069007300740065006e007400430061006c006c0073002f02000000013e00000055006e0069007400790045006e00670069006e0065002e004500760065006e00740073002e00500065007200730069007300740065006e007400430061006c006c00470072006f00750070002c00200055006e0069007400790045006e00670069006e0065002e0043006f00720065004d006f00640075006c006500020000000101070000006d005f00430061006c006c0073002f030000000168000000530079007300740065006d002e0043006f006c006c0065006300740069006f006e0073002e00470065006e0065007200690063002e004c00690073007400600031005b005b0055006e0069007400790045006e00670069006e0065002e004500760065006e00740073002e00500065007200730069007300740065006e007400430061006c006c002c00200055006e0069007400790045006e00670069006e0065002e0043006f00720065004d006f00640075006c0065005d005d002c0020006d00730063006f0072006c006900620003000000060000000000000000070505052d01040000006e0061006d0065001f01050000006d00610078004800700000007a441f01050000006300750072004800700000007a441f01090000006d006f0076006500530070006500650064000000a0401f010c000000610074007400610063006b00440061006d006100670065000000803f1f010d000000610074007400610063006b0043007500720043006f006f006c00000000001f010d000000610074007400610063006b004d006100780043006f006f006c00000040401f0106000000720061006e006700650058000000a0411f0106000000720061006e00670065005a000000a0411f0108000000680069007400440065006c0061007900000000001f01090000006b006e006f0063006b006200610063006b00000000001f010e000000680061006d006d006500720043006f006f006c00540069006d006500000000001f010d000000680061006d006d0065007200430075007200540069006d006500000000002d01060000007400610072006700650074001f010e0000006d006f00640065006c005300680061006b006500540069006d006500000000002b01090000006200610063006b0048007000480069007400002b01080000006900730041006300740069006f006e00002b010800000069007300480061006d006d0065007200002b010500000069007300520075006e000003010c0000006b006e006f0063006b006200610063006b004400690072002f04000000012b00000055006e0069007400790045006e00670069006e0065002e0056006500630074006f00720033002c00200055006e0069007400790045006e00670069006e0065002e0043006f00720065004d006f00640075006c006500200000000020000000002000000000052b010b0000006900730042006f007300730053007400610072007400001f010800000063006f006f006c00540069006d006500000000001f0107000000630075007200540069006d0065000000000005
+    SerializedFormat: 2
+    SerializedBytes: 
     ReferencedUnityObjects:
     - {fileID: 7201352494644501532, guid: 9314bd05728fae94fb41c7c9ae4e661c, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes: []
+    SerializationNodes:
+    - Name: enemy
+      Entry: 7
+      Data: 0|Normal_Enemy, Assembly-CSharp
+    - Name: damageEffect
+      Entry: 6
+      Data: 
+    - Name: attackEffect
+      Entry: 6
+      Data: 
+    - Name: animator
+      Entry: 6
+      Data: 
+    - Name: enemyController
+      Entry: 6
+      Data: 
+    - Name: fireTransform
+      Entry: 6
+      Data: 
+    - Name: obj
+      Entry: 10
+      Data: 0
+    - Name: _event
+      Entry: 7
+      Data: 1|UnityEngine.Events.UnityEvent, UnityEngine.CoreModule
+    - Name: m_PersistentCalls
+      Entry: 7
+      Data: 2|UnityEngine.Events.PersistentCallGroup, UnityEngine.CoreModule
+    - Name: m_Calls
+      Entry: 7
+      Data: 3|System.Collections.Generic.List`1[[UnityEngine.Events.PersistentCall,
+        UnityEngine.CoreModule]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: name
+      Entry: 6
+      Data: 
+    - Name: maxHp
+      Entry: 4
+      Data: 1000
+    - Name: curHp
+      Entry: 4
+      Data: 1000
+    - Name: moveSpeed
+      Entry: 4
+      Data: 5
+    - Name: attackDamage
+      Entry: 4
+      Data: 1
+    - Name: attackCurCool
+      Entry: 4
+      Data: 0
+    - Name: attackMaxCool
+      Entry: 4
+      Data: 3
+    - Name: rangeX
+      Entry: 4
+      Data: 20
+    - Name: rangeZ
+      Entry: 4
+      Data: 20
+    - Name: hitDelay
+      Entry: 4
+      Data: 0
+    - Name: knockback
+      Entry: 4
+      Data: 0
+    - Name: hammerCoolTime
+      Entry: 4
+      Data: 0
+    - Name: hammerCurTime
+      Entry: 4
+      Data: 0
+    - Name: target
+      Entry: 6
+      Data: 
+    - Name: modelShakeTime
+      Entry: 4
+      Data: 0
+    - Name: backHpHit
+      Entry: 5
+      Data: false
+    - Name: isAction
+      Entry: 5
+      Data: false
+    - Name: isHammer
+      Entry: 5
+      Data: false
+    - Name: isRun
+      Entry: 5
+      Data: false
+    - Name: knockbackDir
+      Entry: 7
+      Data: UnityEngine.Vector3, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: isBossStart
+      Entry: 5
+      Data: false
+    - Name: coolTime
+      Entry: 4
+      Data: 0
+    - Name: curTime
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
   dmgTxt: {fileID: 0}
   canvas: {fileID: 6824623682021588821}
   animator: {fileID: 0}
@@ -14179,7 +14550,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -16524,7 +16895,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7518763705369905238
 Transform:
   m_ObjectHideFlags: 0
@@ -16558,15 +16929,145 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serializationData:
-    SerializedFormat: 0
-    SerializedBytes: 01010500000065006e0065006d0079002f00000000011d0000004e006f0072006d0061006c005f0045006e0065006d0079002c00200041007300730065006d0062006c0079002d00430053006800610072007000000000002d010c000000640061006d006100670065004500660066006500630074002d010c000000610074007400610063006b004500660066006500630074002d010800000061006e0069006d00610074006f0072002d010f00000065006e0065006d00790043006f006e00740072006f006c006c00650072002d010d00000066006900720065005400720061006e00730066006f0072006d000b01030000006f0062006a00000000000101060000005f006500760065006e0074002f01000000013500000055006e0069007400790045006e00670069006e0065002e004500760065006e00740073002e0055006e006900740079004500760065006e0074002c00200055006e0069007400790045006e00670069006e0065002e0043006f00720065004d006f00640075006c006500010000000101110000006d005f00500065007200730069007300740065006e007400430061006c006c0073002f02000000013e00000055006e0069007400790045006e00670069006e0065002e004500760065006e00740073002e00500065007200730069007300740065006e007400430061006c006c00470072006f00750070002c00200055006e0069007400790045006e00670069006e0065002e0043006f00720065004d006f00640075006c006500020000000101070000006d005f00430061006c006c0073002f030000000168000000530079007300740065006d002e0043006f006c006c0065006300740069006f006e0073002e00470065006e0065007200690063002e004c00690073007400600031005b005b0055006e0069007400790045006e00670069006e0065002e004500760065006e00740073002e00500065007200730069007300740065006e007400430061006c006c002c00200055006e0069007400790045006e00670069006e0065002e0043006f00720065004d006f00640075006c0065005d005d002c0020006d00730063006f0072006c006900620003000000060000000000000000070505052d01040000006e0061006d0065001f01050000006d00610078004800700000007a441f01050000006300750072004800700000007a441f01090000006d006f0076006500530070006500650064000000a0401f010c000000610074007400610063006b00440061006d006100670065000000803f1f010d000000610074007400610063006b0043007500720043006f006f006c00000000001f010d000000610074007400610063006b004d006100780043006f006f006c00000040401f0106000000720061006e006700650058000000a0411f0106000000720061006e00670065005a000000a0411f0108000000680069007400440065006c0061007900000000001f01090000006b006e006f0063006b006200610063006b00000000001f010e000000680061006d006d006500720043006f006f006c00540069006d006500000000001f010d000000680061006d006d0065007200430075007200540069006d006500000000002d01060000007400610072006700650074001f010e0000006d006f00640065006c005300680061006b006500540069006d006500000000002b01090000006200610063006b0048007000480069007400002b01080000006900730041006300740069006f006e00002b010800000069007300480061006d006d0065007200002b010500000069007300520075006e000003010c0000006b006e006f0063006b006200610063006b004400690072002f04000000012b00000055006e0069007400790045006e00670069006e0065002e0056006500630074006f00720033002c00200055006e0069007400790045006e00670069006e0065002e0043006f00720065004d006f00640075006c006500200000000020000000002000000000052b010b0000006900730042006f007300730053007400610072007400001f010800000063006f006f006c00540069006d006500000000001f0107000000630075007200540069006d0065000000000005
+    SerializedFormat: 2
+    SerializedBytes: 
     ReferencedUnityObjects:
     - {fileID: 7201352494644501532, guid: 9314bd05728fae94fb41c7c9ae4e661c, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes: []
+    SerializationNodes:
+    - Name: enemy
+      Entry: 7
+      Data: 0|Normal_Enemy, Assembly-CSharp
+    - Name: damageEffect
+      Entry: 6
+      Data: 
+    - Name: attackEffect
+      Entry: 6
+      Data: 
+    - Name: animator
+      Entry: 6
+      Data: 
+    - Name: enemyController
+      Entry: 6
+      Data: 
+    - Name: fireTransform
+      Entry: 6
+      Data: 
+    - Name: obj
+      Entry: 10
+      Data: 0
+    - Name: _event
+      Entry: 7
+      Data: 1|UnityEngine.Events.UnityEvent, UnityEngine.CoreModule
+    - Name: m_PersistentCalls
+      Entry: 7
+      Data: 2|UnityEngine.Events.PersistentCallGroup, UnityEngine.CoreModule
+    - Name: m_Calls
+      Entry: 7
+      Data: 3|System.Collections.Generic.List`1[[UnityEngine.Events.PersistentCall,
+        UnityEngine.CoreModule]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: name
+      Entry: 6
+      Data: 
+    - Name: maxHp
+      Entry: 4
+      Data: 1000
+    - Name: curHp
+      Entry: 4
+      Data: 1000
+    - Name: moveSpeed
+      Entry: 4
+      Data: 5
+    - Name: attackDamage
+      Entry: 4
+      Data: 1
+    - Name: attackCurCool
+      Entry: 4
+      Data: 0
+    - Name: attackMaxCool
+      Entry: 4
+      Data: 3
+    - Name: rangeX
+      Entry: 4
+      Data: 20
+    - Name: rangeZ
+      Entry: 4
+      Data: 20
+    - Name: hitDelay
+      Entry: 4
+      Data: 0
+    - Name: knockback
+      Entry: 4
+      Data: 0
+    - Name: hammerCoolTime
+      Entry: 4
+      Data: 0
+    - Name: hammerCurTime
+      Entry: 4
+      Data: 0
+    - Name: target
+      Entry: 6
+      Data: 
+    - Name: modelShakeTime
+      Entry: 4
+      Data: 0
+    - Name: backHpHit
+      Entry: 5
+      Data: false
+    - Name: isAction
+      Entry: 5
+      Data: false
+    - Name: isHammer
+      Entry: 5
+      Data: false
+    - Name: isRun
+      Entry: 5
+      Data: false
+    - Name: knockbackDir
+      Entry: 7
+      Data: UnityEngine.Vector3, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: isBossStart
+      Entry: 5
+      Data: false
+    - Name: coolTime
+      Entry: 4
+      Data: 0
+    - Name: curTime
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
   dmgTxt: {fileID: 0}
   canvas: {fileID: 7518763706806701773}
   animator: {fileID: 0}
@@ -16789,7 +17290,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -19161,7 +19662,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -21856,7 +22357,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7949165252268723532
 Transform:
   m_ObjectHideFlags: 0
@@ -21890,15 +22391,145 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serializationData:
-    SerializedFormat: 0
-    SerializedBytes: 01010500000065006e0065006d0079002f00000000011d0000004e006f0072006d0061006c005f0045006e0065006d0079002c00200041007300730065006d0062006c0079002d00430053006800610072007000000000002d010c000000640061006d006100670065004500660066006500630074002d010c000000610074007400610063006b004500660066006500630074002d010800000061006e0069006d00610074006f0072002d010f00000065006e0065006d00790043006f006e00740072006f006c006c00650072002d010d00000066006900720065005400720061006e00730066006f0072006d000b01030000006f0062006a00000000000101060000005f006500760065006e0074002f01000000013500000055006e0069007400790045006e00670069006e0065002e004500760065006e00740073002e0055006e006900740079004500760065006e0074002c00200055006e0069007400790045006e00670069006e0065002e0043006f00720065004d006f00640075006c006500010000000101110000006d005f00500065007200730069007300740065006e007400430061006c006c0073002f02000000013e00000055006e0069007400790045006e00670069006e0065002e004500760065006e00740073002e00500065007200730069007300740065006e007400430061006c006c00470072006f00750070002c00200055006e0069007400790045006e00670069006e0065002e0043006f00720065004d006f00640075006c006500020000000101070000006d005f00430061006c006c0073002f030000000168000000530079007300740065006d002e0043006f006c006c0065006300740069006f006e0073002e00470065006e0065007200690063002e004c00690073007400600031005b005b0055006e0069007400790045006e00670069006e0065002e004500760065006e00740073002e00500065007200730069007300740065006e007400430061006c006c002c00200055006e0069007400790045006e00670069006e0065002e0043006f00720065004d006f00640075006c0065005d005d002c0020006d00730063006f0072006c006900620003000000060000000000000000070505052d01040000006e0061006d0065001f01050000006d00610078004800700000007a441f01050000006300750072004800700000007a441f01090000006d006f0076006500530070006500650064000000a0401f010c000000610074007400610063006b00440061006d006100670065000000803f1f010d000000610074007400610063006b0043007500720043006f006f006c00000000001f010d000000610074007400610063006b004d006100780043006f006f006c00000040401f0106000000720061006e006700650058000000a0411f0106000000720061006e00670065005a000000a0411f0108000000680069007400440065006c0061007900000000001f01090000006b006e006f0063006b006200610063006b00000000001f010e000000680061006d006d006500720043006f006f006c00540069006d006500000000001f010d000000680061006d006d0065007200430075007200540069006d006500000000002d01060000007400610072006700650074001f010e0000006d006f00640065006c005300680061006b006500540069006d006500000000002b01090000006200610063006b0048007000480069007400002b01080000006900730041006300740069006f006e00002b010800000069007300480061006d006d0065007200002b010500000069007300520075006e000003010c0000006b006e006f0063006b006200610063006b004400690072002f04000000012b00000055006e0069007400790045006e00670069006e0065002e0056006500630074006f00720033002c00200055006e0069007400790045006e00670069006e0065002e0043006f00720065004d006f00640075006c006500200000000020000000002000000000052b010b0000006900730042006f007300730053007400610072007400001f010800000063006f006f006c00540069006d006500000000001f0107000000630075007200540069006d0065000000000005
+    SerializedFormat: 2
+    SerializedBytes: 
     ReferencedUnityObjects:
     - {fileID: 7201352494644501532, guid: 9314bd05728fae94fb41c7c9ae4e661c, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes: []
+    SerializationNodes:
+    - Name: enemy
+      Entry: 7
+      Data: 0|Normal_Enemy, Assembly-CSharp
+    - Name: damageEffect
+      Entry: 6
+      Data: 
+    - Name: attackEffect
+      Entry: 6
+      Data: 
+    - Name: animator
+      Entry: 6
+      Data: 
+    - Name: enemyController
+      Entry: 6
+      Data: 
+    - Name: fireTransform
+      Entry: 6
+      Data: 
+    - Name: obj
+      Entry: 10
+      Data: 0
+    - Name: _event
+      Entry: 7
+      Data: 1|UnityEngine.Events.UnityEvent, UnityEngine.CoreModule
+    - Name: m_PersistentCalls
+      Entry: 7
+      Data: 2|UnityEngine.Events.PersistentCallGroup, UnityEngine.CoreModule
+    - Name: m_Calls
+      Entry: 7
+      Data: 3|System.Collections.Generic.List`1[[UnityEngine.Events.PersistentCall,
+        UnityEngine.CoreModule]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: name
+      Entry: 6
+      Data: 
+    - Name: maxHp
+      Entry: 4
+      Data: 1000
+    - Name: curHp
+      Entry: 4
+      Data: 1000
+    - Name: moveSpeed
+      Entry: 4
+      Data: 5
+    - Name: attackDamage
+      Entry: 4
+      Data: 1
+    - Name: attackCurCool
+      Entry: 4
+      Data: 0
+    - Name: attackMaxCool
+      Entry: 4
+      Data: 3
+    - Name: rangeX
+      Entry: 4
+      Data: 20
+    - Name: rangeZ
+      Entry: 4
+      Data: 20
+    - Name: hitDelay
+      Entry: 4
+      Data: 0
+    - Name: knockback
+      Entry: 4
+      Data: 0
+    - Name: hammerCoolTime
+      Entry: 4
+      Data: 0
+    - Name: hammerCurTime
+      Entry: 4
+      Data: 0
+    - Name: target
+      Entry: 6
+      Data: 
+    - Name: modelShakeTime
+      Entry: 4
+      Data: 0
+    - Name: backHpHit
+      Entry: 5
+      Data: false
+    - Name: isAction
+      Entry: 5
+      Data: false
+    - Name: isHammer
+      Entry: 5
+      Data: false
+    - Name: isRun
+      Entry: 5
+      Data: false
+    - Name: knockbackDir
+      Entry: 7
+      Data: UnityEngine.Vector3, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: isBossStart
+      Entry: 5
+      Data: false
+    - Name: coolTime
+      Entry: 4
+      Data: 0
+    - Name: curTime
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
   dmgTxt: {fileID: 0}
   canvas: {fileID: 7949165253112581079}
   animator: {fileID: 0}
@@ -22019,7 +22650,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -22539,7 +23170,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}

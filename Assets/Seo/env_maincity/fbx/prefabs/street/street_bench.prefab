@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5506382475714166763}
   - component: {fileID: 8624945970738324063}
-  - component: {fileID: 3179711402629560994}
+  - component: {fileID: 3975754828081988645}
   m_Layer: 11
   m_Name: street_bench
   m_TagString: Untagged
@@ -45,9 +45,9 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.75098, y: 0.5146832, z: 1.6}
-  m_Center: {x: -0.030617163, y: 0.2286087, z: 0}
---- !u!65 &3179711402629560994
+  m_Size: {x: 1.3586819, y: 0.74841475, z: 2.9943097}
+  m_Center: {x: -0.08515453, y: 0.34547448, z: 0.004040122}
+--- !u!65 &3975754828081988645
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -58,8 +58,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.25702184, y: 1.0244937, z: 1.6}
-  m_Center: {x: -0.28576085, y: 0.46129966, z: 0}
+  m_Size: {x: 0.4808901, y: 1.4132512, z: 2.9943097}
+  m_Center: {x: -0.5240505, y: 0.6778927, z: 0.004040122}
 --- !u!1001 &2138104839945320297
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -72,12 +72,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b2d96fdaaa4f1814fae87acce4c87298, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b2d96fdaaa4f1814fae87acce4c87298, type: 3}
       propertyPath: m_LocalScale.y
-      value: 6.3887796
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b2d96fdaaa4f1814fae87acce4c87298, type: 3}
       propertyPath: m_LocalScale.z
-      value: 6.3887796
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b2d96fdaaa4f1814fae87acce4c87298, type: 3}
       propertyPath: m_LocalPosition.x
@@ -118,6 +122,10 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: b2d96fdaaa4f1814fae87acce4c87298, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b2d96fdaaa4f1814fae87acce4c87298, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: b2d96fdaaa4f1814fae87acce4c87298, type: 3}
       propertyPath: m_Name
