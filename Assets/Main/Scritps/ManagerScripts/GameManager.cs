@@ -3,6 +3,7 @@ using DG.Tweening;
 using Sirenix.OdinInspector;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class GameManager : SerializedMonoBehaviour
 {
@@ -51,6 +52,7 @@ public class GameManager : SerializedMonoBehaviour
         coolTimeManager.Init();
         MouseLocked(isMouseLock);
     }
+
 
     public void MouseLocked(bool _bool = false)
     {

@@ -73,8 +73,8 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: GreenAttackDummy1
-  m_Speed: 2
+  m_Name: GreenNormalAttack_C1
+  m_Speed: 1.6
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 905563086442005944}
@@ -87,7 +87,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 0ce8c00efc6b87148a60256c9a5271c0, type: 2}
+  m_Motion: {fileID: 7400000, guid: b9df0b069b9692540b8d39a7b24ac9a6, type: 2}
   m_Tag: Attack
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -1210,7 +1210,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 5d426e45ca2d0a040832fa7cc84c50a3, type: 2}
+  m_Motion: {fileID: 7400000, guid: ee650b1a48e43674daa3585f3e0e3b34, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -1305,8 +1305,8 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: GreenAttackDummy2
-  m_Speed: 2
+  m_Name: GreenNormalAttack_C2
+  m_Speed: 1.6
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 7221189775275378657}
@@ -1319,7 +1319,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 42907c535412b5b4f8a8546b1213e07e, type: 2}
+  m_Motion: {fileID: 7400000, guid: 405af75c7b6dd4b4fb267ef7064ce417, type: 2}
   m_Tag: Attack
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -1478,14 +1478,14 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: -8884554055067168236}
-    m_Position: {x: 200, y: 0, z: 0}
+    m_Position: {x: -100, y: 60, z: 0}
   m_ChildStateMachines:
   - serializedVersion: 1
     m_StateMachine: {fileID: -5710823298255048144}
-    m_Position: {x: 490, y: 60, z: 0}
+    m_Position: {x: 350, y: 100, z: 0}
   - serializedVersion: 1
     m_StateMachine: {fileID: 1015775096467046533}
-    m_Position: {x: 320, y: 140, z: 0}
+    m_Position: {x: 610, y: 100, z: 0}
   m_AnyStateTransitions: []
   m_EntryTransitions: []
   m_StateMachineTransitions:
@@ -1745,6 +1745,32 @@ AnimatorState:
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
   m_Motion: {fileID: 7400000, guid: e2d0b8b71a01c1e4eb50d4b5fd7440fd, type: 2}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
+--- !u!1102 &-1634531096318120520
+AnimatorState:
+  serializedVersion: 6
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Green_Chasing
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 7400000, guid: a4c8577ede6164c4b8dd67f2c583f7c0, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -2613,8 +2639,8 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: GreenAttackDummy3
-  m_Speed: 2
+  m_Name: GreenNormalAttack_C3
+  m_Speed: 1.6
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 4556504222827538066}
@@ -2627,7 +2653,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 4a3faac237fe87d48978d2e1420b72bb, type: 2}
+  m_Motion: {fileID: 7400000, guid: e4dfe7e75bc47bb4dbf17c85f207973c, type: 2}
   m_Tag: Attack
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -3989,10 +4015,10 @@ AnimatorStateMachine:
     m_Position: {x: 420, y: 370, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 4873197871067812189}
-    m_Position: {x: 690, y: 380, z: 0}
+    m_Position: {x: 650, y: 370, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -5858453513986253377}
-    m_Position: {x: 923.55756, y: 375.7495, z: 0}
+    m_Position: {x: 920, y: 370, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 7552520618953457236}
     m_Position: {x: 420, y: 440, z: 0}
@@ -4022,7 +4048,10 @@ AnimatorStateMachine:
     m_Position: {x: 420, y: 230, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -8845076866339652205}
-    m_Position: {x: 800, y: 450, z: 0}
+    m_Position: {x: 770, y: 430, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: -1634531096318120520}
+    m_Position: {x: 695.33923, y: 505.21503, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []

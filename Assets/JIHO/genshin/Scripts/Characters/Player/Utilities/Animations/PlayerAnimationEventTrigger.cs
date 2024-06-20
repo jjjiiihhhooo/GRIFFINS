@@ -46,11 +46,6 @@ public class PlayerAnimationEventTrigger : MonoBehaviour
         return player.Animator.IsInTransition(layerIndex);
     }
 
-    public void ThrowExit()
-    {
-        player.skillData.isHand = false;
-    }
-
     public void NormalAttackExit()
     {
         player.currentCharacter.NormalAttackExit();
@@ -99,16 +94,7 @@ public class PlayerAnimationEventTrigger : MonoBehaviour
         player.currentCharacter.R_AnimExit();
     }
 
-    public void GrappleReady()
-    {
-        player.currentCharacter.isGrappleReady = false;
-        player.currentCharacter.StartGrapple();
-    }
-
-    public void GrappleExit()
-    {
-        player.currentCharacter.StopGrapple();
-    }
+   
 
 
 }

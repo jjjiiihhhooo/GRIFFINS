@@ -111,7 +111,7 @@ public class Swinging : MonoBehaviour
             playerController.movementStateMachine.ChangeState(playerController.movementStateMachine.FallingState);
         }
         lr.gameObject.SetActive(true);
-        Player.Instance.currentCharacter.StopGrapple();
+        
 
         // deactivate active grapple
         //if (GetComponent<Grappling>() != null)

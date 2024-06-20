@@ -4,18 +4,13 @@ using UnityEngine.InputSystem;
 
 public class InputData : MonoBehaviour
 {
-    public KeyCode GrappleCut = KeyCode.Space;
-
     public KeyCode LeftAction = KeyCode.Mouse0;
     public KeyCode RightAction = KeyCode.Mouse1;
 
     public KeyCode Q = KeyCode.Q;
     public KeyCode E = KeyCode.E;
-    public KeyCode R = KeyCode.R;
 
     public KeyCode InteractionKey = KeyCode.F;
-    public KeyCode itemSaveKey = KeyCode.Alpha5;
-    public KeyCode scene_assistKey = KeyCode.Tab;
 
     public KeyCode WhiteKey = KeyCode.Alpha1;
     public KeyCode GreenKey = KeyCode.Alpha2;
@@ -23,14 +18,14 @@ public class InputData : MonoBehaviour
 
     public LayerMask aimColliderMask;
     public Vector3 MouseWorldPosition = Vector3.zero;
-    public GameObject projectTile;
-    private Player player;
 
+    private Player player;
 
     public void Init()
     {
 
     }
+
     private void Update()
     {
         if (player == null) player = Player.Instance;
@@ -85,11 +80,6 @@ public class InputData : MonoBehaviour
             player.currentCharacter.LeftAction();
         }
 
-        if (Input.GetKeyDown(itemSaveKey))
-        {
-            player.currentCharacter.ItemSave();
-        }
-
         if (Input.GetKeyDown(Q))
         {
             player.currentCharacter.Q_Action();
@@ -121,7 +111,6 @@ public class InputData : MonoBehaviour
             player.currentCharacter.Interaction();
         }
     }
-
 
     private void ChangeInput()
     {
